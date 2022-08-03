@@ -1,2 +1,2 @@
 # Watson-NLP
-This is designed to demonstrate application of Watson NLP on industry use-cases
+This repo is for demos of the Watson NLP library.
