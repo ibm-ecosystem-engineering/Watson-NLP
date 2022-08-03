@@ -1,14 +1,14 @@
 ## Getting Started with Watson NLP on TechZone
 
-This guide will help you in getting started with setting your environment to play around with Watson NLP.
+This guide will help you to set up Watson NLP in a Python notebook environment, using Watson Studio.
 
 ### Steps:
 #### Reserve your env
-1. Scroll down on the [Techzone page for sentiment analysis](https://techzone.ibm.com/collection/62c8a7c338d3d90017049a70) and click on **Reserve** button to reserve a Watson Studio environment.
+1. Scroll down the page [Techzone page for sentiment analysis](https://techzone.ibm.com/collection/62c8a7c338d3d90017049a70) and click the **Reserve** button to reserve a Watson Studio environment.
 
 ![reserve](Screenshots/reserve.png)
 
-2. It will take a couple of minutes for provisioning the env. You will get an invite for joining the IBM cloud account. Once the environment is ready, you will get a notification similar to this with all the details.
+2. You will receive an email inviting you to join the IBM cloud account. Once your environment is ready (within a few minutes) you will recieve a notification similar to the following.
 
 ![env_details](Screenshots/env_details.png)
 
