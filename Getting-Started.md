@@ -41,6 +41,6 @@ Name your enviroment as something meaniningful like **Watson NLP**. In the Hardw
 
 ![edit](Screenshots/edit.png)
 
-10. Your notebook will load and you can follow the instructions in your notebook for complete the tutorials on Watson NLP
+10. Your notebook will load and you can follow the instructions in your notebook to complete the tutorials on Watson NLP
 
 ![loaded](Screenshots/loaded.png)
