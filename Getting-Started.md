@@ -4,7 +4,7 @@ This guide will help you to set up Watson NLP in a Python notebook environment, 
 
 ### Steps:
 #### Reserve your env
-1. Scroll down the page [Techzone page for sentiment analysis]([https://techzone.ibm.com/collection/62c8a7c338d3d90017049a70](https://techzone.ibm.com/collection/watson-core-nlp#tab-1)) and click the **Reserve** button to reserve a Watson Studio environment.
+1. Scroll down the page [Techzone page for sentiment analysis]([https://techzone.ibm.com/collection/62c8a7c338d3d90017049a70](https://techzone.ibm.com/collection/watson-core-nlp#tab-1) and click the **Reserve** button to reserve a Watson Studio environment.
 
 ![reserve](Screenshots/reserve.png)
 
