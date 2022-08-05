@@ -4,43 +4,42 @@ This guide will help you to set up Watson NLP in a Python notebook environment, 
 
 ### Steps:
 #### Reserve your env
-1. Under the [Sentiment Analysis](https://techzone.ibm.com/collection/watson-core-nlp#tab-1) tab, find the environment tile and click the **Reserve** button to reserve a Watson Studio environment.
+1. Under the [Sentiment Analysis](https://techzone.ibm.com/collection/watson-core-nlp#tab-1) tab, find the environment tile and click **Reserve** to reserve a Watson Studio environment.
 
 ![reserve](Screenshots/reserve.png)
 
-2. You will receive an email inviting you to join the IBM cloud account. Follow the instructions in the email to join.  Your environment should be ready within a few minutes.  Once it is ready, you will recieve a second notification email similar to the following.
+2. Shortly, you will receive an email inviting you to join an IBM cloud account. Follow the instructions in the email to join.  Your environment should be ready within a few minutes.  Once it is ready, you will recieve a second email similar to the following.
 
 ![env_details](Screenshots/env_details.png)
 
-3. Log in to [IBM Cloud Pak for Data](https://dataplatform.cloud.ibm.com). Once logged in, ensure that you are using cloud account **2577353 - tsglwatson** as given in the email. You can check the name of the current account at the top of the screen as shown below.  Change the account if necessary using the drop-down menu.  From the IBM Cloud Pak for Data dashboad, find the tile for the Project you want to work with.  For the Sentiment Analysis tutorial, the name of this project will be prefixed with **sentiment-analysis**.  Once the Project is open, you will be to view the notebooks and data assets in your project with the **Assets** tab.
+3. Log in to [IBM Cloud Pak for Data](https://dataplatform.cloud.ibm.com). Once logged in, ensure that you are using cloud account **2577353 - tsglwatson** as given in the email. You can check the name of the current account in the bar the top of the screen.  Change the account if necessary using the drop-down menu.  From the IBM Cloud Pak for Data dashboad, find the tile for the Project you want to work with.  For the Sentiment Analysis tutorial, the name of this Project will have the prefix **sentiment-analysis**.  Once the Project is open, you can view the notebooks and data assets of the project with the **Assets** tab.
 
 ![assets](Screenshots/assets.png)
 
-4. Click on the **Manage** tab now.
+4. We will create a new environment template. Click on the **Manage** tab.
 
 ![manage_tab](Screenshots/manage_tab.png)
 
-5. Click on **Environments** from the side Navbar and then click on **Templates** tab. Click on **New template**
+5. Click on **Environments** from the side Navbar. Next click on **Templates** tab. Finally, click on **New template**
 
 ![env](Screenshots/env.png)
 
-6. Now create an env for making `watson_nlp` library available in the Watson Studio. (It is available by default as an extra small option but you might need a bigger environment for this dataset and model training as well). 
-Name your enviroment as something meaniningful like **Watson NLP**. In the Hardware configuration, select at least **4 vCPU and 16 GB RAM** for the pre-trained model (OOB sentiment analysis model notebook) and probably a bigger one for model training notebook. Then select **Default Python 3.8 + Watson NLP(beta)** in the Software version. If you do not select this software version, `watson_nlp` library will not be available in the Watson Studio Notebooks. Finally click **Create**
+6. In this step, we will create an environment template that contains the Watson NLP library. Give your environment template a name like **Watson NLP**. In the Hardware configuration, select at least **4 vCPU and 16 GB RAM**. For Software, select **Default Python 3.8 + Watson NLP(beta)**. Finally click **Create**
 
 ![new_env_settings](Screenshots/new_env_settings.png)
 
-7. Once the env is created, click on the **Assets** tab. Then click on the 3 dots at the right end of the notebook and click on **Change environment**
+7. Once the environment template is created, click on the **Assets** tab. Find the notebook you want to work with among the assets.  Click on the ellipsis (the three dots) at the right end of the notebook to open a drop-down menu.  Click **Change environment** in menu.
 
 ![change_env](Screenshots/change_env.png)
 
-8. Select the enviroment you created in the previous step and click on **Change**
-
+8. Select the environment template that you created previously and click **Change*.
+ 
 ![change](Screenshots/change.png)
 
-9. Now you should be able to run the notebook by clicking on the 3 dots and then selecting **Edit** (Note: You need to repeat this step for all the notebooks you have in the project)
+9. Now, you will be able to run the notebook by clicking the ellipsis and selecting **Edit**.  Note that you need to repeat this step for all the notebooks you have in the project.
 
 ![edit](Screenshots/edit.png)
 
-10. Your notebook will load and you can follow the instructions in your notebook to complete the tutorials on Watson NLP
+10. Your notebook will load and you can follow the instructions in your notebook to complete the tutorials on Watson NLP.
 
 ![loaded](Screenshots/loaded.png)
