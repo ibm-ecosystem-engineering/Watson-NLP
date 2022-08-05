@@ -1,6 +1,6 @@
 ## Getting Started with Watson NLP on TechZone
 
-This guide will show you how to set up a Python notebook environment using Watson Studio on IBM Cloud, in order to perform tutorials with the Watson NLP library.  This guide demonstrates specifically how to set things up for the Sentiment Analysis tutorial.  The flow for Emotion Classification is similar.
+This guide will show you how to set up a Python notebook environment using Watson Studio on IBM Cloud so that you can use the Watson NLP library.  This guide demonstrates specifically how to set things up for the Sentiment Analysis tutorial.  The flow for Emotion Classification is similar.
 
 ### Steps:
 #### Reserve your env
