@@ -40,6 +40,6 @@ This guide will show you how to set up a Python notebook environment using Watso
 
 ![edit](Screenshots/edit.png)
 
-10. Your notebook will load and you can follow the instructions in your notebook to complete the tutorials on Watson NLP.
+10. Your notebook will load. You can follow the instructions in your notebook to complete the tutorials on Watson NLP.
 
 ![loaded](Screenshots/loaded.png)
