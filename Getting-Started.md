@@ -1,6 +1,6 @@
 ## Getting Started with Watson NLP on TechZone
 
-This guide will show you how to set up a Python notebook environment using Watson Studio on IBM Cloud so that you can use the Watson NLP library.  This guide demonstrates specifically how to set things up for the Sentiment Analysis tutorial.  The flow for Emotion Classification is similar.
+This guide will show you how to set up a Python notebook environment using Watson Studio on IBM Cloud so that you can use the Watson NLP library.  This guide demonstrates how to set things up for the Sentiment Analysis tutorial.  The flow for Emotion Classification is similar.
 
 ### Steps:
 #### Reserve your env
@@ -16,7 +16,7 @@ This guide will show you how to set up a Python notebook environment using Watso
 
 ![assets](Screenshots/assets.png)
 
-4. Before working with the notebooks, we need to define the environment in which these notebooks will run. To get started on that, click on the **Manage** tab.
+4. Before working with the notebooks, you need to define the environment in which these notebooks will run. To get started on that, click on the **Manage** tab.
 
 ![manage_tab](Screenshots/manage_tab.png)
 
@@ -28,7 +28,7 @@ This guide will show you how to set up a Python notebook environment using Watso
 
 ![new_env_settings](Screenshots/new_env_settings.png)
 
-7. Now we will set an environment for a notebook.  Click on the **Assets** tab. Find the notebook you want to work with among the assets.  Click on the ellipsis (the three dots) to the right of the notebook name in order to open a drop-down menu.  Click **Change environment** in menu.
+7. Now we will set an environment for a notebook.  Click on the **Assets** tab. Find the notebook you want to work with among the assets.  Click on the ellipsis (the three dots) to the right of the notebook name in order to open a drop-down menu.  Within this menu click **Change environment**.
 
 ![change_env](Screenshots/change_env.png)
 
