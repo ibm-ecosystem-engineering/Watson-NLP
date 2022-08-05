@@ -1,18 +1,18 @@
 ## Getting Started with Watson NLP on TechZone
 
-This guide will help you to set up Watson NLP in a Python notebook environment, using Watson Studio.
+This guide will help you to set up Watson NLP in a Python notebook environment, using Watson Studio.  For the guide, we show how to set up the environment for the Sentiment analysis tutorial.  The flow for Emotion Classification is similar.
 
 ### Steps:
 #### Reserve your env
-1. Scroll down the page [Techzone page for sentiment analysis](https://techzone.ibm.com/collection/watson-core-nlp#tab-1) and click the **Reserve** button to reserve a Watson Studio environment.
+1. Under the [Sentiment Analysis](https://techzone.ibm.com/collection/watson-core-nlp#tab-1) tab, find the environment tile and click the **Reserve** button to reserve a Watson Studio environment.
 
 ![reserve](Screenshots/reserve.png)
 
-2. You will receive an email inviting you to join the IBM cloud account. Once your environment is ready (within a few minutes) you will recieve a notification similar to the following.
+2. You will receive an email inviting you to join the IBM cloud account. Follow the instructions in the email to join.  Your environment should be ready within a few minutes.  Once it is ready, you will recieve a second notification email similar to the following.
 
 ![env_details](Screenshots/env_details.png)
 
-3. Once you login and go to the Watson Studio project, you should be able to view the notebooks and data assets in your project on the **Assets** tab.
+3. Log in to [IBM Cloud Pak for Data](https://dataplatform.cloud.ibm.com). Once logged in, ensure that you are using cloud account **2577353 - tsglwatson** as given in the email. You can check the name of the current account at the top of the screen as shown below.  Change the account if necessary using the drop-down menu.  From the IBM Cloud Pak for Data dashboad, find the tile for the Project you want to work with.  For the Sentiment Analysis tutorial, the name of this project will be prefixed with **sentiment-analysis**.  Once the Project is open, you will be to view the notebooks and data assets in your project with the **Assets** tab.
 
 ![assets](Screenshots/assets.png)
 
