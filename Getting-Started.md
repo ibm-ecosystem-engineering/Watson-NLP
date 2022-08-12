@@ -24,7 +24,7 @@ This guide will show you how to set up a Python notebook environment using Watso
 
 ![env](Screenshots/env.png)
 
-6. We will create an environment template that contains the Watson NLP library. Give your environment template a name like **Watson NLP**. In the Hardware configuration, select at least **4 vCPU and 16 GB RAM**. For Software, select **Default Python 3.8 + Watson NLP(beta)**. Finally click **Create**
+6. We will create an environment template that contains the Watson NLP library. Give your environment template a name like **Watson NLP**. In the Hardware configuration, select at least **4 vCPU and 16 GB RAM**. For Software, select **DO + NLP Runtime 22.1 on Python 3.9**. Finally click **Create**
 
 ![new_env_settings](Screenshots/new_env_settings.png)
 
