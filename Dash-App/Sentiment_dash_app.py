@@ -1,5 +1,4 @@
 import os
-from turtle import title
 import dash
 from dash import dcc
 from dash import html
@@ -35,15 +34,15 @@ navbar_main = dbc.Navbar(
             html.A(
                 dbc.Row(
                     [
-                    dbc.Col(html.Img(src=app.get_asset_url('ibm_logo.png'), height="30px")),
-                    dbc.Col(dbc.NavbarBrand("IBM Build Labs", className="me-auto")),
+                    dbc.Col(html.Img(src=app.get_asset_url('ibm_logo.png'), height="40px")),
+                    dbc.Col(dbc.NavbarBrand("Build Labs", className="me-auto")),
                     ],
                     align="center",
                     className="w-0",
                 ),
                 style={"textDecoration": "bold", "margin-right": "33%"},
             ),
-            dbc.Row(html.H2("Watson-Core NLP"),
+            dbc.Row(html.H2("Watson NLP"),
             className="me-auto",
             justify='center'),
             dbc.Row(
@@ -55,7 +54,6 @@ navbar_main = dbc.Navbar(
                                     # add an auto margin after this to push later links to end of nav
                                     className="me-auto",
                                 ),
-                                dbc.NavItem(dbc.NavLink("Report an Issue", href="https://github.ibm.com/hcbt/Watson-NLP/issues/new", target="_blank")),
                                 html.Span(dcc.LogoutButton(logout_url='https://w3.ibm.com/w3publisher/ibm-build-labs'), className="ml-auto")
                             ],
                             # make sure nav takes up the full width for auto margin to get applied
@@ -248,6 +246,7 @@ def sentiment_analysis_callback(n_clicks, value):
     sentence_list = []
     label_list = []
     score_list = []
+    print("#### ", sentence_sentiment)
     for sent_outputs in sentence_sentiment:
         sentence_list.append(sent_outputs[0])
         label_list.append(sent_outputs[1])
@@ -281,4 +280,4 @@ def update_output(n_clicks, value):
     return fig_emotion, df_emotion.to_dict('records')
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run(host="0.0.0.0", port=8050)
