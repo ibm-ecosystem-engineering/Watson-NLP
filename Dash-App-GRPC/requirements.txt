@@ -1,0 +1,8 @@
+dash
+dash_bootstrap_components
+dash_daq
+pandas
+plotly
+numpy
+grpcio
+protobuf
