@@ -1,10 +1,3 @@
-# *****************************************************************#
-# (C) Copyright IBM Corporation 2022.                             #
-#                                                                 #
-# The source code for this program is not published or otherwise  #
-# divested of its trade secrets, irrespective of what has been    #
-# deposited with the U.S. Copyright Office.                       #
-# *****************************************************************#
 import os
 import grpc
 import syntax_types_pb2
@@ -17,7 +10,6 @@ class GrpcClient:
         GRPC_SERVER_URL = os.getenv("GRPC_SERVER_URL", default="127.0.0.1:8033")
         print("###### Calling GRPC endpoint = ", GRPC_SERVER_URL)
         channel = grpc.insecure_channel(GRPC_SERVER_URL)
-        print(" ================== ", channel, "=========================")
         self.stub = CommonServiceStub.CommonServiceStub(channel)
 
      # a method calling syntax_izumo_en_stock model
@@ -39,7 +31,6 @@ class GrpcClient:
         )
         SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL = os.getenv("SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL", default="sentiment-document-cnn-workflow-en-stock-predictor")
         print("###### Calling remote GRPC model = ", SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL)
-        #response = self.stub.watson_nlp_workflows_sentiment_cnn_CNN_Predict(request,metadata=[("mm-vmodel-id", SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL)] )
         response = self.stub.watson_nlp_workflows_document_sentiment_cnn_CNN_Predict(request,metadata=[("mm-vmodel-id", SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL)] )
         return response
 
