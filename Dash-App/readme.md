@@ -60,7 +60,7 @@ docker build -t dash-app:latest .
 ```
 docker run -p 8050:8050 dash-app:latest
 ```
-##### You can now access the application at
+### You can now access the application at
 
 ```
 http://localhost:8050
