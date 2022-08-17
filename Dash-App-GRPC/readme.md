@@ -1,14 +1,13 @@
-### Watson NLP gRPC Python Client dashapp
+### Watson NLP Python gRPC Client
 # Build lab
-This is an example Python application that uses the gRPC API to do scoring for Watson NLP models. The model serving runtime exposes GRPC endpoints to consume the model serving. As GRPC is portable, you can implement client with your choice of programming languages. Here I am going to show you how to implement an example dash app using python.
+This directory contains an example NLP web application written in Python for performing Sentiment Analysis and Emotion Classification on user-supplied texts.  The program uses the gRPC API to call a remote NLP runtime where the models are being served.
 
-Frist of all lets generate a client stub using the proto files
-Gathering Proto files to generate the full protobuf stack, proto files from a few places are required:
+To build this program, we first generate a Python gRPC client stub from proto files. This requires proto files from a few places:
 - The common-service definition from this repository.
-- The WNLP interface definitions
+- The Watson NLP interface definitions
 - The Watson Core interface definitions
 
-### Install the required library to generate client stub.
+### Install the required library to generate a gRPC client stub.
 #### gRPC library
 ```
 python -m pip install grpcio
@@ -17,7 +16,7 @@ python -m pip install grpcio
 ```
 python -m pip install grpcio-tools
 ```
-### Generate stub
+### Generate the stub.
 ```
 python3 -m grpc_tools.protoc -I ${PROTO_FILE_DIR} --python_out=${OUTPUT_DIR} --grpc_python_out=${OUTPUT_DIR} proto/*
 ```
@@ -26,7 +25,7 @@ python3 -m grpc_tools.protoc -I ${PROTO_FILE_DIR} --python_out=${OUTPUT_DIR} --g
 - ######  Creat a request object
 - ######  Call the model by passing model id
 
-In this sample app three models are being called
+In this sample app three models are being called:
 - ###### sentiment_document-cnn-workflow_en_stock
 - ###### ensemble_classification-wf_en_emotion-stock
 - ###### syntax_izumo_en_stock
