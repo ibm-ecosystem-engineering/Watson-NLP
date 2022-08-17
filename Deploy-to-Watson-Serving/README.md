@@ -1,8 +1,11 @@
+# Deploy an NLP Model to Watson Serving
 
 1. Upload a model to a COS bucket
+
 https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-upload
 
 2. Create an HMAC credential for accessing the bucket
+
 https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-uhc-hmac-credentials-main&interface=cli#uhc-hmac-credentials-defined
 
 3. Create a JSON file, e.g. mybucket.json
