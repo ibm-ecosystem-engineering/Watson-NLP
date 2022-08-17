@@ -66,8 +66,8 @@ To build the above, simply put it in a Dockerfile and run the docker build comma
 - ARTIFACTORY_API_KEY
 ```
 docker build . \
-  --build-arg ARTIFACTORY_USERNAME=$ARTIFACTORY_API_KEY \
-  --build-arg ARTIFACTORY_API_KEY=$ARTIFACTORY_USERNAME \
+  --build-arg ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME \
+  --build-arg ARTIFACTORY_API_KEY=$ARTIFACTORY_API_KEY \
   -t dash-app:latest
 ```
 ### Run the Application 
