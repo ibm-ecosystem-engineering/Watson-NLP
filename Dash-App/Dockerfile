@@ -1,7 +1,17 @@
-FROM <BASE_RUNTIME_WATSON_NLP> as base
-ENV ARTIFACTORY_USERNAME <IBM ID>
-ENV ARTIFACTORY_API_KEY <ENTITLEMENT_API_KEY>
+
+ARG WATSON_RUNTIME_BASE
+FROM ${WATSON_RUNTIME_BASE} as base
+
+# Args for artifactory credentials
+ARG ARTIFACTORY_USERNAME
+ARG ARTIFACTORY_API_KEY
+ENV ARTIFACTORY_USERNAME ${ARTIFACTORY_USERNAME}
+ENV ARTIFACTORY_API_KEY ${ARTIFACTORY_API_KEY}
+
+# Setting up the working directory
 WORKDIR /app
+
+# Installing the required python library to run models
 COPY requirements.txt /app/requirements.txt
 RUN pip3 install -r requirements.txt
 RUN pip3 list
