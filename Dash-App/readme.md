@@ -51,7 +51,6 @@ WORKDIR /app
 # Installing the required python library to run models
 COPY requirements.txt /app/requirements.txt
 RUN pip3 install -r requirements.txt
-RUN pip3 list
 EXPOSE 8050
 RUN groupadd appuser && adduser -g appuser appuser && usermod -aG appuser appuser
 RUN chown -R appuser:appuser /app
