@@ -55,7 +55,8 @@ ENTRYPOINT ["python3","Sentiment_dash_app.py"]
 ```
 docker build -t dash-app:latest .
 ```
-### Running the dashapp
+## Run the Application Locally
+### Start the container
 ```
 docker run -p 8050:8050 dash-app:latest
 ```
