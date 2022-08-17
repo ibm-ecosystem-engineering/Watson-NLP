@@ -35,7 +35,6 @@ def get_emotion(text):
 ```
 ## Build
 ### Update Dockerfile 
-Change the environment variable according to your requirement.
 ```
 ARG WATSON_RUNTIME_BASE=wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.9.0-ubi8_py39
 FROM ${WATSON_RUNTIME_BASE} as base
