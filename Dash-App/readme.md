@@ -1,6 +1,5 @@
-### Embed Watson NLP in a sample python web application
-# Build lab
-Use a Python web application to get Sentiment Analysis and Emotion Classification scores for given texts. The application demonstrates how the Watson NLP can be directly embedded in a Python program to serve a model. In the demonstration I am going to show you how to containerize this sample app.
+# Embed Watson NLP in a Python Web Application
+This directory contains an example a Python web application.  This application performs Sentiment Analysis and Emotion Classification on user-specified texts. The Watson NLP library is directly embedded in a Python program and Watson NLP built-in models are used.  We demonstrate how to containerize this application so that it may be deployed easily anywhere.
 
 To develop this app we need the following
 - Watson nlp serving runtime
@@ -34,7 +33,8 @@ def get_emotion(text):
     emotion_output_python = emotion_model.run(text)
     return emotion_output_python
 ```
-### Docker file to run the dashapp
+## Build
+### Update Dockerfile 
 Change the environment variable according to your requirement.
 ```
 FROM <BASE_RUNTIME_WATSON_NLP> as base
