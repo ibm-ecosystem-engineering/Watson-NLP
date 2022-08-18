@@ -82,33 +82,9 @@ client = GrpcClient()
 response = client.call_sentiment_document_workflow("Watson NLP is awesome!")
 print(response)
 ```
-### Docker file to run the dashapp
-Change the environment variable according to your requirement.
-```
-FROM python:3.9
-WORKDIR /app
-COPY requirements.txt /app/requirements.txt
-RUN pip3 install -r requirements.txt
-ENV GRPC_SERVER_URL "localhost:8085"
-ENV SYNTAX_IZUMO_EN_STOCK_MODEL "sentiment_document-cnn-workflow_en_stock"
-ENV SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL "sentiment_document-cnn-workflow_en_stock"
-ENV EMOTION_CLASSIFICATION_STOCK_MODEL "ensemble_classification-wf_en_emotion-stock"
-ENV PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION python
-EXPOSE 8050
-COPY ./*.py /app
-COPY ./assets /app/assets
-CMD ["python3","Sentiment_dash_app.py"]
-```
-### Requirement file is provived to install required libraries
-```
-dash
-dash_bootstrap_components
-dash_daq
-pandas
-plotly
-numpy
-```
+
 ### building the dashapp
+Make sure you are in the root dictory of the project where the docker file resides before you execute the below command.
 ```
 docker build -t dash-app:latest .
 ```
