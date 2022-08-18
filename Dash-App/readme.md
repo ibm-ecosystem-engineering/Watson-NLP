@@ -1,13 +1,9 @@
 # Embed Watson NLP in a Python Web Application
-This directory contains an example a Python web application.  This application performs Sentiment Analysis and Emotion Classification on user-specified texts. The Watson NLP library is directly embedded in a Python program and Watson NLP built-in models are used.  We demonstrate how to containerize this application so that it may be deployed easily anywhere.
+This directory contains code for a web application that performs Sentiment Analysis and Emotion Classification on user-specified texts. In this application the Python code directly depends on the Watson NLP library.  Built-in pre-trained models are used.  We demonstrate how to containerize this application to ease deployment.
 
-To develop this app we need the following
-- Watson nlp serving runtime
-- Watson nlp libraries
-- IBM entitlement key to gain access to your container software
+Note that we use the Watson NLP serving runtime as a base image. The Watson NLP library comes with it, and therefore does not need to be separately installed. 
 
-Once you gain access to nlp serving runtime as a base image, watson nlp library comes with it. You don't have to install watson nlp library seperately.
-### The required libraries
+### Required Python libraries
 ```
 dash
 dash_bootstrap_components
