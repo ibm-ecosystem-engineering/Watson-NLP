@@ -3,7 +3,8 @@ This directory contains code for a web application that performs Sentiment Analy
 
 Note that we use the Watson NLP serving runtime as a base image. The Watson NLP library comes with it, and therefore does not need to be separately installed. 
 
-### Required Python libraries
+### Python libraries
+The application depends on the following libraries. 
 ```
 dash
 dash_bootstrap_components
@@ -13,6 +14,7 @@ plotly
 numpy
 ```
 ### Code snippet calling the models
+Here is a code fragment from *Sentiment_dash_app.py* that demonstrates how models are loaded.
 ```
 import watson_nlp
 
@@ -30,7 +32,7 @@ def get_emotion(text):
     return emotion_output_python
 ```
 ## Build
-### Update Dockerfile 
+### Dockerfile 
 ```
 ARG WATSON_RUNTIME_BASE=wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.9.0-ubi8_py39
 FROM ${WATSON_RUNTIME_BASE} as base
@@ -55,7 +57,7 @@ COPY . /app
 ENTRYPOINT ["python3","Sentiment_dash_app.py"]
 ```
 ### Building the dashapp
-To build the above, simply put it in a Dockerfile and run the docker build command using the following example as a guide. You need to gain access to artifactory user name and api key.
+To build the above, simply put it in a Dockerfile and run the docker build command using the following example as a guide. You need to gain access to artifactory user name and API key.
 - ARTIFACTORY_USERNAME
 - ARTIFACTORY_API_KEY
 ```
@@ -64,12 +66,12 @@ docker build . \
   --build-arg ARTIFACTORY_API_KEY=$ARTIFACTORY_API_KEY \
   -t dash-app:latest
 ```
-### Run the Application 
+## Run the Application 
+To start the container on your local machine with Docker:
 ```
 docker run -p 8050:8050 dash-app:latest
 ```
-### You can now access the application at
-
+You can now access the application at:
 ```
 http://localhost:8050
 ```
