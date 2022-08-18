@@ -3,16 +3,27 @@ This directory contains code for a web application that performs Sentiment Analy
 
 Note that we use the Watson NLP serving runtime as a base image. The Watson NLP library comes with it, and therefore does not need to be separately installed. 
 
-### Python libraries
-The application depends on the following libraries. 
+The application contains the below files
 ```
-dash
-dash_bootstrap_components
-dash_daq
-pandas
-plotly
-numpy
+├── Dockerfile
+├── Sentiment_dash_app.py
+├── assets
+│   ├── bootstrap.min.css
+│   └── ibm_logo.png
+├── readme.md
+└── requirements.txt
 ```
+- Dockerfile : To create docker image
+- requirements.txt :  The list of Python libraries required to run the application
+- Sentiment_dash_app.py : Python program
+
+### Prerequisite
+
+- Docker installed in your workstation
+- For IBMers need to gain access to artifactory user name and API key to build the docker image.
+- - ARTIFACTORY_USERNAME
+- - ARTIFACTORY_API_KEY
+
 ### Code snippet calling the models
 Here is a code fragment from *Sentiment_dash_app.py* that demonstrates how models are loaded.
 ```
@@ -31,35 +42,10 @@ def get_emotion(text):
     emotion_output_python = emotion_model.run(text)
     return emotion_output_python
 ```
-## Build
-### Dockerfile 
-```
-ARG WATSON_RUNTIME_BASE=wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.9.0-ubi8_py39
-FROM ${WATSON_RUNTIME_BASE} as base
 
-# Args for artifactory credentials
-ARG ARTIFACTORY_USERNAME
-ARG ARTIFACTORY_API_KEY
-ENV ARTIFACTORY_USERNAME ${ARTIFACTORY_USERNAME}
-ENV ARTIFACTORY_API_KEY ${ARTIFACTORY_API_KEY}
-
-# Setting up the working directory
-WORKDIR /app
-
-# Installing the required python library to run models
-COPY requirements.txt /app/requirements.txt
-RUN pip3 install -r requirements.txt
-EXPOSE 8050
-RUN groupadd appuser && adduser -g appuser appuser && usermod -aG appuser appuser
-RUN chown -R appuser:appuser /app
-USER appuser
-COPY . /app
-ENTRYPOINT ["python3","Sentiment_dash_app.py"]
-```
 ### Building the dashapp
-To build the above, simply put it in a Dockerfile and run the docker build command using the following example as a guide. You need to gain access to artifactory user name and API key.
-- ARTIFACTORY_USERNAME
-- ARTIFACTORY_API_KEY
+
+Make sure you are in the root dictory of the project where the docker file resides before you execute the below command.
 ```
 docker build . \
   --build-arg ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME \
