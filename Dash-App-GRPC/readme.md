@@ -1,6 +1,9 @@
-### Watson NLP Python gRPC Client
-# Build lab
-This directory contains an example NLP web application written in Python for performing Sentiment Analysis and Emotion Classification on user-supplied texts.  The program uses the gRPC API to call a remote NLP runtime where the models are being served.
+# Watson NLP Python gRPC Client
+This directory contains an example front-end web application that performs Sentiment Analysis and Emotion Classification on user-supplied texts.  The program is a client of a model being served by the Watson NLP runtime.  We use a Python gRPC API to get predictions from the remote model.
+
+Below, we demonstrate how to build this application in a container image, and how to run it locally. 
+
+## Build
 
 To build this program, we first generate a Python gRPC client stub from proto files. This requires proto files from a few places:
 - The common-service definition from this repository.
