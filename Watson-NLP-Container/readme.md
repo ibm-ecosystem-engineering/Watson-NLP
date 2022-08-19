@@ -12,7 +12,7 @@ There are two parts of this demonostration. The nlp runtime with preloaded model
 
 ## Developing and running the server:
 ### 1. Building docker image
-Go to the root directory of the project **Watson-NLP-Container** and run the below command. It will create a docker image **watson-nlp-container:v1**
+Go to the directory **Watson-NLP-Container/Runtime**  and run the below command. It will create a docker image **watson-nlp-container:v1**
 ```
 docker build . \                                
   --build-arg MODEL_NAMES="ensemble_classification-wf_en_emotion-stock sentiment_document-cnn-workflow_en_stock" \
