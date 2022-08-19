@@ -17,15 +17,15 @@ The application contains the below files
 - requirements.txt :  The list of Python libraries required to run the application
 - Sentiment_dash_app.py : Python program
 
-### Prerequisite
+### Prerequisites
 
-- Docker installed in your workstation
-- For IBMers need to gain access to artifactory user name and API key to build the docker image.
+- Docker is installed in your workstation
+- Artifactory user name and API key is required to build the Docker image.  Set the following variables in your environment.
 - - ARTIFACTORY_USERNAME
 - - ARTIFACTORY_API_KEY
 
 ### Code snippet calling the models
-Here is a code fragment from *Sentiment_dash_app.py* that demonstrates how models are loaded.
+Here is a code fragment from *Sentiment_dash_app.py* demonstrating how built-in models are loaded and used for scoring.
 ```
 import watson_nlp
 
@@ -43,7 +43,7 @@ def get_emotion(text):
     return emotion_output_python
 ```
 
-### Building the dashapp
+## Building the Application 
 
 Make sure you are in the root dictory of the project where the docker file resides before you execute the below command.
 ```
