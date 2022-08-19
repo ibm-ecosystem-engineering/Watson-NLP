@@ -6,9 +6,9 @@ There are two parts of this demonostration. The nlp runtime with preloaded model
 ## Prerequisites
 - Docker is installed in your workstation
 - Python >= 3.9 installed in your workstation to run the client program
-- Artifactory user name and API key is required to build the Docker image. Set the following variables in your environment.
--- ARTIFACTORY_USERNAME
--- ARTIFACTORY_API_KEY
+- Artifactory user name and API key are required to build the Docker image. Set the following variables in your environment.
+- - ARTIFACTORY_USERNAME
+- - ARTIFACTORY_API_KEY
 
 ## Developing and running the server:
 ### 1. Building docker image
