@@ -1,5 +1,5 @@
 # Watson NLP Runtime in a Container
-We are going to demonstrate how to build a Watson NLP Runtime container with some models. This container can be  deployed anywhere ( docker, k8, openshift)
+We are going to demonstrate how to build a Watson NLP Runtime container with some preloaded model. This container can be  deployed anywhere ( docker, k8, openshift)
 
 There are two parts of this demonostration. The nlp runtime with preloaded model running in a container and then a simple python client is going to acess the gRPC endpoint exposed by the nlp runtime container.
 
