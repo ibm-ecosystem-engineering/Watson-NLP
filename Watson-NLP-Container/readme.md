@@ -28,7 +28,7 @@ The gRPC service will be exposed in localhost 8085
 
 ### 1.2 Running watson nlp container in OpenShift/K8 cluster
 Make sure you have proper access to the cluster and following tools are installed in your workstation
-- kubernetes cli or openshift oc cli
+- kubernetes CLI or OpenShift OC CLI
 
 Assuming that the docker file you craeted in step 1 is accessible in your OpenShift/k8 cluster. Please change the docker image repo in the **Runtime/Deployment/deployment.yaml** file.
 Run the below commands to deploy in the cluster from the project root directory **Watson-NLP-Container**
