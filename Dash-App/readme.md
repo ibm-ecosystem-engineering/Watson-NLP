@@ -43,7 +43,7 @@ def get_emotion(text):
     return emotion_output_python
 ```
 
-## Building the Application 
+## Build the Application 
 
 Make sure you are in the root dictory of the project where the docker file resides before you execute the below command.
 ```
