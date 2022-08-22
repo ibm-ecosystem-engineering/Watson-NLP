@@ -52,7 +52,7 @@ kubectl get svc
 ## 2 Test the Watson NLP Runtime with a Python client
 In order to run this application you need to gain access to Artifactory to install the below client libraries:
 - **watson_nlp**: Data model is going to be used to prepare the request object
-- **watson_nlp_runtime_client:** it is a packaged gRPC stub libary to communicate to the watson nlp runtime
+- **watson_nlp_runtime_client:** it is a packaged gRPC stub library to communicate to the watson nlp runtime
 
 **Install python library**
  ``` 
