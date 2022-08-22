@@ -21,8 +21,8 @@ The application contains the below files
 
 - Docker is installed in your workstation
 - Artifactory user name and API key is required to build the Docker image.  Set the following variables in your environment.
-- - ARTIFACTORY_USERNAME
-- - ARTIFACTORY_API_KEY
+  - ARTIFACTORY_USERNAME
+  - ARTIFACTORY_API_KEY
 
 ### Code snippet calling the models
 Here is a code fragment from *Sentiment_dash_app.py* demonstrating how built-in models are loaded and used for scoring.
