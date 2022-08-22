@@ -11,7 +11,7 @@ In addition, we demonstrate a Python client that accesses the gRPC endpoint that
   - ARTIFACTORY_API_KEY
 
 ## Build and Run the Server
-### 1. Build a Docker image
+### 1. Build server Docker image
 Go to the directory `Watson-NLP-Container/Runtime`  and run the following command. It will create a Docker image `watson-nlp-container:v1`.
 ```
 docker build . \                                
@@ -21,7 +21,7 @@ docker build . \                                
   -t watson-nlp-container:v1
 ```
 ### 1.1 Run the server locally
-Use the following command to start the server on machine.
+Use the following command to start the server on your local machine.
 ```
 docker run -p 8085:8085 watson-nlp-container:v1
 ```
