@@ -54,7 +54,7 @@ navbar_main = dbc.Navbar(
                                     # add an auto margin after this to push later links to end of nav
                                     className="me-auto",
                                 ),
-                                html.Span(dcc.LogoutButton(logout_url='https://w3.ibm.com/w3publisher/ibm-build-lab'), className="ml-auto")
+                                html.Span(dcc.LogoutButton(logout_url='https://w3.ibm.com/w3publisher/ibm-build-labs'), className="ml-auto")
                             ],
                             # make sure nav takes up the full width for auto margin to get applied
                             className="w-100",
