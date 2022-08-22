@@ -10,9 +10,9 @@ In addition, we demonstrate a Python client that accesses the gRPC endpoint that
 - - ARTIFACTORY_USERNAME
 - - ARTIFACTORY_API_KEY
 
-## Developing and running the server:
-### 1. Building docker image
-Go to the directory **Watson-NLP-Container/Runtime**  and run the below command. It will create a docker image **watson-nlp-container:v1**
+## Build and Run the Server
+### 1. Build a Docker image
+Go to the directory **Watson-NLP-Container/Runtime**  and run the following command. It will create a Docker image **watson-nlp-container:v1**.
 ```
 docker build . \                                
   --build-arg MODEL_NAMES="ensemble_classification-wf_en_emotion-stock sentiment_document-cnn-workflow_en_stock" \
@@ -20,42 +20,41 @@ docker build . \                                
   --build-arg ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME \
   -t watson-nlp-container:v1
 ```
-### 1.1 Running watson nlp container in local workstation
+### 1.1 Run the server locally
+To run the server on your local host, run the following command.
 ```
 docker run -p 8085:8085 watson-nlp-container:v1
 ```
-The gRPC service will be exposed in localhost 8085
+The gRPC service will be exposed in localhost on port 8085.
 
-### 1.2 Running watson nlp container in OpenShift/K8 cluster
-Make sure you have proper access to the cluster and following tools are installed in your workstation
-- kubernetes CLI or OpenShift OC CLI
+### 1.2 Run the server in an OpenShift or Kubernetes cluster
+Alternatively, you can run the service on an OpenShift or Kubernetes cluster.  Ensure that you have access to the cluster and that you have either Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed on your local machine.
 
-Assuming that the docker file you craeted in step 1 is accessible in your OpenShift/k8 cluster. Please change the docker image repo in the **Runtime/Deployment/deployment.yaml** file.
+Assuming that the Docker file you created in step 1 is accessible in your OpenShift/k8 cluster. Change the Docker image repo in the **Runtime/Deployment/deployment.yaml** file.
 Run the below commands to deploy in the cluster from the project root directory **Watson-NLP-Container**
-**In OpenShift**
+**Install in a OpenShift cluster**
 ```
 oc apply -f Runtime/deployment/deployment.yaml
 ```
-Check if the pod and service are running
+Check that the pod and service are running.
 ```
 oc get pods
 oc get svc
 ```
-**In k8**
+**Install in a Kubernetes cluster**
 ```
 kubectl apply -f Runtime/deployment/deployment.yaml
 ```
-Check if the pod and service are running
+Check that the pod and service are running.
 ```
 kubectl get pods
 kubectl get svc
 ```
-## 2 Testing the Watson NLP Runtime with a python client
-To run this application you need to gain access to Artifactory to install the below client library
+## 2 Test the Watson NLP Runtime with a Python client
+In order to run this application you need to gain access to Artifactory to install the below client libraries:
 - **watson_nlp**: Data model is going to be used to prepare the request object
 - **watson_nlp_runtime_client:** it is a packaged gRPC stub libary to communicate to the watson nlp runtime
 
-Steps to create the client application
 **Install python library**
  ``` 
 pip install watson_nlp
@@ -68,7 +67,7 @@ pip install watson_nlp_runtime_client
 
 A sample code can be found in [GrpcClient](GrpcClient.py)
 
-As discussed erlier there are two versions of Watson NLP runtime are running
+As discussed earlier there are two versions of Watson NLP Runtime running:
 - In local docker container
 - And in k8/OpenShift cluster
 
