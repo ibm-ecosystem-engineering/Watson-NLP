@@ -1,38 +1,38 @@
 # Deploy an NLP Model to Watson Serving
 
-## Upload a model to a COS bucket
+## Upload a model to the COS bucket
+If you create a Watson Serving instance in TechZone, it comes with an S3 compatible IBM Cloud Object Storage (COS) bucket, where you can store your own models and servce them through the Watson Serving instance. Serveral CLI tools can be used to upload your models to the COS bucket. We'll use the [Minio Client](https://min.io/download#/linux) here as an example.
 
-https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-upload
-
-## Create an HMAC credential for accessing the bucket
-
-https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-uhc-hmac-credentials-main&interface=cli#uhc-hmac-credentials-defined
-
-## Create a JSON file, e.g. mybucket.json
+### Find the HMAC credential for the COS bucket
+You'll need the HMAC credential stored in a Kubernetes `secret` object named `storage-config` to access the bucket. Here's how you can retrieve it.
 ```
-{
-    "type": "s3",
-    "access_key_id": "$ACCESS_KEY_ID",
-    "secret_access_key": "$SECRET_ACCESS_KEY",
-    "endpoint_url": "$ENDPOINT",
-    "region": "$LOCATION",
-    "default_bucket": "$BUCKET"
-}
+oc get secret/storage-config -o json | jq -r '."data"."'$BUCKET'"' | base64 -d
 ```
 Note:
-- Replace $ACCESS_KEY_ID and $SECRET_ACCESS_KEY with the actual values of the HMAC credential created in the previous step.
-- Replace the $ENDPOINT with the appropriate value for your COS bucket.
-- Replace $LOCATION with the location of your COS bucket.
-- Replace $BUCKET with the name of your COS bucket.
+- Replace `$BUCKET` with the name of the COS bucket, which should be the same as the OpenShift project for your Watson Serving instance.
 
-## Update secret/storage-config
+### Configure Minio Client
+To add an entry in your Minio Client configiuration for the COS bucket, run the following command:
 ```
-oc patch secret/storage-config -p '{"data": {"$KEY": "'"$(cat mybucket.json | base64 -w0)"'"}}'
+mc config host add $ALIAS $COS-ENDPOINT $ACCESS-KEY-ID $SECRET-ACCESS-KEY
 ```
 Note:
-- Replace $KEY with any unique name you pick for the credential, such as the bucket name.
+- Replace `$ALIAS` with a short alias for referencing Object Storage in commands.
+- Replace `$COS-ENDPOINT` with the `endpoint_url` of the HMAC credential.
+- Replace `$ACCESS-KEY-ID` with the `access_key_id` of the HMAC credential.
+- Replace `$SECRET-ACCESS-KEY` with the `secret_access_key` of the HMAC credential.
+
+### Upload a model from a local directory to the COS bucket
+```
+mc cp --recursive /path/to/mymodel mycos/mybucket/mymodel
+```
+
+More details regarding Minio and other tools can be found in the following IBM Cloud docs:
+- https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-minio
+- https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-upload
 
 ## Create a predictor
+A Kubernetes custom resource `Predictor` can be created for the uploaded model as follows.
 ```
 oc create -f - <<EOF
 apiVersion: wmlserving.ai.ibm.com/v1
@@ -42,20 +42,19 @@ metadata:
 spec:
   modelType:
     name: watson-nlp
-  path: $PATHTOMODEL
+  path: $PATH-TO-MODEL
   storage:
     s3:
-      secretKey: $KEY
+      secretKey: $BUCKET
       bucket: $BUCKET
 EOF
 ```
 Note:
-- Replace $PREDICTOR with any unique name for the predictor
-- Replace $PATHTOMODEL with the folder path in the bucket where your model is stored.
-- Replace $KEY with the name you picked in previous step.
-- Replace $BUCKET with the name of your COS bucket.
+- Replace `$PREDICTOR` with any unique name for the predictor.
+- Replace `$PATH-TO-MODEL` with the folder path inside the bucket.
+- Replace `$BUCKET` with the name of the COS bucket.
 
-Once the model is successfully loaded, you'll see the status of the model is "Loaded", when checked with the following command:
+Once the model is successfully loaded, you'll see the status of the model is `Loaded`, when checked with the following command:
 ```
 oc get predictor
 ```
