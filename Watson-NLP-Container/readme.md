@@ -66,23 +66,22 @@ pip install watson_nlp_runtime_client
 
 Example code can be found in [GrpcClient](https://github.com/ibm-build-labs/Watson-NLP/blob/main/Watson-NLP-Container/Client/GrpcClient.py).
 
-Above, we describe two possibly deployments of the server:
-- Local Docker container
-- OpenShift/Kubernetes cluster
+Running the client depends on how the server was started.
 
-### 2.1 Run against local Docker container
+### 2.1 Server runs in local Docker container
 Go the Client directory from project Watson-NLP-Container
 ```
 cd Client
 python3 client.py
 ```
-### 2.2 Run against OpenShift/k8 cluster
-First do a port forwarding to access the Watson NLP Runtime
-In openshift
+### 2.2 Server runs in OpenShift/k8 cluster
+First do a port forwarding to access the Watson NLP Runtime.
+
+In Openshift:
 ```
 oc port-forward svc/watson-nlp-container 8085
 ```
-In kubernetes
+In kubernetes:
 ```
 kubectl port-forward svc/watson-nlp-container 8085
 ```
