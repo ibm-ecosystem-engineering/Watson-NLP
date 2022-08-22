@@ -1,12 +1,12 @@
 # Watson NLP Runtime in a Container
-We are going to demonstrate how to build a Watson NLP Runtime container with some preloaded model. This container can be  deployed anywhere ( docker, k8, openshift)
+In this directory, we demonstrate how to serve pre-trained Watson NLP models by building a container image that contains both the Watson NLP Runtime together with the pre-trained models. This container image can be deployed anywhere (Docker, Kubernetes, OpenShift) to serve the model.  We use models for Sentiment Analysis and Emotion Classification for the demonstration.
 
-There are two parts of this demonostration. The nlp runtime with preloaded model running in a container and then a simple python client is going to acess the gRPC endpoint exposed by the nlp runtime container.
+In addition, we demonstrate a Python client that accesses the gRPC endpoint that is exposed by the Watson NLP Runtime in order to perform scoring on the running model.
 
 ## Prerequisites
-- Docker is installed in your workstation
+- Docker is installed on your workstation
 - Python >= 3.9 installed in your workstation to run the client program
-- Artifactory user name and API key are required to build the Docker image. Set the following variables in your environment.
+- An IBM Artifactory user name and API key are required to build the Docker image. Set the following variables in your environment.
 - - ARTIFACTORY_USERNAME
 - - ARTIFACTORY_API_KEY
 
