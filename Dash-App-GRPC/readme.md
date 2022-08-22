@@ -5,7 +5,7 @@ Below, we demonstrate how to build this application in a container image, and ho
 
 ## Build
 
-To build this program, we first generate a Python gRPC client stub from proto files. This requires proto files from a few places:
+To build this program, we first generate a Python gRPC client stub from proto files. We will get these proto files from a few places:
 - The common-service definition from this repository.
 - The Watson NLP interface definitions
 - The Watson Core interface definitions
@@ -23,15 +23,16 @@ python -m pip install grpcio-tools
 ```
 python3 -m grpc_tools.protoc -I ${PROTO_FILE_DIR} --python_out=${OUTPUT_DIR} --grpc_python_out=${OUTPUT_DIR} proto/*
 ```
-### A sample GRPC client code
-- ######  Create a gRPC channel
-- ######  Creat a request object
-- ######  Call the model by passing model id
+### Example gRPC client code
+The example code in this directory does the following.
+- Creates a gRPC channel
+- Create a request object
+- all the model by passing model id
 
 In this sample app three models are being called:
-- ###### sentiment_document-cnn-workflow_en_stock
-- ###### ensemble_classification-wf_en_emotion-stock
-- ###### syntax_izumo_en_stock
+1. `sentiment_document-cnn-workflow_en_stock`
+2. `ensemble_classification-wf_en_emotion-stock`
+3. `syntax_izumo_en_stock`
 ```
 import os
 import grpc
