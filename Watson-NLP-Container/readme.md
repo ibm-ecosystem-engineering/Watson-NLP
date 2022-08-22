@@ -30,8 +30,8 @@ The gRPC service will be exposed locally on port 8085.
 ### 1.2 Run the server in an OpenShift or Kubernetes cluster
 Alternatively, you can run the service on an OpenShift or Kubernetes cluster.  Ensure that you have access to the cluster and that you have either Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed on your local machine.
 
-Assuming that the Docker file you created in step 1 is accessible in your OpenShift/k8 cluster. Change the Docker image repo in the `Runtime/Deployment/deployment.yaml` file.  Run the below commands to deploy in the cluster from the project root directory **Watson-NLP-Container**
-**Install in a OpenShift cluster**
+Assuming that the Docker file you created in step 1 is accessible in your OpenShift/k8 cluster. Change the Docker image repo in the `Runtime/Deployment/deployment.yaml` file.  Run the below commands to deploy in the cluster from the project root directory **Watson-NLP-Container**.
+#### Install in a OpenShift cluster
 ```
 oc apply -f Runtime/deployment/deployment.yaml
 ```
@@ -40,7 +40,7 @@ Check that the pod and service are running.
 oc get pods
 oc get svc
 ```
-**Install in a Kubernetes cluster**
+#### Install in a Kubernetes cluster
 ```
 kubectl apply -f Runtime/deployment/deployment.yaml
 ```
