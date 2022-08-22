@@ -5,10 +5,26 @@
 # divested of its trade secrets, irrespective of what has been    #
 # deposited with the U.S. Copyright Office.                       #
 #*****************************************************************#
+import sys
+from turtle import textinput
 from GrpcClient import GrpcClient
+
+#Getting user input
+try:
+    textInput=sys.argv[1]
+    if(not len(textInput.strip())):
+        print("Input string is required")
+        quit()
+except:
+    print("Input string is required")
+    quit()
+
 client = GrpcClient()
-response = client.call_emotion_model("I am sad")
+
+#Calling the emotion analysis model
+response = client.call_emotion_model(textInput)
 print(response)
 
-sentimentResponse = client.call_sentiment_document_model_workflow("I am sad too")
+# calling stentiment analysis model
+sentimentResponse = client.call_sentiment_document_model_workflow(textInput)
 print(sentimentResponse)
