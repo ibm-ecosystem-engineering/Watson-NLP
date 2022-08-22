@@ -69,10 +69,10 @@ Example code can be found in [GrpcClient](https://github.com/ibm-build-labs/Wats
 Running the client depends on how the server was started.
 
 ### 2.1 Server runs in local Docker container
-Go the Client directory from project Watson-NLP-Container
+Go the Client directory from project Watson-NLP-Container and pass the input text as a parameter to get sentiment and emotion analysis. 
 ```
 cd Client
-python3 client.py
+python3 client.py "Watson NLP is awesome"
 ```
 ### 2.2 Server runs in OpenShift/k8 cluster
 First do a port forwarding to access the Watson NLP Runtime.
@@ -87,5 +87,48 @@ kubectl port-forward svc/watson-nlp-container 8085
 ```
 ```
 cd Client
-python3 client.py
+python3 client.py "Watson NLP is awesome"
+```
+
+#### Output
+```
+classes {
+  class_name: "joy"
+  confidence: 0.9687168002128601
+}
+classes {
+  class_name: "anger"
+  confidence: 0.03973544389009476
+}
+classes {
+  class_name: "fear"
+  confidence: 0.030667975544929504
+}
+classes {
+  class_name: "sadness"
+  confidence: 0.016257189214229584
+}
+classes {
+  class_name: "disgust"
+  confidence: 0.0033179237507283688
+}
+producer_id {
+  name: "Voting based Ensemble"
+  version: "0.0.1"
+}
+
+score: 0.9761080145835876
+label: SENT_POSITIVE
+sentiment_mentions {
+  span {
+    end: 21
+    text: "Watson NLP is awesome"
+  }
+  score: 0.9761080145835876
+  label: SENT_POSITIVE
+}
+producer_id {
+  name: "Document CNN Sentiment"
+  version: "0.0.1"
+}
 ```
