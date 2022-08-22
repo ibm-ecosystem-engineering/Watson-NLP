@@ -11,6 +11,20 @@ oc get secret/storage-config -o json | jq -r '."data"."'$BUCKET'"' | base64 -d
 Note:
 - Replace `$BUCKET` with the name of the COS bucket, which should be the same as the OpenShift project for your Watson Serving instance.
 
+Example:
+```
+$ BUCKET=$(oc get project -o JSON | jq -r '.items[0]."metadata"."name"')
+$ oc get secret/storage-config -o json | jq -r '."data"."'$BUCKET'"' | base64 -d
+{
+    "type": "s3",
+    "access_key_id": "683a3fb50e0a49d5ae2463725b3e83f5",
+    "secret_access_key": "86b13e59da3a28d1b134d11ace6913705043c4289d976e37",
+    "endpoint_url": "https://s3.us-south.cloud-object-storage.appdomain.cloud",
+    "region": "us-south",
+    "default_bucket": "ibmid-6620037hpc-669mq7e2"
+}
+```
+
 ### Configure Minio Client
 To add an entry in your Minio Client configiuration for the COS bucket, run the following command:
 ```
