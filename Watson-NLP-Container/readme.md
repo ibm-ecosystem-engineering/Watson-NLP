@@ -7,8 +7,8 @@ In addition, we demonstrate a Python client that accesses the gRPC endpoint that
 - Docker is installed on your workstation
 - Python >= 3.9 installed in your workstation to run the client program
 - An IBM Artifactory user name and API key are required to build the Docker image. Set the following variables in your environment.
-- - ARTIFACTORY_USERNAME
-- - ARTIFACTORY_API_KEY
+  - ARTIFACTORY_USERNAME
+  - ARTIFACTORY_API_KEY
 
 ## Build and Run the Server
 ### 1. Build a Docker image
