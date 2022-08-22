@@ -12,7 +12,7 @@ In addition, we demonstrate a Python client that accesses the gRPC endpoint that
 
 ## Build and Run the Server
 ### 1. Build a Docker image
-Go to the directory **Watson-NLP-Container/Runtime**  and run the following command. It will create a Docker image **watson-nlp-container:v1**.
+Go to the directory `Watson-NLP-Container/Runtime`  and run the following command. It will create a Docker image `watson-nlp-container:v1`.
 ```
 docker build . \                                
   --build-arg MODEL_NAMES="ensemble_classification-wf_en_emotion-stock sentiment_document-cnn-workflow_en_stock" \
@@ -21,17 +21,16 @@ docker build . \                                
   -t watson-nlp-container:v1
 ```
 ### 1.1 Run the server locally
-To run the server on your local host, run the following command.
+Use the following command to start the server on machine.
 ```
 docker run -p 8085:8085 watson-nlp-container:v1
 ```
-The gRPC service will be exposed in localhost on port 8085.
+The gRPC service will be exposed locally on port 8085.
 
 ### 1.2 Run the server in an OpenShift or Kubernetes cluster
 Alternatively, you can run the service on an OpenShift or Kubernetes cluster.  Ensure that you have access to the cluster and that you have either Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed on your local machine.
 
-Assuming that the Docker file you created in step 1 is accessible in your OpenShift/k8 cluster. Change the Docker image repo in the **Runtime/Deployment/deployment.yaml** file.
-Run the below commands to deploy in the cluster from the project root directory **Watson-NLP-Container**
+Assuming that the Docker file you created in step 1 is accessible in your OpenShift/k8 cluster. Change the Docker image repo in the `Runtime/Deployment/deployment.yaml` file.  Run the below commands to deploy in the cluster from the project root directory **Watson-NLP-Container**
 **Install in a OpenShift cluster**
 ```
 oc apply -f Runtime/deployment/deployment.yaml
@@ -62,16 +61,16 @@ pip install watson_nlp_runtime_client
 ```
 
 - Create a gRPC channel
-- Creat a request object
+- Create a request object
 - Call the model by passing model id
 
-A sample code can be found in [GrpcClient](Client/GrpcClient.py)
+Example code can be found in [GrpcClient](https://github.com/ibm-build-labs/Watson-NLP/blob/main/Watson-NLP-Container/Client/GrpcClient.py).
 
-As discussed earlier there are two versions of Watson NLP Runtime running:
-- In local docker container
-- And in k8/OpenShift cluster
+Above, we describe two possibly deployments of the server:
+- Local Docker container
+- OpenShift/Kubernetes cluster
 
-### 2.1 Run against local docker container
+### 2.1 Run against local Docker container
 Go the Client directory from project Watson-NLP-Container
 ```
 cd Client
