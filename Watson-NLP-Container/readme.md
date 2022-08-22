@@ -65,7 +65,7 @@ pip install watson_nlp_runtime_client
 - Creat a request object
 - Call the model by passing model id
 
-A sample code can be found in [GrpcClient](GrpcClient.py)
+A sample code can be found in [GrpcClient](Client/GrpcClient.py)
 
 As discussed earlier there are two versions of Watson NLP Runtime running:
 - In local docker container
