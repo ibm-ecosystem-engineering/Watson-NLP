@@ -77,11 +77,11 @@ python3 client.py "Watson NLP is awesome"
 ### 2.2 Server runs in OpenShift/k8 cluster
 First do a port forwarding to access the Watson NLP Runtime.
 
-In Openshift:
+#### In Openshift:
 ```
 oc port-forward svc/watson-nlp-container 8085
 ```
-In kubernetes:
+#### In kubernetes:
 ```
 kubectl port-forward svc/watson-nlp-container 8085
 ```
