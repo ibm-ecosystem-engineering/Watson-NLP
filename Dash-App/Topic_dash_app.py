@@ -224,21 +224,21 @@ def topic_modeling_callback(n_clicks, value):
 def select_model(value):
     if value == "CITIBANK, N.A.":
         print("citi")
-        return watson_nlp.load('topic_models/complaint_topic_model_citi')
+        return watson_nlp.load('topic_models/complaint_topic_model_citi/')
     elif value == "JPMORGAN CHASE & CO.":
         print("chase")
-        return watson_nlp.load('topic_models/complaint_topic_model_jpmorgan')
+        return watson_nlp.load('topic_models/complaint_topic_model_jpmorgan/')
     elif value == "BANK OF AMERICA, NATIONAL ASSOCIATION":
         print("boa")
-        return watson_nlp.load('topic_models/complaint_topic_model_bankof')
+        return watson_nlp.load('topic_models/complaint_topic_model_bankof/')
     elif value == "CAPITAL ONE FINANCIAL CORPORATION":
         print("capital")
-        return watson_nlp.load('topic_models/complaint_topic_model_capital')
+        return watson_nlp.load('topic_models/complaint_topic_model_capital/')
     elif value == "WELLS FARGO & COMPANY":
         print("wells")
-        return watson_nlp.load('topic_models/complaint_topic_model_weels')
+        return watson_nlp.load('topic_models/complaint_topic_model_weels/')
     else:
-        return watson_nlp.load('topic_models/complaint_topic_model_citi')
+        return watson_nlp.load('topic_models/complaint_topic_model_citi/')
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8050, debug=True)
