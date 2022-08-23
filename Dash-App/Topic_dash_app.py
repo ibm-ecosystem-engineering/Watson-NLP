@@ -22,6 +22,8 @@ import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 import watson_nlp
 
+plt.switch_backend('Agg') 
+
 external_stylesheets = ['assets/bootstrap.min.css']
 app = dash.Dash(external_stylesheets=external_stylesheets)
 app.title = 'Watson NLP - Topic Modeling'
@@ -149,6 +151,9 @@ def plot_wordcloud_top10_topics(keywords_list,topic_names):
     plt.margins(x=0, y=0)
     plt.tight_layout()
     plt.show()
+    print('plotting cloud')
+    #return cloud
+
 '''
 app.layout = html.Div(children=[
                     navbar_main,
@@ -223,22 +228,17 @@ def topic_modeling_callback(n_clicks, value):
 
 def select_model(value):
     if value == "CITIBANK, N.A.":
-        print("citi")
-        return watson_nlp.load('topic_models/complaint_topic_model_citi/')
+        return watson_nlp.load('topic-models/complaint_topic_model_citi/')
     elif value == "JPMORGAN CHASE & CO.":
-        print("chase")
-        return watson_nlp.load('topic_models/complaint_topic_model_jpmorgan/')
+        return watson_nlp.load('topic-models/complaint_topic_model_jpmorgan/')
     elif value == "BANK OF AMERICA, NATIONAL ASSOCIATION":
-        print("boa")
-        return watson_nlp.load('topic_models/complaint_topic_model_bankof/')
+        return watson_nlp.load('topic-models/complaint_topic_model_bankof/')
     elif value == "CAPITAL ONE FINANCIAL CORPORATION":
-        print("capital")
-        return watson_nlp.load('topic_models/complaint_topic_model_capital/')
+        return watson_nlp.load('topic-models/complaint_topic_model_capital/')
     elif value == "WELLS FARGO & COMPANY":
-        print("wells")
-        return watson_nlp.load('topic_models/complaint_topic_model_weels/')
+        return watson_nlp.load('topic-models/complaint_topic_model_weels/')
     else:
-        return watson_nlp.load('topic_models/complaint_topic_model_citi/')
+        return watson_nlp.load('topic-models/complaint_topic_model_weels/')
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8050, debug=True)
