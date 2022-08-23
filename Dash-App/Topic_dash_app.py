@@ -69,15 +69,7 @@ navbar_main = dbc.Navbar(
     dark=True,
     className = "ml-auto"
 )
-'''
-topic_modeling_input =  dbc.InputGroup(
-            [
-                dbc.InputGroupText("Enter Text for Topic Modeling"),
-                dbc.Textarea(id="topic-input", placeholder="Text for Topic Modeling"),
-            ],
-            className="mb-3",
-        )
-'''
+
 topic_modeling_input = dbc.DropdownMenu(
             [
                 dbc.DropdownMenuItem(
@@ -95,15 +87,16 @@ topic_modeling_input = dbc.DropdownMenu(
                 dbc.DropdownMenuItem(
                     "WELLS FARGO & COMPANY", id="wellsfargo", n_clicks=0
                 ),
-                dbc.Textarea(id="topic-input", placeholder="Topic modeling input"),
             ],
-            className="me-1",
+            label='Select a Company',
+            id='topic-dropdown',
+            className="me-2",
         )
 
 topic_button = html.Div(
     [
         dbc.Button(
-            "Get Topics", id="topics-button", className="me-1", n_clicks=0
+            "Get Topics", id="topics-button", className="me-2", n_clicks=0
         ),
     ]
 )
@@ -111,7 +104,7 @@ topic_button = html.Div(
 keywords_button = html.Div(
     [
         dbc.Button(
-            "Get Keywords", id="keywords-button", className="me-1", n_clicks=0
+            "Get Keywords", id="keywords-button", className="me-2", n_clicks=0
         ),
     ]
 )
@@ -163,9 +156,8 @@ app.layout = html.Div(children=[
                     [
                     dbc.Col(
                         children=[
-                        html.Div(topic_modeling_input),
-                        html.Div(topic_button),
-                        html.Div(id='container-button-sentiment'),
+                        html.Div([topic_modeling_input, topic_button, keywords_button]),
+                        html.Div(id='container-button-topic'),
                         html.Div(topic_output_figure),
                         html.Div(keywords_output_figure),
                         html.Div(phrases_output_figure),
