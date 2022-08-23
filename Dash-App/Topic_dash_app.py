@@ -69,7 +69,7 @@ navbar_main = dbc.Navbar(
     dark=True,
     className = "ml-auto"
 )
-
+'''
 topic_modeling_input = dbc.DropdownMenu(
             [
                 dbc.DropdownMenuItem(
@@ -89,10 +89,10 @@ topic_modeling_input = dbc.DropdownMenu(
                 ),
             ],
             label='Select a Company',
-            id='topic-dropdown',
+            id='topics-input',
             className="me-2",
         )
-
+'''
 topic_button = html.Div(
     [
         dbc.Button(
@@ -113,7 +113,7 @@ topic_output_figure = dcc.Graph(id='topic-output-figure')
 keywords_output_figure = dcc.Graph(id='keywords-output-figure')
 phrases_output_figure = dcc.Graph(id='phrases-output-figure')
 
-#  Extracting all Topic names , Keywords , Phrases & Sentences from the Topic Model
+# Extracting all Topic names , Keywords , Phrases & Sentences from the Topic Model
 def extract_topics_information(topic_model_output):
     topic_dict=[]
     for topic in topic_model_output['clusters']:
@@ -149,7 +149,7 @@ def plot_wordcloud_top10_topics(keywords_list,topic_names):
     plt.margins(x=0, y=0)
     plt.tight_layout()
     plt.show()
-
+'''
 app.layout = html.Div(children=[
                     navbar_main,
                 dbc.Row(
@@ -169,14 +169,36 @@ app.layout = html.Div(children=[
                     # className="w-0",
                 ),
 ])
+'''
+app.layout = html.Div(children=[
+                    navbar_main,
+                dbc.Row(
+                    [
+                    dbc.Col(
+                        children=[
+                        dcc.Dropdown(["CITIBANK, N.A.", "JPMORGAN CHASE & CO.", "BANK OF AMERICA, NATIONAL ASSOCIATION", "CAPITAL ONE FINANCIAL CORPORATION", "WELLS FARGO & COMPANY"], "CITIBANK, N.A.", id='bank-dropdown'),
+                        #html.Div(topic_modeling_input),
+                        html.Div(topic_button),
+                        # html.Div(id='container-button-topic'),
+                        html.Div(topic_output_figure),
+                        html.Div(keywords_output_figure),
+                        html.Div(phrases_output_figure),
+                        ],
+                        width=6
+                    ),
+                    ],
+                    # align="center",
+                    # className="w-0",
+                ),
+])
 
 @app.callback(
-    Output('container-button-topic', 'children'),
+    #Output('container-button-topic', 'children'),
     Output('topic-output-figure', 'figure'),
     Output('keywords-output-figure', 'figure'),
     Output('phrases-output-figure', 'figure'),
-    Input('topic-button', 'n_clicks'),
-    State('topic-input', 'value'),
+    Input('topics-button', 'n_clicks'),
+    Input('bank-dropdown', 'value'),
 )
 def topic_modeling_callback(n_clicks, value):
     company_topic_model = select_model(value)
@@ -201,17 +223,22 @@ def topic_modeling_callback(n_clicks, value):
 
 def select_model(value):
     if value == "CITIBANK, N.A.":
+        print("citi")
         return watson_nlp.load('topic_models/complaint_topic_model_citi')
     elif value == "JPMORGAN CHASE & CO.":
+        print("chase")
         return watson_nlp.load('topic_models/complaint_topic_model_jpmorgan')
     elif value == "BANK OF AMERICA, NATIONAL ASSOCIATION":
+        print("boa")
         return watson_nlp.load('topic_models/complaint_topic_model_bankof')
     elif value == "CAPITAL ONE FINANCIAL CORPORATION":
+        print("capital")
         return watson_nlp.load('topic_models/complaint_topic_model_capital')
     elif value == "WELLS FARGO & COMPANY":
+        print("wells")
         return watson_nlp.load('topic_models/complaint_topic_model_weels')
     else:
-        return 0
+        return watson_nlp.load('topic_models/complaint_topic_model_citi')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8050)
+    app.run(host="0.0.0.0", port=8050, debug=True)
