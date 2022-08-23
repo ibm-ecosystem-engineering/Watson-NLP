@@ -20,6 +20,7 @@ from dash.dependencies import Input, Output
 from wordcloud import WordCloud
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
+import watson_nlp
 
 external_stylesheets = ['assets/bootstrap.min.css']
 app = dash.Dash(external_stylesheets=external_stylesheets)
@@ -96,13 +97,13 @@ topic_modeling_input = dbc.DropdownMenu(
                 ),
                 dbc.Textarea(id="topic-input", placeholder="Topic modeling input"),
             ],
-            className="mb-3",
+            className="me-1",
         )
 
 topic_button = html.Div(
     [
         dbc.Button(
-            "Get Topics", id="topics-button", className="me-2", n_clicks=0
+            "Get Topics", id="topics-button", className="me-1", n_clicks=0
         ),
     ]
 )
@@ -110,7 +111,7 @@ topic_button = html.Div(
 keywords_button = html.Div(
     [
         dbc.Button(
-            "Get Keywords", id="keywords-button", className="me-2", n_clicks=0
+            "Get Keywords", id="keywords-button", className="me-1", n_clicks=0
         ),
     ]
 )
@@ -186,9 +187,11 @@ app.layout = html.Div(children=[
     State('topic-input', 'value'),
 )
 def topic_modeling_callback(n_clicks, value):
+    company_topic_model = select_model(value)
+
     # Convert topic_dict into data frame to see which are the most imprtnat topics with Keywords & Phrases & SENTENSES (SORT BY Percentage)
     # after load the model need to be pass here as a JSON summary
-    topic_df = pd.DataFrame(extract_topics_information(topic_models/complaint_topic_model_citi.model.to_json_summary()))
+    topic_df = pd.DataFrame(extract_topics_information(company_topic_model.model.to_json_summary()))
     topic_df=topic_df.sort_values("Percentage",ascending=False)
 
     # Plot for topics
@@ -203,6 +206,20 @@ def topic_modeling_callback(n_clicks, value):
     fig_keywords = plot_wordcloud_top10_topics(keywords_list,list(topic_names_val))
     fig_phrases = plot_wordcloud_top10_topics(phrases_list,list(topic_names_val))
     return fig_topic, fig_keywords, fig_phrases
+
+def select_model(value):
+    if value == "CITIBANK, N.A.":
+        return watson_nlp.load('topic_models/complaint_topic_model_citi')
+    elif value == "JPMORGAN CHASE & CO.":
+        return watson_nlp.load('topic_models/complaint_topic_model_jpmorgan')
+    elif value == "BANK OF AMERICA, NATIONAL ASSOCIATION":
+        return watson_nlp.load('topic_models/complaint_topic_model_bankof')
+    elif value == "CAPITAL ONE FINANCIAL CORPORATION":
+        return watson_nlp.load('topic_models/complaint_topic_model_capital')
+    elif value == "WELLS FARGO & COMPANY":
+        return watson_nlp.load('topic_models/complaint_topic_model_weels')
+    else:
+        return 0
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8050)
