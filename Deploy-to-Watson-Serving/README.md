@@ -46,29 +46,33 @@ More details regarding Minio and other tools can be found in the following IBM C
 - https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-upload
 
 ## Create a predictor
-A Kubernetes custom resource `Predictor` can be created for the uploaded model as follows.
+A Kubernetes custom resource `InferenceService` with a `predictor` can be created for the uploaded model as follows.
 ```
 oc create -f - <<EOF
-apiVersion: wmlserving.ai.ibm.com/v1
-kind: Predictor
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
 metadata:
-  name: $PREDICTOR
+  name: $NAME
+  annotations:
+    serving.kserve.io/deploymentMode: ModelMesh
 spec:
-  modelType:
-    name: watson-nlp
-  path: $PATH-TO-MODEL
-  storage:
-    s3:
-      secretKey: $BUCKET
-      bucket: $BUCKET
+  predictor:
+    model:
+      modelFormat:
+        name: watson-nlp
+      storage:
+        path: $PATH-TO-MODEL
+        key: $BUCKET
+        parameters:
+          bucket: $BUCKET
 EOF
 ```
 Note:
-- Replace `$PREDICTOR` with any unique name for the predictor.
+- Replace `$NAME` with any valid unique name.
 - Replace `$PATH-TO-MODEL` with the folder path inside the bucket.
 - Replace `$BUCKET` with the name of the COS bucket.
 
-Once the model is successfully loaded, you'll see the status of the model is `Loaded`, when checked with the following command:
+Once the model is successfully loaded, you'll see the `READY` status is `True`, when checked with the following command:
 ```
-oc get predictor
+oc get inferenceservice
 ```
