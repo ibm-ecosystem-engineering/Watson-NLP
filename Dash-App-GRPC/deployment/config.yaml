@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  EMOTION_CLASSIFICATION_STOCK_MODEL: ensemble-classification-wf-en-emotion-stock-predictor
+  GRPC_SERVER_URL: wml-serving:8033
+  SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL: sentiment-document-cnn-workflow-en-stock-predictor
+  SYNTAX_IZUMO_EN_STOCK_MODEL: syntax-izumo-en-stock-predictor
+kind: ConfigMap
+metadata:
+  name: dahsapp-config
