@@ -12,6 +12,9 @@ import common_service_pb2_grpc as CommonServiceStub
 import common_service_pb2 as CommonService
 
 class GrpcClient:
+
+    NLP_MODEL_SERVICE_TYPE=os.getenv("NLP_MODEL_SERVICE_TYPE", default="vmodel")
+
     # default constructor
     def __init__(self):
         GRPC_SERVER_URL = os.getenv("GRPC_SERVER_URL", default="127.0.0.1:8033")
@@ -27,7 +30,7 @@ class GrpcClient:
         )   
         SYNTAX_IZUMO_EN_STOCK_MODEL = os.getenv("SYNTAX_IZUMO_EN_STOCK_MODEL", default="syntax-izumo-en-stock-predictor")
         print("###### Calling remote GRPC model = ", SYNTAX_IZUMO_EN_STOCK_MODEL)
-        response = self.stub.SyntaxIzumoPredict(request, metadata=[("mm-vmodel-id", SYNTAX_IZUMO_EN_STOCK_MODEL)])
+        response = self.stub.SyntaxIzumoPredict(request, metadata=[(self.NLP_MODEL_SERVICE_TYPE, SYNTAX_IZUMO_EN_STOCK_MODEL)])
         return response
 
     # a method calling sentiment_document-cnn-workflow_en_stock
@@ -39,7 +42,7 @@ class GrpcClient:
         )
         SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL = os.getenv("SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL", default="sentiment-document-cnn-workflow-en-stock-predictor")
         print("###### Calling remote GRPC model = ", SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL)
-        response = self.stub.SentimentDocumentWorkflowPredict(request,metadata=[("mm-vmodel-id", SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL)] )
+        response = self.stub.SentimentDocumentWorkflowPredict(request,metadata=[(self.NLP_MODEL_SERVICE_TYPE, SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL)] )
         return response
 
     # emotion analysis ensemble_classification-wf_en_emotion-stock
@@ -49,5 +52,5 @@ class GrpcClient:
         )
         EMOTION_CLASSIFICATION_STOCK_MODEL = os.getenv("EMOTION_CLASSIFICATION_STOCK_MODEL", default="ensemble-classification-wf-en-emotion-stock-predictor")
         print("###### Calling remote GRPC model = ", EMOTION_CLASSIFICATION_STOCK_MODEL)
-        response = self.stub.EmotionDocumentWorkflowPredict(request,metadata=[("mm-vmodel-id", EMOTION_CLASSIFICATION_STOCK_MODEL)] )
+        response = self.stub.EmotionDocumentWorkflowPredict(request,metadata=[(self.NLP_MODEL_SERVICE_TYPE, EMOTION_CLASSIFICATION_STOCK_MODEL)] )
         return response
