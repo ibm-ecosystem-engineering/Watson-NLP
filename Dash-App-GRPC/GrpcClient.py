@@ -13,11 +13,11 @@ import common_service_pb2 as CommonService
 
 class GrpcClient:
 
-    NLP_MODEL_SERVICE_TYPE=os.getenv("NLP_MODEL_SERVICE_TYPE", default="mm-vmodel-id")
+    NLP_MODEL_SERVICE_TYPE=os.getenv("NLP_MODEL_SERVICE_TYPE", default="mm-model-id")
 
     # default constructor
     def __init__(self):
-        GRPC_SERVER_URL = os.getenv("GRPC_SERVER_URL", default="127.0.0.1:8033")
+        GRPC_SERVER_URL = os.getenv("GRPC_SERVER_URL", default="localhost:8085")
         print("###### Calling GRPC endpoint = ", GRPC_SERVER_URL)
         channel = grpc.insecure_channel(GRPC_SERVER_URL)
         self.stub = CommonServiceStub.CommonServiceStub(channel)
@@ -28,7 +28,7 @@ class GrpcClient:
             raw_document=syntax_types_pb2.RawDocument(text=inputText),
             parsers=syntax_types_pb2.SyntaxParserSpec(parsers=[syntax_types_pb2.SYNTAX_LEMMA])
         )   
-        SYNTAX_IZUMO_EN_STOCK_MODEL = os.getenv("SYNTAX_IZUMO_EN_STOCK_MODEL", default="syntax-izumo-en-stock-predictor")
+        SYNTAX_IZUMO_EN_STOCK_MODEL = os.getenv("SYNTAX_IZUMO_EN_STOCK_MODEL", default="syntax-izumo-en-stock")
         print("###### Calling remote GRPC model = ", SYNTAX_IZUMO_EN_STOCK_MODEL)
         response = self.stub.SyntaxIzumoPredict(request, metadata=[(self.NLP_MODEL_SERVICE_TYPE, SYNTAX_IZUMO_EN_STOCK_MODEL)])
         return response
@@ -40,7 +40,7 @@ class GrpcClient:
             sentence_sentiment=True,
             show_neutral_scores=True
         )
-        SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL = os.getenv("SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL", default="sentiment-document-cnn-workflow-en-stock-predictor")
+        SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL = os.getenv("SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL", default="sentiment_document-cnn-workflow_en_stock")
         print("###### Calling remote GRPC model = ", SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL)
         response = self.stub.SentimentDocumentWorkflowPredict(request,metadata=[(self.NLP_MODEL_SERVICE_TYPE, SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL)] )
         return response
@@ -50,7 +50,7 @@ class GrpcClient:
         request = CommonService.EmotionDocumentWorkflowRequest(
             raw_document=syntax_types_pb2.RawDocument(text=inputText)
         )
-        EMOTION_CLASSIFICATION_STOCK_MODEL = os.getenv("EMOTION_CLASSIFICATION_STOCK_MODEL", default="ensemble-classification-wf-en-emotion-stock-predictor")
+        EMOTION_CLASSIFICATION_STOCK_MODEL = os.getenv("EMOTION_CLASSIFICATION_STOCK_MODEL", default="ensemble_classification-wf_en_emotion-stock")
         print("###### Calling remote GRPC model = ", EMOTION_CLASSIFICATION_STOCK_MODEL)
         response = self.stub.EmotionDocumentWorkflowPredict(request,metadata=[(self.NLP_MODEL_SERVICE_TYPE, EMOTION_CLASSIFICATION_STOCK_MODEL)] )
         return response
