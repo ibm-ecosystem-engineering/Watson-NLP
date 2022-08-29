@@ -13,7 +13,7 @@ import common_service_pb2 as CommonService
 
 class GrpcClient:
 
-    NLP_MODEL_SERVICE_TYPE=os.getenv("NLP_MODEL_SERVICE_TYPE", default="vmodel")
+    NLP_MODEL_SERVICE_TYPE=os.getenv("NLP_MODEL_SERVICE_TYPE", default="mm-vmodel-id")
 
     # default constructor
     def __init__(self):
