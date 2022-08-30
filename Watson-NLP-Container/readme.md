@@ -85,6 +85,9 @@ oc port-forward svc/watson-nlp-container 8085
 ```
 kubectl port-forward svc/watson-nlp-container 8085
 ```
+
+#### 3 Running Python Client. 
+
 ```
 cd Client
 python3 client.py "Watson NLP is awesome"
