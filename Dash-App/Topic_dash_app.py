@@ -21,6 +21,8 @@ from wordcloud import WordCloud
 import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 import watson_nlp
+import io
+import base64
 
 plt.switch_backend('Agg') 
 
@@ -75,19 +77,19 @@ navbar_main = dbc.Navbar(
 topic_modeling_input = dbc.DropdownMenu(
             [
                 dbc.DropdownMenuItem(
-                    "CITIBANK, N.A.", id="citibank", n_clicks=0
+                    "Navient Solutions, LLC.", id="navient", n_clicks=0
                 ),
                 dbc.DropdownMenuItem(
-                    "JPMORGAN CHASE & CO.", id="jpmorgan", n_clicks=0
+                    "Synchrony Finanical", id="synchrony", n_clicks=0
                 ),
                 dbc.DropdownMenuItem(
-                    "BANK OF AMERICA, NATIONAL ASSOCIATION", id="boa", n_clicks=0
+                    "Paypal Holdings, Inc ", id="paypal", n_clicks=0
                 ),
                 dbc.DropdownMenuItem(
-                    "CAPITAL ONE FINANCIAL CORPORATION", id="capitalone", n_clicks=0
+                    "Discover Bank", id="discover", n_clicks=0
                 ),
                 dbc.DropdownMenuItem(
-                    "WELLS FARGO & COMPANY", id="wellsfargo", n_clicks=0
+                    "Ocwen Financial Corporation ", id="ocwen", n_clicks=0
                 ),
             ],
             label='Select a Company',
@@ -98,7 +100,7 @@ topic_modeling_input = dbc.DropdownMenu(
 topic_button = html.Div(
     [
         dbc.Button(
-            "Get Topics", id="topics-button", className="me-2", n_clicks=0
+            "Get Topics by company", id="topics-button", className="me-2", n_clicks=0
         ),
     ]
 )
@@ -112,8 +114,8 @@ keywords_button = html.Div(
 )
 
 topic_output_figure = dcc.Graph(id='topic-output-figure')
-keywords_output_figure = dcc.Graph(id='keywords-output-figure')
-phrases_output_figure = dcc.Graph(id='phrases-output-figure')
+keywords_output_figure = html.Img(id='keywords-output-figure')
+phrases_output_figure = html.Img(id='phrases-output-figure')
 
 # Extracting all Topic names , Keywords , Phrases & Sentences from the Topic Model
 def extract_topics_information(topic_model_output):
@@ -137,22 +139,27 @@ def create_keywords_dict(keywords):
 
 def plot_wordcloud_top10_topics(keywords_list,topic_names):
     cols = [color for name, color in mcolors.TABLEAU_COLORS.items()]  # more colors: 'mcolors.XKCD_COLORS'
-    cloud = WordCloud(background_color='white',width=2500,height=1800,max_words=10,colormap='tab10',
+    cloud = WordCloud(background_color='white',width=150,height=100,max_words=10,colormap='tab10',
                   color_func=lambda *args, **kwargs: cols[i],
                   prefer_horizontal=1.0)
     fig, axes = plt.subplots(1,5, figsize=(25,10), sharex=True, sharey=True)
     for i, ax in enumerate(axes.flatten()):
+        ax.set_title(topic_names[i])
         fig.add_subplot(ax)
         topic_words = keywords_list[i]
-        cloud.generate_from_frequencies(topic_words, max_font_size=300)
-        plt.gca().imshow(cloud)
-        plt.gca().set_title(topic_names[i], fontdict=dict(size=16))
+        cloud.generate_from_frequencies(topic_words, max_font_size=50)
+        buf = io.BytesIO() # in-memory files
+        plt.imshow(cloud,interpolation='bilinear')
+        #plt.set_title(topic_names[i], fontdict=dict(size=16))
+        #fig.update_layout(title_text=topic_names[i], title_x=0.5)
     plt.subplots_adjust(wspace=0, hspace=0)
     plt.margins(x=0, y=0)
     plt.tight_layout()
-    plt.show()
     print('plotting cloud')
-    #return cloud
+    plt.savefig(buf, format = "png", dpi=72, bbox_inches = 'tight', pad_inches = 0) # save to the above file object
+    data = base64.b64encode(buf.getbuffer()).decode("utf8") # encode to html elements
+    plt.close()
+    return data
 
 '''
 app.layout = html.Div(children=[
@@ -181,7 +188,7 @@ app.layout = html.Div(children=[
                     [
                     dbc.Col(
                         children=[
-                        dcc.Dropdown(["CITIBANK, N.A.", "JPMORGAN CHASE & CO.", "BANK OF AMERICA, NATIONAL ASSOCIATION", "CAPITAL ONE FINANCIAL CORPORATION", "WELLS FARGO & COMPANY"], "CITIBANK, N.A.", id='bank-dropdown'),
+                        dcc.Dropdown(["Discover Bank", "Navient Solutions, LLC.", "Synchrony Financial", "Paypal Holdings, Inc ", "Ocwen Financial Corporation"], "Discover Bank", id='bank-dropdown',style={'color':'#00361c'}),
                         #html.Div(topic_modeling_input),
                         html.Div(topic_button),
                         # html.Div(id='container-button-topic'),
@@ -200,8 +207,8 @@ app.layout = html.Div(children=[
 @app.callback(
     #Output('container-button-topic', 'children'),
     Output('topic-output-figure', 'figure'),
-    Output('keywords-output-figure', 'figure'),
-    Output('phrases-output-figure', 'figure'),
+    Output('keywords-output-figure', 'src'),
+    Output('phrases-output-figure', 'src'),
     Input('topics-button', 'n_clicks'),
     Input('bank-dropdown', 'value'),
 )
@@ -214,7 +221,7 @@ def topic_modeling_callback(n_clicks, value):
     topic_df=topic_df.sort_values("Percentage",ascending=False)
 
     # Plot for topics
-    fig_topic = px.bar(topic_df, x="Topic Name", y=["Percentage"], title="Number of Documents by Topic Weightage")
+    fig_topic = px.bar(topic_df, x="Topic Name", y=["Percentage"], title="Number of Documents by Topic Weightage",width =1800)
     
     # Plot for keywords
     keywords = topic_df['Keywords'].head(5)
@@ -224,21 +231,24 @@ def topic_modeling_callback(n_clicks, value):
     phrases_list =create_keywords_dict(phrases)
     fig_keywords = plot_wordcloud_top10_topics(keywords_list,list(topic_names_val))
     fig_phrases = plot_wordcloud_top10_topics(phrases_list,list(topic_names_val))
-    return fig_topic, fig_keywords, fig_phrases
+   
+    return fig_topic,  "data:image/png;base64,{}".format(fig_keywords), "data:image/png;base64,{}".format(fig_phrases)
+
+
 
 def select_model(value):
-    if value == "CITIBANK, N.A.":
-        return watson_nlp.load('topic-models/complaint_topic_model_citi/')
-    elif value == "JPMORGAN CHASE & CO.":
-        return watson_nlp.load('topic-models/complaint_topic_model_jpmorgan/')
-    elif value == "BANK OF AMERICA, NATIONAL ASSOCIATION":
-        return watson_nlp.load('topic-models/complaint_topic_model_bankof/')
-    elif value == "CAPITAL ONE FINANCIAL CORPORATION":
-        return watson_nlp.load('topic-models/complaint_topic_model_capital/')
-    elif value == "WELLS FARGO & COMPANY":
-        return watson_nlp.load('topic-models/complaint_topic_model_weels/')
+    if value == "Discover Bank":
+        return watson_nlp.load('topic-models/complaint_topic_model_discover/')
+    elif value == "Navient Solutions, LLC.":
+        return watson_nlp.load('topic-models/complaint_topic_model_navient/')
+    elif value == "Synchrony Financial":
+        return watson_nlp.load('topic-models/complaint_topic_model_synchrony/')
+    elif value == "Paypal Holdings, Inc":
+        return watson_nlp.load('topic-models/complaint_topic_model_paypal/')
+    elif value == "Ocwen Financial Corporation":
+        return watson_nlp.load('topic-models/complaint_topic_model_ocwen/')
     else:
-        return watson_nlp.load('topic-models/complaint_topic_model_weels/')
+        return watson_nlp.load('topic-models/complaint_topic_model_discover/')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8050, debug=True)
+    app.run(host="0.0.0.0", port=8051, debug=True)
