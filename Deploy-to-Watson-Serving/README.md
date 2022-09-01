@@ -1,7 +1,7 @@
 # Deploy an NLP Model to Watson Serving
 
 ## Upload a model to the COS bucket
-If you create a Watson Serving instance in TechZone, it comes with an S3 compatible IBM Cloud Object Storage (COS) bucket, where you can store your own models and servce them through the Watson Serving instance. Serveral CLI tools can be used to upload your models to the COS bucket. We'll use the [Minio Client](https://min.io/download#/linux) here as an example.
+If you create a Watson Serving instance in TechZone, it comes with an S3 compatible IBM Cloud Object Storage (COS) bucket, where you can store your own models and service them through the Watson Serving instance. Several CLI tools can be used to upload your models to the COS bucket. We'll use the [Minio Client](https://min.io/download#/linux) here as an example.
 
 ### Find the HMAC credential for the COS bucket
 You'll need the HMAC credential stored in a Kubernetes `secret` object named `storage-config` to access the bucket. Here's how you can retrieve it.
@@ -26,7 +26,7 @@ $ oc get secret/storage-config -o json | jq -r '."data"."'$BUCKET'"' | base64 -d
 ```
 
 ### Configure Minio Client
-To add an entry in your Minio Client configiuration for the COS bucket, run the following command:
+To add an entry in your Minio Client configuration for the COS bucket, run the following command:
 ```
 mc config host add $ALIAS $COS-ENDPOINT $ACCESS-KEY-ID $SECRET-ACCESS-KEY
 ```
