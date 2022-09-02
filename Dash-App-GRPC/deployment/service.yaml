@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: dash-app
+  name: dash-app-grpc
 spec:
   type: ClusterIP
   selector:
-    app: dash-app
+    app: dash-app-grpc
   ports:
   - port: 8050
     protocol: TCP

@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dash-app
+  name: dash-app-grpc
 spec:
   selector:
     matchLabels:
-      app: dash-app
+      app: dash-app-grpc
   replicas: 1
   template:
     metadata:
       labels:
-        app: dash-app
+        app: dash-app-grpc
     spec:
       containers:
-      - name: dash-app
-        image: image-registry.openshift-image-registry.svc:5000/openshift/dash-app-grpc:latest
+      - name: dash-app-grpc
+        image: image-registry.openshift-image-registry.svc:5000/openshift/dash-app-grpc:2022083111
         env:
           - name: EMOTION_CLASSIFICATION_STOCK_MODEL
             valueFrom:
@@ -35,6 +35,11 @@ spec:
             valueFrom:
               configMapKeyRef:
                 key: SYNTAX_IZUMO_EN_STOCK_MODEL
+                name: dahsapp-config
+          - name: NLP_MODEL_SERVICE_TYPE
+            valueFrom:
+              configMapKeyRef:
+                key: NLP_MODEL_SERVICE_TYPE
                 name: dahsapp-config
         ports:
         - containerPort: 8050

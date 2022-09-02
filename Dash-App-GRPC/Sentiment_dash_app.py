@@ -36,15 +36,14 @@ navbar_main = dbc.Navbar(
             html.A(
                 dbc.Row(
                     [
-                    dbc.Col(html.Img(src=app.get_asset_url('ibm_logo.png'), height="30px")),
-                    dbc.Col(dbc.NavbarBrand("IBM Build Labs", className="me-auto")),
+                    dbc.Col(dbc.NavbarBrand("Build Labs", className="me-auto")),
                     ],
                     align="center",
                     className="w-0",
                 ),
                 style={"textDecoration": "bold", "margin-right": "33%"},
             ),
-            dbc.Row(html.H2("Watson-Core NLP"),
+            dbc.Row(html.H2("Watson NLP"),
             className="me-auto",
             justify='center'),
             dbc.Row(
@@ -56,7 +55,6 @@ navbar_main = dbc.Navbar(
                                     # add an auto margin after this to push later links to end of nav
                                     className="me-auto",
                                 ),
-                                dbc.NavItem(dbc.NavLink("Report an Issue", href="https://github.ibm.com/hcbt/Watson-NLP/issues/new", target="_blank")),
                                 html.Span(dcc.LogoutButton(logout_url='https://w3.ibm.com/w3publisher/ibm-build-labs'), className="ml-auto")
                             ],
                             # make sure nav takes up the full width for auto margin to get applied

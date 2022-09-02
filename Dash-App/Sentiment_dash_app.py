@@ -34,7 +34,6 @@ navbar_main = dbc.Navbar(
             html.A(
                 dbc.Row(
                     [
-                    dbc.Col(html.Img(src=app.get_asset_url('ibm_logo.png'), height="40px")),
                     dbc.Col(dbc.NavbarBrand("Build Lab", className="me-auto")),
                     ],
                     align="center",
