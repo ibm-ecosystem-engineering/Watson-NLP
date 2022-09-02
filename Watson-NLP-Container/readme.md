@@ -6,20 +6,37 @@ In addition, we demonstrate a Python client that accesses the gRPC endpoint that
 ## Prerequisites
 - Docker is installed on your workstation
 - Python >= 3.9 installed in your workstation to run the client program
-- An [IBM Artifactory](https://na.artifactory.swg-devops.com/ui/admin/artifactory/user_profile) user name and API key are required to build the Docker image. Set the following variables in your environment.
-  - ARTIFACTORY_USERNAME
+- An [IBM Artifactory](https://na.artifactory.swg-devops.com/ui/admin/artifactory/user_profile) user name and API key are required to build the Docker image. Get an Artifactory Api key from [here](https://taas.w3ibm.mybluemix.net/guides/create-apikey-in-artifactory.md) and set the following variables in your environment.
+  - ARTIFACTORY_USERNAME 
   - ARTIFACTORY_API_KEY
-
+```
+export ARTIFACTORY_USERNAME=<USER_NAME>
+export ARTIFACTORY_API_KEY=<API_KEY>
+```
 ## Build and Run the Server
+
+Clone the git repo  
+```
+git clone https://github.com/ibm-build-labs/Watson-NLP 
+```
 ### 1. Build server Docker image
 Go to the directory `Watson-NLP-Container/Runtime`  and run the following command. It will create a Docker image `watson-nlp-container:v1`.
+
 ```
-docker build . \                                
+cd Watson-NLP-Container/Runtime
+```
+```
+docker build . \
   --build-arg MODEL_NAMES="ensemble_classification-wf_en_emotion-stock sentiment_document-cnn-workflow_en_stock" \
   --build-arg ARTIFACTORY_API_KEY=$ARTIFACTORY_API_KEY \
   --build-arg ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME \
   -t watson-nlp-container:v1
 ```
+**Note**: Three build arguments are required. Please pass the parameters correctly when you build the docker image.
+***ARTIFACTORY_USERNAME***=Artifactory username to download the base image 
+***ARTIFACTORY_API_KEY***=Artifactory API key to download the base image 
+***MODEL_NAMES argument*** is the ML model you want to include in the container. You can pass multiple model names with space separated. 
+
 ### 1.1 Run the server locally
 Use the following command to start the server on your local machine.
 ```
@@ -51,13 +68,11 @@ kubectl get svc
 ```
 ## 2 Test the Watson NLP Runtime with a Python client
 In order to run this application you need to gain access to Artifactory to install the below client libraries:
-- **watson_nlp**: Data model is going to be used to prepare the request object
 - **watson_nlp_runtime_client:** it is a packaged gRPC stub library to communicate to the watson nlp runtime
 
 **Install python library**
- ``` 
-pip install watson_nlp
-pip install watson_nlp_runtime_client
+``` 
+pip3 install watson_nlp_runtime_client
 ```
 
 - Create a gRPC channel
@@ -71,7 +86,7 @@ Running the client depends on how the server was started.
 ### 2.1 Server runs in local Docker container
 Go the Client directory from project Watson-NLP-Container and pass the input text as a parameter to get sentiment and emotion analysis. 
 ```
-cd Client
+cd Watson-NLP-Container/Client
 python3 client.py "Watson NLP is awesome"
 ```
 ### 2.2 Server runs in OpenShift/k8 cluster
