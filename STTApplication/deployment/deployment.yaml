@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stt-web-app
+spec:
+  selector:
+    matchLabels:
+      app: stt-web-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: stt-web-app
+    spec:
+      containers:
+      - name: stt-web-app
+        image: us.icr.io/watson-core-demo/stt-web-application:v1
+        env:
+          - name: STT_SERVICE_ENDPOINT
+            value: "install-1-stt-runtime:1080"
+        ports:
+        - containerPort: 8080
