@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Spring Boot & Thymeleaf File Upload</title>
+	<title>Watson Speech to Text</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
@@ -13,29 +13,60 @@
 			<a class="navbar-brand" href="#">Watson Speech to Text</a>
 		</div>
 	</nav>
-	<section class="my-5">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-8 mx-auto">
-					<form method="post" th:action="@{/uploadFile}" enctype="multipart/form-data">
-					
-						<div class="mb-3">
-						  <label for="formFile" class="form-label">Upload audio file to convert to Text</label>
-						  <input class="form-control" name="file" type="file" id="formFile">
-						</div>
-						
-						<button type="submit" class="btn btn-primary">Convert</button>
-					</form>
-					
-				</div>
-				<div class="col-md-8 mx-auto">
-					<pre th:text="${result}" th:if="${result ne null}"  style="white-space: pre"></pre>
-				</div>
-			</div>
-			
-		</div>
-	</section>
 
+	<div class="container-lg" style="margin-top: 20px">
+
+		<table class="table">
+			<tr>
+				<td>Wav file</td>
+				<td>
+					<audio controls th:src="@{/audio/input.wav}" Your browser does not support the <code>audio</code>
+						element.
+					</audio>
+				</td>
+				<td>
+					<a href="/transcript/input.wav" class="btn btn-primary" role="button">Convert</a>
+					<a href="/transcript/input.wav/download" class="btn btn-primary" role="button">Dwonload</a>
+				</td>
+			</tr>
+			<tr>
+				<td>Wav file</td>
+				<td>
+					<audio controls th:src="@{/audio/input.wav}" Your browser does not support the <code>audio</code>
+						element.
+					</audio>
+				</td>
+				<td>
+					<button type="submit" class="btn btn-primary">Convert</button>
+				</td>
+			</tr>
+			<tr>
+				<td>Wav file</td>
+				<td>
+					<audio controls th:src="@{/audio/input.wav}" Your browser does not support the <code>audio</code>
+						element.
+					</audio>
+				</td>
+				<td>
+					<button type="submit" class="btn btn-primary">Convert</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="container-lg" style="margin-top: 20px">
+		<form method="post" th:action="@{/uploadFile}" enctype="multipart/form-data">
+
+			<div class="mb-3">
+				<label for="formFile" class="form-label">Upload audio file to convert to Text</label>
+				<input class="form-control" name="file" type="file" id="formFile">
+			</div>
+
+			<button type="submit" class="btn btn-primary">Convert</button>
+		</form>
+	</div>
+	<div class="container-lg" style="margin-top: 20px">
+		<pre th:text="${result}" th:if="${result ne null}" style="display: inline-block;word-break: break-all;"></pre>
+	</div>
 </body>
 
 </html>

@@ -2,32 +2,30 @@ package com.build.labs.services;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.build.labs.feignclient.FeignSTTClient;
+import com.build.labs.feignclient.SSTServingClient;
 
 @Service
 public class STTService {
 	
-    private final FeignSTTClient postFeignClient;
+    private final SSTServingClient postFeignClient;
+    
+    @Value("${client.post.baseurl}")
+    private String baseUrl;
 	
-	public STTService(FeignSTTClient postFeignClient) {
+	public STTService(SSTServingClient postFeignClient) {
 		super();
 		this.postFeignClient = postFeignClient;
 	}
-
-
-
-	public String execute(InputStream inputStream) throws IOException { 
-		
-		String output = postFeignClient.stt(inputStream.readAllBytes());
-	    return output;
+	
+	public String transcriptAudio(InputStream inputStream) throws URISyntaxException, IOException {
+		String result = postFeignClient.transcript(inputStream.readAllBytes());
+		return result;
 	}
 	
-	/*
-	public static void main(String[] args) throws FileNotFoundException {
-		//new STTService().execute();
-	}
-	*/
+	
 }

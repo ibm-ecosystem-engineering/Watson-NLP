@@ -11,7 +11,7 @@ public interface FeignSTTClient {
 	
 	@PostMapping(STT_REST_MAPPING)
     @Headers({
-            "Content-Type: audio/wav"
+            "Content-Type: audio/mp3"
     })
     String stt(byte[] blob);
 }

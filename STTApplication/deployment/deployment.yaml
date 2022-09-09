@@ -15,6 +15,13 @@ spec:
       containers:
       - name: stt-web-app
         image: us.icr.io/watson-core-demo/stt-web-application:v1
+        resources:
+          requests:
+            memory: "500m"
+            cpu: "100m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
         env:
           - name: STT_SERVICE_ENDPOINT
             value: "install-1-stt-runtime:1080"
