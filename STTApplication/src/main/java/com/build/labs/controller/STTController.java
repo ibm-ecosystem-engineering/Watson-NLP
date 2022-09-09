@@ -94,18 +94,18 @@ public class STTController {
     public ResponseEntity<String> downloadAll() throws IOException, URISyntaxException {
 
         HttpHeaders header = new HttpHeaders();
-        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=output.json");
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=all.json");
         header.add("Cache-Control", "no-cache, no-store, must-revalidate");
         header.add("Pragma", "no-cache");
         header.add("Expires", "0");
 
-        List<String> filenames = List.of("CallCenterSample1.mp3", "CallCenterSample2.mp3", "CallCenterSample3.mp3");
+        List<String> filenames = List.of("CallCenterSample3.mp3", "CallCenterSample2.mp3", "CallCenterSample1.mp3");
         
-        String transcript = "---";
+        String transcript = "";
         
         for(String filename : filenames) {
         	 String output = sttService.transcriptAudio(readFile(filename));
-        	 transcript = "File name: " + filename + "\n" + output;
+        	 transcript = transcript + "File name: " + filename + "\n" + output + "\n";
         }
                 
         return ResponseEntity.ok()

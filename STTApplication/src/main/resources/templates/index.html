@@ -10,7 +10,7 @@
 <body>
 	<nav class="navbar navbar-dark bg-primary">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#">Watson Speech to Text</a>
+			<a class="navbar-brand" href="">Watson Speech to Text</a>
 		</div>
 	</nav>
 
@@ -18,37 +18,41 @@
 
 		<table class="table">
 			<tr>
-				<td>Wav file</td>
 				<td>
-					<audio controls th:src="@{/audio/input.wav}" Your browser does not support the <code>audio</code>
+					<audio controls th:src="@{/audio/CallCenterSample1.mp3}" Your browser does not support the <code>audio</code>
 						element.
 					</audio>
 				</td>
 				<td>
-					<a href="/transcript/input.wav" class="btn btn-primary" role="button">Convert</a>
-					<a href="/transcript/input.wav/download" class="btn btn-primary" role="button">Dwonload</a>
+					<a href="/transcript/CallCenterSample1.mp3" class="btn btn-primary" role="button">Convert</a>
+					<a href="/transcript/CallCenterSample1.mp3/download" class="btn btn-primary" role="button">Dwonload</a>
 				</td>
 			</tr>
 			<tr>
-				<td>Wav file</td>
 				<td>
-					<audio controls th:src="@{/audio/input.wav}" Your browser does not support the <code>audio</code>
+					<audio controls th:src="@{/audio/CallCenterSample2.mp3}" Your browser does not support the <code>audio</code>
 						element.
 					</audio>
 				</td>
 				<td>
-					<button type="submit" class="btn btn-primary">Convert</button>
+					<a href="/transcript/CallCenterSample2.mp3" class="btn btn-primary" role="button">Convert</a>
+					<a href="/transcript/CallCenterSample2.mp3" class="btn btn-primary" role="button">Dwonload</a>
 				</td>
 			</tr>
 			<tr>
-				<td>Wav file</td>
 				<td>
-					<audio controls th:src="@{/audio/input.wav}" Your browser does not support the <code>audio</code>
+					<audio controls th:src="@{/audio/CallCenterSample3.mp3}" Your browser does not support the <code>audio</code>
 						element.
 					</audio>
 				</td>
 				<td>
-					<button type="submit" class="btn btn-primary">Convert</button>
+					<a href="/transcript/CallCenterSample3.mp3" class="btn btn-primary" role="button">Convert</a>
+					<a href="/transcript/CallCenterSample3.mp3/download" class="btn btn-primary" role="button">Dwonload</a>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<a href="/transcript/all" class="btn btn-primary" role="button">Dwonload all</a>
 				</td>
 			</tr>
 		</table>
@@ -57,7 +61,7 @@
 		<form method="post" th:action="@{/uploadFile}" enctype="multipart/form-data">
 
 			<div class="mb-3">
-				<label for="formFile" class="form-label">Upload audio file to convert to Text</label>
+				<label for="formFile" class="form-label">Upload audio file to get a transcript</label>
 				<input class="form-control" name="file" type="file" id="formFile">
 			</div>
 
