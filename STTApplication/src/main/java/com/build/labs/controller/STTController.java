@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +18,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.build.labs.model.Output;
+import com.build.labs.model.Summary;
 import com.build.labs.services.STTService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class STTController {
@@ -48,15 +54,17 @@ public class STTController {
 	@PostMapping("/uploadFile")
 	public String uploadFile(@RequestParam("file") MultipartFile multipartFile, Model model)
 			throws IOException, URISyntaxException {
-		String transcript = "File not found";
+
 		try (InputStream inputStream = multipartFile.getInputStream()) {
-			transcript = sttService.transcriptAudio(inputStream);
+			String transcript = sttService.transcriptAudio(inputStream);
+			List<Output> outputList = formatOutput(transcript);
+			model.addAttribute("result", outputList);
 			
 		} catch (IOException ioe) {
 			throw new IOException("Could not upload file: ", ioe);
 		}
 		
-		model.addAttribute("result", transcript);
+		
 		return "index";
 	}
 	
@@ -66,7 +74,14 @@ public class STTController {
 		
 		InputStream input = new ClassPathResource("static/audio/"+filename).getInputStream();
 		String transcript = sttService.transcriptAudio(input);
-		model.addAttribute("result", transcript);
+		
+		List<Output> outputList = formatOutput(transcript);
+		outputList.forEach(o -> {
+			System.out.println("confidence: " + o.getConfidence());
+			System.out.println("transcript: " + o.getTranscript());
+		});
+		
+		model.addAttribute("result", outputList);
 		return "index";
 	}
 	
@@ -119,4 +134,22 @@ public class STTController {
 		 return new ClassPathResource("static/audio/"+filename).getInputStream();
 	}
 	
+	private List<Output> formatOutput(String outputResult) throws JsonMappingException, JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		Summary summary = objectMapper.readValue(outputResult, Summary.class);
+
+		List<Output> outputList = summary.getResults().stream().map(result -> {
+			List<Output> output = result.getAlternatives().stream().map(alternative -> {
+				Output out = new Output();
+				out.setConfidence(alternative.getConfidence());
+				out.setTranscript(alternative.getTranscript());
+				return out;
+			}).collect(Collectors.toList());
+
+			return output;
+		}).flatMap(List::stream).collect(Collectors.toList());
+
+		return outputList;
+
+	}
 }
