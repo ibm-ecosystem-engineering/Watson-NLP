@@ -2,74 +2,116 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Watson Speech to Text</title>
+	<title>Watson Speech to Text (STT) Library</title>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
+<style>
+	pre {
+		white-space: -moz-pre-wrap;
+		/* Mozilla, supported since 1999 */
+		white-space: -pre-wrap;
+		/* Opera */
+		white-space: -o-pre-wrap;
+		/* Opera */
+		white-space: pre-wrap;
+		/* CSS3 - Text module (Candidate Recommendation) http://www.w3.org/TR/css3-text/#white-space */
+		word-wrap: break-word;
+		/* IE 5.5+ */
+	}
+</style>
 
 <body>
 	<nav class="navbar navbar-dark bg-primary">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="">Watson Speech to Text</a>
+			<a class="navbar-brand" href="/index">
+				<img th:src="@{/logo/ibm_logo.png}" alt="" width="60" height="40"
+				class="d-inline-block align-text-top">
+			</a>
+			<a class="navbar-brand" href="/index">Watson Speech to Text (STT) Library</a>
+			<a class="navbar-brand" href="/index">Build Labs</a>
 		</div>
 	</nav>
 
-	<div class="container-lg" style="margin-top: 20px">
-
+	<div class="container-lg card" style="margin-top: 20px;padding:20px">
+		<p class="h5">Sample audio files to generate and download transcript</p>
 		<table class="table">
 			<tr>
 				<td>
-					<audio controls th:src="@{/audio/CallCenterSample1.mp3}" Your browser does not support the <code>audio</code>
+					Online flower shop
+				</td>
+				<td>
+					<audio controls th:src="@{/audio/CallCenterSample1.mp3}" Your browser does not support the
+						<code>audio</code>
 						element.
 					</audio>
 				</td>
 				<td>
 					<a href="/transcript/CallCenterSample1.mp3" class="btn btn-primary" role="button">Convert</a>
-					<a href="/transcript/CallCenterSample1.mp3/download" class="btn btn-primary" role="button">Dwonload</a>
+					<a href="/transcript/CallCenterSample1.mp3/download" class="btn btn-primary"
+						role="button">Download</a>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<audio controls th:src="@{/audio/CallCenterSample2.mp3}" Your browser does not support the <code>audio</code>
+					Auto centre
+				</td>
+				<td>
+					<audio controls th:src="@{/audio/CallCenterSample2.mp3}" Your browser does not support the
+						<code>audio</code>
 						element.
 					</audio>
 				</td>
 				<td>
 					<a href="/transcript/CallCenterSample2.mp3" class="btn btn-primary" role="button">Convert</a>
-					<a href="/transcript/CallCenterSample2.mp3" class="btn btn-primary" role="button">Dwonload</a>
+					<a href="/transcript/CallCenterSample2.mp3" class="btn btn-primary" role="button">Download</a>
 				</td>
 			</tr>
 			<tr>
 				<td>
-					<audio controls th:src="@{/audio/CallCenterSample3.mp3}" Your browser does not support the <code>audio</code>
+					E-commerce
+				</td>
+				<td>
+					<audio controls th:src="@{/audio/CallCenterSample3.mp3}" Your browser does not support the
+						<code>audio</code>
 						element.
 					</audio>
 				</td>
 				<td>
 					<a href="/transcript/CallCenterSample3.mp3" class="btn btn-primary" role="button">Convert</a>
-					<a href="/transcript/CallCenterSample3.mp3/download" class="btn btn-primary" role="button">Dwonload</a>
+					<a href="/transcript/CallCenterSample3.mp3/download" class="btn btn-primary"
+						role="button">Download</a>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2" align="center">
-					<a href="/transcript/all" class="btn btn-primary" role="button">Dwonload all</a>
+				<td colspan="3" align="center">
+					<a href="/transcript/all" class="btn btn-primary" role="button">Download all</a>
 				</td>
 			</tr>
 		</table>
 	</div>
-	<div class="container-lg" style="margin-top: 20px">
+	<div class="container-lg card" style="margin-top: 20px;padding:20px">
 		<form method="post" th:action="@{/uploadFile}" enctype="multipart/form-data">
 
 			<div class="mb-3">
-				<label for="formFile" class="form-label">Upload audio file to get a transcript</label>
+				<label for="formFile" class="form-label h5">Upload audio file to get a transcript</label>
 				<input class="form-control" name="file" type="file" id="formFile">
 			</div>
 
 			<button type="submit" class="btn btn-primary">Convert</button>
 		</form>
 	</div>
-	<div class="container-lg" style="margin-top: 20px">
-		<pre th:text="${result}" th:if="${result ne null}" style="display: inline-block;word-break: break-all;"></pre>
+	<div th:if="${result ne null}" class="container-lg card" style="margin-top: 20px;padding:20px">
+		<table class="table table-striped">
+			<th:block th:each="rs : ${result}">
+				<tr>
+					<td th:text="'Confidence: ' + ${rs.confidence}"></td>
+				</tr>
+				<tr>
+					<td th:text="'Transcript: ' + ${rs.transcript}"></td>
+				</tr>
+			</th:block>
+		</table>
 	</div>
 </body>
 
