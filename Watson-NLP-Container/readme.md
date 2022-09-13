@@ -96,6 +96,8 @@ Running the client depends on how the server was started.
 Go the Client directory from project Watson-NLP-Container and pass the input text as a parameter to get sentiment and emotion analysis. 
 ```
 cd Watson-NLP-Container/Client
+```
+```
 python3 client.py "Watson NLP is awesome"
 ```
 ### 2.2 Server runs in OpenShift/k8 cluster
