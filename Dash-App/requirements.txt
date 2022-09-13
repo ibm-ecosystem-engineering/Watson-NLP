@@ -4,3 +4,4 @@ dash_daq
 pandas
 plotly
 numpy
+wordcloud

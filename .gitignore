@@ -15,3 +15,10 @@ Dash-App/topic_models/complaint_topic_model_citi
 *.model
 *.json
 *.json
+*.pb
+Dash-App/ensemble_classification-wf_en_emotion-stock/stopwords/artifacts/stopwords.txt
+*.pkl
+*.data-00000-of-00001
+*.index
+Dash-App/svm_model_hotel_reviews_classification
+Dash-App/ensemble_model_hotel_reviews_classification
