@@ -35,7 +35,6 @@ cd Watson-NLP-Container/Runtime
 ```
 ```
 docker build . \
--d \
 --build-arg WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39" \
 --build-arg MODEL_NAMES="ensemble_classification-wf_en_emotion-stock sentiment_document-cnn-workflow_en_stock" \
 --build-arg ARTIFACTORY_API_KEY=$ARTIFACTORY_API_KEY \
@@ -50,7 +49,7 @@ docker build . \
 ### 1.1 Run the server locally
 Use the following command to start the server on your local machine.
 ```
-docker run -p 8085:8085 watson-nlp-container:v1
+docker run -d -p 8085:8085 watson-nlp-container:v1
 ```
 The gRPC service will be exposed locally on port 8085.
 
