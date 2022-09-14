@@ -41,10 +41,16 @@ docker build . \
 --build-arg ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME \
 -t watson-nlp-container:v1
 ```
-**Note**: Three build arguments are required. Please pass the parameters correctly when you build the docker image.
+**Note**: Four build arguments are required. Please pass the parameters correctly when you build the docker image.
+
+***WATSON_RUNTIME_BASE***=Runtime base image. it is optinal the default runtime version is 0.13.1. If you want to change the base image please pass an a valid base image argument.
+
 ***ARTIFACTORY_USERNAME***=Artifactory username to download the base image 
+
 ***ARTIFACTORY_API_KEY***=Artifactory API key to download the base image 
-***MODEL_NAMES argument*** is the ML model you want to include in the container. You can pass multiple model names with space separated. 
+
+***MODEL_NAMES argument***= is the ML model you want to include in the container. You can pass multiple model names with space separated. 
+
 
 ### 1.1 Run the server locally
 Use the following command to start the server on your local machine.
