@@ -5,7 +5,7 @@
 # divested of its trade secrets, irrespective of what has been    #
 # deposited with the U.S. Copyright Office.                       #
 #*****************************************************************#
-ARG WATSON_RUNTIME_BASE
+ARG WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39"
 FROM ${WATSON_RUNTIME_BASE} as base
 #################
 ## Build Phase ##
@@ -15,8 +15,8 @@ FROM base as build
 # Args for artifactory credentials
 ARG ARTIFACTORY_USERNAME
 ARG ARTIFACTORY_API_KEY
-ENV ARTIFACTORY_USERNAME=${ARTIFACTORY_USERNAME}
-ENV ARTIFACTORY_API_KEY=${ARTIFACTORY_API_KEY}
+ENV ARTIFACTORY_USERNAME="htalukder@ibm.com"
+ENV ARTIFACTORY_API_KEY="AKCp8mZT1FkPZ3jFLgdCyvU7GrDtBQraK4d5Sg6pWzqHY41MmPnQw74ixqb6rHAMmAdp9mzGm"
 
 # Build arg to specify space-delimited names of models
 ARG MODEL_NAMES
