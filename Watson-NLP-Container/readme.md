@@ -35,7 +35,10 @@ cd Watson-NLP-Container/Runtime
 ```
 ```
 docker build . \
+--build-arg WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39" \
 --build-arg MODEL_NAMES="ensemble_classification-wf_en_emotion-stock sentiment_document-cnn-workflow_en_stock" \
+--build-arg ARTIFACTORY_API_KEY=$ARTIFACTORY_API_KEY \
+--build-arg ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME \
 -t watson-nlp-container:v1
 ```
 **Note**: Three build arguments are required. Please pass the parameters correctly when you build the docker image.
