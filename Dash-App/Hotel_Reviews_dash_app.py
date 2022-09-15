@@ -1,4 +1,5 @@
 import os
+from pydoc import classname
 import dash
 from dash import dcc
 from dash import html
@@ -35,7 +36,7 @@ plotly_template = pio.templates["plotly_dark"]
 pio.templates["plotly_dark_custom"] = pio.templates["plotly_dark"]
 
 # load saved Model 
-svm_model = watson_nlp.load('svm_model_hotel_reviews_classification')
+#svm_model = watson_nlp.load('svm_model_hotel_reviews_classification')
 # ensemble_model = watson_nlp.load('ensemble_model_hotel_reviews_classification')
 
 # Load a syntax model to split the text into sentences and tokens
@@ -96,10 +97,34 @@ classification_input =  dbc.InputGroup(
             className="mb-3",
         )
 
+entity_input = dbc.InputGroup(
+    [
+        dbc.InputGroupText("Enter Text for Entity Extraction"),
+        dbc.Textarea(id="entity-input", placeholder="Text for Entity Extraction"),
+    ],
+    className="mb-3",
+)
+
 classification_button = html.Div(
     [
         dbc.Button(
             "Classify Hotel Reviews", id="classification-button", className="me-2", n_clicks=0
+        ),
+    ]
+)
+
+entity_button = html.Div(
+    [
+        dbc.Button(
+            "Get Entities", id="entity-button", className="me-2", n_clicks=0
+        ),
+    ]
+)
+
+hotel_button = html.Div(
+    [
+        dbc.Button(
+            "Get Entities for hotel", id="hotel-button", className="me-2", n_clicks=0
         ),
     ]
 )
@@ -120,10 +145,37 @@ keywords_button = html.Div(
     ]
 )
 
+hotel_entities_figure = dcc.Graph(id='hotel-entities-figure')
+hotel_types_figure = dcc.Graph(id='hotel-types-figure')
 topic_output_figure = dcc.Graph(id='topic-output-figure')
 keywords_output_figure = html.Img(id='keywords-output-figure')
 phrases_output_figure = html.Img(id='phrases-output-figure')
 classification_output_figure = dcc.Graph(id='classification-output-figure')
+
+entities_df = pd.DataFrame(columns=['Entity Type', 'Entity Text'])
+entity_output_table = dash_table.DataTable(
+    columns=[{"name": i, "id": i} for i in entities_df.columns],
+    style_header={
+        'backgroundColor': 'rgb(30, 30, 30)',
+        'color': 'white',
+        'textAlign': 'left',
+    },
+    style_data={
+        'backgroundColor': 'rgb(50, 50, 50)',
+        'color': 'white',
+        'width': 'auto',
+    },
+    style_cell={
+        'textAlign': 'left',
+        'font-family':'sans-serif',
+        'headerAlign': 'left'
+    },
+    style_table={'overflowX': 'scroll'},
+    style_as_list_view=True,
+    sort_action='native',
+    sort_mode='multi',
+    id='entity-output-table'
+)
 
 # Extracting all Topic names , Keywords , Phrases & Sentences from the Topic Model
 def extract_topics_information(topic_model_output):
@@ -137,6 +189,7 @@ def extract_entities(data, model, hotel_name=None, website=None):
     import html
 
     input_text = str(data)
+    print(input_text)
     text = html.unescape(input_text)
     if model == 'rbr':
         # Run rbr model on text
@@ -220,16 +273,18 @@ app.layout = html.Div(children=[
                         ],
                         width=6
                     ),
-                    # dbc.Col(
-                    #     children=[
-                    #     html.Div(emotion_classification_input),
-                    #     html.Div(emotion_button),
-                    #     # html.Div(id='container-button-emotion'),
-                    #     html.Div(emotion_output_figure),
-                    #     html.Div(emotion_output_table),
-                    #     ],
-                    #     width=6
-                    # ),
+                    dbc.Col(
+                        children=[
+                        html.Div(entity_input),
+                        html.Div(entity_button),
+                        dcc.Dropdown(["Belgrave", "Euston", "Dorset"], "Belgrave", id='hotel-dropdown',style={'color':'#00361c'}),
+                        html.Div(hotel_button),
+                        html.Div(entity_output_table),
+                        html.Div(hotel_entities_figure),
+                        html.Div(hotel_types_figure),
+                        ],
+                        width=6
+                    ),
                     ],
                     # align="center",
                     # className="w-0",
@@ -256,8 +311,12 @@ def classify_reviews(text):
     State('entity-input', 'value')
 )
 def text_entity_callback(n_clicks, value):
+    print(value)
     entities_dict = extract_entities(value, 'bilstm')
-    entities_df = pd.DataFrame(entities_dict['Entities']).rename(columns={'ent_type':'Entity Type', 'ent_text':'Entity Text'})
+    if len(entities_dict) > 0:
+        entities_df = pd.DataFrame(entities_dict['Entities']).rename(columns={'ent_type':'Entity Type', 'ent_text':'Entity Text'})
+    else:
+        entities_df = pd.DataFrame(column=['NO ENTITIES'])
     return entities_df
 
 @app.callback(
@@ -294,7 +353,7 @@ def hotel_reviews_entity_callback(n_clicks, value):
                         orientation='h', 
                         title=hotel_name + ' Entity Types', 
                         labels={
-                            "index":"Top 20 Entities",
+                            "index":"Top Entity Types",
                             "value":"Count",
                             "variable":"Legend"
                         })
