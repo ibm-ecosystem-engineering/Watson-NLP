@@ -38,6 +38,17 @@ pio.templates["plotly_dark_custom"] = pio.templates["plotly_dark"]
 svm_model = watson_nlp.load('svm_model_hotel_reviews_classification')
 # ensemble_model = watson_nlp.load('ensemble_model_hotel_reviews_classification')
 
+# Load a syntax model to split the text into sentences and tokens
+syntax_model = watson_nlp.load(watson_nlp.download('syntax_izumo_en_stock'))
+# Load bilstm model in WatsonNLP
+bilstm_model = watson_nlp.load(watson_nlp.download('entity-mentions_bilstm_en_stock'))
+# Load rbr model in WatsonNLP
+rbr_model = watson_nlp.load(watson_nlp.download('entity-mentions_rbr_en_stock'))
+# Load bert model in WatsonNLP
+bert_model = watson_nlp.load(watson_nlp.download('entity-mentions_bert_multi_stock'))
+# Load transformer model in WatsonNLP
+#transformer_model = watson_nlp.load(watson_nlp.download('entity-mentions_transformer_multi_stock'))
+
 navbar_main = dbc.Navbar(
         [
             html.A(
@@ -122,6 +133,68 @@ def extract_topics_information(topic_model_output):
         topic_dict.append(topic_val)
     return topic_dict
 
+def extract_entities(data, model, hotel_name=None, website=None):
+    import html
+
+    input_text = str(data)
+    text = html.unescape(input_text)
+    if model == 'rbr':
+        # Run rbr model on text
+        mentions = rbr_model.run(text)
+    else:
+        # Run syntax model on text 
+        syntax_result = syntax_model.run(text)
+        if model == 'bilstm':
+            # Run bilstm model on syntax result
+            mentions = bilstm_model.run(syntax_result)
+        elif model == 'bert':
+            # Run bert model on syntax result
+            mentions = bert_model.run(syntax_result)
+        '''
+        elif model == 'transformer':
+            # Run transformer model on syntax result
+            mentions = transformer_model.run(syntax_result)
+        '''
+            
+    entities_list = mentions.to_dict()['mentions']
+    ent_list=[]
+    for i in range(len(entities_list)):
+        ent_type = entities_list[i]['type']
+        ent_text = entities_list[i]['span']['text'] 
+        ent_list.append({'ent_type':ent_type,'ent_text':ent_text})
+        
+    if len(ent_list) > 0:
+        return {'Document':text,'Hotel Name':hotel_name,'Website':website,'Entities':ent_list}
+    else:
+        return {}
+
+def clean(doc):
+    import html
+
+    wnlp_stop_words = watson_nlp.download_and_load('text_stopwords_classification_ensemble_en_stock').stopwords
+    stop_words = list(wnlp_stop_words)
+    stop_words.remove('keep')
+    stop_words.extend(["gimme", "lemme", "cause", "'cuz", "imma", "gonna", "wanna", 
+                    "gotta", "hafta", "woulda", "coulda", "shoulda", "howdy","day", 
+                    "first", "second", "third", "fourth", "fifth", "London", "london", 
+                    "1st", "2nd", "3rd", "4th", "5th", 
+                    "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", 
+                    "weekend", "week", "evening", "morning"])
+    # replacing &amp to & as it is HTML tag
+    stop_free = " ".join([html.unescape(word) for word in doc.split() if word.lower() not in stop_words])
+    return stop_free
+
+def run_extraction(df, text_col):
+    extract_list = []
+    all_text = dict(zip(df[text_col], zip(df['hotel'], df['website'])))
+    all_text_clean = {clean(doc[0]): doc[1] for doc in all_text.items()}
+    for text in all_text_clean.items():
+        # change the second parameter to 'rbr', 'bilstm', or 'bert' to try other models
+        extract_value = extract_entities(text[0], 'bilstm', text[1][0], text[1][1])
+        if len(extract_value) > 0:
+            extract_list.append(extract_value)              
+    return extract_list
+
 # Most Important top N keywoprds & Phrases 
 # See Top -5 Topics Keywords & Phrases 
 def create_keywords_dict(keywords):
@@ -176,6 +249,56 @@ def classify_reviews(text):
     # predicted_ensemble = ensemble_preds.to_dict()
     # return predicted_ensemble
     return predicted_svm
+
+@app.callback(
+    Output('entity-output-table', 'data'),
+    Input('entity-button', 'n_clicks'),
+    State('entity-input', 'value')
+)
+def text_entity_callback(n_clicks, value):
+    entities_dict = extract_entities(value, 'bilstm')
+    entities_df = pd.DataFrame(entities_dict['Entities']).rename(columns={'ent_type':'Entity Type', 'ent_text':'Entity Text'})
+    return entities_df
+
+@app.callback(
+    Output('hotel-entities-figure', 'figure'),
+    Output('hotel-types-figure', 'figure'),
+    Input('hotel-button', 'n_clicks'),
+    Input('hotel-dropdown', 'value'),
+)
+def hotel_reviews_entity_callback(n_clicks, value):
+    if value == 'Belgrave':
+        df = pd.read_csv('hotel-reviews/uk_england_london_belgrave_hotel.csv')
+    elif value == 'Euston':
+        df = pd.read_csv('hotel-reviews/uk_england_london_euston_square_hotel.csv')
+    elif value == 'Dorset':
+        df = pd.read_csv('hotel-reviews/uk_england_london_dorset_square.csv')
+
+    extract_list = run_extraction(df, 'text')
+    analysis_df = pd.DataFrame(columns=['Document','Hotel Name', 'Website', 'Entities'])
+    analysis_df = analysis_df.append(extract_list,ignore_index = True)
+    exp_entities = analysis_df.explode('Entities')
+    entities_df = pd.concat([exp_entities.drop('Entities', axis=1), exp_entities['Entities'].apply(pd.Series)], axis=1)
+    hotel_name = entities_df['Hotel Name'][0]
+    entities_df['ent_text'].value_counts().head(20).sort_values().plot(kind='barh', title=hotel_name + ' Entities')
+    entities_df['ent_type'].value_counts().head(20).sort_values().plot(kind='barh', title=hotel_name + ' Entity Types')
+    entities_fig = px.bar(entities_df['ent_text'].value_counts().head(20).sort_values(), 
+                            orientation='h', 
+                            title=hotel_name + ' Entities', 
+                            labels={
+                                "index":"Top 20 Entities",
+                                "value":"Count",
+                                "variable":"Legend"
+                            })
+    types_fig = px.bar(entities_df['ent_type'].value_counts().head(20).sort_values(), 
+                        orientation='h', 
+                        title=hotel_name + ' Entity Types', 
+                        labels={
+                            "index":"Top 20 Entities",
+                            "value":"Count",
+                            "variable":"Legend"
+                        })
+    return entities_fig, types_fig
 
 @app.callback(
     # Output('container-button-classification', 'children'),
