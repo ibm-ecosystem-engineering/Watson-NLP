@@ -44,7 +44,7 @@ rbr_model = watson_nlp.load(watson_nlp.download('entity-mentions_rbr_en_stock'))
 # Load bert model in WatsonNLP
 bert_model = watson_nlp.load(watson_nlp.download('entity-mentions_bert_multi_stock'))
 # Load transformer model in WatsonNLP
-transformer_model = watson_nlp.load(watson_nlp.download('entity-mentions_transformer_multi_stock'))
+#transformer_model = watson_nlp.load(watson_nlp.download('entity-mentions_transformer_multi_stock'))
 
 navbar_main = dbc.Navbar(
         [
@@ -154,9 +154,11 @@ def extract_entities(data, model, hotel_name=None, website=None):
         elif model == 'bert':
             # Run bert model on syntax result
             mentions = bert_model.run(syntax_result)
+        '''
         elif model == 'transformer':
             # Run transformer model on syntax result
             mentions = transformer_model.run(syntax_result)
+        '''
         
     entities_list = mentions.to_dict()['mentions']
     ent_list=[]
@@ -203,7 +205,7 @@ app.layout = html.Div(children=[
                     dbc.Col(
                         children=[
                         html.Div(entity_input),
-                        dcc.Dropdown(["rbr", "bilstm", "bert", "transformer"], "bilstm", id='model-dropdown',style={'color':'#00361c'}),
+                        dcc.Dropdown(["rbr", "bilstm", "bert"], "bilstm", id='model-dropdown',style={'color':'#00361c'}),
                         html.Div(entity_button),
                         html.Div(entity_output_table),
                         dcc.Dropdown(["Belgrave", "Euston", "Dorset"], "Dorset", id='hotel-dropdown',style={'color':'#00361c'}),
