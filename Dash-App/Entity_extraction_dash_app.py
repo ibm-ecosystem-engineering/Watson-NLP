@@ -35,10 +35,6 @@ app.title = 'Watson NLP - Hotel Reviews Analysis'
 plotly_template = pio.templates["plotly_dark"]
 pio.templates["plotly_dark_custom"] = pio.templates["plotly_dark"]
 
-# load saved Model 
-#svm_model = watson_nlp.load('svm_model_hotel_reviews_classification')
-# ensemble_model = watson_nlp.load('ensemble_model_hotel_reviews_classification')
-
 # Load a syntax model to split the text into sentences and tokens
 syntax_model = watson_nlp.load(watson_nlp.download('syntax_izumo_en_stock'))
 # Load bilstm model in WatsonNLP
@@ -89,28 +85,12 @@ navbar_main = dbc.Navbar(
     className = "ml-auto"
 )
 
-classification_input =  dbc.InputGroup(
-            [
-                dbc.InputGroupText("Enter Text for Classification"),
-                dbc.Textarea(id="classification-input", placeholder="Text for Review classification"),
-            ],
-            className="mb-3",
-        )
-
 entity_input = dbc.InputGroup(
     [
         dbc.InputGroupText("Enter Text for Entity Extraction"),
         dbc.Textarea(id="entity-input", placeholder="Text for Entity Extraction"),
     ],
     className="mb-3",
-)
-
-classification_button = html.Div(
-    [
-        dbc.Button(
-            "Classify Hotel Reviews", id="classification-button", className="me-2", n_clicks=0
-        ),
-    ]
 )
 
 entity_button = html.Div(
@@ -129,28 +109,8 @@ hotel_button = html.Div(
     ]
 )
 
-topic_button = html.Div(
-    [
-        dbc.Button(
-            "Get Topics by company", id="topics-button", className="me-2", n_clicks=0
-        ),
-    ]
-)
-
-keywords_button = html.Div(
-    [
-        dbc.Button(
-            "Get Keywords", id="keywords-button", className="me-2", n_clicks=0
-        ),
-    ]
-)
-
 hotel_entities_figure = dcc.Graph(id='hotel-entities-figure')
 hotel_types_figure = dcc.Graph(id='hotel-types-figure')
-topic_output_figure = dcc.Graph(id='topic-output-figure')
-keywords_output_figure = html.Img(id='keywords-output-figure')
-phrases_output_figure = html.Img(id='phrases-output-figure')
-classification_output_figure = dcc.Graph(id='classification-output-figure')
 
 entities_df = pd.DataFrame(columns=['Entity Type', 'Entity Text'])
 entity_output_table = dash_table.DataTable(
@@ -176,14 +136,6 @@ entity_output_table = dash_table.DataTable(
     sort_mode='multi',
     id='entity-output-table'
 )
-
-# Extracting all Topic names , Keywords , Phrases & Sentences from the Topic Model
-def extract_topics_information(topic_model_output):
-    topic_dict=[]
-    for topic in topic_model_output['clusters']:
-        topic_val = {'Topic Name':topic['topicName'],'Total Documents':topic['numDocuments'],'Percentage':topic['percentage'],'Cohesiveness':topic['cohesiveness'],'Keywords':topic['modelWords'],'Phrases':topic['modelNgram'],'Sentences':topic['sentences']}
-        topic_dict.append(topic_val)
-    return topic_dict
 
 def extract_entities(data, model, hotel_name=None, website=None):
     import html
@@ -244,31 +196,10 @@ def run_extraction(df, text_col, model):
             extract_list.append(extract_value)              
     return extract_list
 
-# Most Important top N keywoprds & Phrases 
-# See Top -5 Topics Keywords & Phrases 
-def create_keywords_dict(keywords):
-    keywords_list =[]
-    for keys in keywords:
-        dic ={}
-        for key in keys:
-            key_value = key.split(',')
-            dic[key_value[0].split('(')[0]] = float(key_value[1])
-        keywords_list.append(dic)
-    return keywords_list
-
 app.layout = html.Div(children=[
                     navbar_main,
                 dbc.Row(
                     [
-                    dbc.Col(
-                        children=[
-                        html.Div(classification_input),
-                        html.Div(classification_button),
-                        # html.Div(id='container-button-classification'),
-                        html.Div(classification_output_figure),
-                        ],
-                        width=6
-                    ),
                     dbc.Col(
                         children=[
                         html.Div(entity_input),
@@ -280,27 +211,13 @@ app.layout = html.Div(children=[
                         html.Div(hotel_entities_figure),
                         html.Div(hotel_types_figure),
                         ],
-                        width=6
+                        width=10
                     ),
                     ],
                     # align="center",
                     # className="w-0",
                 ),
 ])
-
-def classify_reviews(text):
-    syntax_model = watson_nlp.load(watson_nlp.download('syntax_izumo_en_stock'))
-    use_model = watson_nlp.load(watson_nlp.download('embedding_use_en_stock'))
-    syntax_result = syntax_model.run(text)
-    # run SVM model on top of syntax result
-    svm_preds = svm_model.run(use_model.run(syntax_result, doc_embed_style='raw_text'))
-    predicted_svm = svm_preds.to_dict()
-
-    # ensemble_preds = ensemble_model.run(text)
-    # # predicted_ensemble = ensemble_preds.to_dict()["classes"][0]["class_name"]
-    # predicted_ensemble = ensemble_preds.to_dict()
-    # return predicted_ensemble
-    return predicted_svm
 
 @app.callback(
     Output('entity-output-table', 'data'),
@@ -309,7 +226,6 @@ def classify_reviews(text):
     Input('model-dropdown', 'value'),
 )
 def text_entity_callback(n_clicks, entity_input, model_dropdown):
-    print(model_dropdown)
     entities_dict = extract_entities(entity_input, model_dropdown)
     if len(entities_dict) > 0:
         entities_df = pd.DataFrame(entities_dict['Entities']).rename(columns={'ent_type':'Entity Type', 'ent_text':'Entity Text'})
@@ -355,34 +271,6 @@ def hotel_reviews_entity_callback(n_clicks, hotel_dropdown, model_dropdown):
                             "variable":"Legend"
                         })
     return entities_fig, types_fig
-
-@app.callback(
-    # Output('container-button-classification', 'children'),
-    Output('classification-output-figure', 'figure'),
-    Input('classification-button', 'n_clicks'),
-    State('classification-input', 'value')
-)
-def reviews_classification_callback(n_clicks, value):
-    # sentiment_output_example_processed = json.dumps(sentiment_output_example)
-    classification_output_python = classify_reviews(value)
-    print("OUTPUT CLASSES: ", classification_output_python['classes'])
-
-    df_classification = pd.DataFrame(classification_output_python['classes'])
-    # Adding a column with colors
-    df_classification["color"] = np.where(df_classification["class_name"]=='Complaint', 'red', 'green')
-
-    # Plot for sentiment score
-    fig_classification = go.Figure()
-    fig_classification.add_trace(
-        go.Bar(
-            name='Hotel Review category',
-            y=df_classification['confidence'],
-            x=df_classification['class_name'],
-            marker_color=df_classification['color'],
-            # hovertext=df_classification['Text']
-            ))
-    fig_classification.update_layout(template=plotly_template,barmode='stack',title_text='Hotel Review Classification', title_x=0.5)
-    return fig_classification
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8051, debug=True)
