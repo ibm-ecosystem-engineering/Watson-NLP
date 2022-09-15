@@ -8,7 +8,7 @@ I am going to show you the first option batch processing using a Java spring boo
 
 Architecture diagram:
 
-[](architecture.png)
+![Diagram](architecture.png)
  
 ### Resources
 
