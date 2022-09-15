@@ -280,6 +280,7 @@ def hotel_reviews_entity_callback(n_clicks, hotel_dropdown, model_dropdown):
                                 "value":"Count",
                                 "variable":"Legend"
                             })
+    entities_fig.update_layout(template=plotly_template,barmode='stack',title_text='Entities extracted from Hotel Reviews', title_x=0.5)
     types_fig = px.bar(entities_df['ent_type'].value_counts().head(20).sort_values(),
                         orientation='h',
                         title=hotel_name + ' Entity Types',
@@ -288,6 +289,7 @@ def hotel_reviews_entity_callback(n_clicks, hotel_dropdown, model_dropdown):
                             "value":"Count",
                             "variable":"Legend"
                         })
+    types_fig.update_layout(template=plotly_template,barmode='stack',title_text='Entity types extracted from Hotel Reviews', title_x=0.5)
     return entities_fig, types_fig
 
 if __name__ == '__main__':
