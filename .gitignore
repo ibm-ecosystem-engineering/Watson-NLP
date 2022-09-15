@@ -22,3 +22,11 @@ Dash-App/ensemble_classification-wf_en_emotion-stock/stopwords/artifacts/stopwor
 *.index
 Dash-App/svm_model_hotel_reviews_classification
 Dash-App/ensemble_model_hotel_reviews_classification
+*.data-00000-of-00002
+*.data-00001-of-00002
+Dash-App/entity-mentions_bert_multi_stock/artifacts/vocab.txt
+Dash-App/entity-mentions_bilstm_en_stock/vocab_files/vocab.chars.txt
+Dash-App/entity-mentions_bilstm_en_stock/vocab_files/vocab.tags.txt
+Dash-App/entity-mentions_bilstm_en_stock/vocab_files/vocab.words.txt
+Dash-App/entity-mentions_rbr_en_stock/artifacts/entities-pattern-distro-aql-0.0.4-extractor-nlu-entity-v2-multi-language.zip
+Dash-App/text_stopwords_classification_ensemble_en_stock/artifacts/stopwords.txt

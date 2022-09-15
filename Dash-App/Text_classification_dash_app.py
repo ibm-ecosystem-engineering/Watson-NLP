@@ -159,28 +159,47 @@ app.layout = html.Div(children=[
                 ),
 ])
 
-def classify_reviews(text):
+empty_output = {
+  "classes": [
+    {
+      "class_name": "NONE/EMPTY",
+      "confidence": 0
+    },
+    {
+      "class_name": "NONE/EMPTY",
+      "confidence": 0
+    }
+  ],
+}
+
+def classify_reviews(text: str):
     syntax_model = watson_nlp.load(watson_nlp.download('syntax_izumo_en_stock'))
     use_model = watson_nlp.load(watson_nlp.download('embedding_use_en_stock'))
-    syntax_result = syntax_model.run(text)
-    # run SVM model on top of syntax result
-    svm_preds = reviews_svm_model.run(use_model.run(syntax_result, doc_embed_style='raw_text'))
-    predicted_svm = svm_preds.to_dict()
-    return predicted_svm
+    if text is None:
+        return empty_output
+    else:     
+        syntax_result = syntax_model.run(text)
+        # run SVM model on top of syntax result
+        svm_preds = reviews_svm_model.run(use_model.run(syntax_result, doc_embed_style='raw_text'))
+        predicted_svm = svm_preds.to_dict()
+        return predicted_svm
 
     # ensemble_preds = reviews_svm_model.run(text)
     # # predicted_ensemble = ensemble_preds.to_dict()["classes"][0]["class_name"]
     # predicted_ensemble = ensemble_preds.to_dict()
     # return predicted_ensemble
 
-def classify_complaints(text):
+def classify_complaints(text: str):
     syntax_model = watson_nlp.load(watson_nlp.download('syntax_izumo_en_stock'))
     use_model = watson_nlp.load(watson_nlp.download('embedding_use_en_stock'))
-    syntax_result = syntax_model.run(text)
-    # run SVM model on top of syntax result
-    svm_preds = complaints_svm_model.run(use_model.run(syntax_result, doc_embed_style='raw_text'))
-    predicted_svm = svm_preds.to_dict()
-    return predicted_svm
+    if text is None:
+        return empty_output
+    else:        
+        syntax_result = syntax_model.run(text)
+        # run SVM model on top of syntax result
+        svm_preds = complaints_svm_model.run(use_model.run(syntax_result, doc_embed_style='raw_text'))
+        predicted_svm = svm_preds.to_dict()
+        return predicted_svm
 
     # ensemble_preds = complaints_ensemble_model.run(text)
     # # predicted_ensemble = ensemble_preds.to_dict()["classes"][0]["class_name"]
