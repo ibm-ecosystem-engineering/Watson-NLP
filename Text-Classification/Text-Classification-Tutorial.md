@@ -1,27 +1,4 @@
----
-draft: true
-display_in_listing: false
-title: Use the Watson NLP library to perform text classification
-subtitle: "Understand the fundamentals of IBM Watson NLP and walk through the process of training models to perform text classification"
-meta_title: Use the Watson NLP library to perform text classification
-authors:
-  - name: Shivam Solanki
-    email: Shivam.Raj.Solanki@ibm.com
- 
-completed_date: "2022-09-20"
-check_date: "2023-09-20"
-excerpt: "Understand the fundamentals of IBM Watson NLP and walk through the process of training models to perform text classification"
-meta_description: "Understand the fundamentals of IBM Watson NLP and walk through the process of training models to perform text classification"
-meta_keywords: Watson NLP, NLP, natural language processing, models, machine learning, text classification
-primary_tag: artificial-intelligence
-tags:
-  - "nlp"
-  - "text-classification"
-  - "machine-learning"
-components:
-  - embeddable-ai
-  - watson-apis
----
+# Easy guide to Text Classification with Watson NLP
 
 With IBM Watson libraries, IBM introduced a common library for artificial intelligence (AI) runtimes (for serving the model) and AI libraries (like Natural Language Processing, Document Understanding, Translation, and Trust). IBM Watson libraries brings everything under one umbrella for consistency and ease of development and deployment. This tutorial walks you through the steps of training a model to classify text in consumer complaints using the `watson_nlp` library from IBM Watson NLP.
 
