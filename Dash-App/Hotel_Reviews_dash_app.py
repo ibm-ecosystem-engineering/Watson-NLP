@@ -48,7 +48,7 @@ rbr_model = watson_nlp.load(watson_nlp.download('entity-mentions_rbr_en_stock'))
 # Load bert model in WatsonNLP
 bert_model = watson_nlp.load(watson_nlp.download('entity-mentions_bert_multi_stock'))
 # Load transformer model in WatsonNLP
-#transformer_model = watson_nlp.load(watson_nlp.download('entity-mentions_transformer_multi_stock'))
+transformer_model = watson_nlp.load(watson_nlp.download('entity-mentions_transformer_multi_stock'))
 
 navbar_main = dbc.Navbar(
         [
@@ -202,11 +202,9 @@ def extract_entities(data, model, hotel_name=None, website=None):
         elif model == 'bert':
             # Run bert model on syntax result
             mentions = bert_model.run(syntax_result)
-        '''
         elif model == 'transformer':
             # Run transformer model on syntax result
             mentions = transformer_model.run(syntax_result)
-        '''
         
     entities_list = mentions.to_dict()['mentions']
     ent_list=[]
@@ -235,13 +233,13 @@ def clean(doc):
     stop_free = " ".join([html.unescape(word) for word in doc.split() if word.lower() not in stop_words])
     return stop_free
 
-def run_extraction(df, text_col):
+def run_extraction(df, text_col, model):
     extract_list = []
     all_text = dict(zip(df[text_col], zip(df['hotel'], df['website'])))
     all_text_clean = {clean(doc[0]): doc[1] for doc in all_text.items()}
     for text in all_text_clean.items():
         # change the second parameter to 'rbr', 'bilstm', or 'bert' to try other models
-        extract_value = extract_entities(text[0], 'bilstm', text[1][0], text[1][1])
+        extract_value = extract_entities(text[0], model, text[1][0], text[1][1])
         if len(extract_value) > 0:
             extract_list.append(extract_value)              
     return extract_list
@@ -274,6 +272,7 @@ app.layout = html.Div(children=[
                     dbc.Col(
                         children=[
                         html.Div(entity_input),
+                        dcc.Dropdown(["rbr", "bilstm", "bert", "transformer"], "bilstm", id='model-dropdown',style={'color':'#00361c'}),
                         html.Div(entity_button),
                         html.Div(entity_output_table),
                         dcc.Dropdown(["Belgrave", "Euston", "Dorset"], "Dorset", id='hotel-dropdown',style={'color':'#00361c'}),
@@ -306,10 +305,12 @@ def classify_reviews(text):
 @app.callback(
     Output('entity-output-table', 'data'),
     Input('entity-button', 'n_clicks'),
-    State('entity-input', 'value')
+    State('entity-input', 'value'),
+    Input('model-dropdown', 'value'),
 )
-def text_entity_callback(n_clicks, value):
-    entities_dict = extract_entities(value, 'bilstm')
+def text_entity_callback(n_clicks, entity_input, model_dropdown):
+    print(model_dropdown)
+    entities_dict = extract_entities(entity_input, model_dropdown)
     if len(entities_dict) > 0:
         entities_df = pd.DataFrame(entities_dict['Entities']).rename(columns={'ent_type':'Entity Type', 'ent_text':'Entity Text'})
     else:
@@ -321,16 +322,17 @@ def text_entity_callback(n_clicks, value):
     Output('hotel-types-figure', 'figure'),
     Input('hotel-button', 'n_clicks'),
     Input('hotel-dropdown', 'value'),
+    Input('model-dropdown', 'value'),
 )
-def hotel_reviews_entity_callback(n_clicks, value):
-    if value == 'Belgrave':
+def hotel_reviews_entity_callback(n_clicks, hotel_dropdown, model_dropdown):
+    if hotel_dropdown == 'Belgrave':
         df = pd.read_csv('hotel-reviews/uk_england_london_belgrave_hotel.csv').dropna(axis=0)
-    elif value == 'Euston':
+    elif hotel_dropdown == 'Euston':
         df = pd.read_csv('hotel-reviews/uk_england_london_euston_square_hotel.csv').dropna(axis=0)
-    elif value == 'Dorset':
+    elif hotel_dropdown == 'Dorset':
         df = pd.read_csv('hotel-reviews/uk_england_london_dorset_square.csv').dropna(axis=0)
     
-    extract_list = run_extraction(df, 'text')
+    extract_list = run_extraction(df, 'text', model_dropdown)
     analysis_df = pd.DataFrame(columns=['Document','Hotel Name', 'Website', 'Entities'])
     analysis_df = analysis_df.append(extract_list,ignore_index = True)
     exp_entities = analysis_df.explode('Entities')
