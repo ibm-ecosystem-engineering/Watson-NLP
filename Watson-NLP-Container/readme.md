@@ -1,7 +1,15 @@
 # Watson NLP Runtime in a Container
-In this directory, we demonstrate how to serve pre-trained Watson NLP models by building a container image that contains both the Watson NLP Runtime together with the pre-trained models. This container image can be deployed anywhere (Docker, Kubernetes, OpenShift) to serve the model.  We use models for Sentiment Analysis and Emotion Classification for the demonstration.
+In this directory, we will learn how to serve pre-trained Watson NLP models from a standalone container.  For the examples, we will use stock models for Sentiment Analysis and Emotion Classification.
 
-In addition, we demonstrate a Python client that accesses the gRPC endpoint that is exposed by the Watson NLP Runtime in order to perform scoring on the running model.
+By standalone container, we mean that the container image is self-contained and includes both ML models and the model runtime.  When the container runs it exposes REST and gRPC endpoints that a client program can use to run scoring against the models.  
+
+Standalone containers are useful since they can be deployed in a variety of contexts.  
+
+In this tutorial, we will deploy locally with Docker, which can be convenient for development.  As well, we will deploy on a Kubernetes or OpenShift cluster.In addition to serving the models, this tutorial demonstrates how to testing the service by running a simple Python client program.
+
+## Architecture diagram
+
+![Diagram](WatsonNLPRuntimeContainer.png)
 
 ## Prerequisites
 - Docker is installed on your workstation
@@ -27,20 +35,27 @@ cd Watson-NLP-Container/Runtime
 ```
 ```
 docker build . \
-  --build-arg MODEL_NAMES="ensemble_classification-wf_en_emotion-stock sentiment_document-cnn-workflow_en_stock" \
-  --build-arg ARTIFACTORY_API_KEY=$ARTIFACTORY_API_KEY \
-  --build-arg ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME \
-  -t watson-nlp-container:v1
+--build-arg WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39" \
+--build-arg MODEL_NAMES="ensemble_classification-wf_en_emotion-stock sentiment_document-cnn-workflow_en_stock" \
+--build-arg ARTIFACTORY_API_KEY=$ARTIFACTORY_API_KEY \
+--build-arg ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME \
+-t watson-nlp-container:v1
 ```
-**Note**: Three build arguments are required. Please pass the parameters correctly when you build the docker image.
+**Note**: Four build arguments are required. Please pass the parameters correctly when you build the docker image.
+
+***WATSON_RUNTIME_BASE***=Runtime base image. it is optinal the default runtime version is 0.13.1. If you want to change the base image please pass an a valid base image argument.
+
 ***ARTIFACTORY_USERNAME***=Artifactory username to download the base image 
+
 ***ARTIFACTORY_API_KEY***=Artifactory API key to download the base image 
-***MODEL_NAMES argument*** is the ML model you want to include in the container. You can pass multiple model names with space separated. 
+
+***MODEL_NAMES argument***= is the ML model you want to include in the container. You can pass multiple model names with space separated. 
+
 
 ### 1.1 Run the server locally
 Use the following command to start the server on your local machine.
 ```
-docker run -p 8085:8085 watson-nlp-container:v1
+docker run -d -p 8085:8085 watson-nlp-container:v1
 ```
 The gRPC service will be exposed locally on port 8085.
 
@@ -87,6 +102,8 @@ Running the client depends on how the server was started.
 Go the Client directory from project Watson-NLP-Container and pass the input text as a parameter to get sentiment and emotion analysis. 
 ```
 cd Watson-NLP-Container/Client
+```
+```
 python3 client.py "Watson NLP is awesome"
 ```
 ### 2.2 Server runs in OpenShift/k8 cluster
