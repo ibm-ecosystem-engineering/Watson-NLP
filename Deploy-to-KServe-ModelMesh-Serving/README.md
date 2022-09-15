@@ -24,7 +24,7 @@ You'll need to [login to the IBM Kubernetes Service (IKS) cluster](https://cloud
 
 ```
 # Login to the IBM Cloud CLI. Enter your IBM Cloud credentials when prompted.
-ibmcloud login
+ibmcloud login --sso
 
 # Sets the context by updating the kubeconfig file set by KUBECONFIG environment variable, or ~/.kube/config by default.
 ibmcloud ks cluster config --cluster iks-ksmm1v
