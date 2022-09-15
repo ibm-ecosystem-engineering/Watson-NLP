@@ -189,7 +189,6 @@ def extract_entities(data, model, hotel_name=None, website=None):
     import html
 
     input_text = str(data)
-    print(input_text)
     text = html.unescape(input_text)
     if model == 'rbr':
         # Run rbr model on text
@@ -208,16 +207,15 @@ def extract_entities(data, model, hotel_name=None, website=None):
             # Run transformer model on syntax result
             mentions = transformer_model.run(syntax_result)
         '''
-            
+        
     entities_list = mentions.to_dict()['mentions']
     ent_list=[]
     for i in range(len(entities_list)):
         ent_type = entities_list[i]['type']
         ent_text = entities_list[i]['span']['text'] 
         ent_list.append({'ent_type':ent_type,'ent_text':ent_text})
-        
     if len(ent_list) > 0:
-        return {'Document':text,'Hotel Name':hotel_name,'Website':website,'Entities':ent_list}
+        return {'Document':input_text,'Hotel Name':hotel_name,'Website':website,'Entities':ent_list}
     else:
         return {}
 
@@ -311,12 +309,14 @@ def classify_reviews(text):
     State('entity-input', 'value')
 )
 def text_entity_callback(n_clicks, value):
-    print(value)
     entities_dict = extract_entities(value, 'bilstm')
+    '''
     if len(entities_dict) > 0:
         entities_df = pd.DataFrame(entities_dict['Entities']).rename(columns={'ent_type':'Entity Type', 'ent_text':'Entity Text'})
     else:
-        entities_df = pd.DataFrame(column=['NO ENTITIES'])
+        entities_df = pd.DataFrame(columns=['NO ENTITIES'])
+    '''
+    entities_df = pd.DataFrame(entities_dict['Entities']).rename(columns={'ent_type':'Entity Type', 'ent_text':'Entity Text'})
     return entities_df
 
 @app.callback(
@@ -327,11 +327,11 @@ def text_entity_callback(n_clicks, value):
 )
 def hotel_reviews_entity_callback(n_clicks, value):
     if value == 'Belgrave':
-        df = pd.read_csv('hotel-reviews/uk_england_london_belgrave_hotel.csv')
+        df = pd.read_csv('hotel-reviews/uk_england_london_belgrave_hotel.csv').dropna(axis=0)
     elif value == 'Euston':
-        df = pd.read_csv('hotel-reviews/uk_england_london_euston_square_hotel.csv')
+        df = pd.read_csv('hotel-reviews/uk_england_london_euston_square_hotel.csv').dropna(axis=0)
     elif value == 'Dorset':
-        df = pd.read_csv('hotel-reviews/uk_england_london_dorset_square.csv')
+        df = pd.read_csv('hotel-reviews/uk_england_london_dorset_square.csv').dropna(axis=0)
 
     extract_list = run_extraction(df, 'text')
     analysis_df = pd.DataFrame(columns=['Document','Hotel Name', 'Website', 'Entities'])
