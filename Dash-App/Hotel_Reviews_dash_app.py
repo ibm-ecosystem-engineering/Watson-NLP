@@ -158,7 +158,7 @@ entity_output_table = dash_table.DataTable(
     style_header={
         'backgroundColor': 'rgb(30, 30, 30)',
         'color': 'white',
-        'textAlign': 'left',
+        'textAlign': 'center',
     },
     style_data={
         'backgroundColor': 'rgb(50, 50, 50)',
@@ -166,9 +166,9 @@ entity_output_table = dash_table.DataTable(
         'width': 'auto',
     },
     style_cell={
-        'textAlign': 'left',
+        'textAlign': 'center',
         'font-family':'sans-serif',
-        'headerAlign': 'left'
+        'headerAlign': 'center'
     },
     style_table={'overflowX': 'scroll'},
     style_as_list_view=True,
@@ -275,9 +275,9 @@ app.layout = html.Div(children=[
                         children=[
                         html.Div(entity_input),
                         html.Div(entity_button),
-                        dcc.Dropdown(["Belgrave", "Euston", "Dorset"], "Belgrave", id='hotel-dropdown',style={'color':'#00361c'}),
-                        html.Div(hotel_button),
                         html.Div(entity_output_table),
+                        dcc.Dropdown(["Belgrave", "Euston", "Dorset"], "Dorset", id='hotel-dropdown',style={'color':'#00361c'}),
+                        html.Div(hotel_button),
                         html.Div(hotel_entities_figure),
                         html.Div(hotel_types_figure),
                         ],
@@ -310,14 +310,11 @@ def classify_reviews(text):
 )
 def text_entity_callback(n_clicks, value):
     entities_dict = extract_entities(value, 'bilstm')
-    '''
     if len(entities_dict) > 0:
         entities_df = pd.DataFrame(entities_dict['Entities']).rename(columns={'ent_type':'Entity Type', 'ent_text':'Entity Text'})
     else:
-        entities_df = pd.DataFrame(columns=['NO ENTITIES'])
-    '''
-    entities_df = pd.DataFrame(entities_dict['Entities']).rename(columns={'ent_type':'Entity Type', 'ent_text':'Entity Text'})
-    return entities_df
+        entities_df = pd.DataFrame([{'Entity Type': 'NONE/EMPTY', 'Entity Text': 'NONE/EMPTY'}])
+    return entities_df.to_dict('records')
 
 @app.callback(
     Output('hotel-entities-figure', 'figure'),
@@ -332,26 +329,24 @@ def hotel_reviews_entity_callback(n_clicks, value):
         df = pd.read_csv('hotel-reviews/uk_england_london_euston_square_hotel.csv').dropna(axis=0)
     elif value == 'Dorset':
         df = pd.read_csv('hotel-reviews/uk_england_london_dorset_square.csv').dropna(axis=0)
-
+    
     extract_list = run_extraction(df, 'text')
     analysis_df = pd.DataFrame(columns=['Document','Hotel Name', 'Website', 'Entities'])
     analysis_df = analysis_df.append(extract_list,ignore_index = True)
     exp_entities = analysis_df.explode('Entities')
-    entities_df = pd.concat([exp_entities.drop('Entities', axis=1), exp_entities['Entities'].apply(pd.Series)], axis=1)
+    entities_df = pd.concat([exp_entities.drop('Entities', axis=1), exp_entities['Entities'].apply(pd.Series)], axis=1).reset_index().drop(['index'],axis=1)
     hotel_name = entities_df['Hotel Name'][0]
-    entities_df['ent_text'].value_counts().head(20).sort_values().plot(kind='barh', title=hotel_name + ' Entities')
-    entities_df['ent_type'].value_counts().head(20).sort_values().plot(kind='barh', title=hotel_name + ' Entity Types')
-    entities_fig = px.bar(entities_df['ent_text'].value_counts().head(20).sort_values(), 
-                            orientation='h', 
-                            title=hotel_name + ' Entities', 
+    entities_fig = px.bar(entities_df['ent_text'].value_counts().head(20).sort_values(),
+                            orientation='h',
+                            title=hotel_name + ' Entities',
                             labels={
                                 "index":"Top 20 Entities",
                                 "value":"Count",
                                 "variable":"Legend"
                             })
-    types_fig = px.bar(entities_df['ent_type'].value_counts().head(20).sort_values(), 
-                        orientation='h', 
-                        title=hotel_name + ' Entity Types', 
+    types_fig = px.bar(entities_df['ent_type'].value_counts().head(20).sort_values(),
+                        orientation='h',
+                        title=hotel_name + ' Entity Types',
                         labels={
                             "index":"Top Entity Types",
                             "value":"Count",
