@@ -1,7 +1,7 @@
 # Tutorial: Deploy a Watson NLP Model to KServe ModelMesh Serving
 [KServe ModelMesh Serving](https://github.com/kserve/modelmesh-serving) is a Kubernetes-based platform for realtime serving of ML/DL models, optimized for high volume/density use cases. Utilization of available system resources is maximized via intelligent management of in-memory model data across clusters of deployed Pods, based on usage of those models over time. Leveraging existing third-party model servers, a number of standard ML/DL model formats are supported out-of-the box with more to follow: TensorFlow, PyTorch ScriptModule, ONNX, scikit-learn, XGBoost, LightGBM, OpenVINO IR. It can also be extended to support custom runtimes with arbitrary model formats, such as Watson NLP runtime.
 
-This tutorial will walk you through the steps to deploy Watson NLP models to a KServe ModelMesh Serving sandbox environment on [IBM Technology Zone](https://techzone.ibm.com/).
+This tutorial will walk you through the steps to deploy Watson NLP models to a KServe ModelMesh Serving sandbox environment on [IBM Technology Zone](https://techzone.ibm.com/) (or TechZone in short).
 
 ## Prerequisites
 - Access to a KServe ModelMesh Serving sandbox environment on IBM Technology Zone
@@ -22,7 +22,7 @@ You'll need to [login to the IBM Kubernetes Service (IKS) cluster](https://cloud
 <span style="font-size:x-small">
 
 ```
-# Log in to the IBM Cloud CLI. Enter your IBM Cloud credentials when prompted.
+# Login to the IBM Cloud CLI. Enter your IBM Cloud credentials when prompted.
 ibmcloud login
 
 # List the clusters to get the name of the cluster you want to access.
@@ -48,13 +48,13 @@ syntax-izumo-en-stock-predictor                         grpc://modelmesh-serving
 </span>
 
 **Tip**:
-- The name of your dedicated `namespace` in the IKS cluster can be found in the email you received from IBM Technology Zone.
+- The name of your dedicated `namespace` in the IKS cluster can be found in the email you received from TechZone.
 
 ## Upload your own models to the COS bucket
-The KServe ModelMesh Serving instance in TechZone comes with a dedicated COS bucket, where you can store your own models and service them through the KServe ModelMesh Serving instance. Several CLI tools can be used to upload your models to the COS bucket. We'll use the Minio Client here as an example.
+The KServe ModelMesh Serving instance in TechZone comes with a dedicated COS bucket, where you can store your own models and serve them through the KServe ModelMesh Serving instance. Several CLI tools can be used to upload your models to the COS bucket. We'll use the Minio Client here as an example.
 
 ### Find the HMAC credential for the COS bucket
-You'll need the [HMAC credential](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-uhc-hmac-credentials-main) stored in a Kubernetes `secret` object named `storage-config` to access the bucket. Here's how you can retrieve it.
+You'll need the [HMAC credential](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-uhc-hmac-credentials-main) stored in a Kubernetes `secret` object named `storage-config` to access the COS bucket. Here's how you can retrieve it.
 
 <span style="font-size:x-small">
 
