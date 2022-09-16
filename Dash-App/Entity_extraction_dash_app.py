@@ -45,6 +45,10 @@ rbr_model = watson_nlp.load(watson_nlp.download('entity-mentions_rbr_en_stock'))
 bert_model = watson_nlp.load(watson_nlp.download('entity-mentions_bert_multi_stock'))
 # Load transformer model in WatsonNLP
 #transformer_model = watson_nlp.load(watson_nlp.download('entity-mentions_transformer_multi_stock'))
+# Load noun phrases model
+noun_phrases_model = watson_nlp.load(watson_nlp.download('noun-phrases_rbr_en_stock'))
+# Load keywords model 
+keywords_model = watson_nlp.load(watson_nlp.download('keywords_text-rank_en_stock'))
 
 navbar_main = dbc.Navbar(
         [
@@ -92,6 +96,7 @@ entity_sample_input_box = dcc.Textarea(
         value=entity_sample_text,
         style={'width': '100%', 'height': 150},
     )
+
 entity_sample_input = dbc.InputGroup(
     [
         dbc.InputGroupText("Copy Sample text for Entity Extraction"),
@@ -124,8 +129,17 @@ hotel_button = html.Div(
     ]
 )
 
+phrases_button = html.Div(
+    [
+        dbc.Button(
+            "Get Keyword phrases for hotel", id='phrases-button', className="me-2", n_clicks=0
+        ),
+    ]
+)
+
 hotel_entities_figure = dcc.Graph(id='hotel-entities-figure')
 hotel_types_figure = dcc.Graph(id='hotel-types-figure')
+hotel_phrases_figure = dcc.Graph(id='hotel-phrases-figure')
 
 entities_df = pd.DataFrame(columns=['Entity Type', 'Entity Text'])
 entity_output_table = dash_table.DataTable(
@@ -213,28 +227,106 @@ def run_extraction(df, text_col, model):
             extract_list.append(extract_value)              
     return extract_list
 
+def custom_tokenizer(text):
+    # parse the text for pos tagging and lemmatization
+    result = syntax_model.run(text, parsers=('part_of_speech', 'lemma'))
+
+    pos_filter = {
+                    4,      # POS_AUX
+                    10,     # POS_PART
+                    11,     # POS_PRON
+                    15,     # POS_SYM
+                    17      # POS_X
+                  }
+
+    # collect the terms that qualify as meaningful.
+    # to qualify, a term must meet all conditions:
+    # (a) not be pos-tagged as symbol / content-less word
+    # (b) not be a stop-word from the pre-defined list
+    # (c) be longer than 1 character
+    terms = []
+    for token in result.tokens:
+        pos_tag = token.part_of_speech
+        if pos_tag not in pos_filter:
+            lemma = token.lemma.strip()
+            text = token.span.text.strip()
+            term = lemma if len(lemma) > 0 else text
+            if len(term) >1:
+                terms.append(term)
+    return " ".join(terms)
+
+def extract_keywords(text):
+    # Run the Syntax and Noun Phrases models
+    syntax_prediction = syntax_model.run(text, parsers=('token', 'lemma', 'part_of_speech'))
+    noun_phrases = noun_phrases_model.run(text)
+    # Run the keywords model
+    keywords = keywords_model.run(syntax_prediction, noun_phrases, limit=5)  
+    keywords_list = keywords.to_dict()['keywords']
+    key_list = []
+    for i in range(len(keywords_list)):
+        dict_list = {}
+        key = custom_tokenizer(keywords_list[i]['text'])
+        dict_list['phrase'] = key
+        dict_list['relevance'] = keywords_list[i]['relevance']
+        key_list.append(dict_list)
+    return {'Complaint data':text,'Phrases':key_list}
+
+def top_doc_generator(analysis_df):
+    top_doc_list =[]
+    for index, row in analysis_df.iterrows():
+        top_doc_list.append(row['Document'])
+    return top_doc_list
+
+def explode_phrases(top_doc_list):
+    keywords = [extract_keywords(doc) for doc in top_doc_list] 
+    phrases_df = pd.DataFrame(keywords)
+
+    exp_phrases = phrases_df.explode('Phrases')
+    exp_phrases = exp_phrases.dropna(subset=['Phrases'])
+    exp_phrases = pd.concat([exp_phrases.drop(['Phrases'], axis=1), exp_phrases['Phrases'].apply(pd.Series)], axis=1)
+    exp_phrases['phrase_length'] = exp_phrases['phrase'].apply(lambda x: len(x.split(' ')))
+    # Removing uni-gram and bi-grams
+    exp_phrases = exp_phrases[exp_phrases.phrase_length > 2]
+    return exp_phrases
+
 app.layout = html.Div(children=[
                     navbar_main,
-                dbc.Row(
-                    [
-                    dbc.Col(
-                        children=[
-                        html.Div(entity_sample_input),
-                        html.Div(entity_input),
-                        dcc.Dropdown(["rbr", "bilstm", "bert"], "bilstm", id='model-dropdown',style={'color':'#00361c'}),
-                        html.Div(entity_button),
-                        html.Div(entity_output_table),
-                        dcc.Dropdown(["Belgrave", "Euston", "Dorset"], "Dorset", id='hotel-dropdown',style={'color':'#00361c'}),
-                        html.Div(hotel_button),
-                        html.Div(hotel_entities_figure),
-                        html.Div(hotel_types_figure),
+                    dbc.Row(
+                        [
+                        dbc.Col(
+                            children=[
+                            html.Div(entity_sample_input),
+                            html.Div(entity_input),
+                            dcc.Dropdown(["rbr", "bilstm", "bert"], "bilstm", id='model-dropdown',style={'color':'#00361c'}),
+                            html.Div(entity_button),
+                            html.Div(entity_output_table),
+                            ],
+                            width=8, 
+                        ),
                         ],
-                        width=10
+                        justify="center",
                     ),
-                    ],
-                    # align="center",
-                    # className="w-0",
-                ),
+                    dbc.Row(
+                        [
+                        dbc.Col(
+                            children=[
+                            dcc.Dropdown(["Belgrave", "Euston", "Dorset"], "Belgrave", id='hotel-dropdown',style={'color':'#00361c'}),
+                            html.Div(hotel_button),
+                            html.Div(hotel_entities_figure),
+                            html.Div(hotel_types_figure),
+                            ],
+                            width=6
+                        ),
+                        dbc.Col(
+                            children=[
+                            dcc.Dropdown(["Belgrave", "Euston", "Dorset"], "Belgrave", id='phrases-dropdown',style={'color':'#00361c'}),
+                            html.Div(phrases_button),
+                            html.Div(hotel_phrases_figure),
+                            ],
+                            width=6
+                        ),
+                        ],
+                    )
 ])
 
 @app.callback(
@@ -271,10 +363,9 @@ def hotel_reviews_entity_callback(n_clicks, hotel_dropdown, model_dropdown):
     analysis_df = analysis_df.append(extract_list,ignore_index = True)
     exp_entities = analysis_df.explode('Entities')
     entities_df = pd.concat([exp_entities.drop('Entities', axis=1), exp_entities['Entities'].apply(pd.Series)], axis=1).reset_index().drop(['index'],axis=1)
-    hotel_name = entities_df['Hotel Name'][0]
     entities_fig = px.bar(entities_df['ent_text'].value_counts().head(20).sort_values(),
                             orientation='h',
-                            title=hotel_name + ' Entities',
+                            title=hotel_dropdown + ' Entities',
                             labels={
                                 "index":"Top 20 Entities",
                                 "value":"Count",
@@ -283,7 +374,7 @@ def hotel_reviews_entity_callback(n_clicks, hotel_dropdown, model_dropdown):
     entities_fig.update_layout(template=plotly_template,barmode='stack',title_text='Entities extracted from Hotel Reviews', title_x=0.5)
     types_fig = px.bar(entities_df['ent_type'].value_counts().head(20).sort_values(),
                         orientation='h',
-                        title=hotel_name + ' Entity Types',
+                        title=hotel_dropdown + ' Entity Types',
                         labels={
                             "index":"Top Entity Types",
                             "value":"Count",
@@ -291,6 +382,41 @@ def hotel_reviews_entity_callback(n_clicks, hotel_dropdown, model_dropdown):
                         })
     types_fig.update_layout(template=plotly_template,barmode='stack',title_text='Entity types extracted from Hotel Reviews', title_x=0.5)
     return entities_fig, types_fig
+
+@app.callback(
+    Output('hotel-phrases-figure', 'figure'),
+    Input('hotel-button', 'n_clicks'),
+    Input('phrases-dropdown', 'value'),
+    Input('model-dropdown', 'value'),
+)
+def hotel_reviews_phrases_callback(n_clicks, phrases_dropdown, model_dropdown):
+    import math
+
+    if phrases_dropdown == 'Belgrave':
+        df = pd.read_csv('hotel-reviews/uk_england_london_belgrave_hotel.csv').dropna(axis=0)
+    elif phrases_dropdown == 'Euston':
+        df = pd.read_csv('hotel-reviews/uk_england_london_euston_square_hotel.csv').dropna(axis=0)
+    elif phrases_dropdown == 'Dorset':
+        df = pd.read_csv('hotel-reviews/uk_england_london_dorset_square.csv').dropna(axis=0)
+    
+    extract_list = run_extraction(df, 'text', model_dropdown)
+    analysis_df = pd.DataFrame(columns=['Document','Hotel Name', 'Website', 'Entities'])
+    analysis_df = analysis_df.append(extract_list,ignore_index = True)
+
+    top_doc_list = top_doc_generator(analysis_df)
+    exp_phrases = explode_phrases(top_doc_list)
+
+    lowest_rel = exp_phrases.sort_values('relevance', ascending=True).tail(20).reset_index().drop(['index'], axis=1).head(1)['relevance'][0]
+    lower_bound = math.floor(lowest_rel*100)/100
+    phrases_fig = px.bar(exp_phrases.sort_values('relevance', ascending=True).tail(20), 
+                            x='relevance', 
+                            y='phrase',
+                            orientation='h', 
+                            title=phrases_dropdown + 'Top Relevant Phrases Ranked',
+                        )
+    phrases_fig.update_xaxes(range=[lower_bound, 1.0])
+    phrases_fig.update_layout(template=plotly_template,barmode='stack',title_text='Keyword phrases extracted from Hotel Reviews', title_x=0.5)
+    return phrases_fig
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8051, debug=True)
