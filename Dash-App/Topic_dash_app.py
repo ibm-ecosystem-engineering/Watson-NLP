@@ -238,17 +238,17 @@ def topic_modeling_callback(n_clicks, value):
 
 def select_model(value):
     if value == "Discover Bank":
-        return watson_nlp.load('topic-models/complaint_topic_model_discover/')
+        return watson_nlp.load('models/complaint_topic_model_discover/')
     elif value == "Navient Solutions, LLC.":
-        return watson_nlp.load('topic-models/complaint_topic_model_navient/')
+        return watson_nlp.load('models/complaint_topic_model_navient/')
     elif value == "Synchrony Financial":
-        return watson_nlp.load('topic-models/complaint_topic_model_synchrony/')
+        return watson_nlp.load('models/complaint_topic_model_synchrony/')
     elif value == "Paypal Holdings, Inc":
-        return watson_nlp.load('topic-models/complaint_topic_model_paypal/')
+        return watson_nlp.load('models/complaint_topic_model_paypal/')
     elif value == "Ocwen Financial Corporation":
-        return watson_nlp.load('topic-models/complaint_topic_model_ocwen/')
+        return watson_nlp.load('models/complaint_topic_model_ocwen/')
     else:
-        return watson_nlp.load('topic-models/complaint_topic_model_discover/')
+        return watson_nlp.load('models/complaint_topic_model_discover/')
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=8051, debug=True)
