@@ -30,3 +30,6 @@ Dash-App/entity-mentions_bilstm_en_stock/vocab_files/vocab.tags.txt
 Dash-App/entity-mentions_bilstm_en_stock/vocab_files/vocab.words.txt
 Dash-App/entity-mentions_rbr_en_stock/artifacts/entities-pattern-distro-aql-0.0.4-extractor-nlu-entity-v2-multi-language.zip
 Dash-App/text_stopwords_classification_ensemble_en_stock/artifacts/stopwords.txt
+Dash-App/keywords_text-rank_en_stock/model_data/ngram_np_phrase.txt
+Dash-App/keywords_text-rank_en_stock/model_data/stopwords.txt
+Dash-App/noun-phrases_rbr_en_stock/artifacts/watson-nlp-npchunker-aql-0.0.19-extractor-en.zip
