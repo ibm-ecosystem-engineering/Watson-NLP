@@ -1,5 +1,5 @@
 # Tutorial: Deploy a Watson NLP Model to KServe ModelMesh Serving
-[KServe ModelMesh Serving](https://github.com/kserve/modelmesh-serving) is a Kubernetes-based platform for real-time serving of ML/DL models, optimized for high volume/density use cases. Utilization of available system resources is maximized via intelligent management of in-memory model data across clusters of deployed Pods, based on usage of those models over time. Leveraging existing third-party model servers, a number of standard ML/DL model formats are supported out-of-the box with more to follow: TensorFlow, PyTorch ScriptModule, ONNX, scikit-learn, XGBoost, LightGBM, OpenVINO IR. It can also be extended to support custom runtimes with arbitrary model formats, such as Watson NLP runtime.
+[KServe ModelMesh Serving](https://github.com/kserve/modelmesh-serving) is a Kubernetes-based platform for real-time serving of ML/DL models, optimized for high volume/density use cases. Utilization of available system resources is maximized via intelligent management of in-memory model data across clusters of deployed Pods, based on usage of those models over time. Leveraging existing third-party model servers, a number of standard ML/DL model formats are supported out-of-the-box with more to follow: TensorFlow, PyTorch ScriptModule, ONNX, scikit-learn, XGBoost, LightGBM, OpenVINO IR. It can also be extended to support custom runtimes with arbitrary model formats, such as Watson NLP runtime.
 
 This tutorial will walk you through the steps to deploy Watson NLP models to a KServe ModelMesh Serving sandbox environment on [IBM Technology Zone](https://techzone.ibm.com/) (or TechZone in short).
 
@@ -27,15 +27,15 @@ You'll need to [login to the IBM Kubernetes Service (IKS) cluster](https://cloud
 ibmcloud login --sso
 
 # Sets the context by updating the kubeconfig file set by KUBECONFIG environment variable, or ~/.kube/config by default.
-ibmcloud ks cluster config --cluster iks-ksmm1v
+ibmcloud ks cluster config --cluster <iks-cluster-name>
 
 # Set the default namespace in your current context.
-kubectl config set-context --current --namespace=<insert-namespace-name-here>
+kubectl config set-context --current --namespace=<your-namespace>
 ```
 </span>
 
 **Tip**:
-- The name of your dedicated `namespace` in the IKS cluster can be found in the email you received from TechZone.
+- The names of the IKS cluster and your `namespace` can be found in the email you received from TechZone.
 
 ### Sample models
 Some sample Watson NLP stock models are loaded into the Watson NLP runtime pods, so that the serving instance can properly handle the API calls from the sample Dash App and send the results back. These sample models are stored in a shared read-only S3 compatible [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage) (COS) bucket. Some [Kubernetes custom resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) are created so that the serving instance knows how to load the sample models.
