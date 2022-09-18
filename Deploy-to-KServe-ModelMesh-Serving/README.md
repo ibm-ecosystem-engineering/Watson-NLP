@@ -10,28 +10,28 @@ This tutorial will walk you through the steps to deploy Watson NLP models to a K
 - Minio Client command line tool [mc](https://min.io/download)
 
 ## Getting started
-When you request a TechZone environment for Kserve ModelMesh Serving, the system will create a `namespace` for you in a Kubernetes cluster and deploy an instance of Kserve Model Mesh in the namespace.  Once the environment is ready, you will recieve an email letting you know.  This email will include a link to the [Kubernetes Dashboard](https://github.com/kubernetes/dashboard).  Clicking on this link will bring up the Kubernetes `service` resources in your dedicated `namespace`. 
+When you first request a TechZone environment for Kserve ModelMesh Serving, the system will create a `namespace` for you in a Kubernetes cluster and deploy an instance of Kserve Model Mesh in the namespace.  Once your environment is ready, you will recieve an email to let you know.  This email will include a link to a [Kubernetes Dashboard](https://github.com/kubernetes/dashboard).  Clicking on this link will bring up the Kubernetes `service` resources in your dedicated `namespace`. 
 
-Your TechZone environment will be provisioned with an example Watson NLP application already running.  In your Kubernetes Dashboard find the `service` called `dash-app-lb`.  This application has an external endpoint. Clicking on the external endpoint will let you try out this application in your browser. The application lets you get **Sentiment Analysis** and **Emotion Classification** scores for given texts.
+Your TechZone environment will be provisioned with an example Watson NLP application already running.  In your Kubernetes Dashboard find the `service` called `dash-app-lb`.  This application has an external endpoint. Clicking on the external endpoint will let you test this application in your browser. The application allows the user to feed in texts, and get back **Sentiment Analysis** and **Emotion Classification** on these texts texts. The models are being served by Kserve Model Mesh in your namespace.
 
 **Tip**:
-- For new users, you would received an email invite from IBM Cloud to join the `tsglwatson` account.
+- For new users, you will receive an email invite from IBM Cloud to join the `tsglwatson` account when you first request the TechZone environment.
 - You need to login to the [IBM Cloud Console](https://cloud.ibm.com/docs/overview?topic=overview-ui) before you can open up the Kubernetes Dashboard.
 - It might take a few minutes for the DNS record of the Dash App's external endpoint to propagate across the Internet.
 
 ### Login with CLI
-You'll need to [login to the IBM Kubernetes Service (IKS) cluster](https://cloud.ibm.com/docs/containers?topic=containers-access_cluster) with the CLI tools to run the CLI commands in this tutorial.
+You will need to [login to the IBM Kubernetes Service (IKS) cluster](https://cloud.ibm.com/docs/containers?topic=containers-access_cluster) with the CLI tools to run the CLI commands in this tutorial.
 
 <span style="font-size:x-small">
 
 ```
-# Login to the IBM Cloud CLI, with a one-time passcode. Enter your IBM Cloud credentials when prompted in the browser.
+# Login to the IBM Cloud CLI with a one-time passcode. Enter your IBM Cloud credentials when prompted in the browser.
 ibmcloud login --sso
 
-# Sets the context by updating the kubeconfig file set by KUBECONFIG environment variable, or ~/.kube/config by default.
+# Set the context by updating the kubeconfig file set by KUBECONFIG environment variable, or ~/.kube/config by default.
 ibmcloud ks cluster config --cluster <iks-cluster-name>
 
-# Set the default namespace in your current context.
+# Set kubectl to use your namespace by default.
 kubectl config set-context --current --namespace=<your-namespace>
 ```
 </span>
