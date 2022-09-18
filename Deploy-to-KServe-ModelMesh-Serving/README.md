@@ -1,7 +1,7 @@
 # Tutorial: Deploy a Watson NLP Model to KServe ModelMesh Serving
-This tutorial will walk you through the steps to deploy Watson NLP models to a KServe ModelMesh Serving sandbox environment on [IBM Technology Zone](https://techzone.ibm.com/) (TechZone).  [Kserve](https://kserve.github.io/website/0.9/) is a Kubernetes based platform for ML model inference. It supports several standard ML model formats out-of-the-box including: TensorFlow, PyTorch ScriptModule, ONNX, scikit-learn, XGBoost, LightGBM, OpenVINO IR. It can also be extended to support custom runtimes with arbitrary model formats, such as Watson NLP runtime. 
+This tutorial will walk you through the steps to deploy Watson NLP models to a KServe ModelMesh Serving sandbox environment on [IBM Technology Zone](https://techzone.ibm.com/) (TechZone).  
 
-[KServe ModelMesh Serving](https://kserve.github.io/website/0.7/modelserving/mms/modelmesh/overview/) is a recently added feature intended to increase Kserve's scalability.  It is designed to handle large volumes of models, where the deployed models change frequently.  It loads and unloads models aiming to balance between responsiveness to users, and computational footprint.
+[Kserve](https://kserve.github.io/website/0.9/) is a Kubernetes based platform for ML model inference. It supports several standard ML model formats out-of-the-box including: TensorFlow, PyTorch ScriptModule, ONNX, scikit-learn, XGBoost, LightGBM, OpenVINO IR. It can also be extended to support custom runtimes with arbitrary model formats, such as Watson NLP runtime. [KServe ModelMesh Serving](https://kserve.github.io/website/0.7/modelserving/mms/modelmesh/overview/) is a recently added feature intended to increase Kserve's scalability.  It is designed to handle large volumes of models, where the deployed models change frequently.  It loads and unloads models aiming to balance between responsiveness to users, and computational footprint.
 
 ## Prerequisites
 - Access to a KServe ModelMesh Serving sandbox environment on IBM Technology Zone
@@ -12,7 +12,7 @@ This tutorial will walk you through the steps to deploy Watson NLP models to a K
 ## Getting started
 When you first request a TechZone environment for Kserve ModelMesh Serving, the system will create a `namespace` for you in a Kubernetes cluster and deploy an instance of Kserve Model Mesh in the namespace.  Once your environment is ready, you will recieve an email to let you know.  This email will include a link to a [Kubernetes Dashboard](https://github.com/kubernetes/dashboard).  Clicking on this link will bring up the Kubernetes `service` resources in your dedicated `namespace`. 
 
-Your TechZone environment will be provisioned with an example Watson NLP application already running.  In your Kubernetes Dashboard find the `service` called `dash-app-lb`.  This application has an external endpoint. Clicking on the external endpoint will let you test this application in your browser. The application allows the user to feed in texts, and get back **Sentiment Analysis** and **Emotion Classification** on these texts texts. The models are being served by Kserve Model Mesh in your namespace.
+Your TechZone environment will have an example Watson NLP application already running.  In your Kubernetes Dashboard find the `service` called `dash-app-lb`.  This application has an external endpoint. Clicking on the external endpoint will let you test this application in your browser. The application allows the user to feed in texts, and get back **Sentiment Analysis** and **Emotion Classification** on these texts texts. The models are being served by Kserve Model Mesh in your namespace.
 
 **Tip**:
 - For new users, you will receive an email invite from IBM Cloud to join the `tsglwatson` account when you first request the TechZone environment.
@@ -40,7 +40,7 @@ kubectl config set-context --current --namespace=<your-namespace>
 - The names of the IKS cluster and your `namespace` can be found in the email you received from TechZone.
 
 ### Sample models
-Some sample Watson NLP stock models are loaded into the Watson NLP runtime pods, so that the serving instance can properly handle the API calls from the sample Dash App and send the results back. These sample models are stored in a shared read-only S3 compatible [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage) (COS) bucket. Some [Kubernetes custom resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) are created so that the serving instance knows how to load the sample models.
+Watson NLP models that are used by the example application are stored in a shared read-only S3 compatible [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage) (COS) bucket. Some [Kubernetes custom resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) are created so that the serving instance knows how to load the sample models.
 
 <span style="font-size:x-small">
 
