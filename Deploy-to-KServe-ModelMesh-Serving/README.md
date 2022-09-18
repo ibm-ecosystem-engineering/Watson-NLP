@@ -40,7 +40,7 @@ kubectl config set-context --current --namespace=<your-namespace>
 - The names of the IKS cluster and your `namespace` can be found in the email you received from TechZone.
 
 ### Sample models
-Watson NLP models that are used by the example application are stored in a shared read-only S3 compatible [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage) (COS) bucket. Some [Kubernetes custom resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) are created so that the serving instance knows how to load the sample models.
+In order that Kserve Model Mesh serve a model, the model must be stored in an S3 compatible object store.  A Kubernetes custom resource `inferenceservice` is created to register the model with the service.  In the sandbox environment, Watson NLP models that are used by the example application are stored in a shared read-only S3 compatible [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage) (COS) bucket, and `inferenceservice` CRs are created for these models.
 
 <span style="font-size:x-small">
 
@@ -57,7 +57,7 @@ syntax-izumo-en-stock-predictor                         grpc://modelmesh-serving
 The KServe ModelMesh Serving instance in TechZone comes with a dedicated COS bucket, where you can store your own models and serve them through the KServe ModelMesh Serving instance. Several CLI tools can be used to upload your models to the COS bucket. We'll use the Minio Client here as an example.
 
 ### Find the HMAC credential for the COS bucket
-You'll need the [HMAC credential](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-uhc-hmac-credentials-main) stored in a Kubernetes `secret` object named `storage-config` to access the COS bucket. Here's how you can retrieve it.
+You will need the [HMAC credential](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-uhc-hmac-credentials-main) stored in a Kubernetes `secret` object named `storage-config` to access the COS bucket. Here is how you can retrieve it.
 
 <span style="font-size:x-small">
 
@@ -116,7 +116,7 @@ More details regarding Minio and other tools can be found in the following IBM C
 - https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-upload
 
 ## Create a predictor for your model
-A Kubernetes custom resource `InferenceService` with a `predictor` can be created for the uploaded model as follows.
+A Kubernetes custom resource `InferenceService` is created for the uploaded model as follows.
 
 <span style="font-size:x-small">
 
@@ -147,7 +147,7 @@ EOF
 - Replace `$PATH-TO-MODEL` with the folder path inside the bucket.
 - Replace `$BUCKET` with the name of the COS bucket.
 
-Once the model is successfully loaded, you'll see the `READY` status is `True`, when checked with the following command:
+Once the model is successfully loaded, you will see the `READY` status is `True`, when checked with the following command:
 
 <span style="font-size:x-small">
 
