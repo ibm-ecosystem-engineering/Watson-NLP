@@ -1,5 +1,5 @@
 # Tutorial: Deploy a Watson NLP Model to KServe ModelMesh Serving
-This tutorial will walk you through the steps to deploy Watson NLP models to a KServe ModelMesh Serving sandbox environment on [IBM Technology Zone](https://techzone.ibm.com/) (or TechZone in short).
+This tutorial will walk you through the steps to deploy Watson NLP models to a KServe ModelMesh Serving sandbox environment on [IBM Technology Zone](https://techzone.ibm.com/) (TechZone).
 
 [Kserve](https://kserve.github.io/website/0.9/) is a Kubernetes based platform for ML model inference. It supports several standard ML model formats out-of-the-box including: TensorFlow, PyTorch ScriptModule, ONNX, scikit-learn, XGBoost, LightGBM, OpenVINO IR. It can also be extended to support custom runtimes with arbitrary model formats, such as Watson NLP runtime. 
 
@@ -11,8 +11,10 @@ This tutorial will walk you through the steps to deploy Watson NLP models to a K
 - Kubernetes command line tool [kubectl](https://kubernetes.io/docs/tasks/tools/)
 - Minio Client command line tool [mc](https://min.io/download)
 
-## Sample Dash App
-After you reserve a KServe ModelMesh Serving sandbox environment in TechZone, you'll receive an email with a link to the [Kubernetes Dashboard](https://github.com/kubernetes/dashboard), which shows the Kubernetes `service` resources in a dedicated `namespace` when you open it up in a browser. You should be able to find a `service` named `dash-app-lb`, that has an external endpoint. Click on the external endpoint would open up a sample Dash App in your browser. You can use this sample Dash App to send **Sentiment Analysis** and **Emotion Classification** inference requests to the ModelMesh Serving instance, by entering some text in the corresponding text input boxes and clicking on the `Get` buttons.
+## Getting started
+When you request a TechZone environment for Kserve ModelMesh Serving, the system will create a `namespace` for you in a Kubernetes cluster and deploy an instance of Kserve Model Mesh in the namespace.  Once the environment is ready, you will recieve an email letting you know.  This email will include a link to the [Kubernetes Dashboard](https://github.com/kubernetes/dashboard).  Clicking on this link will bring up the Kubernetes `service` resources in your dedicated `namespace`. 
+
+Your TechZone environment will be provisioned with an example Watson NLP application already running.  In your Kubernetes Dashboard find the `service` called `dash-app-lb`.  This application has an external endpoint. Clicking on the external endpoint will let you try out this application in your browser. The application lets you get **Sentiment Analysis** and **Emotion Classification** scores for given texts.
 
 **Tip**:
 - For new users, you would received an email invite from IBM Cloud to join the `tsglwatson` account.
