@@ -2,7 +2,7 @@
 
 In a previous tutorial, we saw how to build a standalone container image for serving stock Watson NLP models.  In this tutorial, we turn our attention to serving custom models using a standalone container image.  
 
-You will learn how to take a model that you have trained in Watson Studio, and build a standalone Docker container image to serve the model.  As with the image built using stock Watson NLP models, this container image can be deployed in many environments.  When the container runs, it exposes an endpoint that clients can use to run inference queries against the served models.  In this tutorial, you will deploy the container image on your laptop with Docker.
+You will learn how to take a model that you have trained in Watson Studio, and build a standalone Docker container image to serve the model.  As with the image built using stock Watson NLP models, this container image can be deployed in many environments (Docker, Kubernetes, OpenShift, cloud container services).  When the container runs, it exposes an endpoint that clients can use to run inference queries against the served models.  In this tutorial, you will deploy the container image on your laptop with Docker.
 
 ## Resources:
 GitHub Repo: https://github.com/ibm-build-labs/Watson-NLP/tree/main/Watson-NLP-Container
