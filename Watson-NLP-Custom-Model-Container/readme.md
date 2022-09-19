@@ -39,19 +39,19 @@ If you have trained a model in a Watson Studio notebook, then in this step you w
 
 Before you can export your custom model, you need to ensure that a project token is set in the notebook environment so that your notebook can access the Cloud Object Storage (COS) bucket associated with the project.  
 
-Get your access token from the IBM Data Platform GUI from Manage -> Access control -> Access tokens. 
+Get your access token from the IBM Data Platform GUI from **Manage -> Access control -> Access tokens.** 
 
 ![access token](Images/access_token.png)
 
-Add the token to your notebook by clicking More -> Insert project token from the notebook action bar. By running the inserted hidden code cell, a project object is created that you can use to access project resources. 
+Add the token to your notebook by clicking **More -> Insert project token** from the notebook action bar. By running the inserted hidden code cell, a project object is created that you can use to access project resources. 
 
 ![insert token](Images/insert_token.png)
 
-Get your project id from Manage -> General -> Project Id 
+Get your project id from **Manage -> General -> Project Id**
 
 ![project id](Images/project_id.png)
     
-Ensure that project access token is be inserted at the top of the notebook in a code cell.  Replace the project_id and project_access_token in the following with the values you have found above. 
+Ensure that project access token is be inserted at the top of the notebook in a code cell.  Replace the **project_id** and **project_access_token** in the following with the values you have found above. 
 ```
 from project_lib import Project 
 project = Project(project_id='<project_id>', project_access_token='<project_access_token>') 
@@ -96,7 +96,7 @@ docker run -d -p 8085:8085 watson-nlp-custom-container:v1
 The container exposes a gRPC service on port 8085. 
 
 ### 5. Test 
-We will test the service using a simple Python client program.  The client code is under the directory Watson-NLP-Custom-Model-Container/Client.  Assuming we start in the Runtime directory: 
+We will test the service using a simple Python client program.  The client code is under the directory **Watson-NLP-Custom-Model-Container/Client**.  Assuming we start in the Runtime directory: 
 ```
 cd ../Client 
 ```
@@ -112,7 +112,7 @@ python3 client.py "Watson NLP is awesome"
 This will query the default model that we have packaged with this example.  In order to query another model, you will have to update some of the client code. 
 To make call to the gRPC inference service, you will need the following: 
 
-- Model ID.   This is passed as a header argument, mm-model-id : “<MODEL_ID>”. You can set the Model ID in environment variable 
+- **Model_ID:** This is passed as a header argument, mm-model-id : “<MODEL_ID>”. You can set the Model ID in environment variable 
 ```
 export WATSON_NLP_MODEL_ID=” ensemble_classification-wf_en_emotion” 
 ```
