@@ -21,6 +21,6 @@ except:
 
 client = GrpcClient()
 
-#Calling the emotion analysis model
-response = client.call_emotion_model(textInput)
+#Calling the watson nlp model
+response = client.call_nlp_model(textInput)
 print(response)

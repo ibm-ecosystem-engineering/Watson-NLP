@@ -8,8 +8,10 @@
 import grpc
 import os
 import watson_nlp.data_model as dm
-from watson_nlp_runtime_client import common_service_pb2, common_service_pb2_grpc
-
+from watson_nlp_runtime_client import (
+    common_service_pb2_grpc,
+    common_service_pb2
+)
 class GrpcClient:
     # default constructor
     def __init__(self):
@@ -18,24 +20,12 @@ class GrpcClient:
         channel = grpc.insecure_channel(GRPC_SERVER_URL)
         self.stub = common_service_pb2_grpc.CommonServiceStub(channel)
 
-    # a method calling sentiment_document-cnn-workflow_en_stock
-    def call_sentiment_document_model_workflow(self, inputText):
-        request = common_service_pb2.SentimentDocumentWorkflowRequest(
-            raw_document=dm.RawDocument(text=inputText).to_proto(),
-            sentence_sentiment=True,
-            show_neutral_scores=True
+    def call_nlp_model(self,inputText):
+        request = common_service_pb2.watson_nlp_topics_Message(
+           raw_document=dm.RawDocument(text=inputText).to_proto()
         )
-        SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL = os.getenv("SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL", default="sentiment_document-cnn-workflow_en_stock")
-        print("###### Calling remote GRPC model = ", SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL)
-        response = self.stub.SentimentDocumentWorkflowPredict(request,metadata=[("mm-model-id", SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL)] )
-        return response
-
-    # emotion analysis ensemble_classification-wf_en_emotion-stock
-    def call_emotion_model(self, inputText):
-        request = common_service_pb2.EmotionDocumentWorkflowRequest(
-            raw_document=dm.RawDocument(text=inputText).to_proto()
-        )
-        EMOTION_CLASSIFICATION_STOCK_MODEL = os.getenv("EMOTION_CLASSIFICATION_STOCK_MODEL", default="ensemble_classification-wf_en_emotion-stock")
-        print("###### Calling remote GRPC model = ", EMOTION_CLASSIFICATION_STOCK_MODEL)
-        response = self.stub.EmotionDocumentWorkflowPredict(request,metadata=[("mm-model-id", EMOTION_CLASSIFICATION_STOCK_MODEL)] )
+        
+        WATSON_NLP_MODEL_ID = os.getenv("WATSON_NLP_MODEL_ID", default="ensemble_classification-wf_en_emotion-stock")
+        print("###### Calling remote GRPC model = ", WATSON_NLP_MODEL_ID)
+        response = self.stub.watson_nlp_topics_Predict(request,metadata=[("mm-model-id", WATSON_NLP_MODEL_ID)] )
         return response
