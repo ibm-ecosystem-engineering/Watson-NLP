@@ -41,11 +41,16 @@ Before you can export your custom model, you need to ensure that a project token
 
 Get your access token from the IBM Data Platform GUI from Manage -> Access control -> Access tokens. 
 
-<diagram>
+![access token](Images/access_token.png)
+
 Add the token to your notebook by clicking More -> Insert project token from the notebook action bar. By running the inserted hidden code cell, a project object is created that you can use to access project resources. 
-<diagram>
+
+![insert token](Images/insert_token.png)
+
 Get your project id from Manage -> General -> Project Id 
-<diagram>
+
+![project id](Images/project_id.png)
+    
 Ensure that project access token is be inserted at the top of the notebook in a code cell.  Replace the project_id and project_access_token in the following with the values you have found above. 
 ```
 from project_lib import Project 
@@ -58,7 +63,9 @@ In your notebook environment you can save your model as a project asset by runni
 The model will be saved in a Cloud Object Storage (COS) bucket that is associated with the project in a ZIP archive.  Note that the ZIP archive created by the save_data function is compatible to the watson_nlp.load() function that is also used to load stock Watson NLP models.  
 
 You can find the saved model in asset tab. 
-<diagram>
+
+![saved model](Images/saved_model.png)
+    
 Use the Watson Studio GUI to download the model to your work station, copying it in to the models directory. You can save multiple models in this directory.  
 
 The file name for the model will be used as the model ID.  When making an inference request from a client program, this model ID will be used to specify which model to use. 
