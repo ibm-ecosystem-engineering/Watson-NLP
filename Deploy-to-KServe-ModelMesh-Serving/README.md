@@ -42,7 +42,9 @@ kubectl config set-context --current --namespace=<your-namespace>
 - The names of the IKS cluster and your `namespace` can be found in the email you received from TechZone.
 
 ### Sample models
-In order that Kserve Model Mesh serve a model, the model must be stored in an S3 compatible object store.  A Kubernetes custom resource `inferenceservice` is created to register the model with the service.  In the sandbox environment, Watson NLP models that are used by the example application are stored in a shared read-only S3 compatible [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage) (COS) bucket, and `inferenceservice` CRs are created for these models.
+In order to serve a model using Kserve Model Mesh, store the model must be stored in an S3 compatible object store, and then create the Kuberneteds custom resource `inferenceservice` to register the model with the service.  
+    
+In the TechZone sandbox environment, the Watson NLP models that are used by the example application are stored in a shared read-only S3 compatible [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage) (COS) bucket, and `inferenceservice` CRs have been created for these models. 
 
 <span style="font-size:x-small">
 
