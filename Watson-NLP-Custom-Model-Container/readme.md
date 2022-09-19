@@ -7,7 +7,7 @@ When the container runs, it exposes an endpoint that clients can use to run infe
 
 ### Architecture diagram
 
-<diagram>
+![reference architecture](Images/reference_architecture.png)
     
 ### Resources:
   
