@@ -1,27 +1,3 @@
----
-draft: true
-display_in_listing: false
-title: Sentiment analysis using Watson-NLP
-subtitle: "Use a pretrained model for sentiment analysis and fine tune the model using the watson_nlp library"
-meta_title: Sentiment analysis using Watson-NLP
-authors:
-  - name: Shivam Solanki
-    email: Shivam.Raj.Solanki@ibm.com
-completed_date: "2022-09-20"
-check_date: "2023-09-20"
-excerpt: "Use a pretrained model for sentiment analysis and fine tune the model using the watson_nlp library"
-meta_description: "Use a pretrained model for sentiment analysis and fine tune the model using the watson_nlp library"
-meta_keywords: Watson NLP, natural language processing, models, machine learning
-primary_tag: artificial-intelligence
-tags:
-  - "speech-and-empathy"
-  - "machine-learning"
-components:
-  - embeddable-ai
-  - watson-apis
-
----
-
 ## Introduction
 
 Sentiment analysis is used ubiquitously to gain insights from text data. For example, using sentiment analysis, companies can understand the voice of the customer or the market sentiment of the company. However, due to the lack of a standard infrastructure and standard libraries, many sentiment analysis projects remain at the proof-of-concept (POC) level and are never put into production.

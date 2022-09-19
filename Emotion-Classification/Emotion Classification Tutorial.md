@@ -1,30 +1,3 @@
----
-draft: true
-display_in_listing: false
-title: Use the Watson NLP library to perform emotion classification
-subtitle: "Understand the fundamentals of IBM Watson NLP and walk through the process of running and evaluating pretrained models to perform emotion classification"
-meta_title: Use the Watson NLP library to perform emotion classification
-authors:
-  - name: Shivam Solanki
-    email: Shivam.Raj.Solanki@ibm.com
-  - name: Christopher Chen 
-    email: christopherchen@ibm.com
-
- 
-completed_date: "2022-09-20"
-check_date: "2023-09-20"
-excerpt: "Understand the fundamentals of IBM Watson NLP and walk through the process of running and evaluating pretrained models to perform emotion classification."
-meta_description: "Understand the fundamentals of IBM Watson NLP and walk through the process of running and evaluating pretrained models to perform emotion classification."
-meta_keywords: Watson NLP, NLP, natural language processing, models, machine learning, emotion classification
-primary_tag: artificial-intelligence
-tags:
-  - "speech-and-empathy"
-  - "machine-learning"
-components:
-  - embeddable-ai
-  - watson-apis
----
-
 With IBM Watson NLP, IBM introduced a common library for artificial intelligence (AI) runtimes (for serving the model) and AI libraries (like Natural Language Processing, Document Understanding, Translation, and Trust). IBM Watson NLP brings everything under one umbrella for consistency and ease of development and deployment. This tutorial walks you through the steps of using a pretrained model to classify emotions in tweets using the `watson_nlp` library from IBM Watson NLP.
 
 The `watson_nlp` library is available on IBM Watson Studio as a runtime library so that you can directly use it for model training, evaluation, and prediction. The following figure shows the Watson NLP NLP architecture.
