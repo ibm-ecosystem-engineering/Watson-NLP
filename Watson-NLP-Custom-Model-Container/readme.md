@@ -3,12 +3,18 @@ In a previous tutorial, we saw how to build a standalone container image for ser
 
 In this tutorial you will learn how to take a model that you have trained in Watson Studio, and build a standalone Docker container image to serve the model. As with standalone images built using stock Watson NLP models, this container image can be deployed in many environments (Docker, Kubernetes, OpenShift, cloud container services).  In this tutorial you will deploy the container image on your laptop with Docker. 
 
-When the container runs, it exposes an endpoint that clients can use to run inference queries against the served models.   
+When the container runs, it exposes an endpoint that clients can use to run inference queries against the served models.  
+
 ### Architecture diagram
+
 <diagram>
+    
 ### Resources:
+  
 GitHub Repo: https://github.com/ibm-build-labs/Watson-NLP/tree/main/Watson-NLP-Container
+    
 ### Prerequisites
+    
 - Docker is installed on your workstation
 - Python >= 3.9 installed in your workstation to run the client program
 - An IBM Artifactory username and API key are required to build the Docker image. Set the following variables in your environment.
