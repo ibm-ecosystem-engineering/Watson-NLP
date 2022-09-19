@@ -3,7 +3,7 @@ This tutorial will walk you through the steps to deploy a Watson NLP model to th
 
 [Kserve](https://kserve.github.io/website/0.9/) is a Kubernetes based platform for ML model inference. It supports several standard ML model formats out-of-the-box including: TensorFlow, PyTorch ScriptModule, ONNX, scikit-learn, XGBoost, LightGBM, OpenVINO IR. It can also be extended to support custom runtimes with arbitrary model formats, such as Watson NLP runtime. 
 
-[KServe ModelMesh Serving](https://kserve.github.io/website/0.7/modelserving/mms/modelmesh/overview/) is a recently added feature intended to increase Kserve's scalability. It is designed to handle large volumes of models, where the deployed models change frequently.  It loads and unloads models aiming to balance between responsiveness to users, and computational footprint.
+[KServe ModelMesh Serving](https://kserve.github.io/website/0.9/modelserving/mms/modelmesh/overview/) is a recently added feature intended to increase Kserve's scalability. It is designed to handle large volumes of models, where the deployed models change frequently.  It loads and unloads models aiming to balance between responsiveness to users, and computational footprint.
 
 ## Prerequisites
 - Access to a KServe ModelMesh Serving sandbox environment on IBM Technology Zone
