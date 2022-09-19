@@ -35,7 +35,7 @@ In this directory, you will find a Dockerfile and a models directory.
 Dockerfile        models 
 ```
 ### 2. Save the Model
-If you have trained a model in a Watson Studio notebook, then in this step you will export it and copy it in to the models directory.  If you do not have a model, then you can use the model that exists in the models directory to complete this tutorial. 
+If you have trained a model in a Watson Studio notebook, then in this step you will export it and copy it in to the models directory.  If you do not have a model, then you can download a model from [here](https://github.com/ibm-build-labs/Watson-NLP/releases/download/ml_model/ensemble_classification-wf_en_emotion) and save it in the models directory to complete this tutorial. In that case you may skip to step 3.
 
 Before you can export your custom model, you need to ensure that a project token is set in the notebook environment so that your notebook can access the Cloud Object Storage (COS) bucket associated with the project.  
 
