@@ -1,9 +1,9 @@
 # Deploy a Watson NLP Model to KServe ModelMesh Serving
-This tutorial will walk you through the steps to deploy Watson NLP models to a KServe ModelMesh Serving sandbox environment on [IBM Technology Zone](https://techzone.ibm.com/) (TechZone).  
+This tutorial will walk you through the steps to deploy a Watson NLP model to the KServe ModelMesh Serving sandbox environment on [IBM Technology Zone](https://techzone.ibm.com/) (TechZone).  
 
 [Kserve](https://kserve.github.io/website/0.9/) is a Kubernetes based platform for ML model inference. It supports several standard ML model formats out-of-the-box including: TensorFlow, PyTorch ScriptModule, ONNX, scikit-learn, XGBoost, LightGBM, OpenVINO IR. It can also be extended to support custom runtimes with arbitrary model formats, such as Watson NLP runtime. 
 
-[KServe ModelMesh Serving](https://kserve.github.io/website/0.7/modelserving/mms/modelmesh/overview/) is a recently added feature intended to increase Kserve's scalability.  It is designed to handle large volumes of models, where the deployed models change frequently.  It loads and unloads models aiming to balance between responsiveness to users, and computational footprint.
+[KServe ModelMesh Serving](https://kserve.github.io/website/0.7/modelserving/mms/modelmesh/overview/) is a recently added feature intended to increase Kserve's scalability. It is designed to handle large volumes of models, where the deployed models change frequently.  It loads and unloads models aiming to balance between responsiveness to users, and computational footprint.
 
 ## Prerequisites
 - Access to a KServe ModelMesh Serving sandbox environment on IBM Technology Zone
@@ -12,9 +12,9 @@ This tutorial will walk you through the steps to deploy Watson NLP models to a K
 - Minio Client command line tool [mc](https://min.io/download)
 
 ## Getting started
-When you first request a TechZone environment for Kserve ModelMesh Serving, the system will create a `namespace` for you in a Kubernetes cluster and deploy an instance of Kserve Model Mesh in the namespace.  Once your environment is ready, you will recieve an email to let you know.  This email will include a link to a [Kubernetes Dashboard](https://github.com/kubernetes/dashboard).  Clicking on this link will bring up the Kubernetes `service` resources in your dedicated `namespace`. 
+When you first request a TechZone sandbox environment for Kserve ModelMesh Serving, the system will create a `namespace` for you in a Kubernetes cluster and deploy an instance of Kserve ModelMesh in the namespace.  Once your environment is ready, you will recieve an email to let you know.  This email will include a link to the [Kubernetes Dashboard](https://github.com/kubernetes/dashboard).  Clicking on this link will bring up the Kubernetes `service` resources in your dedicated `namespace`. 
 
-Your TechZone environment will have an example Watson NLP application already running.  In your Kubernetes Dashboard find the `service` called `dash-app-lb`.  This application has an external endpoint. Clicking on the external endpoint will let you test this application in your browser. The application allows the user to feed in texts, and get back **Sentiment Analysis** and **Emotion Classification** on these texts texts. The models are being served by Kserve Model Mesh in your namespace.
+Your TechZone environment will have an example Watson NLP application already running.  In the Kubernetes Dashboard, find a `service` called `dash-app-lb`, which has an external endpoint. Clicking on the external endpoint will let you test this application in your browser. The application allows the user to feed in texts, and get back **Sentiment Analysis** and **Emotion Classification** on the texts. The models are being served by Kserve ModelMesh in your namespace.
 
 **Tip**:
 - For new users, you will receive an email invite from IBM Cloud to join the `tsglwatson` account when you first request the TechZone environment.
@@ -22,7 +22,7 @@ Your TechZone environment will have an example Watson NLP application already ru
 - It might take a few minutes for the DNS record of the Dash App's external endpoint to propagate across the Internet.
 
 ### Login with CLI
-You will need to [login to the IBM Kubernetes Service (IKS) cluster](https://cloud.ibm.com/docs/containers?topic=containers-access_cluster) with the CLI tools to run the CLI commands in this tutorial.
+You will need to [login to the IBM Kubernetes Service (IKS) cluster](https://cloud.ibm.com/docs/containers?topic=containers-access_cluster) with the CLI tools to run the commands in this tutorial.
 
 <span style="font-size:x-small">
 
@@ -42,7 +42,7 @@ kubectl config set-context --current --namespace=<your-namespace>
 - The names of the IKS cluster and your `namespace` can be found in the email you received from TechZone.
 
 ### Sample models
-In order to serve a model using Kserve Model Mesh, store the model must be stored in an S3 compatible object store, and then create the Kuberneteds custom resource `inferenceservice` to register the model with the service.  
+In order to serve a model using Kserve ModelMesh, the model must be stored in an S3 compatible object store, and then create the Kuberneteds custom resource `inferenceservice` to register the model with the service.  
     
 In the TechZone sandbox environment, the Watson NLP models that are used by the example application are stored in a shared read-only S3 compatible [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage) (COS) bucket, and `inferenceservice` CRs have been created for these models. 
 
@@ -57,7 +57,7 @@ syntax-izumo-en-stock-predictor                         grpc://modelmesh-serving
 ```
 </span>
 
-## Upload your own models to the COS bucket
+## Upload your own model
 The KServe ModelMesh Serving instance in TechZone comes with a dedicated COS bucket, where you can store your own models and serve them through the KServe ModelMesh Serving instance. Several CLI tools can be used to upload your models to the COS bucket. We'll use the Minio Client here as an example.
 
 ### Find the HMAC credential for the COS bucket
