@@ -3,7 +3,9 @@ In this directory, we will learn how to serve pre-trained Watson NLP models from
 
 By standalone container, we mean that the container image is self-contained and includes both ML models and the model runtime.  When the container runs it exposes REST and gRPC endpoints that a client program can use to run scoring against the models.  
 
-Standalone containers are useful since they can be deployed in a variety of contexts.  In this tutorial, we will deploy locally with Docker, which can be convenient for development. It demonstrates how to testing the service by running a simple Python client program.
+Standalone containers are useful since they can be deployed in a variety of contexts.  In this tutorial, we will deploy locally with Docker, which can be convenient for development.
+
+In addition to serving the models, this tutorial demonstrates how to testing the service by running a simple Python client program. 
 
 ### Architecture diagram
 
