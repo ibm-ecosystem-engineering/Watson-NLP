@@ -215,7 +215,7 @@ def classify_complaints(text: str):
 def reviews_classification_callback(n_clicks, value):
     # sentiment_output_example_processed = json.dumps(sentiment_output_example)
     classification_output_python = classify_reviews(value)
-    print("OUTPUT CLASSES: ", classification_output_python['classes'])
+    # print("OUTPUT CLASSES: ", classification_output_python['classes'])
 
     df_classification = pd.DataFrame(classification_output_python['classes'])
     # Adding a column with colors
@@ -241,7 +241,7 @@ def reviews_classification_callback(n_clicks, value):
 )
 def complaints_classification_callback(n_clicks, value):
     classification_output_python = classify_complaints(value)
-    print("OUTPUT CLASSES: ", classification_output_python['classes'])
+    # print("OUTPUT CLASSES: ", classification_output_python['classes'])
 
     df_classification = pd.DataFrame(classification_output_python['classes'])
     # Adding a column with colors
