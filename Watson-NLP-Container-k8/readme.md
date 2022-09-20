@@ -34,7 +34,7 @@ git clone https://github.com/ibm-build-labs/Watson-NLP
 ```
 Go to the project directory for this tutorials
 ```
-cd Watson-NLP/Watson-NLP-Container-Local
+cd Watson-NLP/Watson-NLP-Container-k8
 ```
 ### 2. Build
 Go to the directory `Runtime`
