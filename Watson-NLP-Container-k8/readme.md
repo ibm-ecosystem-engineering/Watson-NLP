@@ -9,7 +9,7 @@ In addition to serving the models, this tutorial demonstrates how to testing the
 
 ### Architecture diagram
 
-![Diagram](Images/WatsonNLPRuntimeContainer.png)
+![Diagram](Images/ReferenceArchitectureK8.png)
 
 ### Prerequisites
 - Docker is installed on your workstation
