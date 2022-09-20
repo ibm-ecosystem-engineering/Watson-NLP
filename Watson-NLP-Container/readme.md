@@ -34,7 +34,7 @@ git clone https://github.com/ibm-build-labs/Watson-NLP
 ```
 Go to the project directory for this tutorials
 ```
-cd Watson-NLP/Watson-NLP-Container-Local
+cd Watson-NLP/Watson-NLP-Container
 ```
 ### 2. Build
 Go to the directory `Runtime`
@@ -111,7 +111,7 @@ docker run -d -p 8085:8085 watson-nlp-container:v1
 The gRPC service will be exposed locally on port 8085 at localhost.
 
 ### 4. Test 
-We will test the service using a simple Python client program.  The client code is under the directory **Watson-NLP-Container-Local/Client**.  Assuming we start in the Runtime directory: 
+We will test the service using a simple Python client program.  The client code is under the directory **Watson-NLP-Container/Client**.  Assuming we start in the Runtime directory: 
 ```
 cd ../Client 
 ```
