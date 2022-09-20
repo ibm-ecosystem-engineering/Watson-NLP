@@ -7,7 +7,7 @@ Standalone containers are useful since they can be deployed in a variety of cont
 
 ### Architecture diagram
 
-![Diagram](Images/WatsonNLPRuntimeContainer.png)
+![Diagram](Images/ReferenceArchitectureRuntimeLocal.png)
 
 ### Prerequisites
 - Docker is installed on your workstation
