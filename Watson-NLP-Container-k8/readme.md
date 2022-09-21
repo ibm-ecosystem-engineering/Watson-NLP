@@ -32,7 +32,9 @@ Go to the project directory for this tutorial.
 ```
 cd Watson-NLP/Watson-NLP-Container-k8
 ```
-### 2. Build
+### 2. Build the container image 
+If you already have a standalone container image that you have created to serve models, you can skip this step.
+
 Go to the directory `Runtime`.
 ```
 cd Runtime
@@ -73,19 +75,15 @@ ENV LOCAL_MODELS_DIR=/app/models
 COPY --from=build /app/models /app/models
 ```
 
-For the build we use the Watson NLP Runtime container image as the base image. Stock models are downloaded to the build machine during the build phase, and then copied into the image during the release phase.
+Observe that the build uses the Watson NLP Runtime container image as the base image. Stock models are downloaded to the build machine during the build phase, and then copied into the image during the release phase.
 
-Below are the four build arguments required for this Dockerfile.  Set these as environment variables.  
-- **WATSON_RUNTIME_BASE**=Watson base runtime image. you may provide any version you want. the default version is 13.1
+The four build arguments are used for this Dockerfile.  Set these as environment variables.  
+- **WATSON_RUNTIME_BASE**=Watson base runtime image (optional).
 - **ARTIFACTORY_USERNAME**=Artifactory username to download the base image
 - **ARTIFACTORY_API_KEY**=Artifactory API key to download the base image
-- **MODEL_NAMES**=argument is the ML model you want to include in the container. You can pass multiple model names with space separated.
+- **MODEL_NAMES**=Space-separated list of models to be served. 
 
-**LOCAL_MODELS_DIR** is the directory from where Watson runtime reads all the models. You don’t have to change anything here.Finally copy all the model from the base stage to release stage.To build a docker image, run the following command. 
-
-Finally copy all the model from the base stage to release stage. 
- 
-To build a docker image, run the following command.
+To build a Docker image, run the following command.
 ```
 docker build . \
 --build-arg WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39" \
@@ -99,9 +97,8 @@ This will create a Docker image called `watson-nlp-container:v1`.  When the co
 - sentiment_document-cnn-workflow_en_stock 
 - ensemble_classification-wf_en_emotion-stock 
 
-To use this image in kubernetes/OpenShift cluster, you need an image repository so that during deployment cluster can pull the image. In this example I am using IBM cloud container registry. You can choose a repository on your own.
-
-Tag your image with proper repository and namespace/project name. replacing the <REPO> and <PROJECT_NAME> based on your configuration.
+### 3. Copy the image to a container registry
+To use this image in Kubernetes or OpenShift cluster, you need to provision the image to a repository so that during deployment cluster can pull the image.  Tag your image with proper repository and namespace/project name. replacing the <REPO> and <PROJECT_NAME> based on your configuration.
 ```
 docker tag watson-nlp-container:v1 <REPO>/<PROJECT_NAME>/watson-nlp-container:v1 
 ```
