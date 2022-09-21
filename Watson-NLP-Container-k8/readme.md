@@ -1,19 +1,15 @@
-# Watson NLP Runtime in a Container
-In this directory, we will learn how to serve pre-trained Watson NLP models from a standalone container.  For the examples, we will use stock models for Sentiment Analysis and Emotion Classification.
+# Standalone Containers on Kubernetes and OpenShift
+In this tutorial you will learn how to serve Watson NLP models using a standalone container on a Kubernetes or OpenShift cluster.  For the tutorial you will use stock models for Sentiment Analysis and Emotion Classification, though you can use the same approach to serve other stock models or custom models that you have trained on Kubernetes or OpenShift.
 
-By standalone container, we mean that the container image is self-contained and includes both ML models and the model runtime.  When the container runs it exposes REST and gRPC endpoints that a client program can use to run scoring against the models.  
-
-Standalone containers are useful since they can be deployed in a variety of contexts.  In this tutorial, we will deploy on a Kubernetes or OpenShift cluster.
-
-In addition to serving the models, this tutorial demonstrates how to testing the service by running a simple Python client program. 
+The standalone container image includes both the Watson NLP Runtime and the models to be served.  When the container runs, it exposes a gRPC and REST endpoints that clients can use to run inference against the served models.  The advantage of using standalone containers is that they can be deployed on any container runtime.
 
 ### Architecture diagram
 
 ![Diagram](Images/ReferenceArchitectureK8.png)
 
 ### Prerequisites
-- Docker is installed on your workstation
-- Python >= 3.9 installed in your workstation to run the client program
+- Docker is installed on your workstation.
+- Python >= 3.9 installed in your workstation.  (This is needed to run the client program.)
 - An [IBM Artifactory](https://na.artifactory.swg-devops.com/ui/admin/artifactory/user_profile) user name and API key are required to build the Docker image. Get an Artifactory Api key from [here](https://taas.w3ibm.mybluemix.net/guides/create-apikey-in-artifactory.md)
   - ARTIFACTORY_USERNAME 
   - ARTIFACTORY_API_KEY
@@ -27,7 +23,7 @@ export ARTIFACTORY_API_KEY=<API_KEY>
 ## Steps
 
 ### 1. Clone the git repo
-Clone the git repository containing our example code. Go to the directory that contains the code used in this tutorial.
+Clone the GitHub repository containing our example code. Go to the directory that contains the code used in this tutorial.
 
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP 
