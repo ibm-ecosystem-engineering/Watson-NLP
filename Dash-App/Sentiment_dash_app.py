@@ -279,4 +279,5 @@ def update_output(n_clicks, value):
     return fig_emotion, df_emotion.to_dict('records')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8050)
+    SERVICE_PORT = os.getenv("SERVICE_PORT", default="8050")
+    app.run(host="0.0.0.0", port=SERVICE_PORT)

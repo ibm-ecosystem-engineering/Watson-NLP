@@ -251,4 +251,5 @@ def select_model(value):
         return watson_nlp.load('models/complaint_topic_model_discover/')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=8051, debug=True)
+    SERVICE_PORT = os.getenv("SERVICE_PORT", default="8050")
+    app.run(host="0.0.0.0", port=SERVICE_PORT, debug=True)
