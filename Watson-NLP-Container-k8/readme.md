@@ -1,4 +1,4 @@
-# Standalone Containers on Kubernetes and OpenShift
+# Serving Models with Standalone Containers on Kubernetes and OpenShift
 In this tutorial you will learn how to serve Watson NLP models using a standalone container on a Kubernetes or OpenShift cluster.  For the tutorial you will use stock models for Sentiment Analysis and Emotion Classification, though you can use the same approach to serve other stock models or custom models that you have trained on Kubernetes or OpenShift.
 
 The standalone container image includes both the Watson NLP Runtime and the models to be served.  When the container runs, it exposes a gRPC and REST endpoints that clients can use to run inference against the served models.  The advantage of using standalone containers is that they can be deployed on any container runtime.
