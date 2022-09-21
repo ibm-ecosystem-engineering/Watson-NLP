@@ -28,16 +28,16 @@ Clone the GitHub repository containing our example code. Go to the directory tha
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
-Go to the project directory for this tutorials
+Go to the project directory for this tutorial.
 ```
 cd Watson-NLP/Watson-NLP-Container-k8
 ```
 ### 2. Build
-Go to the directory `Runtime`
+Go to the directory `Runtime`.
 ```
 cd Runtime
 ```
-We will build the container image for the service with the following Dockerfile. 
+This directory contains the Dockerfile we will use to build the standalone container image.
 ```
 ARG WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39"
 FROM ${WATSON_RUNTIME_BASE} as base
@@ -75,7 +75,7 @@ COPY --from=build /app/models /app/models
 
 For the build we use the Watson NLP Runtime container image as the base image. Stock models are downloaded to the build machine during the build phase, and then copied into the image during the release phase.
 
-Below are the four build arguments that needto be passed during building the image,
+Below are the four build arguments required for this Dockerfile.  Set these as environment variables.  
 - **WATSON_RUNTIME_BASE**=Watson base runtime image. you may provide any version you want. the default version is 13.1
 - **ARTIFACTORY_USERNAME**=Artifactory username to download the base image
 - **ARTIFACTORY_API_KEY**=Artifactory API key to download the base image
