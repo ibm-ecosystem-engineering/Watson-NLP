@@ -7,6 +7,8 @@ This Watson NLP Runtime container exposes gRPC and REST endpoints that can be us
 
 ### Architecture Diagram
 
+![Reference architecure](images/referenceArchitecturePythonClient.png)
+
 We first demonstrate below how to build a container image for the web application. Then we demonstrate how to run it with either Docker, or in a Kubernetes or OpenShift cluster. Finally, we will take a closer look at the code for this client application. 
 
 ### Prerequisites: 
