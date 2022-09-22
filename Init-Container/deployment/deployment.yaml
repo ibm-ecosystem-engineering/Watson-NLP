@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: watson-main-container
+spec:
+  selector:
+    matchLabels:
+      app: watson-main-container
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: watson-main-container
+    spec:
+      initContainers:
+      - name: initial-model-loading
+        image: busybox
+        command:
+        - wget
+        - "-O"
+        - "/app/models/ensemble_classification-wf_en_emotion"
+        - https://github.com/ibm-build-labs/Watson-NLP/releases/download/ml_model/ensemble_classification-wf_en_emotion
+        volumeMounts:
+        - name: configdir
+          mountPath: "/app/models"
+      containers:
+      - name: watson-main-container
+        image: image-registry.openshift-image-registry.svc:5000/poc/runtime:13.1.0
+        env:
+        - name: LOCAL_MODELS_DIR
+          value: "/app/models"
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 8085
+        volumeMounts:
+        - name: configdir
+          mountPath: "/app/models"
+      volumes:
+      - name: configdir
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: watson-main-container
+spec:
+  type: ClusterIP
+  selector:
+    app: watson-main-container
+  ports:
+  - port: 8085
+    protocol: TCP
+    targetPort: 8085
