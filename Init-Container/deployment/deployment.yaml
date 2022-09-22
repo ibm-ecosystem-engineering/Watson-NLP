@@ -13,15 +13,10 @@ spec:
         app: watson-main-container
     spec:
       initContainers:
-      - name: initial-model-loading
-        image: busybox
-        command:
-        - wget
-        - "-O"
-        - "/app/models/ensemble_classification-wf_en_emotion"
-        - https://github.com/ibm-build-labs/Watson-NLP/releases/download/ml_model/ensemble_classification-wf_en_emotion
+      - name: initial-model-loading-emotion-classification
+        image: image-registry.openshift-image-registry.svc:5000/poc/watson-nlp_classification_ensemble-workflow_lang_en_tone-stock:2.3.1
         volumeMounts:
-        - name: configdir
+        - name: model-directory
           mountPath: "/app/models"
       containers:
       - name: watson-main-container
@@ -29,6 +24,8 @@ spec:
         env:
         - name: LOCAL_MODELS_DIR
           value: "/app/models"
+        - name: LOG_LEVEL
+          value: debug
         resources:
           requests:
             memory: "2Gi"
@@ -37,12 +34,13 @@ spec:
             memory: "4Gi"
             cpu: "1000m"
         ports:
+        - containerPort: 8080
         - containerPort: 8085
         volumeMounts:
-        - name: configdir
+        - name: model-directory
           mountPath: "/app/models"
       volumes:
-      - name: configdir
+      - name: model-directory
         emptyDir: {}
 ---
 apiVersion: v1
@@ -54,6 +52,12 @@ spec:
   selector:
     app: watson-main-container
   ports:
+  - port: 8080
+    name: http-rest-svc
+    protocol: TCP
+    targetPort: 8080
   - port: 8085
+    name: http-grpc-svc
     protocol: TCP
     targetPort: 8085
+  

@@ -18,12 +18,12 @@ class GrpcClient:
         channel = grpc.insecure_channel(GRPC_SERVER_URL)
         self.stub = common_service_pb2_grpc.CommonServiceStub(channel)
 
-    # emotion analysis ensemble_classification-wf_en_emotion-stock
+    # emotion analysis classification_ensemble-workflow_lang_en_tone-stock
     def call_emotion_model(self, inputText):
         request = common_service_pb2.EmotionDocumentWorkflowRequest(
             raw_document=dm.RawDocument(text=inputText).to_proto()
         )
-        EMOTION_CLASSIFICATION_STOCK_MODEL = os.getenv("EMOTION_CLASSIFICATION_STOCK_MODEL", default="ensemble_classification-wf_en_emotion")
+        EMOTION_CLASSIFICATION_STOCK_MODEL = os.getenv("EMOTION_CLASSIFICATION_STOCK_MODEL", default="classification_ensemble-workflow_lang_en_tone-stock")
         print("###### Calling remote GRPC model = ", EMOTION_CLASSIFICATION_STOCK_MODEL)
         response = self.stub.EmotionDocumentWorkflowPredict(request,metadata=[("mm-model-id", EMOTION_CLASSIFICATION_STOCK_MODEL)] )
         return response
