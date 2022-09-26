@@ -3,7 +3,7 @@ In this tutorial you will learn how to export a Watson NLP model from Watson Stu
 
 The approach taken is to create a standalone container image, in which the models are packaged into the image together with the Watson NLP Runtime.  When the container runs it will expose REST and gRPC endpoints that client programs can use to make inference requests. 
 
-Standalone containers are useful since they can be deployed anywhere:  On your laptop using Docker; on a Kubernetes or OpenShift cluster; or on a cloud container service like IBM Code Engine or AWS Fargate.  In this tutorial, you will run the container on your local machine using Docker.
+Standalone containers are useful since they can be deployed anywhere:  On your laptop using Docker; on a Kubernetes or OpenShift cluster; or on a cloud container service like IBM Code Engine or AWS Fargate.  
 
 ### Architecture diagram
 
