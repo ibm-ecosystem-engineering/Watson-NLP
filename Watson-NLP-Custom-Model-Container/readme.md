@@ -1,22 +1,16 @@
-## Serving Custom Models with a Standalone Container
-In a previous tutorial, we saw how to build a standalone container image for serving stock Watson NLP models. In this tutorial, we turn our attention to serving custom models using a standalone container image. 
+## Serving Custom Watson NLP Models using Standalone Containers
+In this tutorial you will learn how to serve custom Watson NLP models using standalone containers.  Both the models and the Watson NLP Runtime will be packaged into the container image.  When the container runs it will expose REST and gRPC endpoints that client programs can use to do inference on the models. 
 
-In this tutorial you will learn how to take a model that you have trained in Watson Studio, and build a standalone Docker container image to serve the model. As with standalone images built using stock Watson NLP models, this container image can be deployed in many environments (Docker, Kubernetes, OpenShift, cloud container services).  In this tutorial you will deploy the container image on your laptop with Docker. 
-
-When the container runs, it exposes an endpoint that clients can use to run inference queries against the served models.  
+Standalone containers are useful since they can be deployed anywhere: your laptop using a container runtime like Docker; a Kubernetes or OpenShift cluster; or, a cloud container service like IBM Code Engine or AWS Fargate.  In this tutorial, you will run the container on your local machine using Docker.
 
 ### Architecture diagram
 
 ![reference architecture](Images/reference_architecture.png)
     
-### Resources:
-  
-GitHub Repo: https://github.com/ibm-build-labs/Watson-NLP/tree/main/Watson-NLP-Container
-    
 ### Prerequisites
     
-- Docker is installed on your workstation
-- Python >= 3.9 installed in your workstation to run the client program
+- Docker is installed on your workstation.
+- Python >= 3.9 installed in your workstation to run the client program.
 - An IBM Artifactory username and API key are required to build the Docker image. Set the following variables in your environment.
     - ARTIFACTORY_USERNAME
     -  ARTIFACTORY_API_KEY
