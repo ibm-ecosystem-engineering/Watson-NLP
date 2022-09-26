@@ -113,9 +113,7 @@ Run the client command as:
 ```
 python3 client.py "Watson NLP is awesome" 
 ```
-
-##### Output
-
+You will see output similar to the following.
 ```
 classes {
   class_name: "joy"
