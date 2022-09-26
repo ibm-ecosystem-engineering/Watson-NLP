@@ -34,16 +34,22 @@ navbar_main = dbc.Navbar(
             html.A(
                 dbc.Row(
                     [
+                    dbc.Col(html.Img(src=app.get_asset_url('ibm_logo.png'), height="30px")),
                     dbc.Col(dbc.NavbarBrand("Build Lab", className="me-auto")),
                     ],
                     align="center",
                     className="w-0",
                 ),
-                style={"textDecoration": "bold", "margin-right": "33%"},
+                style={"textDecoration": "bold", "margin-right": "20%"},
             ),
-            dbc.Row(html.H2("Watson NLP"),
+            dbc.Row(html.H2("Watson NLP: "),
             className="me-auto",
-            justify='center'),
+            justify='center',
+            ),
+            dbc.Row(html.H3("Sentiment & Emotion Classification"),
+            className="me-auto",
+            justify='center'
+            ),
             dbc.Row(
                 [
                         dbc.Nav(
@@ -53,7 +59,7 @@ navbar_main = dbc.Navbar(
                                     # add an auto margin after this to push later links to end of nav
                                     className="me-auto",
                                 ),
-                                html.Span(dcc.LogoutButton(logout_url='https://w3.ibm.com/w3publisher/ibm-build-labs'), className="ml-auto")
+                                # html.Span(dcc.LogoutButton(logout_url='https://w3.ibm.com/w3publisher/ibm-build-labs'), className="ml-auto")
                             ],
                             # make sure nav takes up the full width for auto margin to get applied
                             className="w-100",
@@ -67,10 +73,87 @@ navbar_main = dbc.Navbar(
     className = "ml-auto"
 )
 
+sentiment_sample_text = "I don't share everyone's unbridled enthusiasm for this film. It is indeed a great popcorn flick, with outstanding aerial photography and maneuvers. But 10 stars? There are few, if any, movies that are perfect, and deserve that kind of rating. \
+The problem with the film is the plot. It is so filled with age-worn cliches that one could easily tell what was coming from beginning to end. I mean, you had to know who was going to save the day at the end, and you had to know what was going to happen when Maverick jumped out of Penny's window. Those are just two examples of the many obvious plot points that you could see coming a mile away. I could list them all, but it would take up too much space here. Basically the entire plot was entirely predictable. \
+The opening scene, especially, was straight out of Hollywood Screenplay Writing 101. I mean, seriously, how many times have we seen that subplot? Countless. \
+There were no characters in the movie, either. They were all caricatures, stereotypes. No depth to any of them. They had their standard roles to play, and that was it. \
+Did I enjoy the film? Sure, it was fun. Especially on a big theater screen with a loud sound system. Did I take anything away from the film? Did it make me think about anything after it was over? Nah. Will I see it again? Nah. \
+I will give Tom Cruise credit for including Val Kilmer in the cast. Considering his health problems, that was a nice touch. \
+So, yeah, enjoy the film. Sit back with your bag of popcorn and enjoy the g-forces. But don't pretend it is anything other than just another summer blockbuster."
+# sentiment_sample_input = dcc.Textarea(
+#         id='textarea-sentiment',
+#         value=sentiment_sample_text,
+#         style={'width': '100%', 'height': 200},
+#     )
+sentiment_sample_input = dbc.InputGroup(
+            [
+                dbc.InputGroupText("Copy Text for Sentiment Analysis"),
+                dcc.Textarea(
+                    id='textarea-sentiment',
+                    value=sentiment_sample_text,
+                    style={'width': '100%', 'height': 100},
+                ),
+                dcc.Clipboard(
+                    target_id="textarea-sentiment",
+                    title="copy",
+                    style={
+                        # "position": "absolute",
+                        # "top": 0,
+                        # "right": 20,
+                        # "fontSize": 20,
+                        # "color": "black",
+                        # "display": "inline-block",
+                        # "verticalAlign": "top",
+                    },
+                ),
+            ],
+            # className="mb-3",
+)
+emotion_sample_text = " Rooms were stunningly decorated and really spacious in the top of the building Pictures are of room 300 The true beauty of the building has been kept but modernised brilliantly Also the bath was lovely and big and inviting Great more for couples Restaurant menu was a bit pricey but there were loads of little eatery places nearby within walking distance and the tram stop into the centre was about a 6 minute walk away and only about 3 or 4 stops from the centre of Amsterdam Would recommend this hotel to anyone it s unbelievably well priced too"
+# emotion_sample_input = dcc.Textarea(
+#         id='textarea-emotion',
+#         value=emotion_sample_text,
+#         style={'width': '100%', 'height': 200},
+#     )
+emotion_sample_input = dbc.InputGroup(
+            [
+                dbc.InputGroupText("Copy Text for Sentiment Analysis"),
+                dcc.Textarea(
+                    id='textarea-emotion',
+                    value=emotion_sample_text,
+                    style={'width': '100%', 'height': 100},
+                ),
+                dcc.Clipboard(
+                    target_id="textarea-emotion",
+                    title="copy2",
+                    style={
+                        "position": "absolute",
+                        "top": 0,
+                        "right": 20,
+                        "color": "black",
+                        "display": "inline-block",
+                        "fontSize": 20,
+                        "verticalAlign": "top",
+                    },
+                ),
+            ],
+            # className="mb-3",
+)
+
 sentiment_analysis_input =  dbc.InputGroup(
             [
                 dbc.InputGroupText("Enter Text for Sentiment Analysis"),
                 dbc.Textarea(id="sentiment-input", placeholder="Text for Sentiment analysis"),
+                dcc.Clipboard(
+                    target_id="textarea-sentiment",
+                    title="copy1",
+                    style={
+                        "display": "inline-block",
+                        "fontSize": 20,
+                        "verticalAlign": "top",
+                        "color": "black"
+                    },
+                ),
             ],
             className="mb-3",
         )
@@ -88,6 +171,7 @@ sentiment_button = html.Div(
         dbc.Button(
             "Get Sentiment", id="sentiment-button", className="me-2", n_clicks=0
         ),
+        dbc.Button(id="sentiment-result", color="success", className="me-1"),
     ]
 )
 
@@ -96,6 +180,7 @@ emotion_button = html.Div(
         dbc.Button(
             "Get Emotion", id="emotion-button", className="me-2", n_clicks=0
         ),
+        dbc.Button(id="emotion-result", color="success", className="me-1"),
     ]
 )
 
@@ -155,22 +240,73 @@ emotion_output_table = dash_table.DataTable(
     id='emotion-output-table'
 )
 
+empty_sentiment_output = {
+  "score": 0,
+  "label": "Sentiment not analyzed",
+  "mixed": "NONE/EMPTY",
+  "target": "",
+  "sentiment_mentions": [
+    {
+      "span": {
+        "begin": 0,
+        "end": 0,
+        "text": "NONE/EMPTY"
+      },
+      "score": 0,
+      "label": "NONE/EMPTY"
+    },
+  ],
+  "producer_id": {
+    "name": "Document BERT Sentiment",
+    "version": "0.0.1"
+  }
+}
+
 def get_sentiment(text):
     # load Model 
-    sentiment_model = watson_nlp.load(watson_nlp.download('sentiment_document-cnn_en_stock'))
+    # sentiment_model = watson_nlp.load(watson_nlp.download('sentiment_document-cnn_en_stock'))
+    sentiment_model = watson_nlp.load('models/bert_wkflow_imdb_5_epochs')
+    # sentiment_model = watson_nlp.download_and_load('sentiment-aggregated_bert-workflow_en_stock')
     syntax_model = watson_nlp.load(watson_nlp.download('syntax_izumo_en_stock'))
     # run the syntax model
-    syntax_result = syntax_model.run(text, parsers=('token', 'lemma', 'part_of_speech'))
+    # syntax_result = syntax_model.run(text, parsers=('token', 'lemma', 'part_of_speech'))
     # run the sentiment model on the result of the syntax analysis
-    sentiment_output_python = sentiment_model.run(syntax_result, sentence_sentiment=True)
-    return sentiment_output_python, sentiment_output_python.to_dict()['label']
+    # sentiment_output_python = sentiment_model.run(syntax_result, sentence_sentiment=True)
+    sentiment_output_python = ''
+    if text is None:
+        return empty_sentiment_output['sentiment_mentions'], empty_sentiment_output['label'], empty_sentiment_output['score']
+    else:
+        sentiment_output_python = sentiment_model.run(text, sentence_sentiment=True, language_code="en")
+        sentence_sentiment = sentiment_output_python.to_dict()['sentiment_mentions']
+        # sentence_label = sentiment_output_python.to_dict()['label']
+        document_sentiment_label = sentiment_output_python.to_dict()['label']
+        document_sentiment_score = sentiment_output_python.to_dict()['score']
+        print("sentiment_output_python######", sentiment_output_python)
+        # return sentiment_output_python, sentiment_output_python.to_dict()['label']
+        return sentence_sentiment, document_sentiment_label, document_sentiment_score
 
+empty_emotion_output = {
+  "classes": [
+    {
+      "class_name": "Emotion not analyzed",
+      "confidence": 0
+    },
+  ],
+  "producer_id": {
+    "name": "Voting based Ensemble",
+    "version": "0.0.1"
+  }
+}
 
 def get_emotion(text):
     # Load the Emotion workflow model for English
     emotion_model = watson_nlp.load(watson_nlp.download('ensemble_classification-wf_en_emotion-stock'))
-    emotion_output_python = emotion_model.run(text)
-    return emotion_output_python
+    if text is None:
+        return empty_emotion_output
+    else:
+        emotion_output_python = emotion_model.run(text)
+        print("EMOTION ####", emotion_output_python)
+        return emotion_output_python.to_dict()
 
 sentiment_table_card = html.Div(
     [
@@ -187,21 +323,25 @@ app.layout = html.Div(children=[
                     [
                     dbc.Col(
                         children=[
+                        html.H4("Sentiment Analysis"),
                         html.Div(sentiment_analysis_input),
                         html.Div(sentiment_button),
                         html.Div(id='container-button-sentiment'),
                         html.Div(sentiment_output_figure),
                         html.Div(sentiment_output_table),
+                        html.Div(sentiment_sample_input),
                         ],
                         width=6
                     ),
                     dbc.Col(
                         children=[
+                        html.H4("Emotion Classification"),
                         html.Div(emotion_classification_input),
                         html.Div(emotion_button),
-                        # html.Div(id='container-button-emotion'),
+                        html.Div(id='container-button-emotion'),
                         html.Div(emotion_output_figure),
                         html.Div(emotion_output_table),
+                        html.Div(emotion_sample_input),
                         ],
                         width=6
                     ),
@@ -209,10 +349,15 @@ app.layout = html.Div(children=[
                     # align="center",
                     # className="w-0",
                 ),
+                html.Br(),
+                html.Footer(children="Please note that this content is made available by IBM Build Lab to foster Embedded AI technology adoption. \
+                                The content may include systems & methods pending patent with USPTO and protected under US Patent Laws. \
+                                Copyright - 2022 IBM Corporation")
 ])
 
 @app.callback(
-    Output('container-button-sentiment', 'children'),
+    # Output('container-button-sentiment', 'children'),
+    Output('sentiment-result', 'children'),
     Output('sentiment-output-figure', 'figure'),
     Output('sentiment-output-table', 'data'),
     Input('sentiment-button', 'n_clicks'),
@@ -220,8 +365,10 @@ app.layout = html.Div(children=[
 )
 def sentiment_analysis_callback(n_clicks, value):
     # sentiment_output_example_processed = json.dumps(sentiment_output_example)
-    sentiment_output_python = get_sentiment(value)[0]
-    sentence_sentiment = [(sm['score']) for sm in sentiment_output_python.to_dict()['sentiment_mentions']]
+    sentence_sentiment = get_sentiment(value)[0]
+    # print("sentence_sentiment: ****", sentence_sentiment)
+    sentence_sentiment = [(sm['score']) for sm in sentence_sentiment]
+    # sentence_sentiment = [(sm['score']) for sm in sentiment_output_python.to_dict()['sentiment_mentions']]
 
     df_sentiment = pd.DataFrame()
     df_sentiment['sentiment_score'] = sentence_sentiment
@@ -237,27 +384,37 @@ def sentiment_analysis_callback(n_clicks, value):
             marker_color=df_sentiment['color'],
             # hovertext=df_sentiment['Text']
             ))
-    fig_sentiment.update_layout(template=plotly_template,barmode='stack',title_text='Sentence Sentiment Score', title_x=0.5)
+    fig_sentiment.update_layout(template=plotly_template,barmode='stack',title_text='Sentence Sentiment Score', title_x=0.5,
+                                xaxis_title="Sentence Number", yaxis_title="Sentiment Score")
     
 
     # sentiment_output_python = json.loads(sentiment_output_example)
-    sentence_sentiment = [(sm['span']['text'], sm['label'], sm['score']) for sm in sentiment_output_python.to_dict()['sentiment_mentions']]
+    sentence_sentiment = get_sentiment(value)[0]
+    sentence_sentiment = [(sm['span']['text'], sm['label'], sm['score']) for sm in sentence_sentiment]
+    # sentence_sentiment = [(sm['span']['text'], sm['label'], sm['score']) for sm in sentiment_output_python.to_dict()['sentiment_mentions']]
+    # print("OUTPUT LENGTH:", len(sentence_sentiment))
+    # print("DATAFRAME  SHAPE:", df_sentiment_output['Sentence'].shape)
     sentence_list = []
     label_list = []
     score_list = []
-    print("#### ", sentence_sentiment)
+    # print("#### ", sentence_sentiment)
     for sent_outputs in sentence_sentiment:
         sentence_list.append(sent_outputs[0])
         label_list.append(sent_outputs[1])
         score_list.append(sent_outputs[2])
+    df_sentiment_output.drop(df_sentiment_output.index, inplace=True)
+    # print("DATAFRAME: ", df_sentiment_output)    
     df_sentiment_output['Sentence'] = sentence_list
     df_sentiment_output['Label'] = label_list
     df_sentiment_output['Score'] = score_list
 
-    return get_sentiment(value)[1], fig_sentiment, df_sentiment_output.to_dict('records')
+
+    return ("Overall Sentiment Output: ", get_sentiment(value)[1], ' | ', str(round(get_sentiment(value)[2], 2))), \
+        fig_sentiment, df_sentiment_output.to_dict('records')
 
 @app.callback(
     # Output('container-button-emotion', 'children'),
+    Output('emotion-result', 'children'),
     Output('emotion-output-figure', 'figure'),
     Output('emotion-output-table', 'data'),
     Input('emotion-button', 'n_clicks'),
@@ -268,16 +425,23 @@ def update_output(n_clicks, value):
     emotion_output_python = get_emotion(value)
     class_name_list = []
     confidence_list = []
-    for classes in emotion_output_python.to_dict()['classes']:
+    for classes in emotion_output_python['classes']:
+    # for classes in emotion_output_python.to_dict()['classes']:
         class_name_list.append(classes['class_name'])
         confidence_list.append(classes['confidence'])
+    df_emotion.drop(df_emotion.index, inplace=True)
     df_emotion['class_name'] = class_name_list
     df_emotion['confidence'] = confidence_list
+    print("df_emotion: ", df_emotion)
 
     fig_emotion = px.bar(df_emotion, x='class_name', y='confidence')
-    fig_emotion.update_layout(template=plotly_template,barmode='stack',title_text='Emotion Score', title_x=0.5)
-    return fig_emotion, df_emotion.to_dict('records')
+    fig_emotion.update_layout(template=plotly_template,barmode='stack',title_text='Emotion Score', title_x=0.5,
+                                xaxis_title="Emotion", yaxis_title="Confidence Score")
+    return ("Emotion Output: ", emotion_output_python['classes'][0]['class_name'], ' | ', str(round(emotion_output_python['classes'][0]['confidence'], 2))),\
+         fig_emotion, df_emotion.to_dict('records')
+    # return emotion_output_python.to_dict()['classes'][0]['class_name'], fig_emotion, df_emotion.to_dict('records')
 
 if __name__ == '__main__':
-    SERVICE_PORT = os.getenv("SERVICE_PORT", default="8050")
-    app.run(host="0.0.0.0", port=SERVICE_PORT)
+    # SERVICE_PORT = os.getenv("SERVICE_PORT", default="8050")
+    # app.run(host="0.0.0.0", port=SERVICE_PORT, debug=True)
+    app.run(host="0.0.0.0", port=8051, debug=True)

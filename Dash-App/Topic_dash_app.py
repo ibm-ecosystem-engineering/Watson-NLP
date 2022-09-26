@@ -40,17 +40,22 @@ navbar_main = dbc.Navbar(
             html.A(
                 dbc.Row(
                     [
-                    dbc.Col(html.Img(src=app.get_asset_url('ibm_logo.png'), height="40px")),
+                    dbc.Col(html.Img(src=app.get_asset_url('ibm_logo.png'), height="30px")),
                     dbc.Col(dbc.NavbarBrand("Build Lab", className="me-auto")),
                     ],
                     align="center",
                     className="w-0",
                 ),
-                style={"textDecoration": "bold", "margin-right": "33%"},
+                style={"textDecoration": "bold", "margin-right": "20%"},
             ),
-            dbc.Row(html.H2("Watson NLP"),
+            dbc.Row(html.H2("Watson NLP: "),
             className="me-auto",
-            justify='center'),
+            justify='center',
+            ),
+            dbc.Row(html.H3("Topic Modeling"),
+            className="me-auto",
+            justify='center'
+            ),
             dbc.Row(
                 [
                         dbc.Nav(
@@ -60,7 +65,7 @@ navbar_main = dbc.Navbar(
                                     # add an auto margin after this to push later links to end of nav
                                     className="me-auto",
                                 ),
-                                html.Span(dcc.LogoutButton(logout_url='https://w3.ibm.com/w3publisher/ibm-build-labs'), className="ml-auto")
+                                # html.Span(dcc.LogoutButton(logout_url='https://w3.ibm.com/w3publisher/ibm-build-labs'), className="ml-auto")
                             ],
                             # make sure nav takes up the full width for auto margin to get applied
                             className="w-100",
@@ -73,35 +78,40 @@ navbar_main = dbc.Navbar(
     dark=True,
     className = "ml-auto"
 )
-'''
-topic_modeling_input = dbc.DropdownMenu(
-            [
-                dbc.DropdownMenuItem(
-                    "Navient Solutions, LLC.", id="navient", n_clicks=0
-                ),
-                dbc.DropdownMenuItem(
-                    "Synchrony Finanical", id="synchrony", n_clicks=0
-                ),
-                dbc.DropdownMenuItem(
-                    "Paypal Holdings, Inc ", id="paypal", n_clicks=0
-                ),
-                dbc.DropdownMenuItem(
-                    "Discover Bank", id="discover", n_clicks=0
-                ),
-                dbc.DropdownMenuItem(
-                    "Ocwen Financial Corporation ", id="ocwen", n_clicks=0
-                ),
-            ],
-            label='Select a Company',
-            id='topics-input',
-            className="me-2",
-        )
-'''
+
+df_topic_output = pd.DataFrame(columns=['Topic Name', 'Sentences'])
+topic_output_table = dash_table.DataTable(
+    # data=df_sentiment_output.to_dict('records'),
+    columns=[{"name": i, "id": i} for i in df_topic_output.columns],
+    style_header={
+        'backgroundColor': 'rgb(30, 30, 30)',
+        'color': 'white',
+        'textAlign': 'left',
+    },
+    style_data={
+        'backgroundColor': 'rgb(50, 50, 50)',
+        'color': 'white',
+        'width': 'auto',
+    },
+    style_cell={
+        'textAlign': 'left',
+        'font-family':'sans-serif',
+        'headerAlign': 'left'
+    },
+    style_table={'overflowX': 'scroll'},
+    style_as_list_view=True,
+    sort_action='native',
+    sort_mode='multi',
+    id='topic-output-table'
+)
+
 topic_button = html.Div(
     [
         dbc.Button(
             "Get Topics by company", id="topics-button", className="me-2", n_clicks=0
         ),
+        dbc.Button("Data Source URL: Consumer Complaint Database", id="data-source", color="link", className="me-1",
+                     href="https://www.consumerfinance.gov/data-research/consumer-complaints/"),
     ]
 )
 
@@ -122,6 +132,7 @@ def extract_topics_information(topic_model_output):
     topic_dict=[]
     for topic in topic_model_output['clusters']:
         topic_val = {'Topic Name':topic['topicName'],'Total Documents':topic['numDocuments'],'Percentage':topic['percentage'],'Cohesiveness':topic['cohesiveness'],'Keywords':topic['modelWords'],'Phrases':topic['modelNgram'],'Sentences':topic['sentences']}
+        # print("------------", topic['sentences'])
         topic_dict.append(topic_val)
     return topic_dict
 
@@ -151,11 +162,12 @@ def plot_wordcloud_top10_topics(keywords_list,topic_names):
         buf = io.BytesIO() # in-memory files
         plt.imshow(cloud,interpolation='bilinear')
         #plt.set_title(topic_names[i], fontdict=dict(size=16))
-        #fig.update_layout(title_text=topic_names[i], title_x=0.5)
+        # fig.update_layout(title_text=topic_names[i], title_x=0.5)
+        # fig.update_layout(template=plotly_template)
     plt.subplots_adjust(wspace=0, hspace=0)
     plt.margins(x=0, y=0)
     plt.tight_layout()
-    print('plotting cloud')
+    # print('plotting cloud')
     plt.savefig(buf, format = "png", dpi=72, bbox_inches = 'tight', pad_inches = 0) # save to the above file object
     data = base64.b64encode(buf.getbuffer()).decode("utf8") # encode to html elements
     plt.close()
@@ -193,10 +205,12 @@ app.layout = html.Div(children=[
                         html.Div(topic_button),
                         # html.Div(id='container-button-topic'),
                         html.Div(topic_output_figure),
+                        html.Div(topic_output_table),
+                        html.H3("Most Frequent Keywords & Phrases of top 5 Topics"),
                         html.Div(keywords_output_figure),
                         html.Div(phrases_output_figure),
                         ],
-                        width=6
+                        # width=6
                     ),
                     ],
                     # align="center",
@@ -209,6 +223,7 @@ app.layout = html.Div(children=[
     Output('topic-output-figure', 'figure'),
     Output('keywords-output-figure', 'src'),
     Output('phrases-output-figure', 'src'),
+    Output('topic-output-table', 'data'),
     Input('topics-button', 'n_clicks'),
     Input('bank-dropdown', 'value'),
 )
@@ -221,8 +236,10 @@ def topic_modeling_callback(n_clicks, value):
     topic_df=topic_df.sort_values("Percentage",ascending=False)
 
     # Plot for topics
-    fig_topic = px.bar(topic_df, x="Topic Name", y=["Percentage"], title="Number of Documents by Topic Weightage",width =1800)
-    
+    fig_topic = px.bar(topic_df, x="Topic Name", y=["Percentage"])
+    fig_topic.update_layout(template=plotly_template,barmode='stack',title_text='Topic Modeling output for the Selected Company', title_x=0.5,
+                                xaxis_title="Topic Name", yaxis_title="Percentage")
+    # print(topic_df[['Topic Name', 'Sentences']].head())
     # Plot for keywords
     keywords = topic_df['Keywords'].head(5)
     phrases = topic_df['Phrases'].head(5)
@@ -231,10 +248,14 @@ def topic_modeling_callback(n_clicks, value):
     phrases_list =create_keywords_dict(phrases)
     fig_keywords = plot_wordcloud_top10_topics(keywords_list,list(topic_names_val))
     fig_phrases = plot_wordcloud_top10_topics(phrases_list,list(topic_names_val))
-   
-    return fig_topic,  "data:image/png;base64,{}".format(fig_keywords), "data:image/png;base64,{}".format(fig_phrases)
 
+    # df_topic_output = topic_df[['Topic Name', 'Sentences']]
+    df_topic_output['Topic Name'] = topic_df['Topic Name']
+    df_topic_output['Sentences'] = topic_df['Sentences'].astype(str)
+    # print("df_topic_output", df_topic_output.head())
 
+    return fig_topic,  "data:image/png;base64,{}".format(fig_keywords), "data:image/png;base64,{}".format(fig_phrases), \
+            df_topic_output.to_dict('records')
 
 def select_model(value):
     if value == "Discover Bank":
@@ -251,5 +272,5 @@ def select_model(value):
         return watson_nlp.load('models/complaint_topic_model_discover/')
 
 if __name__ == '__main__':
-    SERVICE_PORT = os.getenv("SERVICE_PORT", default="8050")
+    SERVICE_PORT = os.getenv("SERVICE_PORT", default="8051")
     app.run(host="0.0.0.0", port=SERVICE_PORT, debug=True)

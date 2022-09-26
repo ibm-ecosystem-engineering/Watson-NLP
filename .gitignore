@@ -33,3 +33,6 @@ Dash-App/text_stopwords_classification_ensemble_en_stock/artifacts/stopwords.txt
 Dash-App/keywords_text-rank_en_stock/model_data/ngram_np_phrase.txt
 Dash-App/keywords_text-rank_en_stock/model_data/stopwords.txt
 Dash-App/noun-phrases_rbr_en_stock/artifacts/watson-nlp-npchunker-aql-0.0.19-extractor-en.zip
+Dash-App/models/bert_wkflow_imdb_5_epochs
+Dash-App/hotel-reviews/london_hotel_reviews.csv
+Dash-App/models/bert_wkflow_imdb_5_epochs
