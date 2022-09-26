@@ -49,6 +49,8 @@ bert_model = watson_nlp.load(watson_nlp.download('entity-mentions_bert_multi_sto
 noun_phrases_model = watson_nlp.load(watson_nlp.download('noun-phrases_rbr_en_stock'))
 # Load keywords model 
 keywords_model = watson_nlp.load(watson_nlp.download('keywords_text-rank_en_stock'))
+# Load sentiment model
+sentiment_extraction_model = watson_nlp.load(watson_nlp.download('targets-sentiment_sequence-bert_multi_stock'))
 
 navbar_main = dbc.Navbar(
         [
@@ -113,6 +115,20 @@ entity_input = dbc.InputGroup(
     className="mb-3",
 )
 
+search_entities_input = dbc.InputGroup(
+    [
+        dbc.InputGroupText("Enter entities for search (separate by commas)"),
+        dbc.Textarea(id="search-entities-input", placeholder="Entities for Search"),
+    ]
+)
+
+search_phrases_input = dbc.InputGroup(
+    [
+        dbc.InputGroupText("Enter phrases for search (separate by commas)"),
+        dbc.Textarea(id="search-phrases-input", placeholder="Phrases for Search"),
+    ]
+)
+
 entity_button = html.Div(
     [
         dbc.Button(
@@ -133,6 +149,14 @@ phrases_button = html.Div(
     [
         dbc.Button(
             "Get Keyword phrases for hotel", id='phrases-button', className="me-2", n_clicks=0
+        ),
+    ]
+)
+
+search_button = html.Div(
+    [
+        dbc.Button(
+            "Search for hotels with matching entities and phrases", id='search-button', className="me-2", n_clicks=0
         ),
     ]
 )
@@ -164,6 +188,31 @@ entity_output_table = dash_table.DataTable(
     sort_action='native',
     sort_mode='multi',
     id='entity-output-table'
+)
+
+search_df = pd.DataFrame(columns=['Hotel Name', 'Document', 'phrase', 'ent_text'])
+search_output_table = dash_table.DataTable(
+    columns=[{"name": i, "id": i} for i in search_df.columns],
+    style_header={
+        'backgroundColor': 'rgb(30, 30, 30)',
+        'color': 'white',
+        'textAlign': 'center',
+    },
+    style_data={
+        'backgroundColor': 'rgb(50, 50, 50)',
+        'color': 'white',
+        'width': 'auto',
+    },
+    style_cell={
+        'textAlign': 'center',
+        'font-family':'sans-serif',
+        'headerAlign': 'center'
+    },
+    style_table={'overflowX': 'scroll'},
+    style_as_list_view=True,
+    sort_action='native',
+    sort_mode='multi',
+    id='search-output-table'
 )
 
 def extract_entities(data, model, hotel_name=None, website=None):
@@ -289,6 +338,43 @@ def explode_phrases(top_doc_list):
     exp_phrases = exp_phrases[exp_phrases.phrase_length > 2]
     return exp_phrases
 
+def explode_phrases2(hotels_df):
+    keywords = []
+    for index, row in hotels_df.iterrows():
+        keywords.append(extract_keywords(row['Document'], row['Hotel Name']))
+    phrases_df = pd.DataFrame(keywords)
+
+    exp_phrases = phrases_df.explode('Phrases')
+    exp_phrases = exp_phrases.dropna(subset=['Phrases'])
+    exp_phrases = pd.concat([exp_phrases.drop(['Phrases'], axis=1), exp_phrases['Phrases'].apply(pd.Series)], axis=1)
+    exp_phrases['phrase_length'] = exp_phrases['phrase'].apply(lambda x: len(x.split(' ')))
+    # Removing uni-gram and bi-grams
+    exp_phrases = exp_phrases[exp_phrases.phrase_length > 2]
+    return exp_phrases
+
+def search_entity(hotels_df, entities_list, phrases_list):
+    search_df = hotels_df[(hotels_df['ent_text'].str.lower().str.contains('|'.join(entities_list).lower())) & 
+                          (hotels_df['phrase'].str.lower().str.contains('|'.join(phrases_list).lower()))]
+    hotel_count = search_df['Hotel Name'].value_counts().to_dict()
+    return search_df, hotel_count
+
+def run_sentiment(df, text_col, ent_col):
+    pos_targets =[]
+    neg_targets =[]
+    targets = []
+    entities = dict(df[ent_col])
+    for text, hotel in zip(df[text_col], df['Hotel Name']):
+        syntax_analysis_en = syntax_model.run(text, parsers=('token',))
+        extracted_sentiments = sentiment_extraction_model.run(syntax_analysis_en)
+        for key , score in extracted_sentiments.to_dict()['targeted_sentiments'].items():
+            label = score['label']
+            targets.append({'Hotel Name' : hotel, 'phrase' : key, 'sentiment' : score['label']})
+            if label=='SENT_POSITIVE': # and key not in pos_targets:
+                pos_targets.append(key)
+            elif label=='SENT_NEGATIVE': # and key not in neg_targets:
+                neg_targets.append(key)
+    return pos_targets, neg_targets, targets
+
 app.layout = html.Div(children=[
                     navbar_main,
                     dbc.Row(
@@ -301,10 +387,19 @@ app.layout = html.Div(children=[
                             html.Div(entity_button),
                             html.Div(entity_output_table),
                             ],
-                            width=8, 
+                            width=6, 
+                        ),
+                        dbc.Col(
+                            children=[
+                            html.Div(search_entities_input),
+                            html.Div(search_phrases_input),
+                            html.Div(search_button),
+                            html.Div(search_output_table),
+                            ],
+                            width=6, 
                         ),
                         ],
-                        justify="center",
+                        #justify="center",
                     ),
                     dbc.Row(
                         [
@@ -328,6 +423,35 @@ app.layout = html.Div(children=[
                         ],
                     )
 ])
+
+@app.callback(
+    Output('search-output-table', 'data'),
+    Input('search-button', 'n_clicks'),
+    State('search-entities-input', 'value'),
+    State('search-phrases-input', 'value'),
+)
+def search_entity_callback(n_clicks, search_entities, search_phrases):
+    hotels_df = pd.read_csv('hotel-reviews/london_hotel_reviews.csv').drop(['Unnamed: 0'], axis=1)
+    hotels_df_sample = hotels_df.sample(frac = 0.05, random_state = 1)
+    hotels_extract_list = run_extraction(hotels_df_sample, 'text', 'bilstm')
+    hotels_analysis_df = pd.DataFrame(columns=['Document','Hotel Name', 'Website', 'Entities'])
+    hotels_analysis_df = hotels_analysis_df.append(hotels_extract_list,ignore_index = True)
+    hotels_exp_entities = hotels_analysis_df.explode('Entities')
+    hotels_entities_df = pd.concat([hotels_exp_entities.drop('Entities', axis=1), hotels_exp_entities['Entities'].apply(
+                            pd.Series)], axis=1).reset_index().drop(['index'],axis=1)
+    exp_phrases_hotels = explode_phrases2(hotels_analysis_df)
+    hotels_entities_phrases = pd.merge(hotels_entities_df, exp_phrases_hotels, on=['Document', 'Hotel Name']).drop_duplicates()
+    combined_phrases_df = hotels_entities_phrases.groupby(
+                            ['Document','Hotel Name', 'ent_text'])['phrase'].apply(
+                            lambda x: '; '.join(x)).reset_index()
+    compressed_hotels = combined_phrases_df.groupby(
+                            ['Document','Hotel Name','phrase'])['ent_text'].apply(
+                            lambda x: '; '.join(x)).reset_index()
+    search_entities = search_entities.split(',')
+    search_phrases = search_phrases.split(',')
+    search_df, hotel_count = search_entity(compressed_hotels, search_entities, search_phrases)
+    search_df = search_df.groupby('Hotel Name')
+    return search_df.to_dict('records')
 
 @app.callback(
     Output('entity-output-table', 'data'),
