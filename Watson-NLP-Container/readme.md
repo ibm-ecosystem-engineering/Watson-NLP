@@ -3,8 +3,6 @@ In this tutorial you will learn how to serve stock Watson NLP models from a stan
 
 Standalone containers are useful since they can be deployed anywhere: your laptop using a container runtime like Docker; a Kubernetes or OpenShift cluster; or, a cloud container service like IBM Code Engine or AWS Fargate.  In this tutorial, you will run the container on your local machine using Docker.
 
-In addition to serving the models, this tutorial demonstrates how to testing the service by running a simple Python client program. 
-
 For this tutorial, you will use Watson NLP stock models for Sentiment Analysis and Emotion Classification.  
 
 ### Architecture diagram
@@ -98,12 +96,10 @@ Use the following command to start the service on your local machine.
 ```
 docker run -d -p 8085:8085 watson-nlp-container:v1
 ```
-The gRPC endpoint will be exposed on port 8085 at localhost.
+The models are now being served.  The gRPC endpoint will be exposed on port 8085 at localhost.
 
 ### 4. Test 
-Finally, test the service using a simple Python client.  The client code is under the directory **Watson-NLP/Watson-NLP-Container/Client**.  
-
-Assuming that you are in the Runtime directory: 
+You can now test the service.  There is code for a simple Python client code in the directory **Watson-NLP/Watson-NLP-Container/Client**.  
 ```
 cd ../Client 
 ```
@@ -111,7 +107,9 @@ Ensure that the Watson NLP Python SDK is installed on your machine.
 ```
 pip3 install watson_nlp_runtime_client 
 ```
-The client command expects a single text string argument, and requests inference scoring of the models being served.  Run the client command as: 
+This client command expects a single text string argument and requests inference from stock Sentiment Analysis and Emotion Classification models.  
+
+Run the client command as: 
 ```
 python3 client.py "Watson NLP is awesome" 
 ```
