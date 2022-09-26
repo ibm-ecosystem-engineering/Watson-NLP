@@ -29,12 +29,12 @@ This repository contains the code used in this tutorial.
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
-### 2. Build
-Go to the directory which contains the Dockerfile used to build the container image.
+### 2. Build the Docker Image
+Run the following.
 ```
 cd Watson-NLP/Watson-NLP-Container/Runtime
 ```
-The contents of the Dockerfile are as follows. 
+In this directory is a Dockerfile.  The contents are as follows. 
 ```
 ARG WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39"
 FROM ${WATSON_RUNTIME_BASE} as base
