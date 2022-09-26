@@ -1,5 +1,6 @@
 import os
 from pydoc import classname
+from xml.dom.minidom import Document
 import dash
 from dash import dcc
 from dash import html
@@ -57,17 +58,22 @@ navbar_main = dbc.Navbar(
             html.A(
                 dbc.Row(
                     [
-                    dbc.Col(html.Img(src=app.get_asset_url('ibm_logo.png'), height="40px")),
+                    dbc.Col(html.Img(src=app.get_asset_url('ibm_logo.png'), height="30px")),
                     dbc.Col(dbc.NavbarBrand("Build Lab", className="me-auto")),
                     ],
                     align="center",
                     className="w-0",
                 ),
-                style={"textDecoration": "bold", "margin-right": "33%"},
+                style={"textDecoration": "bold", "margin-right": "20%"},
             ),
-            dbc.Row(html.H2("Watson NLP"),
+            dbc.Row(html.H2("Watson NLP: "),
             className="me-auto",
-            justify='center'),
+            justify='center',
+            ),
+            dbc.Row(html.H3("Entity and Phrase Extraction - Hotel Reviews Analysis"),
+            className="me-auto",
+            justify='center'
+            ),
             dbc.Row(
                 [
                         dbc.Nav(
@@ -77,7 +83,7 @@ navbar_main = dbc.Navbar(
                                     # add an auto margin after this to push later links to end of nav
                                     className="me-auto",
                                 ),
-                                html.Span(dcc.LogoutButton(logout_url='https://w3.ibm.com/w3publisher/ibm-build-labs'), className="ml-auto")
+                                # html.Span(dcc.LogoutButton(logout_url='https://w3.ibm.com/w3publisher/ibm-build-labs'), className="ml-auto")
                             ],
                             # make sure nav takes up the full width for auto margin to get applied
                             className="w-100",
@@ -200,8 +206,10 @@ search_output_table = dash_table.DataTable(
     },
     style_data={
         'backgroundColor': 'rgb(50, 50, 50)',
+        'whiteSpace': 'normal',
         'color': 'white',
         'width': 'auto',
+        'height': 'auto',
     },
     style_cell={
         'textAlign': 'center',
@@ -355,6 +363,7 @@ def explode_phrases2(hotels_df):
 def search_entity(hotels_df, entities_list, phrases_list):
     search_df = hotels_df[(hotels_df['ent_text'].str.lower().str.contains('|'.join(entities_list).lower())) & 
                           (hotels_df['phrase'].str.lower().str.contains('|'.join(phrases_list).lower()))]
+    search_df = search_df[['Hotel Name', 'Document', 'phrase', 'ent_text']]
     hotel_count = search_df['Hotel Name'].value_counts().to_dict()
     return search_df, hotel_count
 
@@ -424,6 +433,24 @@ app.layout = html.Div(children=[
                     )
 ])
 
+# csv is available at https://ibm.box.com/s/o64czi6qa9dli62itshpt70oyfifqn7d
+hotels_df = pd.read_csv('hotel-reviews/london_hotel_reviews.csv').drop(['Unnamed: 0'], axis=1)
+hotels_df_sample = hotels_df.sample(frac = 0.05, random_state = 1)
+hotels_extract_list = run_extraction(hotels_df_sample, 'text', 'bilstm')
+hotels_analysis_df = pd.DataFrame(columns=['Document','Hotel Name', 'Website', 'Entities'])
+hotels_analysis_df = hotels_analysis_df.append(hotels_extract_list,ignore_index = True)
+hotels_exp_entities = hotels_analysis_df.explode('Entities')
+hotels_entities_df = pd.concat([hotels_exp_entities.drop('Entities', axis=1), hotels_exp_entities['Entities'].apply(
+                        pd.Series)], axis=1).reset_index().drop(['index'],axis=1)
+exp_phrases_hotels = explode_phrases2(hotels_analysis_df)
+hotels_entities_phrases = pd.merge(hotels_entities_df, exp_phrases_hotels, on=['Document', 'Hotel Name']).drop_duplicates()
+combined_phrases_df = hotels_entities_phrases.groupby(
+                        ['Document','Hotel Name', 'ent_text'])['phrase'].apply(
+                        lambda x: '; '.join(x)).reset_index()
+compressed_hotels = combined_phrases_df.groupby(
+                        ['Document','Hotel Name','phrase'])['ent_text'].apply(
+                        lambda x: '; '.join(x)).reset_index()
+
 @app.callback(
     Output('search-output-table', 'data'),
     Input('search-button', 'n_clicks'),
@@ -431,23 +458,6 @@ app.layout = html.Div(children=[
     State('search-phrases-input', 'value'),
 )
 def search_entity_callback(n_clicks, search_entities, search_phrases):
-    # csv is available at https://ibm.box.com/s/o64czi6qa9dli62itshpt70oyfifqn7d
-    hotels_df = pd.read_csv('hotel-reviews/london_hotel_reviews.csv').drop(['Unnamed: 0'], axis=1)
-    hotels_df_sample = hotels_df.sample(frac = 0.05, random_state = 1)
-    hotels_extract_list = run_extraction(hotels_df_sample, 'text', 'bilstm')
-    hotels_analysis_df = pd.DataFrame(columns=['Document','Hotel Name', 'Website', 'Entities'])
-    hotels_analysis_df = hotels_analysis_df.append(hotels_extract_list,ignore_index = True)
-    hotels_exp_entities = hotels_analysis_df.explode('Entities')
-    hotels_entities_df = pd.concat([hotels_exp_entities.drop('Entities', axis=1), hotels_exp_entities['Entities'].apply(
-                            pd.Series)], axis=1).reset_index().drop(['index'],axis=1)
-    exp_phrases_hotels = explode_phrases2(hotels_analysis_df)
-    hotels_entities_phrases = pd.merge(hotels_entities_df, exp_phrases_hotels, on=['Document', 'Hotel Name']).drop_duplicates()
-    combined_phrases_df = hotels_entities_phrases.groupby(
-                            ['Document','Hotel Name', 'ent_text'])['phrase'].apply(
-                            lambda x: '; '.join(x)).reset_index()
-    compressed_hotels = combined_phrases_df.groupby(
-                            ['Document','Hotel Name','phrase'])['ent_text'].apply(
-                            lambda x: '; '.join(x)).reset_index()
     search_entities = search_entities.split(', ')
     search_phrases = search_phrases.split(', ')
     search_df, hotel_count = search_entity(compressed_hotels, search_entities, search_phrases)
