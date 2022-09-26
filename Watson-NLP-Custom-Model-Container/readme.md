@@ -46,18 +46,22 @@ Get your project id from **Manage -> General -> Project Id**
 
 ![project id](Images/project_id.png)
     
-Ensure that project access token is be inserted at the top of the notebook in a code cell.  Replace the **project_id** and **project_access_token** in the following with the values you have found above. 
+Ensure that project access token is be inserted at the top of the notebook in a code cell.  Replace the **project_id** and **project_access_token** in the following with the values you obtained above. 
 ```
 from project_lib import Project 
 project = Project(project_id='<project_id>', project_access_token='<project_access_token>') 
 ```
-In your notebook environment you can save your model as a project asset by running the following. 
-- <file_name> is the exported model name 
-- <trained_model_object> is the model being saved
+In your notebook environment you can save your model as a project by adding and running the following line.
+```
+project.save_data('<file_name>', data=<trained_model_object>.as_file_like_object(), overwrite=True)
+```
+Here:
+- `<file_name>` is the exported model name 
+- `<trained_model_object>` is the model being saved
 
-The model will be saved in a Cloud Object Storage (COS) bucket that is associated with the project in a ZIP archive.  Note that the ZIP archive created by the save_data function is compatible to the watson_nlp.load() function that is also used to load stock Watson NLP models.  
+The model will be saved into ZIP archive in a Cloud Object Storage (COS) bucket that is associated with the project.  Note that the ZIP archive created by the `save_data` function can be loaded using `watson_nlp.load()`, i.e. the same function that also used to load stock Watson NLP models.  
 
-You can find the saved model in asset tab. 
+Once you have saved the model, you will be able to find the saved model in asset tab. 
 
 ![saved model](Images/saved_model.png)
     
