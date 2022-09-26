@@ -24,9 +24,8 @@ export ARTIFACTORY_API_KEY=<API_KEY>
 
 ## Steps
 
-### 1. Clone the git repo
-Clone the GitHub repository containing the code used in this tutorial.
-
+### 1. Clone the GitHub repository
+Clone the GitHub repository that contains code used in this tutorial.
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
