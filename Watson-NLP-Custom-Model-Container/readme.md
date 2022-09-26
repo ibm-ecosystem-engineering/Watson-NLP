@@ -51,17 +51,17 @@ Ensure that project access token is be inserted at the top of the notebook in a 
 from project_lib import Project 
 project = Project(project_id='<project_id>', project_access_token='<project_access_token>') 
 ```
-In your notebook environment you can save your model as a project by adding and running the following line.
+Add the following line to your notebook environment and run it, in order to save your model. 
 ```
 project.save_data('<file_name>', data=<trained_model_object>.as_file_like_object(), overwrite=True)
 ```
-Here:
+In the above line you must replace the following:
 - `<file_name>` is the exported model name 
 - `<trained_model_object>` is the model being saved
 
-The model will be saved into ZIP archive in a Cloud Object Storage (COS) bucket that is associated with the project.  Note that the ZIP archive created by the `save_data` function can be loaded using `watson_nlp.load()`, i.e. the same function that also used to load stock Watson NLP models.  
+The model will be saved into ZIP archive in a Cloud Object Storage (COS) bucket that is associated with the project.  Note that this ZIP archive can be loaded using `watson_nlp.load()`, i.e. the same function that also used to load stock Watson NLP models.  
 
-Once you have saved the model, you will be able to find the saved model in asset tab. 
+Once you have saved the model, you will be able to find it in the Asset tab. 
 
 ![saved model](Images/saved_model.png)
     
