@@ -79,9 +79,7 @@ Observe that the Watson NLP Runtime image is used as the base image. (The defaul
 
 Build the container image with the following command. 
 ```
-docker build . \ 
---build-arg WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39" \ 
--t watson-nlp-custom-container:v1 
+docker build . --build-arg WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39" -t watson-nlp-custom-container:v1 
 ```
 This results in a image file named `watson-nlp-custom-container:v1`.
 
