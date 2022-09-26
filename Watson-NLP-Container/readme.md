@@ -3,7 +3,7 @@ In this tutorial you will learn how to serve stock Watson NLP models from a stan
 
 Standalone containers are useful since they can be deployed anywhere: your laptop using a container runtime like Docker; a Kubernetes or OpenShift cluster; or, a cloud container service like IBM Code Engine or AWS Fargate.  In this tutorial, you will run the container on your local machine using Docker.
 
-For this tutorial, you will use Watson NLP stock models for Sentiment Analysis and Emotion Classification.  
+The tutorial uses Watson NLP stock models for Sentiment Analysis and Emotion Classification, but this can easily be adapted to serving other stock Watson NLP models. 
 
 ### Architecture diagram
 
