@@ -190,7 +190,7 @@ entity_output_table = dash_table.DataTable(
     id='entity-output-table'
 )
 
-search_df = pd.DataFrame(columns=['Hotel Name', 'Document', 'phrase', 'ent_text'])
+search_df = pd.DataFrame(columns=['Document', 'Hotel Name', 'phrase', 'ent_text'])
 search_output_table = dash_table.DataTable(
     columns=[{"name": i, "id": i} for i in search_df.columns],
     style_header={
@@ -273,7 +273,7 @@ def run_extraction(df, text_col, model):
         # change the second parameter to 'rbr', 'bilstm', or 'bert' to try other models
         extract_value = extract_entities(text[0], model, text[1][0], text[1][1])
         if len(extract_value) > 0:
-            extract_list.append(extract_value)              
+            extract_list.append(extract_value)
     return extract_list
 
 def custom_tokenizer(text):
@@ -304,7 +304,7 @@ def custom_tokenizer(text):
                 terms.append(term)
     return " ".join(terms)
 
-def extract_keywords(text):
+def extract_keywords(text, hotel):
     # Run the Syntax and Noun Phrases models
     syntax_prediction = syntax_model.run(text, parsers=('token', 'lemma', 'part_of_speech'))
     noun_phrases = noun_phrases_model.run(text)
@@ -318,7 +318,7 @@ def extract_keywords(text):
         dict_list['phrase'] = key
         dict_list['relevance'] = keywords_list[i]['relevance']
         key_list.append(dict_list)
-    return {'Complaint data':text,'Phrases':key_list}
+    return {'Document':text,'Hotel Name':hotel,'Phrases':key_list}
 
 def top_doc_generator(analysis_df):
     top_doc_list =[]
@@ -326,8 +326,8 @@ def top_doc_generator(analysis_df):
         top_doc_list.append(row['Document'])
     return top_doc_list
 
-def explode_phrases(top_doc_list):
-    keywords = [extract_keywords(doc) for doc in top_doc_list] 
+def explode_phrases(top_doc_list, hotel):
+    keywords = [extract_keywords(doc, hotel) for doc in top_doc_list] 
     phrases_df = pd.DataFrame(keywords)
 
     exp_phrases = phrases_df.explode('Phrases')
@@ -447,10 +447,9 @@ def search_entity_callback(n_clicks, search_entities, search_phrases):
     compressed_hotels = combined_phrases_df.groupby(
                             ['Document','Hotel Name','phrase'])['ent_text'].apply(
                             lambda x: '; '.join(x)).reset_index()
-    search_entities = search_entities.split(',')
-    search_phrases = search_phrases.split(',')
+    search_entities = search_entities.split(', ')
+    search_phrases = search_phrases.split(', ')
     search_df, hotel_count = search_entity(compressed_hotels, search_entities, search_phrases)
-    search_df = search_df.groupby('Hotel Name')
     return search_df.to_dict('records')
 
 @app.callback(
@@ -528,7 +527,7 @@ def hotel_reviews_phrases_callback(n_clicks, phrases_dropdown, model_dropdown):
     analysis_df = analysis_df.append(extract_list,ignore_index = True)
 
     top_doc_list = top_doc_generator(analysis_df)
-    exp_phrases = explode_phrases(top_doc_list)
+    exp_phrases = explode_phrases(top_doc_list, phrases_dropdown)
 
     lowest_rel = exp_phrases.sort_values('relevance', ascending=True).tail(20).reset_index().drop(['index'], axis=1).head(1)['relevance'][0]
     lower_bound = math.floor(lowest_rel*100)/100
