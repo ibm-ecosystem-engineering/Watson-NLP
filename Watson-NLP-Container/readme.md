@@ -1,11 +1,11 @@
 # Watson NLP Runtime in a Container
-In this directory, we will learn how to serve pre-trained Watson NLP models from a standalone container.  For the examples, we will use stock models for Sentiment Analysis and Emotion Classification.
+In this tutorial you will learn how to serve stock Watson NLP models from a standalone container.  Both the ML models and the model runtime will be packaged into the container image.  When the container runs it exposes REST and gRPC endpoints that client programs can use to do inference on the models. 
 
-By standalone container, we mean that the container image is self-contained and includes both ML models and the model runtime.  When the container runs it exposes REST and gRPC endpoints that a client program can use to run scoring against the models.  
-
-Standalone containers are useful since they can be deployed in a variety of contexts.  In this tutorial, we will deploy locally with Docker, which can be convenient for development.
+Standalone containers are useful since they can be deployed anywhere: your laptop using a container runtime like Docker; a Kubernetes or OpenShift cluster; or, a cloud container service like IBM Code Engine or AWS Fargate.  In this tutorial, you will run the container on your local machine using Docker.
 
 In addition to serving the models, this tutorial demonstrates how to testing the service by running a simple Python client program. 
+
+For this tutorial, you will use Watson NLP stock models for Sentiment Analysis and Emotion Classification.  
 
 ### Architecture diagram
 
@@ -27,21 +27,17 @@ export ARTIFACTORY_API_KEY=<API_KEY>
 ## Steps
 
 ### 1. Clone the git repo
-Clone the git repository containing our example code. Go to the directory that contains the code used in this tutorial.
+Clone the GitHub repository containing the code used in this tutorial.
 
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
-Go to the project directory for this tutorials
-```
-cd Watson-NLP/Watson-NLP-Container
-```
 ### 2. Build
-Go to the directory `Runtime`
+Go to the directory used to build the container image.
 ```
-cd Runtime
+cd Watson-NLP/Watson-NLP-Container/Runtime
 ```
-We will build the container image for the service with the following Dockerfile. 
+There is a Dockerfile in this directory used to build the service.  The contents are as follows. 
 ```
 ARG WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39"
 FROM ${WATSON_RUNTIME_BASE} as base
@@ -76,20 +72,15 @@ FROM base as release
 ENV LOCAL_MODELS_DIR=/app/models
 COPY --from=build /app/models /app/models
 ```
+Observe that the container image uses the Watson NLP Runtime as its base image.  During the build phase it downloads stock models to the machine.  These are copied into the image in the release phase.  
 
-For the build we use the Watson NLP Runtime container image as the base image. Stock models are downloaded to the build machine during the build phase, and then copied into the image during the release phase.
-
-Below are the four build arguments that needto be passed during building the image,
-- **WATSON_RUNTIME_BASE**=Watson base runtime image. you may provide any version you want. the default version is 13.1
+The following arguments are passed to the build command.
+- **WATSON_RUNTIME_BASE**=The Watson NLP Runtime image (optional).
 - **ARTIFACTORY_USERNAME**=Artifactory username to download the base image
 - **ARTIFACTORY_API_KEY**=Artifactory API key to download the base image
-- **MODEL_NAMES**=argument is the ML model you want to include in the container. You can pass multiple model names with space separated.
+- **MODEL_NAMES**=A space-separated list of stock Watson NLP models that you want served from this container.
 
-**LOCAL_MODELS_DIR** is the directory from where Watson runtime reads all the models. You don’t have to change anything here.Finally copy all the model from the base stage to release stage.To build a docker image, run the following command. 
-
-Finally copy all the model from the base stage to release stage. 
- 
-To build a docker image, run the following command.
+To build the image, run the following command.
 ```
 docker build . \
 --build-arg WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39" \
@@ -98,20 +89,21 @@ docker build . \
 --build-arg ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME \
 -t watson-nlp-container:v1
 ```
-
 This will create a Docker image called `watson-nlp-container:v1`.  When the container runs, it will serve two stock models: 
 - sentiment_document-cnn-workflow_en_stock 
 - ensemble_classification-wf_en_emotion-stock 
 
 ### 3. Run the server locally
-Use the following command to start the server on your local machine.
+Use the following command to start the service on your local machine.
 ```
 docker run -d -p 8085:8085 watson-nlp-container:v1
 ```
-The gRPC service will be exposed locally on port 8085 at localhost.
+The gRPC endpoint will be exposed on port 8085 at localhost.
 
 ### 4. Test 
-We will test the service using a simple Python client program.  The client code is under the directory **Watson-NLP-Container/Client**.  Assuming we start in the Runtime directory: 
+Finally, test the service using a simple Python client.  The client code is under the directory **Watson-NLP/Watson-NLP-Container/Client**.  
+
+Assuming that you are in the Runtime directory: 
 ```
 cd ../Client 
 ```
