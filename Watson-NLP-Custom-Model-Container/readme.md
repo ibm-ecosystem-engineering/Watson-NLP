@@ -1,7 +1,7 @@
 ## Serving Custom Watson NLP Models using Standalone Containers
-In this tutorial you will learn how to export a Watson NLP model from Watson Studio and to serve it with Docker. 
+In this tutorial you will learn to export a Watson NLP model from Watson Studio and to serve it with Docker. 
 
-The approach we take is to create a standalone container image, in which the models are packaged into the image together with the Watson NLP Runtime.  When the container runs it will expose REST and gRPC endpoints that client programs can use to make inference requests. 
+We will serve the model with a standalone container, in which the model is packaged into a the container image together with the Watson NLP Runtime. When the container runs it will expose REST and gRPC endpoints that client programs can use to make inference requests. 
 
 Standalone containers can be deployed anywhere include laptop with Docker; on a Kubernetes or OpenShift cluster; or, on a cloud container service like IBM Code Engine or AWS Fargate.  
 
@@ -27,10 +27,10 @@ Go to the build directory.
 ```
 cd Watson-NLP-Custom-Model-Container/Runtime 
 ```
-In this directory, you will find a Dockerfile and a models directory.  The Dockerfile will be used to build the standalone container.  During the build, models that reside in the models directory will be incorporated into the container image.
+In this directory, you will find a Dockerfile and a models directory. The Dockerfile will be used to build the standalone container. During the build, models that reside in the models directory will be incorporated into the container image.
 
-### 2. Save the Model
-If you have trained a model in a Watson Studio notebook, then in this step you will export it and put it in the models directory.  Otherwise, you can download a model from [here](https://github.com/ibm-build-labs/Watson-NLP/releases/download/ml_model/ensemble_classification-wf_en_emotion) and save it in the models directory. In that case you may skip to step 3.
+### 2. Save the model
+If you have trained a model in a Watson Studio notebook, then in this step you will export it and put it in the models directory. Otherwise, you can download a model from [here](https://github.com/ibm-build-labs/Watson-NLP/releases/download/ml_model/ensemble_classification-wf_en_emotion) and save it in the models directory. In that case you may skip to step 3.
 
 Before you can export your custom model, ensure that a project token is set in the notebook environment so that your notebook can access the Cloud Object Storage (COS) bucket associated with your project.  
 
@@ -38,7 +38,7 @@ Get your access token from the IBM Data Platform GUI from **Manage -> Access con
 
 ![access token](Images/access_token.png)
 
-Add the token to your notebook by clicking **More -> Insert project token** from the notebook action bar. By running the inserted hidden code cell, a project object is created that you can use to access project resources. 
+Add the token to your notebook by clicking **More -> Insert project token** on the notebook action bar. By running the inserted hidden code cell, a project object is created that you can use to access project resources. 
 
 ![insert token](Images/insert_token.png)
 
