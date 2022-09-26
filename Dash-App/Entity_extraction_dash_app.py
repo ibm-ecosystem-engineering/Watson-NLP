@@ -431,6 +431,7 @@ app.layout = html.Div(children=[
     State('search-phrases-input', 'value'),
 )
 def search_entity_callback(n_clicks, search_entities, search_phrases):
+    # csv is available at https://ibm.box.com/s/o64czi6qa9dli62itshpt70oyfifqn7d
     hotels_df = pd.read_csv('hotel-reviews/london_hotel_reviews.csv').drop(['Unnamed: 0'], axis=1)
     hotels_df_sample = hotels_df.sample(frac = 0.05, random_state = 1)
     hotels_extract_list = run_extraction(hotels_df_sample, 'text', 'bilstm')
