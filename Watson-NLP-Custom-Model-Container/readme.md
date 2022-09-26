@@ -61,32 +61,32 @@ In the above line you must replace the following:
 
 The model will be saved into ZIP archive in a Cloud Object Storage (COS) bucket that is associated with the project.  Note that this ZIP archive can be loaded using `watson_nlp.load()`, i.e. the same function that also used to load stock Watson NLP models.  
 
-Once you have saved the model, you will be able to find it in the Asset tab. 
+Once you have saved the model, you will be able to find it in the **Assets** tab. 
 
 ![saved model](Images/saved_model.png)
     
-Use the Watson Studio GUI to download the model to your work station, copying it in to the models directory. You can save multiple models in this directory.  
+Use the Watson Studio GUI to download the model into the models directory on your local machine. You can save multiple models in this directory.  
 
-The file name for the model will be used as the model ID.  When making an inference request from a client program, this model ID will be used to specify which model to use. 
+When the model service starts, it will use the file name that you use as the model ID.  When a client program makes an inference request, it will need to use this model ID to target the model. 
 
-### 3. Build
-After the models you want to serve have been saved to your workstation, you can build the container image.  Examine the contents of the Dockerfile. 
+### 3. Build the container image
+Once you have copied the models into the *models* directory, it is time to build the container.  Examine the contents of the Dockerfile in the directory `Watson-NLP/Watson-NLP-Custom-Model-Container/Runtime`.
 ```
 ARG WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39" 
 FROM ${WATSON_RUNTIME_BASE} as base 
 ENV LOCAL_MODELS_DIR=/app/models 
 COPY models /app/models 
 ```
+Observe the Watson NLP Runtime image is used as the base image. Models are copied in to the container file system.  The default version of the Runtime is set Dockerfile can be overridden in the build command. 
 
-The image uses the Watson NLP Runtime image as the base image, and the models are copied in to the container file system.  A default version of the Runtime is set in the Dockerfile, but this can be overridden in the build command. 
-
-Build the image using the following command. 
+Build the container image with the following command. 
 ```
 docker build . \ 
 --build-arg WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39" \ 
 -t watson-nlp-custom-container:v1 
 ```
-This results in a image named watson-nlp-custom-container:v1. 
+This results in a image file named `watson-nlp-custom-container:v1`.
+
 ### 4. Run 
 Use the following command to start the server with Docker on your local machine. 
 ```
@@ -95,7 +95,7 @@ docker run -d -p 8085:8085 watson-nlp-custom-container:v1
 The container exposes a gRPC service on port 8085. 
 
 ### 5. Test 
-We will test the service using a simple Python client program.  The client code is under the directory **Watson-NLP-Custom-Model-Container/Client**.  Assuming we start in the Runtime directory: 
+You can test model service using the simple Python client program in the directory `Watson-NLP/Watson-NLP-Custom-Model-Container/Client`.  Assuming you are in the Runtime directory: 
 ```
 cd ../Client 
 ```
