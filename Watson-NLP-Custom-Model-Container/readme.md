@@ -25,12 +25,12 @@ git clone https://github.com/ibm-build-labs/Watson-NLP
 ```
 Go to the build directory.
 ```
-cd Watson-NLP-Custom-Model-Container/Runtime 
+cd Waton-NLP/Watson-NLP-Custom-Model-Container/Runtime 
 ```
 In this directory, you will find a Dockerfile and a models directory. The Dockerfile will be used to build the standalone container. During the build, models that reside in the models directory will be incorporated into the container image.
 
 ### 2. Save the model
-If you have trained a model in a Watson Studio notebook, then in this step you will export it and put it in the models directory. Otherwise, you can download a model from [here](https://github.com/ibm-build-labs/Watson-NLP/releases/download/ml_model/ensemble_classification-wf_en_emotion) and save it in the models directory. In that case you may skip to step 3.
+If you have trained a model in a Watson Studio notebook, then in this step you will export it and put it in the *models* directory. Otherwise, you can download a model from [here](https://github.com/ibm-build-labs/Watson-NLP/releases/download/ml_model/ensemble_classification-wf_en_emotion) and save it to the *models* directory. In that case skip to step 3.
 
 Before you can export your custom model, ensure that a project token is set in the notebook environment so that your notebook can access the Cloud Object Storage (COS) bucket associated with your project.  
 
@@ -65,7 +65,7 @@ The model will be saved into ZIP archive in a Cloud Object Storage (COS) bucket 
     
 Using the Watson Studio GUI download the model into the *models* directory on your local machine. You can save multiple models in this directory.  
 
-When the model service starts, the file name that you use to save the model will be used as the model ID.  Client programx will use this model ID when making requests for inference.
+When the model service starts, the file name that you use to save the model will be used as the model ID.  Client programs will use this model ID when making requests for inference.
 
 ### 3. Build the container image
 At this point, the models you want to serve will be in the *models* directory. Examine the contents of the Dockerfile in the directory: `Watson-NLP/Watson-NLP-Custom-Model-Container/Runtime`
