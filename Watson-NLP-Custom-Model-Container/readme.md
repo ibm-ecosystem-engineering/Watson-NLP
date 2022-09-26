@@ -87,14 +87,14 @@ docker build . \
 ```
 This results in a image file named `watson-nlp-custom-container:v1`.
 
-### 4. Run 
+### 4. Run the service with Docker
 Use the following command to start the server with Docker on your local machine. 
 ```
 docker run -d -p 8085:8085 watson-nlp-custom-container:v1 
 ```
 The container exposes a gRPC service on port 8085. 
 
-### 5. Test 
+### 5. Test the service
 You can test model service using the simple Python client program in the directory `Watson-NLP/Watson-NLP-Custom-Model-Container/Client`.  Assuming you are in the Runtime directory: 
 ```
 cd ../Client 
