@@ -1,5 +1,5 @@
 # Serve Stock Watson NLP Models using Standalone Containers
-In this tutorial you will learn how to serve stock Watson NLP models from standalone containers.  Both the models and the Watson NLP Runtime will be packaged into the container image.  When the container runs it will expose REST and gRPC endpoints that client programs can use to do inference on the models. 
+In this tutorial you will to serve stock Watson NLP models from standalone containers, in which both the models and the Watson NLP Runtime will be packaged into the container image.  When the container runs it will expose REST and gRPC endpoints that client programs can use to do inference on the models. 
 
 Standalone containers are useful since they can be deployed anywhere: your laptop using a container runtime like Docker; a Kubernetes or OpenShift cluster; or, a cloud container service like IBM Code Engine or AWS Fargate.  In this tutorial, you will run the container on your local machine using Docker.
 
