@@ -1,7 +1,7 @@
 # Serving Models with Standalone Containers on Kubernetes and OpenShift
-In this tutorial you will learn how to serve Watson NLP models using a standalone container on a Kubernetes or OpenShift cluster.  For the tutorial you will use stock models for Sentiment Analysis and Emotion Classification, though you can use the same approach to serve other stock models or custom models that you have trained on Kubernetes or OpenShift.
+In this tutorial we will build a standalone container image to serve Watson NLP models, and deploy it on a Kubernetes or OpenShift cluster. 
 
-The standalone container image includes both the Watson NLP Runtime and the models to be served.  When the container runs, it exposes a gRPC and REST endpoints that clients can use to run inference against the served models.  The advantage of using standalone containers is that they can be deployed on any container runtime.
+The container image we build will include both the Watson NLP Runtime as well as Watson NLP models.  When the container runs, it exposes a gRPC and REST endpoints that clients can use to run inference against the served models.  The advantage of using standalone containers is that they can be deployed on any container runtime.
 
 ### Architecture diagram
 
@@ -22,22 +22,17 @@ export ARTIFACTORY_API_KEY=<API_KEY>
 
 ## Steps
 
-### 1. Clone the git repo
-Clone the GitHub repository containing our example code. Go to the directory that contains the code used in this tutorial.
-
+### 1. Clone the GitHub repository
+Clone the repository containing the code used in this tutorial.  
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
-Go to the project directory for this tutorial.
-```
-cd Watson-NLP/Watson-NLP-Container-k8
-```
 ### 2. Build the container image 
-If you already have a standalone container image that you have created to serve models, you can skip this step.
+In this step, we will build a container image to use for this tutorial. If you already have a standalone container image that you will use to serve models, you can skip this step.
 
-Go to the directory `Runtime`.
+Go to the build directory for this tutorial.
 ```
-cd Runtime
+cd Watson-NLP/Watson-NLP-Container-k8/Runtime
 ```
 This directory contains the Dockerfile we will use to build the standalone container image.
 ```
