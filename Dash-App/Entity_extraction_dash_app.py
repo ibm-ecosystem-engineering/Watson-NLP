@@ -189,14 +189,17 @@ entity_output_table = dash_table.DataTable(
         'font-family':'sans-serif',
         'headerAlign': 'center'
     },
-    style_table={'overflowX': 'scroll'},
+    style_table={
+        'overflowX': 'scroll', 
+        'overflowY': 'auto'
+    },
     style_as_list_view=True,
     sort_action='native',
     sort_mode='multi',
     id='entity-output-table'
 )
 
-search_df = pd.DataFrame(columns=['Document', 'Hotel Name', 'phrase', 'ent_text'])
+search_df = pd.DataFrame(columns=['Hotel Name', 'Document', 'phrase', 'ent_text'])
 search_output_table = dash_table.DataTable(
     columns=[{"name": i, "id": i} for i in search_df.columns],
     style_header={
@@ -216,7 +219,11 @@ search_output_table = dash_table.DataTable(
         'font-family':'sans-serif',
         'headerAlign': 'center'
     },
-    style_table={'overflowX': 'scroll'},
+    style_table={
+        'height': '400px', 
+        'overflowX': 'scroll', 
+        'overflowY': 'auto'
+    },
     style_as_list_view=True,
     sort_action='native',
     sort_mode='multi',
@@ -433,31 +440,14 @@ app.layout = html.Div(children=[
                     )
 ])
 
-# csv is available at https://ibm.box.com/s/o64czi6qa9dli62itshpt70oyfifqn7d
-hotels_df = pd.read_csv('hotel-reviews/london_hotel_reviews.csv').drop(['Unnamed: 0'], axis=1)
-hotels_df_sample = hotels_df.sample(frac = 0.05, random_state = 1)
-hotels_extract_list = run_extraction(hotels_df_sample, 'text', 'bilstm')
-hotels_analysis_df = pd.DataFrame(columns=['Document','Hotel Name', 'Website', 'Entities'])
-hotels_analysis_df = hotels_analysis_df.append(hotels_extract_list,ignore_index = True)
-hotels_exp_entities = hotels_analysis_df.explode('Entities')
-hotels_entities_df = pd.concat([hotels_exp_entities.drop('Entities', axis=1), hotels_exp_entities['Entities'].apply(
-                        pd.Series)], axis=1).reset_index().drop(['index'],axis=1)
-exp_phrases_hotels = explode_phrases2(hotels_analysis_df)
-hotels_entities_phrases = pd.merge(hotels_entities_df, exp_phrases_hotels, on=['Document', 'Hotel Name']).drop_duplicates()
-combined_phrases_df = hotels_entities_phrases.groupby(
-                        ['Document','Hotel Name', 'ent_text'])['phrase'].apply(
-                        lambda x: '; '.join(x)).reset_index()
-compressed_hotels = combined_phrases_df.groupby(
-                        ['Document','Hotel Name','phrase'])['ent_text'].apply(
-                        lambda x: '; '.join(x)).reset_index()
-
 @app.callback(
     Output('search-output-table', 'data'),
     Input('search-button', 'n_clicks'),
     State('search-entities-input', 'value'),
     State('search-phrases-input', 'value'),
 )
-def search_entity_callback(n_clicks, search_entities, search_phrases):
+def search_entity_callback(n_clicks, search_entities=['asdfjkl', 'asdfjkl;'], search_phrases=['asdfjkl;', 'asdfjkl;']):
+    compressed_hotels = pd.read_csv('hotel-reviews/compressed_hotels.csv')
     search_entities = search_entities.split(', ')
     search_phrases = search_phrases.split(', ')
     search_df, hotel_count = search_entity(compressed_hotels, search_entities, search_phrases)
