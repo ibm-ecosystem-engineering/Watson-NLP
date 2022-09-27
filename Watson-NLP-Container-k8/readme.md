@@ -1,7 +1,5 @@
 # Serving Models with Standalone Containers on Kubernetes and OpenShift
-In this tutorial we will build a standalone container image to serve Watson NLP models, and deploy it on a Kubernetes or OpenShift cluster. 
-
-The container image we build will include both the Watson NLP Runtime as well as Watson NLP models.  When the container runs, it exposes a gRPC and REST endpoints that clients can use to run inference against the served models.  The advantage of using standalone containers is that they can be deployed on any container runtime.
+In this tutorial you will build a standalone container image to serve Watson NLP models, and run it on a Kubernetes or OpenShift cluster. The standalone container image will include both the Watson NLP Runtime as well as Watson NLP models.  When the container runs, it exposes a gRPC and REST endpoints that clients can use to run inference against the served models.  
 
 ### Architecture diagram
 
@@ -28,13 +26,13 @@ Clone the repository containing the code used in this tutorial.
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
 ### 2. Build the container image 
-In this step, we will build a container image to use for this tutorial. If you already have a standalone container image that you will use to serve models, you can skip this step.
+In this step, we will build a container image to use for this tutorial. If you already have a standalone container image to serve Watson NLP models, you can skip this step.
 
-Go to the build directory for this tutorial.
+Go to the build directory.
 ```
 cd Watson-NLP/Watson-NLP-Container-k8/Runtime
 ```
-This directory contains the Dockerfile we will use to build the standalone container image.
+This directory contains the Dockerfile with the following contents.
 ```
 ARG WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39"
 FROM ${WATSON_RUNTIME_BASE} as base
@@ -69,16 +67,15 @@ FROM base as release
 ENV LOCAL_MODELS_DIR=/app/models
 COPY --from=build /app/models /app/models
 ```
+Observe that the Watson NLP Runtime image is used as the base image. Stock Watson NLP models are downloaded during the build phase, and then copied into the final image during the release phase.
 
-Observe that the build uses the Watson NLP Runtime container image as the base image. Stock models are downloaded to the build machine during the build phase, and then copied into the image during the release phase.
-
-The four build arguments are used for this Dockerfile.  Set these as environment variables.  
+The following arguments are used during the build.  Set these as environment variables.  
 - **WATSON_RUNTIME_BASE**=Watson base runtime image (optional).
 - **ARTIFACTORY_USERNAME**=Artifactory username to download the base image
 - **ARTIFACTORY_API_KEY**=Artifactory API key to download the base image
 - **MODEL_NAMES**=Space-separated list of models to be served. 
 
-To build a Docker image, run the following command.
+To build, run the following command.
 ```
 docker build . \
 --build-arg WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39" \
@@ -87,10 +84,9 @@ docker build . \
 --build-arg ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME \
 -t watson-nlp-container:v1
 ```
-
 This will create a Docker image called `watson-nlp-container:v1`.  When the container runs, it will serve two stock models: 
-- sentiment_document-cnn-workflow_en_stock 
-- ensemble_classification-wf_en_emotion-stock 
+- `sentiment_document-cnn-workflow_en_stock` 
+- `ensemble_classification-wf_en_emotion-stock`
 
 ### 3. Copy the image to a container registry
 To use this image in Kubernetes or OpenShift cluster, you need to provision the image to a repository so that during deployment cluster can pull the image.  Tag your image with proper repository and namespace/project name. replacing the <REPO> and <PROJECT_NAME> based on your configuration.
