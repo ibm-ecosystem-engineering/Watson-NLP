@@ -30,7 +30,7 @@ cd Waton-NLP/Watson-NLP-Custom-Model-Container/Runtime
 In this directory, you will find a Dockerfile and a models directory. The Dockerfile will be used to build the standalone container. During the build, models that reside in the models directory will be incorporated into the container image.
 
 ### 2. Save the model
-If you have trained a model in a Watson Studio notebook, then in this step you will export it and put it in the *models* directory. Otherwise, you can download a model from [here](https://github.com/ibm-build-labs/Watson-NLP/releases/download/ml_model/ensemble_classification-wf_en_emotion) and save it to the *models* directory. In that case skip to step 3.
+If you have trained a model in a Watson Studio notebook, then in this step you will export it and put it in the *models* directory. If you do not have a trained model, you can download a model from [here](https://github.com/ibm-build-labs/Watson-NLP/releases/download/ml_model/ensemble_classification-wf_en_emotion).  Save it to the *models* directory with the name `ensemble_classification-wf_en_emotion-stock`, and then skip to step 3.
 
 Before you can export your custom model, ensure that a project token is set in the notebook environment so that your notebook can access the Cloud Object Storage (COS) bucket associated with your project.  
 
@@ -81,7 +81,10 @@ Build the container image with the following command.
 ```
 docker build . --build-arg WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39" -t watson-nlp-custom-container:v1 
 ```
-This results in a image file named `watson-nlp-custom-container:v1`.
+This results in a image named `watson-nlp-custom-container:v1`.  You can check this by running:
+```
+docker images
+```
 
 ### 4. Run the service with Docker
 Use the following command to start serving the models. 
@@ -91,20 +94,23 @@ docker run -d -p 8085:8085 watson-nlp-custom-container:v1
 The container exposes a gRPC service on port 8085. 
 
 ### 5. Test the service
-You can test model service using the simple Python client program in the directory `Watson-NLP/Watson-NLP-Custom-Model-Container/Client`.  First, ensure that the Watson NLP Python SDK is installed on your machine. 
+You can test model service using the simple Python client program in the directory `Watson-NLP/Watson-NLP-Custom-Model-Container/Client`.  The client code given here will make inference requests to the example model `ensemble_classification-wf_en_emotion-stock` that is referenced in step 2.  If you are using your own model, you will have to first update the client code.  See below for details.
+
+First, ensure that the Watson NLP Python SDK is installed on your machine. 
 ```
 pip3 install watson_nlp_runtime_client 
 ```
-Assuming you are in the Runtime directory: 
+Assuming you are in the Runtime directory, go to the directory with the client code.
 ```
 cd ../Client 
 ```
-The client command expects a single text string argument, and requests inference scoring of by one of the models being served.  Run the client command as: 
+The program expects a single text string argument.  Run it as: 
 ```
 python3 client.py "Watson NLP is awesome" 
 ```
+The result from the model will be printed to the screen.
 
-This will query the default model that we have packaged with this example.  In order to query another model, you will have to update some of the client code. To make call to the gRPC inference service, you will need the following: 
+Now assuming that you are not using the example model.  You will have to update some of the client code. To make call to the gRPC inference service, you will need the following: 
 
 - **Model_ID:** This is passed as a header argument, mm-model-id : “<MODEL_ID>”. You can set the Model ID in environment variable 
 ```
