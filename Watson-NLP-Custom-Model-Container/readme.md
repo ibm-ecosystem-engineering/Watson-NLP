@@ -1,5 +1,5 @@
 ## Serving Custom Watson NLP Models using Standalone Containers
-In this tutorial you will learn to export a Watson NLP model from Watson Studio and to serve it with Docker. 
+In this tutorial you will export a Watson NLP model from Watson Studio and to serve it with Docker. 
 
 We will serve the model with a standalone container, in which the model is packaged into a the container image together with the Watson NLP Runtime. When the container runs it will expose REST and gRPC endpoints that client programs can use to make inference requests. 
 
@@ -94,13 +94,13 @@ docker run -d -p 8085:8085 watson-nlp-custom-container:v1
 The container exposes a gRPC service on port 8085. 
 
 ### 5. Test the service
-The client code included with this tutorial will make inference requests to the sample model `ensemble_classification-wf_en_emotion-stock` that is referenced in step 2.  If you are using your own model, you will have to first update the client code.  These modifications are discussed below.  First we will discuss the case that you are using the example model.
+Now test the model service using a client program. The client program appears in the directory `Watson-NLP/Watson-NLP-Custom-Model-Container/Client`. Note that the client code included with this tutorial will make inference requests to the sample model `ensemble_classification-wf_en_emotion-stock` that is referenced in step 2.  If you are using your own model, you will have to first update the client code.
 
 Ensure that the Watson NLP Python SDK is installed on your machine. 
 ```
 pip3 install watson_nlp_runtime_client 
 ```
-The client program appears in the directory `Watson-NLP/Watson-NLP-Custom-Model-Container/Client`.  Assuming you are in the Runtime directory, go to this directory:
+Assuming you are in the Runtime directory, go to this directory:
 ```
 cd ../Client 
 ```
@@ -109,20 +109,3 @@ Run the client program as:
 python3 client.py "Watson NLP is awesome" 
 ```
 This program takes a single text string as an argument.  The result from the model is printed to the screen.
-
-If you are not using the sample model, you will need to make the following changes.
-
-- **Set WATSON_NLP_MODEL_ID in the environemtn.** Set this to match the name of the model being served.  This must match the name of the model file name that you earlier placed in the *models* directory.
-```
-export WATSON_NLP_MODEL_ID=” ensemble_classification-wf_en_emotion” 
-```
-- **Ensure correct request object is used.** Update the request object to match the model type. You may need to pass additional parameters. 
-```
-request = common_service_pb2.watson_nlp_topics_Message( 
-    raw_document=dm.RawDocument(text=inputText).to_proto() 
-) 
-```
-- Call the stub installed by Watson_nlp_runtime_client 
-```
-response = self.stub.watson_nlp_topics_Predict(request,metadata=[("mm-model-id", WATSON_NLP_MODEL_ID)] ) 
-```
