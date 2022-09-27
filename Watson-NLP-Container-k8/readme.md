@@ -1,4 +1,4 @@
-# Serving Models with Standalone Containers on Kubernetes and OpenShift
+# Serving Watson NLP Models with Standalone Containers on Kubernetes and OpenShift
 In this tutorial you will build a standalone container image to serve Watson NLP models and run it on a Kubernetes or OpenShift cluster. The standalone container image will include both the Watson NLP Runtime as well as Watson NLP models.  When the container runs, it exposes gRPC and REST endpoints that clients can use to run inference against the served models.  
 
 ### Architecture diagram
