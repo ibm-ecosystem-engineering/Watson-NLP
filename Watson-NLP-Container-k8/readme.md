@@ -149,7 +149,7 @@ spec:
 ```
 
 ####  3.1 Run on Kubernetes
-Run the below commands to deploy in the cluster from the project root directory `Watson-NLP-Container-k8`.
+Run the below commands to deploy in the cluster from the directory `Watson-NLP/Watson-NLP-Container-k8`.
 ```
 kubectl apply -f Runtime/deployment/deployment.yaml 
 ```
@@ -161,7 +161,7 @@ kubectl get pods
 kubectl get svc
 ```
 #### 3.2 Run on OpenShift
-Run the below commands to deploy in the cluster from the project root directory `Watson-NLP-Container-k8`.
+Run the below commands to deploy in the cluster from the project root directory `Watson-NLP/Watson-NLP-Container-k8`.
 ```
 oc apply -f Runtime/deployment/deployment.yaml 
 ```
@@ -175,7 +175,7 @@ oc get svc
 
 
 ### 4. Test
-We will test the service using a simple Python client program.  The client code is under the directory **Watson-NLP-Container-k8/Client**.  Assuming we start in the Runtime directory: 
+We will test the service using a simple Python client program.  The client code is under the directory `Watson-NLP/Watson-NLP-Container-k8/Client`.  Assuming we start in the Runtime directory: 
 ```
 cd ../Client 
 ```
