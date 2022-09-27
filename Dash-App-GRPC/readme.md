@@ -13,7 +13,7 @@ This tutorial follows on from previous tutorials serving Sentiment Analysis and 
 
 We will first build a container image for the application, and then run it with either Docker, or on a Kubernetes or OpenShift cluster. At the end of the tutorial, we will take a closer look at the application code.
 
-### Prerequisites: 
+### Prerequisites
 - Docker is installed on your local machine. 
 - Python >= 3.9 is installed on your local machine. 
 - You have access to a running instance of the Watson NLP Runtime running Sentiment Analysis and Emotion Classification models. 
