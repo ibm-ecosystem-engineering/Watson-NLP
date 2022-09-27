@@ -110,13 +110,13 @@ python3 client.py "Watson NLP is awesome"
 ```
 This program takes a single text string as an argument.  The result from the model is printed to the screen.
 
-Now consider the case that assuming that you are not using the sample model.  You will need to make the following changes:
+If you are not using the sample model, you will need to make the following changes.
 
-- **Model_ID:** This is passed as a header argument, mm-model-id : “<MODEL_ID>”. You can set the Model ID in environment variable 
+- **Set WATSON_NLP_MODEL_ID in the environemtn.** Set this to match the name of the model being served.  This must match the name of the model file name that you earlier placed in the *models* directory.
 ```
 export WATSON_NLP_MODEL_ID=” ensemble_classification-wf_en_emotion” 
 ```
-- Make a request object based on the model id. You may have to pass additional parameter. 
+- **Ensure correct request object is used.** Update the request object to match the model type. You may need to pass additional parameters. 
 ```
 request = common_service_pb2.watson_nlp_topics_Message( 
     raw_document=dm.RawDocument(text=inputText).to_proto() 
