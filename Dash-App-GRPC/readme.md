@@ -3,7 +3,9 @@ In this tutorial you will build and deploy a Watson NLP client application.  The
 
 You can adapt the sample code from this tutorial to your own projects.
 
-This tutorial follows on from previous tutorials serving Sentiment Analysis and Emotion Classification models.  As a starting point, you should have a running instance of the Watson NLP Runtime that is serving Sentiment Analysis and Emotion Classification models. 
+This tutorial follows on from previous tutorials serving Sentiment Analysis and Emotion Classification models.  As a starting point, you should have a running instance of the Watson NLP Runtime that is serving Sentiment Analysis and Emotion Classification models that is serving the following pretrained Watson NLP models:
+- `sentiment_document-cnn-workflow_en_stock`
+- `ensemble_classification-wf_en_emotion-stock`
 
 ### Architecture Diagram
 
@@ -18,7 +20,7 @@ We will first build a container image for the application, and then run it with 
 
 ## Steps
 ### 1. Clone the GitHub repository
-Clone the repository containing the sample code for this tutorial. 
+Clone the repository that contains the sample code used in this tutorial. 
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP
 ```
@@ -26,11 +28,13 @@ Go to the root directory for this tutorial.
 ```
 cd Watson-NLP/Dash-App-GRPC
 ```
-### 2. Install library
-Installing the Watson NLP Python SDK.  This is a packaged gRPC stub library that is used to communicate with the Watson NLP Runtime.  
+### 2. Install the client library
+Run the following command to install the Watson NLP Python client library.  
 ```
 pip3 install watson_nlp_runtime_client 
 ```
+This is a packaged gRPC stub library that is used to communicate with the Watson NLP Runtime. 
+
 ### 3. Build docker image
 Th Docker file for the application. In the requirement.txt all the required package are listed.  
 ```
@@ -49,7 +53,7 @@ COPY ./*.py /app
 COPY ./assets /app/assets 
 CMD ["python3","Sentiment_dash_app.py"] 
 ```
-Make sure you are in the root directory of the project where the docker file resides before you execute the below command. 
+Ensure you are in the root directory of the project where the docker file resides before you execute the below command. 
 ```
 docker build -t dash-app-grpc:latest . 
 ```
