@@ -67,7 +67,7 @@ FROM base as release
 ENV LOCAL_MODELS_DIR=/app/models
 COPY --from=build /app/models /app/models
 ```
-Observe that the Watson NLP Runtime image is used as the base image. Stock Watson NLP models are downloaded during the build phase, and then copied into the final image during the release phase.
+Notice that the Watson NLP Runtime image is used as the base image. Stock Watson NLP models are downloaded during the build phase, and then copied into the final image during the release phase.
 
 The following arguments are used during the build.  Set these as environment variables.  
 - **WATSON_RUNTIME_BASE**=Watson base runtime image (optional).
@@ -75,7 +75,7 @@ The following arguments are used during the build.  Set these as environment var
 - **ARTIFACTORY_API_KEY**=Artifactory API key to download the base image
 - **MODEL_NAMES**=Space-separated list of models to be served. 
 
-To build, run the following command.
+To build this image, run the following command.
 ```
 docker build . \
 --build-arg WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39" \
@@ -84,12 +84,12 @@ docker build . \
 --build-arg ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME \
 -t watson-nlp-container:v1
 ```
-This will create a Docker image called `watson-nlp-container:v1`.  When the container runs, it will serve two stock models: 
+This will create a Docker image called `watson-nlp-container:v1`.  When the container runs, it serves two out-of-the-box models: 
 - `sentiment_document-cnn-workflow_en_stock` 
 - `ensemble_classification-wf_en_emotion-stock`
 
 ### 3. Copy the image to a container registry
-To use this image in Kubernetes or OpenShift cluster, you need to provision the image to a repository so that during deployment cluster can pull the image.  Tag your image with proper repository and namespace/project name. replacing the <REPO> and <PROJECT_NAME> based on your configuration.
+To use this image in Kubernetes or OpenShift cluster, you need to first provision the image to a container repository that your cluster can access.  Tag your image with proper repository and namespace/project name. Replace `<REPO>` and `<PROJECT_NAME>` in the following commands based on your configuration.
 ```
 docker tag watson-nlp-container:v1 <REPO>/<PROJECT_NAME>/watson-nlp-container:v1 
 ```
@@ -99,12 +99,13 @@ docker push <REPO>/<PROJECT_NAME>/watson-nlp-container:v1
 ```
 
 ### 3. Deploy in Kubernetes/OpenShift
-
-To run the service in an OpenShift or Kubernetes cluster, ensure that you have access to the cluster and that you have either the Kubernetes CLI (kubectl) or OpenShift CLI (oc) installed on your local machine.  Further, ensure that the Docker image you created above is in a container registry that is accessible from your Kubernetes or OpenShift cluster. Login to your Kubernetes/OpenShift cluster.
+To run the service in an OpenShift or Kubernetes cluster, ensure that you have either the Kubernetes CLI (`kubectl`) or OpenShift CLI (`oc`) installed on your local machine, and that you have logged into the cluster.  Further, ensure that the Docker image you created above is in a container registry that is accessible from your Kubernetes or OpenShift cluster.
  
-Below is an example of the YAML file to use.  There are two Kubernetes resources in the file:  a Deployment and a Service. 
- 
-You will need to update the image path in the Deployment to point to the container registry where you have stored your container image. 
+Below is an example of the YAML to use to deploy on your cluster.  This file is available in the sample code at: 
+```
+Watson-NLP/Watson-NLP-Container-k8/Runtime/deployment/deployment.yaml
+```
+Before you start the service, you will need to update the image path in the Deployment to point to your container image.
 ```
 apiVersion: apps/v1 
 kind: Deployment 
@@ -146,9 +147,8 @@ spec:
     protocol: TCP 
     targetPort: 8085 
 ```
-Run the below commands to deploy in the cluster from the project root directory Watson-NLP-C 
-Container.
-####  3.1 Kubernetes
+
+####  3.1 Run on Kubernetes
 Run the below commands to deploy in the cluster from the project root directory `Watson-NLP-Container-k8`.
 ```
 kubectl apply -f Runtime/deployment/deployment.yaml 
@@ -160,7 +160,7 @@ kubectl get pods
 ```
 kubectl get svc
 ```
-#### 3.2 OpenShift
+#### 3.2 Run on OpenShift
 Run the below commands to deploy in the cluster from the project root directory `Watson-NLP-Container-k8`.
 ```
 oc apply -f Runtime/deployment/deployment.yaml 
