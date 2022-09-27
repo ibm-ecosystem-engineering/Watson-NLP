@@ -1,9 +1,7 @@
 ## Watson NLP Python Client 
-In this tutorial, you will learn how to integrate Watson NLP into your application using the Python client SDK.  The example client application is a web service that performs Sentiment Analysis and Emotion Classification on user-supplied texts. 
+In this tutorial you will build and deploy a client application that uses served Watson NLP models.  The sample client application is a web service built in Python that performs Sentiment Analysis and Emotion Classification on user-supplied texts.  It uses the Watson NLP Python Client SDK to talk to a model service.
 
-This tutorial follows on from previous tutorials on serving Sentiment Analysis and Emotion Classification models.  As a starting point, you should have a running instance of Watson NLP Runtime serving Sentiment Analysis and Emotion Classification models. 
-
-This Watson NLP Runtime container exposes gRPC and REST endpoints that can be used by client programs to perform inference on the models being served.  Our client program uses the gRPC endpoint. 
+This tutorial follows on from previous tutorials serving Sentiment Analysis and Emotion Classification models.  As a starting point, you should have a running instance of the Watson NLP Runtime that is serving Sentiment Analysis and Emotion Classification models. 
 
 ### Architecture Diagram
 
