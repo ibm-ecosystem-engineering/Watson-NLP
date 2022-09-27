@@ -70,7 +70,7 @@ navbar_main = dbc.Navbar(
             className="me-auto",
             justify='center',
             ),
-            dbc.Row(html.H3("Entity and Phrase Extraction - Hotel Reviews Analysis"),
+            dbc.Row(html.H3("Entity and Phrase Extraction"),
             className="me-auto",
             justify='center'
             ),
@@ -437,7 +437,11 @@ app.layout = html.Div(children=[
                             width=6
                         ),
                         ],
-                    )
+                    ),
+                    html.Br(),
+                    html.Footer(children="Please note that this content is made available by IBM Build Lab to foster Embedded AI technology adoption. \
+                                    The content may include systems & methods pending patent with USPTO and protected under US Patent Laws. \
+                                    Copyright - 2022 IBM Corporation")
 ])
 
 @app.callback(
@@ -543,5 +547,5 @@ def hotel_reviews_phrases_callback(n_clicks, phrases_dropdown, model_dropdown):
     return phrases_fig
 
 if __name__ == '__main__':
-    SERVICE_PORT = os.getenv("SERVICE_PORT", default="8050")
+    SERVICE_PORT = os.getenv("SERVICE_PORT", default="8051")
     app.run(host="0.0.0.0", port=SERVICE_PORT, debug=True)
