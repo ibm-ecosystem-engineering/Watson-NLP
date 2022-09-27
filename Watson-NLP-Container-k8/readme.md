@@ -1,5 +1,5 @@
 # Serving Models with Standalone Containers on Kubernetes and OpenShift
-In this tutorial you will build a standalone container image to serve Watson NLP models and run it on a Kubernetes or OpenShift cluster. The standalone container image will include both the Watson NLP Runtime as well as Watson NLP models.  When the container runs, it exposes a gRPC and REST endpoints that clients can use to run inference against the served models.  
+In this tutorial you will build a standalone container image to serve Watson NLP models and run it on a Kubernetes or OpenShift cluster. The standalone container image will include both the Watson NLP Runtime as well as Watson NLP models.  When the container runs, it exposes gRPC and REST endpoints that clients can use to run inference against the served models.  
 
 ### Architecture diagram
 
@@ -26,7 +26,7 @@ Clone the repository containing the code used in this tutorial.
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
 ### 2. Build the container image 
-In this step, we will build a container image to use for this tutorial. If you already have a standalone container image to serve Watson NLP models, you can skip this step.
+In this step, you will build a container image to deploy. If you already have a standalone container image to serve stock and/or custom Watson NLP models that you prefer to use, you can skip this step.
 
 Go to the build directory.
 ```
@@ -84,12 +84,12 @@ docker build . \
 --build-arg ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME \
 -t watson-nlp-container:v1
 ```
-This will create a Docker image called `watson-nlp-container:v1`.  When the container runs, it serves two out-of-the-box models: 
+This will create a Docker image called `watson-nlp-container:v1`.  When the container runs, it serves two stock Watson NLP models: 
 - `sentiment_document-cnn-workflow_en_stock` 
 - `ensemble_classification-wf_en_emotion-stock`
 
 ### 3. Copy the image to a container registry
-To use this image in Kubernetes or OpenShift cluster, you need to first provision the image to a container repository that your cluster can access.  Tag your image with proper repository and namespace/project name. Replace `<REPO>` and `<PROJECT_NAME>` in the following commands based on your configuration.
+To deploy this image in Kubernetes or OpenShift cluster, you must first provision the image to a container repository that your cluster can access.  Tag your image with proper repository and namespace/project name. Replace `<REPO>` and `<PROJECT_NAME>` in the following commands based on your configuration.
 ```
 docker tag watson-nlp-container:v1 <REPO>/<PROJECT_NAME>/watson-nlp-container:v1 
 ```
@@ -175,7 +175,7 @@ oc get svc
 
 
 ### 4. Test
-We will test the service using a simple Python client program. The client code is under the directory `Watson-NLP/Watson-NLP-Container-k8/Client`. Note that the client command is specific to the model build above. If you are using your own model, you will have to change the client code.
+Finally, you can test the service using a simple Python client program. The client code is under the directory `Watson-NLP/Watson-NLP-Container-k8/Client`. Note that the client command is specific to the models. If you are using different models from the ones in the above build, you will have to change the client code.
 
 Assuming that you start in the Runtime directory: 
 ```
