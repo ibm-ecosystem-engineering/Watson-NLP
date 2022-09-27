@@ -175,7 +175,9 @@ oc get svc
 
 
 ### 4. Test
-We will test the service using a simple Python client program.  The client code is under the directory `Watson-NLP/Watson-NLP-Container-k8/Client`.  Assuming we start in the Runtime directory: 
+We will test the service using a simple Python client program. The client code is under the directory `Watson-NLP/Watson-NLP-Container-k8/Client`. Note that the client command is specific to the model build above. If you are using your own model, you will have to change the client code.
+
+Assuming that you start in the Runtime directory: 
 ```
 cd ../Client 
 ```
@@ -183,12 +185,11 @@ Ensure that the Watson NLP Python SDK is installed on your machine.
 ```
 pip3 install watson_nlp_runtime_client 
 ```
-Enable port forwarding from your local machine prior to running the test. 
-**Kubernetes**
+Enable port forwarding from your local machine prior to running the test. For a Kubernetes cluster:
 ```
 kubectl port-forward svc/watson-nlp-container 8085 
 ```
-**OpenShift**
+If you are using OpenShift:
 ```
 oc port-forward svc/watson-nlp-container 8085
 ```
