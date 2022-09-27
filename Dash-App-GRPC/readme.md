@@ -7,32 +7,30 @@ This tutorial follows on from previous tutorials serving Sentiment Analysis and 
 
 ![Reference architecure](images/referenceArchitecturePythonClient.png)
 
-We first demonstrate below how to build a container image for the web application. Then we demonstrate how to run it with either Docker, or in a Kubernetes or OpenShift cluster. Finally, we will take a closer look at the code for this client application. 
+We will first build a container image for the application, and then run it with either Docker, or on a Kubernetes or OpenShift cluster. At the end of the tutorial, we will take a closer look at the application code.
 
 ### Prerequisites: 
 - Docker is installed on your local machine. 
 - Python >= 3.9 is installed on your local machine. 
 - You have access to a running instance of the Watson NLP Runtime running Sentiment Analysis and Emotion Classification models. 
-- You have cloned the repo to your machine: https://github.com/ibm-build-labs/Watson-NLP
 
 ## Steps
-### 1. Clone the git repo
-Clone the GitHub repository containing our example code. Go to the directory that contains the code used in this tutorial.
+### 1. Clone the GitHub repository
+Clone the repository containing the sample code for this tutorial. 
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP
 ```
-Go to the project directory for this tutorial.
+Go to the root directory for this tutorial.
 ```
 cd Watson-NLP/Dash-App-GRPC
 ```
 ### 2. Install library
-Begin by installing the Watson NLP Python SDK.  This is a packaged gRPC stub library used to communicate with the Watson NLP Runtime.  
+Installing the Watson NLP Python SDK.  This is a packaged gRPC stub library that is used to communicate with the Watson NLP Runtime.  
 ```
 pip3 install watson_nlp_runtime_client 
 ```
 ### 3. Build docker image
-
-This is a sample docker file with a python3.9 base image. In the requirement.txt all the required package are listed.  
+Th Docker file for the application. In the requirement.txt all the required package are listed.  
 ```
 FROM python:3.9 
 WORKDIR /app 
