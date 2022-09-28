@@ -11,7 +11,7 @@ The tutorial uses pretrained models for Sentiment Analysis and Emotion Classific
 
 ### Prerequisites
 - Docker is installed on your workstation
-- Python >= 3.9 installed in your workstation to run the client program
+- Python 3.9 or later is installed in your workstation. (This is used to run the client program.)
 - An [IBM Artifactory](https://na.artifactory.swg-devops.com/ui/admin/artifactory/user_profile) user name and API key are required to build the Docker image. Get an Artifactory Api key from [here](https://taas.w3ibm.mybluemix.net/guides/create-apikey-in-artifactory.md)
   - ARTIFACTORY_USERNAME 
   - ARTIFACTORY_API_KEY
