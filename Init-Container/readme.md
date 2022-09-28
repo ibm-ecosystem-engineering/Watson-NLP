@@ -1,6 +1,6 @@
 # Running Pretrained Watson NLP Models on Kubernetes or OpenShift
 
-In this tutorial, you will run Watson NLP pretrained models on a Kubernetes or OpenShift cluster. 
+In this tutorial, you will serve Watson NLP pretrained models on a Kubernetes or OpenShift cluster. 
 
 One possible approach to doing this is to build a standalone container image that packages the Watson NLP Runtime together with the models. This approach is the topic of another tutorial.  An advantage of a standalone container is that the same image can be run using Docker, a cloud container service, as well as Kubernetes or OpenShift. 
 
@@ -14,9 +14,12 @@ Using this approach, models are kept in separate containers, that are themselves
 
 ### Architecture diagram
 
+
+
 ### Prerequisites
-
-
+- Python >= 3.9 installed on your local machine.  (This is needed to run the client program.)
+- You have either the Kubernetes or OpenShift CLI (`kubectl` or `oc`) installed on your local machine.
+- You have a Kubernetes or OpenShift cluster that you can use to deploy the service, and are logged in with the CLI. 
 
 ## Steps
 
@@ -25,3 +28,12 @@ Clone the repository containing the code used in this tutorial.
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
+The code for this tutorial in under `Watson-NLP/Init-Container`.
+
+### 2. Ensure that your cluster has access to the registry
+
+### 3. Create the resource
+
+
+
+### 4. Test the service
