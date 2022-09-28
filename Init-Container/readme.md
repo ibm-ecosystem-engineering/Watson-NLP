@@ -10,9 +10,13 @@ The present tutorial uses an alternative approach that is specific to Kubernetes
 
 Init container images will run to completion before the main application container runs. The images for the pretrained models specifically will provision the model to the *emptyDir* volume of the Pod, where they can be loaded by the Watson NLP Runtime.
 
+Using this approach, models are kept in separate containers, that are themselves separate from the runtime. To change the set of served models you need only to update the Kubernetes manifest.
+
 ### Architecture diagram
 
 ### Prerequisites
+
+
 
 ## Steps
 
