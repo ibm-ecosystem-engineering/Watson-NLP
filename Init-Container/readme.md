@@ -33,11 +33,69 @@ git clone https://github.com/ibm-build-labs/Watson-NLP
 ```
 Go to the directory with code used in this tutorial.
 ``
-cs Watson-NLP/Init-Container
+cd Watson-NLP/Init-Container
 ``
 
 ### 2. Deploy the service
- 
+The Kubernetes manifest is in `deployment/deployment.yaml`. This file consists of a Deployment and a Service. The Deployment is as follows:
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: watson-main-container
+spec:
+  selector:
+    matchLabels:
+      app: watson-main-container
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: watson-main-container
+    spec:
+      initContainers:
+      - name: initial-model-loading-emotion-classification
+        image: image-registry.openshift-image-registry.svc:5000/poc/watson-nlp_classification_ensemble-workflow_lang_en_tone-stock:2.3.1
+        volumeMounts:
+        - name: model-directory
+          mountPath: "/app/models"
+      containers:
+      - name: watson-main-container
+        image: image-registry.openshift-image-registry.svc:5000/poc/runtime:13.1.0
+        env:
+        - name: LOCAL_MODELS_DIR
+          value: "/app/models"
+        - name: LOG_LEVEL
+          value: debug
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 8080
+        - containerPort: 8085
+        volumeMounts:
+        - name: model-directory
+          mountPath: "/app/models"
+      volumes:
+      - name: model-directory
+        emptyDir: {}
+```
+The 
 
+In order to serve a different pretrained model, update the model image name.
+
+If using Kubernetes:
+```
+kubectl apply -f deployment/deployment.yaml
+```
+If using OpenShift:
+```
+oc apply -f deployment/deployment.yaml
+```
 
 ### 4. Test the service
+
