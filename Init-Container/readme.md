@@ -2,7 +2,7 @@
 
 In this tutorial, you will run Watson NLP pretrained models on a Kubernetes or OpenShift cluster. 
 
-A separate tutorial uses the approach of building a standalone container image to package both the Watson NLP Runtime together with the models. An advantage of such a standalone container is that it can be run using Docker, a cloud container service, as well as Kubernetes or OpenShift. 
+One approach to doing this, is to build a standalone container image that packages the Watson NLP Runtime together with the models. This approach is the topic of another tutorial.  An advantage of such a standalone container is that it can be run using Docker, a cloud container service, as well as Kubernetes or OpenShift. 
 
 The downside of using standalone containers is that you need to build and manage a new container image every time there is a change in the set of models to be served. Moreover, the sizes of the container images can be large when there are many models to serve.
 
