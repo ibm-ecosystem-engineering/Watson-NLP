@@ -168,7 +168,7 @@ search_button = html.Div(
 )
 
 hotel_entities_figure = dcc.Graph(id='hotel-entities-figure')
-hotel_types_figure = dcc.Graph(id='hotel-types-figure')
+#hotel_types_figure = dcc.Graph(id='hotel-types-figure')
 hotel_types_treemap = dcc.Graph(id='hotel-types-treemap')
 hotel_phrases_figure = dcc.Graph(id='hotel-phrases-figure')
 
@@ -425,7 +425,7 @@ app.layout = html.Div(children=[
                             dcc.Dropdown(["Belgrave", "Euston", "Dorset"], "Belgrave", id='hotel-dropdown',style={'color':'#00361c'}),
                             html.Div(hotel_button),
                             html.Div(hotel_entities_figure),
-                            html.Div(hotel_types_figure),
+                            #html.Div(hotel_types_figure),
                             html.Div(hotel_types_treemap),
                             ],
                             width=6
@@ -475,7 +475,7 @@ def text_entity_callback(n_clicks, entity_input, model_dropdown):
 
 @app.callback(
     Output('hotel-entities-figure', 'figure'),
-    Output('hotel-types-figure', 'figure'),
+    #Output('hotel-types-figure', 'figure'),
     Output('hotel-types-treemap', 'figure'),
     Input('hotel-button', 'n_clicks'),
     Input('hotel-dropdown', 'value'),
@@ -505,6 +505,7 @@ def hotel_reviews_entity_callback(n_clicks, hotel_dropdown, model_dropdown):
                             })
     entities_fig.update_layout(template=plotly_template,barmode='stack',title_text='Entities extracted from Hotel Reviews', title_x=0.5)
 
+    '''
     types_fig = px.bar(entities_df['ent_type'].value_counts().head(20).sort_values(),
                         orientation='h',
                         title=hotel_dropdown + ' Entity Types',
@@ -514,16 +515,16 @@ def hotel_reviews_entity_callback(n_clicks, hotel_dropdown, model_dropdown):
                             "variable":"Legend"
                         })
     types_fig.update_layout(template=plotly_template,barmode='stack',title_text='Entity types extracted from Hotel Reviews', title_x=0.5)
-
+    '''
     fig_treemap_types = px.treemap(
         entities_df,
         title="Entities types from Hotel Reviews",
         path=["ent_type", "ent_text"],
-        #color="Cohesiveness",
+        color="ent_type",
         color_continuous_scale=px.colors.sequential.GnBu,
     )
     fig_treemap_types.update_layout(template=plotly_template)
-    return entities_fig, types_fig, fig_treemap_types
+    return entities_fig, fig_treemap_types #types_fig, fig_treemap_types
 
 @app.callback(
     Output('hotel-phrases-figure', 'figure'),
