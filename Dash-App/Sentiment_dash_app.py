@@ -265,9 +265,9 @@ empty_sentiment_output = {
 def get_sentiment(text):
     # load Model 
     # sentiment_model = watson_nlp.load(watson_nlp.download('sentiment_document-cnn_en_stock'))
-    sentiment_model = watson_nlp.load('models/bert_wkflow_imdb_5_epochs')
+    sentiment_model = watson_nlp.load('models/sentiment_emotion/bert_wkflow_imdb_5_epochs')
     # sentiment_model = watson_nlp.download_and_load('sentiment-aggregated_bert-workflow_en_stock')
-    syntax_model = watson_nlp.load(watson_nlp.download('syntax_izumo_en_stock'))
+    # syntax_model = watson_nlp.load(watson_nlp.download('syntax_izumo_en_stock'))
     # run the syntax model
     # syntax_result = syntax_model.run(text, parsers=('token', 'lemma', 'part_of_speech'))
     # run the sentiment model on the result of the syntax analysis
@@ -300,7 +300,7 @@ empty_emotion_output = {
 
 def get_emotion(text):
     # Load the Emotion workflow model for English
-    emotion_model = watson_nlp.load(watson_nlp.download('ensemble_classification-wf_en_emotion-stock'))
+    emotion_model = watson_nlp.load('models/sentiment_emotion/ensemble_classification-wf_en_emotion-stock')
     if text is None:
         return empty_emotion_output
     else:
@@ -442,6 +442,6 @@ def update_output(n_clicks, value):
     # return emotion_output_python.to_dict()['classes'][0]['class_name'], fig_emotion, df_emotion.to_dict('records')
 
 if __name__ == '__main__':
-    # SERVICE_PORT = os.getenv("SERVICE_PORT", default="8050")
-    # app.run(host="0.0.0.0", port=SERVICE_PORT, debug=True)
-    app.run(host="0.0.0.0", port=8051, debug=True)
+    SERVICE_PORT = os.getenv("SERVICE_PORT", default="8050")
+    app.run(host="0.0.0.0", port=SERVICE_PORT, debug=True)
+    # app.run(host="0.0.0.0", port=8051, debug=True)

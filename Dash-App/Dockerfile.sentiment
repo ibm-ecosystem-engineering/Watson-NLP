@@ -14,16 +14,6 @@ EXPOSE ${SERVICE_PORT}
 # Setting up the working directory
 WORKDIR /app
 
-ARG MODEL_NAMES="syntax_izumo_en_stock entity-mentions_bilstm_en_stock entity-mentions_rbr_en_stock entity-mentions_bert_multi_stock noun-phrases_rbr_en_stock keywords_text-rank_en_stock"
-# Download all of the models locally to /app/models
-RUN true && \
-    mkdir -p /app/models && \
-    arr=(${MODEL_NAMES}) && \
-    for model_name in "${arr[@]}"; do \
-        python3 -c "import watson_nlp; watson_nlp.download('${model_name}', parent_dir='/app')"; \
-    done && \
-    true
-
 # Installing the required python library to run models
 COPY requirements.txt /app/requirements.txt
 RUN pip3 install -r requirements.txt
@@ -34,5 +24,6 @@ RUN chown -R appuser:appuser /app
 USER appuser
 
 COPY assets /app/assets
+COPY models/sentiment_emotion /app/models/sentiment_emotion
 COPY Sentiment_dash_app.py /app/Sentiment_dash_app.py
 ENTRYPOINT ["python3","Sentiment_dash_app.py"]
