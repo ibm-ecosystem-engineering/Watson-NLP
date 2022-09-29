@@ -66,7 +66,7 @@ This manifest consists of a Kubernetes Deployment and a Service.  Within the Dep
 ```
 Init containers of a Pod will run to completion before the main application container starts.  You can change this image name to serve other pretrained models. As well, you can serve multiple models at once by specifying multiple init containers.
 
-The model container mounts the `emptyDir` at path `/app/models/`. The entrypoint script for the model container will copy the model to this location when it runs.
+The model container mounts the Pod's `emptyDir` volume at path `/app/models`. The entrypoint script for the model container will copy the model to this location when it runs.
 
 The main application container image is the Watson NLP Runtime.
 ```
@@ -92,4 +92,4 @@ The main application container image is the Watson NLP Runtime.
         - name: model-directory
           mountPath: "/app/models"
 ```
-Note that this container also mounts the 
+Note that this container also mounts the Pod's `emptyDir` volume at path `/app/models`. The environment variable `LOCAL_MODELS_DIR` is set to this path in order to inform the Watson NLP Runtime where to find the models.
