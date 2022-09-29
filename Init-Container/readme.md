@@ -94,4 +94,4 @@ The main application container image is the Watson NLP Runtime.
         - name: model-directory
           mountPath: "/app/models"
 ```
-Note that this container also mounts the Pod's `emptyDir` volume at path `/app/models`. The environment variable `LOCAL_MODELS_DIR` is set to this path in order to inform the Watson NLP Runtime where to find the models.
+Note that this container also mounts the Pod's `emptyDir` volume at path `/app/models`. The environment variable `LOCAL_MODELS_DIR` is set to `/app/models` to inform the Watson NLP Runtime where to find the models.
