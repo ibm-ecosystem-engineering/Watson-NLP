@@ -21,8 +21,6 @@ To follow the steps in this tutorial, you need:
 * A [Python notebook](https://github.com/ibm-build-labs/Watson-NLP/blob/main/Emotion-Classification/Emotion%20Classification%20-%20Pre-Trained%20Models.ipynb)
 * **What are the helper libraries that you need to import?**
 
-Before working through the tutorial, you should have an understanding of IBM Watson Studio and Jupyter Notebooks.
-
 ## Estimated time
 
 It should take you approximately 1 hour to complete this tutorial.
@@ -31,59 +29,7 @@ It should take you approximately 1 hour to complete this tutorial.
 
 The steps in this tutorial use an example of IMDB movie reviews from Kaggle to walk you through the process.
 
-### Setting up your environment
-
-To begin, you set up a Python notebook environment using Watson Studio on IBM Cloud so that you can use the watson_nlp_ library.
-
-#### Reserve your env
-
-** How does this work outside of Tech Zone when you can't reserve an env? This process needs to be documented here for people outside of IBM.**
-(Note: If you can't reserve an env on Tech Zone but if you have access to Watson Studio instance, you can skip steps 1 and 2 to complete the tutorial)
-
-1. Under the [Entities & Keywords Extraction](https://techzone.ibm.com/collection/watson-nlp-entities-keywords-extraction#tab-1) tab, find the environment tile and click **Reserve** to reserve a Watson Studio environment.
-
-    ![reserve](images/reserve.png)
-
-2. Shortly, you will receive an email inviting you to join an IBM cloud account. Follow the instructions in the email to join.  Your environment should be ready within a few minutes.  When it is ready, you will recieve a second email similar to the following.
-
-    ![env_details](images/env_details.png)
-
-3. Log in to [IBM Cloud Pak for Data](https://dataplatform.cloud.ibm.com?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg). After you log in, ensure that you are using cloud account **2577353 - tsglwatson**. You can check the name of the current account on the top right of the screen.  Change the account if necessary using the drop-down menu.  From the IBM Cloud Pak for Data dashboad, find the tile for the Project that you want to work with.  For the Consumer complaints classification tutorial, the name of this Project will have the prefix **Entities-Keywords-Extraction**.  Once the Project is open, you can view the notebooks and data assets of the project using the **Assets** tab.
-
-    (Note: If you are not using the TechZone environment, you will not have access to this IBM cloud account. You can load the [Hotel Reviews Analysis - Entities and Keywords notebook](https://github.com/ibm-build-labs/Watson-NLP/blob/main/Entities-Keywords-Extraction/Hotel%20Reviews%20Analysis%20-%20Entities%20and%20Keywords.ipynb) into your Watson Studio project directly. Follow [instructions for creating notebook from URL](https://www.ibm.com/docs/en/cloud-paks/cp-data/4.5.x?topic=notebooks-creating)).
-
-    ![assets](images/assets.png)
-
-4. Before working with the notebooks, you must define the environment in which these notebooks will run. To get started on that, click on the **Manage** tab.
-
-    ![manage_tab](images/manage_tab.png)
-
-5. Click on **Environments** from the side Navbar. Next click on **Templates** tab. Finally, click on **New template**
-
-    ![env](images/env.png)
-
-6. We will create an environment template that contains the Watson NLP library. Give your environment template a name like **Watson NLP**. In the Hardware configuration, select at least **4 vCPU and 16 GB RAM**  (Note: For better performance, select higher Hardware configuration). For Software, select **DO + NLP Runtime 22.1 on Python 3.9**. Finally click **Create**
-
-    ![new_env_settings](images/new_env_settings.png)
-
-7. Now we will set an environment for a notebook.  Click on the **Assets** tab. Find the notebook you want to work with among the assets.  Click on the ellipsis (the three dots) to the right of the notebook name in order to open a drop-down menu.  Within this menu click **Change environment**.
-
-    ![change_env](images/change_env.png)
-
-8. Select the environment template that you created previously and click **Change**.
- 
-    ![change](images/change.png)
-
-9. You will be able to run the notebook by clicking the ellipsis and selecting **Edit**.
-
-![edit](images/edit.png)
-
-10. Your notebook will load. You can follow the instructions in your notebook to complete the tutorials on Watson NLP.
-
-    ![loaded](images/loaded.png)
-
-
-### Step 1. Collecting the data set
+## Step 1. Collecting the data set
 
 **These steps need to be broken out like the "Setting up your environment section.**
 (Note: If you are reserving the env through TechZone, you don't need to collect the data manually. The env comes with the Watson Studio project pre-created for you. You can skip the rest of the steps here and follow the instructions in the notebook to complete the Text Classification tutorial. However, if you are not reserving the env through TechZone and you have a Watson Studio instance, then you should follow the steps described below)
@@ -113,7 +59,15 @@ We will use 3 hotels for analysis and comparison and they have been saved for yo
     ![insert-cell.png](images/insert-cell.png)
 
 
-    ii) Ensure you place the cursor below the commented line. Click the Find and add data icon (01/00) on the top right corner. Choose the Files tab, and pick the `complaint_updated.csv` file. Click Insert to code and choose pandas DataFrame. Rename the dataframe from `df_data_1` to `complaint_df`.
+    ii) Ensure you place the cursor below the commented line. Click the Find and add data icon (01/00) on the top right corner. 
+    
+    Choose the Files tab, and pick the `uk_england_london_belgrave_hotel.csv` file. Click Insert to code and choose pandas DataFrame. Rename the dataframe from `df_data_1` to `belgrave_df`. 
+    
+    Choose the Files tab, and pick the `uk_england_london_euston_square_hotel.csv` file. Click Insert to code and choose pandas DataFrame. Rename the dataframe from `df_data_2` to `euston_df`. 
+    
+    Choose the Files tab, and pick the `uk_england_london_dorset_square.csv` file. Click Insert to code and choose pandas DataFrame. Rename the dataframe from `df_data_3` to `dorset_df`. 
+    
+    Choose the Files tab, and pick the `london_hotel_reviews.csv` file. Click Insert to code and choose pandas DataFrame. Rename the dataframe from `df_data_4` to `hotels_df`.
 
     ![insert-dataset.png](images/insert-dataset.png)
 
@@ -121,7 +75,7 @@ We will use 3 hotels for analysis and comparison and they have been saved for yo
 
     ![Datahead frame](images/datahead-frame.png)
 
-### Step 3. Entity Extraction
+## Step 3. Entity Extraction
 
 Entity extraction uses the entity-mentions block to encapsulate algorithms for the task of extracting mentions of entities (person, organizations, dates, locations,...) from the input text. The block offers implementations of strong entity extraction algorithms from each of the four families: rule-based, classic ML, deep-learning and transformers.
 
@@ -130,7 +84,7 @@ There are two types of models:
 A rule-based model (the rbr models), which handles syntactically regular entity types such as number, email and phone.
 A model trained on labeled data for the more complex entity types such as person, organization location.
 
-#### Step 3A. Entity extraction function
+### Step 3A. Entity extraction function
 
 Rule-based models (rbr) do not depend on any blocks, so you can just directly run them on input text.
 
@@ -204,7 +158,7 @@ stop_words.extend(["gimme", "lemme", "cause", "'cuz", "imma", "gonna", "wanna",
                    "weekend", "week", "evening", "morning"])
 ```
 
-#### Step 3B. Run entity extraction
+### Step 3B. Run entity extraction
 
 1. Apply data pre-processing on the input text/documents and then run the cleaned text through the model. The model used can be specified via the model parameter in extract_entities().
 ```
@@ -230,14 +184,14 @@ def run_extraction(df_list, text_col):
     ![Top 20 entities](images/top-20-entities.png)
 
 
-#### Step 3C. Comparing top 20 entities for each hotel
+### Step 3C. Comparing top 20 entities for each hotel
 We can examine the results of the entity extraction by plotting the top frequently mentioned entities for each hotel. These mentions can be used to generate tags for a hotel to create relevancy and familiarity for search engine results.
 
 1. Display frequency with horizontal barcharts.
     ![Entities comparison output](images/entities-comparison-output.png)
 
 
-#### Step 3D. Comparison between Booking.com vs TripAdvisor for one hotel
+### Step 3D. Comparison between Booking.com vs TripAdvisor for one hotel
 Another approach to analyzing hotel customer reviews is by comparing the entity mentions found on the two websites where the reviews are published. Here we are looking at Booking.com vs TripAdvisor. We can hope to gain insight on the tendencies of reviewers who use one platform compared to the other platform.
 
 1. Plot side-by-side word clouds for each of the hotels.
@@ -250,7 +204,7 @@ It can be observed that the customers on Booking.com care more about the conveni
 
 We can use this collective information to give priority to the website with reviews that better align with our own preferences about choosing a hotel. Do we care more about the convenience of the location of a hotel or do we care about the hotel's ambience, reception, perks?
 
-### Step 4. Keyword phrase extraction
+## Step 4. Keyword phrase extraction
 
 Another Watson NLP capability we can utilize to analyze the hotel reviews is Keyword phrase extraction. The keywords block ranks noun phrases extracted from an input document based on how relevant they are within the document.
 
@@ -288,6 +242,94 @@ def extract_keywords(text):
     ![Phrase extraction plot](images/phrase-extraction-plot.png)
 
 These top-ranked phrases can be used to generate a brief description of the most noteable attributes of each hotel. Customers can find interest in a particular hotel with just take one look at the list of phrases.
+
+## Step 5. Entity and Phrase Search
+
+One of the applications of entity detection is in searching. We can search for entitiy mentions and phrases by using them as tags of reviews in our large London hotel reviews dataset.
+
+1. Sample 5% of the London hotels reviews for the sake of runtime and capacity.
+```
+hotels_df_sample = hotels_df.sample(frac = 0.05, random_state = 1)
+```
+
+2. Run entity extraction on the sampled dataframe.
+```
+hotels_extract_list = run_extraction([hotels_df_sample], 'text')
+```
+
+3. Build a function to run and parse phrase on the sampled dataframe. This function uses the previously built `extract_keywords()` function.
+```
+def explode_phrases2(hotels_df):
+    keywords = []
+    for index, row in hotels_df.iterrows():
+        keywords.append(extract_keywords(row['Document'], row['Hotel Name']))
+    phrases_df = pd.DataFrame(keywords)
+
+    exp_phrases = phrases_df.explode('Phrases')
+    exp_phrases = exp_phrases.dropna(subset=['Phrases'])
+    exp_phrases = pd.concat([exp_phrases.drop(['Phrases'], axis=1), exp_phrases['Phrases'].apply(pd.Series)], axis=1)
+    exp_phrases['phrase_length'] = exp_phrases['phrase'].apply(lambda x: len(x.split(' ')))
+    # Removing uni-gram and bi-grams
+    exp_phrases = exp_phrases[exp_phrases.phrase_length > 2]
+    return exp_phrases
+```
+
+4. Combine the results of the entity extraction and phrase extraction functions into one dataframe.
+
+5. Input a list of entities and a list of phrases to the search function and run it on the dataframe. 
+```
+def search_entity(hotels_df, entities_list, phrases_list):
+    search_df = hotels_df[(hotels_df['ent_text'].str.lower().str.contains('|'.join(entities_list).lower())) & 
+                          (hotels_df['phrase'].str.lower().str.contains('|'.join(phrases_list).lower()))]
+    hotel_count = search_df['Hotel Name'].value_counts().to_dict()
+    return search_df, hotel_count
+```
+For example, if we care about the food, cleanliness, and convenience of a hotel; we can use the words `good breakfast`, `room service`, `clean`, and `shopping` to look for hotel reviews that mention these entities and phrases. We hope to find a shortend list of hotels that fulfill our criteria.
+    ![Results of the search](images/search_df.png)
+
+Just based on the results of the entity and phrase extraction search, we can determine that these 5 hotels best offer the features that we are looking for. To get a better idea of how the hotels were received, we can read all of the reviews from each of the hotels that matched.
+
+## Step 6. Actionable insights using entities and keyword phrase extraction combined with sentiment analysis
+
+For these 5 hotels, we can determine the targeted sentiment for the phrases found in their reviews. We want to make sure that the entities and phrases we've detected are positive so that we can make an accurate decision on which hotel to pick.
+
+The Targets Sentiment Extraction block contains algorithms for the task of extracting the sentiments expressed in text and identifying the targets of those sentiments. The block automatically outputs both the target terms and the sentiment expressed towards each target term when given an input text.
+
+For example, given the input:
+```
+“The served food was delicious, yet the service was slow.”
+```
+The block identifies that there is a positive sentiment expressed towards the target “food”, and a negative sentiment expressed towards “service”. A significant advantage of this block is that it can handle multiple targets with different sentiments in one sentence. For the above example, it automatically identifies the positive sentiment towards “food” and the negative sentiment towards “service”.
+
+1. Load the target sentiment extraction model.
+```
+sentiment_extraction_model = watson_nlp.load(watson_nlp.download('targets-sentiment_sequence-bert_multi_stock'))
+```
+
+2. Build a function to run the sentiment extraction model on the entity and phrase results from the previosu step.
+```
+def run_sentiment(df, text_col, ent_col):
+    pos_targets =[]
+    neg_targets =[]
+    targets = []
+    entities = dict(df[ent_col])
+    for text, hotel in zip(df[text_col], df['Hotel Name']):
+        syntax_analysis_en = syntax_model.run(text, parsers=('token',))
+        extracted_sentiments = sentiment_extraction_model.run(syntax_analysis_en)
+        for key , score in extracted_sentiments.to_dict()['targeted_sentiments'].items():
+            label = score['label']
+            targets.append({'Hotel Name' : hotel, 'phrase' : key, 'sentiment' : score['label']})
+            if label=='SENT_POSITIVE': # and key not in pos_targets:
+                pos_targets.append(key)
+            elif label=='SENT_NEGATIVE': # and key not in neg_targets:
+                neg_targets.append(key)
+    return pos_targets, neg_targets, targets
+```
+The function captures the flow for running a target sentiment extraction model. First, we run the input document/text through the syntax model. Then, we use the syntax output as input for the target sentiment extraction model where the ouput will include the target text and their sentiment. We will return the outputs into two separate lists of positive and negative sentiment text as well as one list of labels for every phrase.
+
+3. We can display a word cloud for the positive sentiment phrases of every hotel in the search result to get a better view at the well rated features of each hotel.
+
+    ![Target sentiment word cloud](images/target-sentiment-cloud.png)
 
 ## Conclusion
 
