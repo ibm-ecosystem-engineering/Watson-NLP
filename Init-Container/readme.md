@@ -13,14 +13,14 @@ Using this approach, models are kept in separate containers, that are themselves
 
 
 ### Prerequisites
-- Python >= 3.9 installed on your local machine.  (This is needed to run the client program.)
+- Python >= 3.9 installed on your local machine. This is needed to run the client program.
 - You have a Kubernetes or OpenShift cluster that you can use to deploy the service. 
 - You have either the Kubernetes or OpenShift CLI (`kubectl` or `oc`) installed on your local machine, and configured to use the cluster.
 
 ## Steps
 
 ### 1. Give your cluster access to the image registry
-We will create a secret in the Kubernetes or OpenShift cluster that grants the cluster access to the IBM Entitled Registry, where the Watson NLP Runtime and pretrained models are stored.
+Create a secret in the Kubernetes or OpenShift cluster in order to grant the cluster access to the registry where the Watson NLP Runtime and pretrained models are stored.
 ```
 docker login
 ```
@@ -49,13 +49,13 @@ The model service is now deployed.
 
 ### 4. Test the service
 
-## The Kubernetes manifest
+## Understanding the Kubernetes Manifest
 
-he Kubernetes manifest used to deploy the model service is in `deployment/deployment.yaml`. Have a look at the contents.
+The Kubernetes manifest used to deploy the model service is stored under the root directory for this tutorial at `deployment/deployment.yaml`.  
 ```
 cat deployment/deployment.yaml
 ```
-Observe that in this manifest the image of a pretrained model is given as an `initContainer`.  
+This manifest consists of a Kubernetes Deployment and a Service.  Within the Deployment, the Pod specification has an init container which uses the container image of a Watson NLP pretrained model. 
 ```
       initContainers:
       - name: initial-model-loading-emotion-classification
@@ -64,10 +64,12 @@ Observe that in this manifest the image of a pretrained model is given as an `in
         - name: model-directory
           mountPath: "/app/models"       
 ```
-To serve a different pretrained model, you can change the image name.
+Init containers of a Pod will run to completion before the main application container starts.  You can change this image name to serve other pretrained models. As well, you can serve multiple models at once by specifying multiple init containers.
 
-The 
-````
+The model container mounts the `emptyDir` at path `/app/models/`. The entrypoint script for the model container will copy the model to this location when it runs.
+
+The main application container image is the Watson NLP Runtime.
+```
       containers:
       - name: watson-main-container
         image: image-registry.openshift-image-registry.svc:5000/poc/runtime:13.1.0
@@ -89,10 +91,5 @@ The
         volumeMounts:
         - name: model-directory
           mountPath: "/app/models"
-      volumes:
-      - name: model-directory
-        emptyDir: {}
 ```
-
-In order to serve a different pretrained model, update the model image name.
-```
+Note that this container also mounts the 
