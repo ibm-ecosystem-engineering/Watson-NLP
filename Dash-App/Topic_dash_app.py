@@ -124,8 +124,10 @@ keywords_button = html.Div(
 )
 
 topic_output_figure = dcc.Graph(id='topic-output-figure')
-keywords_output_figure = html.Img(id='keywords-output-figure')
-phrases_output_figure = html.Img(id='phrases-output-figure')
+keywords_output_figure = dcc.Graph(id='keywords-output-figure')
+# keywords_output_figure = html.Img(id='keywords-output-figure')
+# phrases_output_figure = html.Img(id='phrases-output-figure')
+phrases_output_figure = dcc.Graph(id='phrases-output-figure')
 
 # Extracting all Topic names , Keywords , Phrases & Sentences from the Topic Model
 def extract_topics_information(topic_model_output):
@@ -205,10 +207,10 @@ app.layout = html.Div(children=[
                         html.Div(topic_button),
                         # html.Div(id='container-button-topic'),
                         html.Div(topic_output_figure),
-                        html.Div(topic_output_table),
-                        html.H3("Most Frequent Keywords & Phrases of top 5 Topics"),
-                        html.Div(keywords_output_figure),
+                        # html.Div(topic_output_table),
+                        # html.H3("Most Frequent Keywords & Phrases of top 5 Topics"),
                         html.Div(phrases_output_figure),
+                        html.Div(keywords_output_figure),
                         ],
                         # width=6
                     ),
@@ -225,9 +227,11 @@ app.layout = html.Div(children=[
 @app.callback(
     #Output('container-button-topic', 'children'),
     Output('topic-output-figure', 'figure'),
-    Output('keywords-output-figure', 'src'),
-    Output('phrases-output-figure', 'src'),
-    Output('topic-output-table', 'data'),
+    # Output('keywords-output-figure', 'src'),
+    # Output('phrases-output-figure', 'src'),
+    Output('phrases-output-figure', 'figure'),
+    Output('keywords-output-figure', 'figure'),
+    # Output('topic-output-table', 'data'),
     Input('topics-button', 'n_clicks'),
     Input('bank-dropdown', 'value'),
 )
@@ -245,21 +249,44 @@ def topic_modeling_callback(n_clicks, value):
                                 xaxis_title="Topic Name", yaxis_title="Percentage")
     # print(topic_df[['Topic Name', 'Sentences']].head())
     # Plot for keywords
-    keywords = topic_df['Keywords'].head(5)
-    phrases = topic_df['Phrases'].head(5)
-    topic_names_val = topic_df['Topic Name'].head(5)
-    keywords_list =create_keywords_dict(keywords)
-    phrases_list =create_keywords_dict(phrases)
-    fig_keywords = plot_wordcloud_top10_topics(keywords_list,list(topic_names_val))
-    fig_phrases = plot_wordcloud_top10_topics(phrases_list,list(topic_names_val))
+    # keywords = topic_df['Keywords'].head(5)
+    # phrases = topic_df['Phrases'].head(5)
+    # topic_names_val = topic_df['Topic Name'].head(5)
+    # keywords_list =create_keywords_dict(keywords)
+    # phrases_list =create_keywords_dict(phrases)
+    # fig_keywords = plot_wordcloud_top10_topics(keywords_list,list(topic_names_val))
+    # fig_phrases = plot_wordcloud_top10_topics(phrases_list,list(topic_names_val))
 
     # df_topic_output = topic_df[['Topic Name', 'Sentences']]
     df_topic_output['Topic Name'] = topic_df['Topic Name']
     df_topic_output['Sentences'] = topic_df['Sentences'].astype(str)
     # print("df_topic_output", df_topic_output.head())
 
-    return fig_topic,  "data:image/png;base64,{}".format(fig_keywords), "data:image/png;base64,{}".format(fig_phrases), \
-            df_topic_output.to_dict('records')
+    # Hierarchical Treemap
+    fig_treemap_keywords = px.treemap(
+        topic_df.explode('Keywords'),
+        title="Keywords associated with the Topics",
+        path=["Topic Name", "Keywords"],
+        color="Cohesiveness",
+        color_continuous_scale=px.colors.sequential.GnBu,
+    )
+    fig_treemap_keywords.update_layout(template=plotly_template)
+    
+    fig_treemap_phrases = px.treemap(
+        topic_df.explode('Phrases'),
+        title="Phrases associated with the Topics",
+        path=["Topic Name", "Phrases"],
+        color="Cohesiveness",
+        color_continuous_scale=px.colors.sequential.GnBu,
+    )
+    fig_treemap_phrases.update_layout(template=plotly_template)
+
+
+    # return fig_topic,  "data:image/png;base64,{}".format(fig_keywords), "data:image/png;base64,{}".format(fig_phrases), \
+    #         df_topic_output.to_dict('records')
+
+    return fig_topic,  fig_treemap_phrases, fig_treemap_keywords
+            # df_topic_output.to_dict('records')
 
 def select_model(value):
     if value == "Discover Bank":
