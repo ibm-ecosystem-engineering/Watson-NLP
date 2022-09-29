@@ -55,7 +55,9 @@ The Kubernetes manifest used to deploy the model service is stored under the roo
 ```
 cat deployment/deployment.yaml
 ```
-This manifest consists of a Kubernetes Deployment and a Service.  Within the Deployment, the Pod specification has an init container which uses the container image of a Watson NLP pretrained model. 
+This manifest consists of a Kubernetes Deployment and a Service. The Pods of the Deployment will all serve the same set of models. The Service provides an endpoint for the service, and load balancing.
+
+Observe that the Pods of the Deployment have an init container specified, which use the container image of a Watson NLP pretrained model. 
 ```
       initContainers:
       - name: initial-model-loading-emotion-classification
@@ -64,7 +66,7 @@ This manifest consists of a Kubernetes Deployment and a Service.  Within the Dep
         - name: model-directory
           mountPath: "/app/models"       
 ```
-Init containers of a Pod will run to completion before the main application container starts.  You can change this image name to serve other pretrained models. As well, you can serve multiple models at once by specifying multiple init containers.
+The init containers of a Pod will run to completion before the main application container starts. These containers will provision the models so that the Watson NLP Runtime can find them. You can change the image name to serve other pretrained models. As well, you can serve multiple models at once by specifying multiple init containers.
 
 The model container mounts the Pod's `emptyDir` volume at path `/app/models`. The entrypoint script for the model container will copy the model to this location when it runs.
 
