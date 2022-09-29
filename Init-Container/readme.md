@@ -48,7 +48,28 @@ oc apply -f deployment/deployment.yaml
 The model service is now deployed.  
 
 ### 4. Test the service
-A simple Python client program is included under the `client` subdirectory. To run it first enable port forwarding from your 
+Run a simple Python client program to test that the model is being served. Note that the client code is specific to the model. If you serve a different model you will need to update the client program.
+
+Ensure that the Watson NLP Python SDK is installed on your machine. 
+```
+pip3 install watson_nlp_runtime_client 
+```
+Enable port forwarding from your local machine. For a Kubernetes cluster:
+```
+kubectl port-forward svc/watson-nlp-container 8085 
+```
+If you are using OpenShift:
+```
+oc port-forward svc/watson-nlp-container 8085
+```
+Go to the directory with the client program and run it.   
+```
+cd client
+```
+```
+python3 client.py "Watson NLP is awesome" 
+```
+The client command expects a single text string argument. The client will print out the inference response returned by the model.
 
 ## Understanding the Kubernetes Manifest
 
