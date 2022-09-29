@@ -1,4 +1,4 @@
-# Running Pretrained Watson NLP Models on Kubernetes or OpenShift
+# Serving Pretrained Watson NLP Models on Kubernetes or OpenShift
 
 In this tutorial, you will serve Watson NLP pretrained models on a Kubernetes or OpenShift cluster. 
 
