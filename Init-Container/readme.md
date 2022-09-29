@@ -2,7 +2,7 @@
 
 In this tutorial, you will serve Watson NLP pretrained models on a Kubernetes or OpenShift cluster. 
 
-Rather than use a standalone container --- in which runtime and models are packaged into a single image --- this tutorial uses an approach specific to Kubernetes and OpenShift: In the Kubernetes manifest, the Pod specification uses the Watson NLP Runtime image as the main application image, and the pretrained model images to be served *init containers* of the Pod. Note that both the Watson NLP Runtime as well as Watson NLP pretrained models are available as container images on IBM's container registry.
+Rather than use a standalone container --- in which runtime and models are packaged into a single image --- this tutorial uses an approach specific to running on Kubernetes and OpenShift. In the Kubernetes manifest, the Pod specification uses the Watson NLP Runtime image as the main application image, and the pretrained model images to be served *init containers* of the Pod. Note that both the Watson NLP Runtime as well as Watson NLP pretrained models are available as container images on IBM's container registry.
 
 Init container images will run to completion before the main application container runs. The images for the pretrained models specifically will provision the model to the *emptyDir* volume of the Pod, where they can be loaded by the Watson NLP Runtime.
 
