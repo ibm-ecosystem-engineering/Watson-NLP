@@ -32,9 +32,9 @@ Clone the GitHub repository containing the sample code used in this tutorial.
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
 Go to the directory with code used in this tutorial.
-``
+```
 cd Watson-NLP/Init-Container
-``
+```
 
 ### 2. Deploy the service
 If using Kubernetes:
