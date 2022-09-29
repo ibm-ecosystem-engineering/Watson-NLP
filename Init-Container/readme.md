@@ -52,7 +52,7 @@ A simple Python client program is included under the `client` subdirectory. To r
 
 ## Understanding the Kubernetes Manifest
 
-The Kubernetes manifest used to deploy the model service is stored under the root directory for this tutorial at `deployment/deployment.yaml`.  
+Examine the Kubernetes manifest used to deploy the model service.  
 ```
 cat deployment/deployment.yaml
 ```
