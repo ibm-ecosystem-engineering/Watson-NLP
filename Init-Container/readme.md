@@ -37,7 +37,21 @@ cd Watson-NLP/Init-Container
 ``
 
 ### 2. Deploy the service
-The Kubernetes manifest used to deploy the model service is in `deployment/deployment.yaml`. Have a look at the contents.
+If using Kubernetes:
+```
+kubectl apply -f deployment/deployment.yaml
+```
+If using OpenShift:
+```
+oc apply -f deployment/deployment.yaml
+```
+The model service is now deployed.  
+
+### 4. Test the service
+
+## The Kubernetes manifest
+
+he Kubernetes manifest used to deploy the model service is in `deployment/deployment.yaml`. Have a look at the contents.
 ```
 cat deployment/deployment.yaml
 ```
@@ -81,16 +95,4 @@ The
 ```
 
 In order to serve a different pretrained model, update the model image name.
-
-If using Kubernetes:
 ```
-kubectl apply -f deployment/deployment.yaml
-```
-If using OpenShift:
-```
-oc apply -f deployment/deployment.yaml
-```
-The model service is now deployed.  
-
-### 4. Test the service
-
