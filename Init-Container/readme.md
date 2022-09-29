@@ -48,6 +48,7 @@ oc apply -f deployment/deployment.yaml
 The model service is now deployed.  
 
 ### 4. Test the service
+A simple Python client program is included under the `client` subdirectory. To run it first enable port forwarding from your 
 
 ## Understanding the Kubernetes Manifest
 
