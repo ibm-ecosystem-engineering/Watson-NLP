@@ -37,28 +37,23 @@ cd Watson-NLP/Init-Container
 ``
 
 ### 2. Deploy the service
-The Kubernetes manifest is in `deployment/deployment.yaml`. This file consists of a Deployment and a Service. The Deployment is as follows:
+The Kubernetes manifest used to deploy the model service is in `deployment/deployment.yaml`. Have a look at the contents.
 ```
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: watson-main-container
-spec:
-  selector:
-    matchLabels:
-      app: watson-main-container
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: watson-main-container
-    spec:
+cat deployment/deployment.yaml
+```
+Observe that in this manifest the image of a pretrained model is given as an `initContainer`.  
+```
       initContainers:
       - name: initial-model-loading-emotion-classification
         image: image-registry.openshift-image-registry.svc:5000/poc/watson-nlp_classification_ensemble-workflow_lang_en_tone-stock:2.3.1
         volumeMounts:
         - name: model-directory
-          mountPath: "/app/models"
+          mountPath: "/app/models"       
+```
+To serve a different pretrained model, you can change the image name.
+
+The 
+````
       containers:
       - name: watson-main-container
         image: image-registry.openshift-image-registry.svc:5000/poc/runtime:13.1.0
@@ -84,7 +79,6 @@ spec:
       - name: model-directory
         emptyDir: {}
 ```
-The 
 
 In order to serve a different pretrained model, update the model image name.
 
@@ -96,6 +90,7 @@ If using OpenShift:
 ```
 oc apply -f deployment/deployment.yaml
 ```
+The model service is now deployed.  
 
 ### 4. Test the service
 
