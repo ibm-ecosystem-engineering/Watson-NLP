@@ -8,8 +8,7 @@ Init container images will run to completion before the main application contain
 
 Using this approach, models are kept in separate containers, that are themselves separate from the runtime. To change the set of served models you need only to update the Kubernetes manifest. 
 
-### Architecture diagram
-
+### Reference architecture
 
 
 ### Prerequisites
