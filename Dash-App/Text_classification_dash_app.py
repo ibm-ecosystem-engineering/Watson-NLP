@@ -45,34 +45,34 @@ navbar_main = dbc.Navbar(
             html.A(
                 dbc.Row(
                     [
-                    dbc.Col(html.Img(src=app.get_asset_url('ibm_logo.png'), height="40px")),
-                    dbc.Col(dbc.NavbarBrand("Build Lab", className="me-auto")),
+                    dbc.Col(html.Img(src=app.get_asset_url('ibm_logo.png'), height="30px")),
+                    dbc.Col(dbc.NavbarBrand("Build Lab", className="ml-auto")),
+                    #dbc.Col(html.H2("Watson NLP"), className="me-auto", justify='center')
                     ],
-                    align="center",
                     className="w-0",
                 ),
-                style={"textDecoration": "bold", "margin-right": "33%"},
+                style={"textDecoration": "bold", "margin-right": "20%"},
             ),
-            dbc.Row(html.H2("Watson NLP"),
-            className="me-auto",
-            justify='center'),
-            dbc.Row(
+            dbc.Col(
                 [
-                        dbc.Nav(
-                            [
-                                dbc.NavItem(
-                                    dbc.NavLink("©"),
-                                    # add an auto margin after this to push later links to end of nav
-                                    className="me-auto",
-                                ),
-                                html.Span(dcc.LogoutButton(logout_url='https://w3.ibm.com/w3publisher/ibm-build-labs'), className="ml-auto")
-                            ],
-                            # make sure nav takes up the full width for auto margin to get applied
-                            className="w-100",
-                        ),
+                    dbc.Row(
+                        [
+                            html.H2("Watson NLP", style={'textAlign': 'center'}),
+                            
+                        ],
+                        className="me-auto",
+                        align='center',
+                        justify='center',
+                    ),
+                    dbc.Row(html.H4("Text Classification", style={'textAlign': 'center'}),
+                        className="me-auto",
+                        align='center',
+                        justify='center'
+                    ),
                 ],
-        className="flex-grow-1",
-        )
+                align = 'center'
+            ),
+            dbc.Col([]),
         ],
     color="primary",
     dark=True,
