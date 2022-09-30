@@ -64,13 +64,13 @@ navbar_main = dbc.Navbar(
                     ],
                     className="w-0",
                 ),
-                style={"textDecoration": "bold", "margin-right": "30%"},
+                style={"textDecoration": "bold", "margin-right": "20%"},
             ),
             dbc.Col(
                 [
                     dbc.Row(
                         [
-                            html.H2("Watson NLP ©", style={'textAlign': 'center'}),
+                            html.H2("Watson NLP", style={'textAlign': 'center'}),
                             
                         ],
                         className="me-auto",
