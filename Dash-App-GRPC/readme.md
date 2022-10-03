@@ -42,9 +42,9 @@ docker build -t dash-app-grpc:latest .
 ```
 This results in an image named `dash-app-grpc:latest`.
 
-### 4. Run
+## Run
 
-#### 4.1 Run with Docker 
+### 4. Run with Docker
 In this section, we give the steps to run your application front-end locally using Docker.
 
 If your model service is running on a Kubernetes or OpenShift cluster, then first enable port forwarding.  In Kubernetes:
@@ -74,14 +74,19 @@ You can use your browser to access the application at:
 http://localhost:8050 
 ```
 
-#### 4.2 Run the application in a Kubernetes or OpenShift cluster 
-Prior to deployment push the image to a container registry. Please change the `<Image Registry>` and `<Project Name>` in the following commands based on your configuration. 
+### 4.2 Run the application in a Kubernetes or OpenShift cluster 
+In this section we discuss the steps to running the application on the same Kubernetes or OpenShift cluster that your model is being served. 
+
+#### Push the image to a container registry
+First you will need to push the image to a container registry that can be accessed by your cluster. Run the following commands, changing the `<Image Registry>` and `<Project Name>` in the following commands based on your configuration. 
 ```
 docker tag dash-app-grpc:latest <Image Registry>/<Project Name>/dash-app-grpc:latest 
 ```
 ```
 docker push <Image Registry>/<Project Name>/dash-app-grpc:latest 
 ```
+
+#### 
 
 The Kubernetes manifest to run the service is under the 
 
