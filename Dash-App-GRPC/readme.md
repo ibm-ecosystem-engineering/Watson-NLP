@@ -82,14 +82,14 @@ http://localhost:8050
 ```
 
 #### 4.2 Run the application in a Kubernetes or OpenShift cluster 
- 
-Before running the app in localhost, you need to push to image in a container registry. Please change the `<Image Registry> and <Project Name>` based on your configuration. 
+Prior to deployment push to image to a container registry. Please change the `<Image Registry>` and `<Project Name>` below based on your configuration. 
 ```
 docker tag dash-app-grpc:latest <Image Registry>/<Project Name>/dash-app-grpc:latest 
 ```
 ```
 docker push <Image Registry>/<Project Name>/dash-app-grpc:latest 
 ```
+
 All the deployment files are in the deployment directory. In deployment.yaml file you need to modify set the image location based on the image you built in the previous step. 
 
 **Image:** `<Image Registry>/<Project Name>/dash-app-grpc:latest` 
