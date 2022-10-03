@@ -198,6 +198,96 @@ docker --context myecscontext compose --project-name sample-project logs
 ```
 </span>
 
+If you get a response like the following, the Watson NLP Runtime is working properly.
+
+<span style="font-size:x-small">
+
+```
+{
+  "text": "This is a test.",
+  "producerId": {
+    "name": "Izumo Text Processing",
+    "version": "0.0.1"
+  },
+  "tokens": [
+    {
+      "span": {
+        "begin": 0,
+        "end": 4,
+        "text": "This"
+      },
+      "lemma": "",
+      "partOfSpeech": "POS_UNSET",
+      "dependency": null,
+      "features": []
+    },
+    {
+      "span": {
+        "begin": 5,
+        "end": 7,
+        "text": "is"
+      },
+      "lemma": "",
+      "partOfSpeech": "POS_UNSET",
+      "dependency": null,
+      "features": []
+    },
+    {
+      "span": {
+        "begin": 8,
+        "end": 9,
+        "text": "a"
+      },
+      "lemma": "",
+      "partOfSpeech": "POS_UNSET",
+      "dependency": null,
+      "features": []
+    },
+    {
+      "span": {
+        "begin": 10,
+        "end": 14,
+        "text": "test"
+      },
+      "lemma": "",
+      "partOfSpeech": "POS_UNSET",
+      "dependency": null,
+      "features": []
+    },
+    {
+      "span": {
+        "begin": 14,
+        "end": 15,
+        "text": "."
+      },
+      "lemma": "",
+      "partOfSpeech": "POS_UNSET",
+      "dependency": null,
+      "features": []
+    }
+  ],
+  "sentences": [
+    {
+      "span": {
+        "begin": 0,
+        "end": 15,
+        "text": "This is a test."
+      }
+    }
+  ],
+  "paragraphs": [
+    {
+      "span": {
+        "begin": 0,
+        "end": 15,
+        "text": "This is a test."
+      }
+    }
+  ]
+}
+```
+</span>
+
 
 ## Clean up
 Don't forget to clean up afterwards with the `docker compose down` command, to avoid paying for the cloud resources you no longer need.
