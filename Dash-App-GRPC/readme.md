@@ -46,18 +46,17 @@ This results in an image named `dash-app-grpc:latest`.
 
 #### 4.1 Run with Docker 
 
+If your model service is running in k8s/ocp ... port forwarding
+
 Set the following environment variables:
-- **GRPC_SERVER_URL.** This is gRPC endpoint with port for the model service. The default value is `localhost:8085`. If the service is running on a Kubernetes or OpenShift cluster the value should be of the form `<Service Name>:<Port>`.
+- **GRPC_SERVER_URL.** This is gRPC endpoint with port for the model service. The default value is `localhost:8085`. 
 - **SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL:** Set this to the name of the sentiment analysis model. Default value is `entiment-document-cnn-workflow-en-stock`.
 - EMOTION_CLASSIFICATION_STOCK_MODEL: This is name of the emotion analysis model. Default value is `ensemble-classification-wf-en-emotion-stock`.
-- NLP_MODEL_SERVICE_TYPE: This is runtime deployment type. Default value is `mm-model-id`.
-Use the command below command to start the container.
 ```
 docker run \ 
 -e GRPC_SERVER_URL=${GRPC_SERVER_URL} \ 
 -e SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL=${SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL} \ 
 -e EMOTION_CLASSIFICATION_STOCK_MODEL=${EMOTION_CLASSIFICATION_STOCK_MODEL} \ 
--e NLP_MODEL_SERVICE_TYPE=${NLP_MODEL_SERVICE_TYPE} \ 
 -p 8050:8050 dash-app-grpc:latest 
 ```
 You can now use your browser to access the application at:
