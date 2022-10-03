@@ -85,132 +85,56 @@ docker push <Image Registry>/<Project Name>/dash-app-grpc:latest
 ```
 
 #### 5.2 Update the manifest
-The Kubernetes manifest to run the service is under the 
-
-In deployment.yaml file you need to modify set the image location based on the image you built in the previous step. 
-
-**Image:** `<Image Registry>/<Project Name>/dash-app-grpc:latest` 
-
-There are three Kubernetes resource files in the deployment directory 
-- config.yaml 
-- deployment.yaml 
-- service.yaml
-
-**deployment.yaml**
-
-Deployment object describes mainly the number of replicas and the image path. Image path needs to be changed based on where you put the image in your container registry. Change the Docker image repo in spec.containers.image in deployment.yaml file. All the environment variables are set using config map describes in config.yaml. 
+Starting at the root directory for this tutorial, go to the directory with the Kubernetes manifest.
 ```
-apiVersion: apps/v1 
-kind: Deployment 
-metadata: 
-  name: dash-app-grpc 
-spec: 
-  selector: 
-    matchLabels: 
-      app: dash-app-grpc 
-  replicas: 1 
-  template: 
-    metadata: 
-      labels: 
-        app: dash-app-grpc 
-    spec: 
-      containers: 
-      - name: dash-app-grpc 
-        image: image-registry.openshift-image-registry.svc:5000/openshift/dash-app-grpc:2022083111 
-        env: 
-          - name: EMOTION_CLASSIFICATION_STOCK_MODEL 
-            valueFrom: 
-              configMapKeyRef: 
-                key: EMOTION_CLASSIFICATION_STOCK_MODEL 
-                name: dahsapp-config 
-          - name: GRPC_SERVER_URL 
-            valueFrom: 
-              configMapKeyRef: 
-                key: GRPC_SERVER_URL 
-                name: dahsapp-config 
-          - name: SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL 
-            valueFrom: 
-              configMapKeyRef: 
-                key: SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL 
-                name: dahsapp-config 
-          - name: SYNTAX_IZUMO_EN_STOCK_MODEL 
-            valueFrom: 
-              configMapKeyRef: 
-                key: SYNTAX_IZUMO_EN_STOCK_MODEL 
-                name: dahsapp-config 
-          - name: NLP_MODEL_SERVICE_TYPE 
-            valueFrom: 
-              configMapKeyRef: 
-                key: NLP_MODEL_SERVICE_TYPE 
-                name: dahsapp-config 
-        ports: 
-        - containerPort: 8050 
+cd deployment
+```
+There are three files in the directory.
+- `config.yaml` 
+- `deployment.yaml` 
+- `service.yaml`
+
+In `deployment.yaml` update the image line to point to the image that you pushed to a registry, i.e. change this line:
+```
+       image: image-registry.openshift-image-registry.svc:5000/openshift/dash-app-grpc:2022083111 
+```
+The format should be:
+```
+       image: <Image Registry>/<Project Name>/dash-app-grpc:latest` 
 ```
 
-**config.yaml:**
+#### 5.3 Set environment variables
+Set the following variables in your environment.
 
-```
-apiVersion: v1 
-data: 
-  EMOTION_CLASSIFICATION_STOCK_MODEL: ensemble-classification-wf-en-emotion-stock-predictor 
-  GRPC_SERVER_URL: wml-serving:8033 
-  SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL: sentiment-document-cnn-workflow-en-stock-predictor 
-  SYNTAX_IZUMO_EN_STOCK_MODEL: syntax-izumo-en-stock-predictor 
-  NLP_MODEL_SERVICE_TYPE: mm-vmodel-id 
-kind: ConfigMap 
-metadata: 
-  name: dahsapp-config 
-```
-
-In the config.yaml file below environment variables need to be set. Please change according to your requirement. Make sure you set the GRPC_SERVER_URL correct. 
-
-- **GRPC_SERVER_URL:** It is gRPC endpoint with port. For OpenShift the value would be <Service Name>:<Port> for example “wml-serving:8033” 
-- **SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL:** This is sentiment analysis stock model. Default value is “entiment-document-cnn-workflow-en-stock” 
-- **EMOTION_CLASSIFICATION_STOCK_MODEL:** This is emotion analysis stock model. Default value is “ensemble-classification-wf-en-emotion-stock” 
-- **NLP_MODEL_SERVICE_TYPE:** This is runtime deployment type. Default value is “mm-model-id”. For WML Serving runtime running in K8/Openshift please set value “mm-vmodel-id”
-
-**service.yaml**
-
-Service object describes to create a clusterIP service, so that we can expose the service outside later using port-forward. Port is exposed at 8050. 
-
-```
-apiVersion: v1 
-kind: Service 
-metadata: 
-  name: dash-app-grpc 
-spec: 
-  type: ClusterIP 
-  selector: 
-    app: dash-app-grpc 
-  ports: 
-  - port: 8050 
-    protocol: TCP 
-    targetPort: 8050 
-```
+- `GRPC_SERVER_URL`: Set this to the gRPC endpoint of the model service. The value should have the form `<Service-Name>:<Port>`, e.g. `wml-serving:8033`. 
+- `SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL`: Set this to the name of the sentiment analysis model being served. Default value is `entiment-document-cnn-workflow-en-stock`.
+- `EMOTION_CLASSIFICATION_STOCK_MODEL`: Set this to the name of the emotion classification model being served. Default value is `ensemble-classification-wf-en-emotion-stock`.
+ 
 #### 5.3 Deploy 
-execute the below command to deploy in OpenShift Cluster.
+
+**Kubernetes.** Execute the following command to deploy.
+```
+kubectl apply -f deployment/ 
+```
+Enable port-forward to the service in order to access it from your local machine.
+```
+kubectl port-forward svc/dash-app-grpc 8050 
+```
+
+**OpenShift.** Execute the below command to deploy.
 ```
 oc apply -f deployment/ 
 ```
-you can expose the service as a route, or you can do a port-forward to test the application as a route.
+You can expose the service as a route, or you can do a port-forward to test the application as a route.
 ```
 oc expose service/dash-app-grpc 
 ```
 ```
 oc get route
 ```
-or you can port forward the service to access in localhost 
+Or, you can port forward the service to access in localhost 
 ```
 oc port-forward svc/dash-app-grpc 8050 
-```
-  
-execute the below command to deploy in Kubernetes Cluster.
-```
-kubectl apply -f deployment/ 
-```
-port forward the service to access in localhost
-```
-kubectl port-forward svc/dash-app-grpc 8050 
 ```
 
 #### 5.4 Test
