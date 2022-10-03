@@ -42,10 +42,10 @@ docker build -t dash-app-grpc:latest .
 ```
 This results in an image named `dash-app-grpc:latest`.
 
-## Run
-
 ### 4. Run with Docker
-In this section, we give the steps to run your application front-end locally using Docker.
+In this section, we give the steps to run your application front-end locally using Docker. If you instead want to run it on your Kubernetes or OpenShift cluster, skip ahead to the next step.
+
+#### Enable port forwarding
 
 If your model service is running on a Kubernetes or OpenShift cluster, then first enable port forwarding.  In Kubernetes:
 ```
@@ -55,6 +55,8 @@ For OpenShift:
 ```
 oc port-forward svc/watson-nlp-container 8085
 ```
+
+#### Start the web service
 
 Set the following environment variables:
 - **GRPC_SERVER_URL.** Set this to the gRPC endpoint model service. The default value is `localhost:8085`. 
@@ -69,6 +71,9 @@ docker run \
 -e EMOTION_CLASSIFICATION_STOCK_MODEL=${EMOTION_CLASSIFICATION_STOCK_MODEL} \ 
 -p 8050:8050 dash-app-grpc:latest 
 ```
+
+#### Test
+
 You can use your browser to access the application at:
 ```
 http://localhost:8050 
