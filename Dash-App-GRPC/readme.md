@@ -6,12 +6,11 @@ You can adapt the sample code from this tutorial to your own projects.
 This tutorial follows on from previous tutorials serving Sentiment Analysis and Emotion Classification models.  As a starting point, you should have a running instance of the Watson NLP Runtime that is serving Sentiment Analysis and Emotion Classification models that is serving the following pretrained Watson NLP models:
 - `sentiment_document-cnn-workflow_en_stock`
 - `ensemble_classification-wf_en_emotion-stock`
+We will first build a container image for the application, and then run it with either Docker, or on a Kubernetes or OpenShift cluster. At the end of the tutorial, we will take a closer look at the application code.
 
 ### Architecture Diagram
 
 ![Reference architecure](images/referenceArchitecturePythonClient.png)
-
-We will first build a container image for the application, and then run it with either Docker, or on a Kubernetes or OpenShift cluster. At the end of the tutorial, we will take a closer look at the application code.
 
 ### Prerequisites
 - Docker is installed on your local machine. 
