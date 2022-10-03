@@ -1,9 +1,9 @@
 # Serve Watson NLP Pretrained Models using Standalone Containers
-In this tutorial you will to serve Watson NLP pretrained models from a standalone container. Both the Watson NLP Runtime and the models will be packaged into a single container image.  When the container runs it will expose REST and gRPC endpoints that client programs can use to do inference on the models. 
+This tutorial will walk you through the steps to build a container image to serve pretrained Watson NLP models. Both the Watson NLP Runtime and the models will be packaged into the container image.  When the container runs it will expose REST and gRPC endpoints that client programs can use to make inference requests on the models. 
 
-Standalone containers are useful as they can be deployed anywhere: on your laptop using a container runtime like Docker; on a Kubernetes or OpenShift cluster; or, on a cloud container service like IBM Code Engine or AWS Fargate.  In this tutorial, you will run the container on your local machine using Docker.
+These containers can run anywhere. In the tutorial you will run the container using Docker. The same image could also be run on a Kubernetes or OpenShift cluster, or on a cloud container service like IBM Code Engine or AWS Fargate.  
 
-The tutorial uses pretrained models for Sentiment Analysis and Emotion Classification, but this can easily be adapted to serving other pretrained models. 
+The tutorial uses pretrained models for Sentiment Analysis and Emotion Classification, however the approach can easily be adapted to serving other pretrained models. 
 
 ### Architecture diagram
 
