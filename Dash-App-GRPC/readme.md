@@ -36,7 +36,7 @@ pip3 install watson_nlp_runtime_client
 This is a packaged gRPC stub library that is used to communicate with the Watson NLP Runtime. 
 
 ### 3. Build docker image
-Th Docker file for the application. In the requirement.txt all the required package are listed.  
+Below is the Docker file used to build.  
 ```
 FROM python:3.9 
 WORKDIR /app 
@@ -60,9 +60,14 @@ docker build -t dash-app-grpc:latest .
 
 ### 4. Run
 
-#### 4.1 Running the app in localhost 
+#### 4.1 Run with Docker 
 
-Run the below command to run the container.
+Set the following environment variables:
+- **GRPC_SERVER_URL.** This is gRPC endpoint with port for the model service. The default value is “localhost:8085”. If the service is running on a Kubernetes or OpenShift cluster the value should be of the form `<Service Name>:<Port>`.
+- **SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL:** Set this to the name of the sentiment analysis model. Default value is `entiment-document-cnn-workflow-en-stock`.
+- EMOTION_CLASSIFICATION_STOCK_MODEL: This is name of the emotion analysis model. Default value is `ensemble-classification-wf-en-emotion-stock`.
+- NLP_MODEL_SERVICE_TYPE: This is runtime deployment type. Default value is `mm-model-id`.
+Use the command below command to start the container.
 ```
 docker run \ 
 -e GRPC_SERVER_URL=${GRPC_SERVER_URL} \ 
@@ -71,19 +76,12 @@ docker run \
 -e NLP_MODEL_SERVICE_TYPE=${NLP_MODEL_SERVICE_TYPE} \ 
 -p 8050:8050 dash-app-grpc:latest 
 ```
-
-Pass the environment variable with proper values 
-- GRPC_SERVER_URL: It is gRPC endpoint with port. The default value is “localhost:8085”. For OpenShift the value would be <Service Name>:<Port> 
-- SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL: This is sentiment analysis stock model. Default value is “entiment-document-cnn-workflow-en-stock” 
-- EMOTION_CLASSIFICATION_STOCK_MODEL: This is emotion analysis stock model. Default value is “ensemble-classification-wf-en-emotion-stock” 
-- NLP_MODEL_SERVICE_TYPE: This is runtime deployment type. Default value is “mm-model-id”. For WML Serving runtime running in K8/Openshift please set value “mm-vmodel-id” 
-
-You can now access the application at 
+You can now use your browser to access the application at:
 ```
 http://localhost:8050 
 ```
 
-#### 4.2 Running the application in a Kubernetes and OpenShift cluster 
+#### 4.2 Run the application in a Kubernetes or OpenShift cluster 
  
 Before running the app in localhost, you need to push to image in a container registry. Please change the `<Image Registry> and <Project Name>` based on your configuration. 
 ```
