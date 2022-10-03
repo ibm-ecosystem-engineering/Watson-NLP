@@ -45,13 +45,23 @@ This results in an image named `dash-app-grpc:latest`.
 ### 4. Run
 
 #### 4.1 Run with Docker 
+In this section, we give the steps to run your application front-end locally using Docker.
 
-If your model service is running in k8s/ocp ... port forwarding
+If your model service is running on a Kubernetes or OpenShift cluster, then first enable port forwarding.  In Kubernetes:
+```
+kubectl port-forward svc/watson-nlp-container 8085 
+```
+For OpenShift:
+```
+oc port-forward svc/watson-nlp-container 8085
+```
 
 Set the following environment variables:
-- **GRPC_SERVER_URL.** This is gRPC endpoint with port for the model service. The default value is `localhost:8085`. 
-- **SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL:** Set this to the name of the sentiment analysis model. Default value is `entiment-document-cnn-workflow-en-stock`.
-- EMOTION_CLASSIFICATION_STOCK_MODEL: This is name of the emotion analysis model. Default value is `ensemble-classification-wf-en-emotion-stock`.
+- **GRPC_SERVER_URL.** Set this to the gRPC endpoint model service. The default value is `localhost:8085`. 
+- **SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL:** Set this to the name of the sentiment analysis model being served. Default value is `entiment-document-cnn-workflow-en-stock`.
+- **EMOTION_CLASSIFICATION_STOCK_MODEL:** Set this to the name of the emotion classification model being served. Default value is `ensemble-classification-wf-en-emotion-stock`.
+
+The following command will start the front-end service.
 ```
 docker run \ 
 -e GRPC_SERVER_URL=${GRPC_SERVER_URL} \ 
@@ -59,7 +69,7 @@ docker run \
 -e EMOTION_CLASSIFICATION_STOCK_MODEL=${EMOTION_CLASSIFICATION_STOCK_MODEL} \ 
 -p 8050:8050 dash-app-grpc:latest 
 ```
-You can now use your browser to access the application at:
+You can use your browser to access the application at:
 ```
 http://localhost:8050 
 ```
