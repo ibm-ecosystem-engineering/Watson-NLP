@@ -1,13 +1,9 @@
 # Watson NLP Python Client 
-In this tutorial you will build and deploy a Watson NLP client application.  The sample client application is a web service built in Python that performs Sentiment Analysis and Emotion Classification on user-supplied texts.  The client application uses the Watson NLP Python SDK to interact with a back-end model service.
+In this tutorial you will build and deploy a Watson NLP client application.  The sample client application is a web service built in Python that performs Sentiment Analysis and Emotion Classification on user-supplied texts.  The client application uses the Watson NLP Python SDK to interact with a back-end model service. You can adapt the sample code from this tutorial to your own projects.
 
-You can adapt the sample code from this tutorial to your own projects.
-
-This tutorial follows on from previous tutorials serving Sentiment Analysis and Emotion Classification models.  As a starting point, you should have a running instance of the Watson NLP Runtime that is serving Sentiment Analysis and Emotion Classification models that is serving the following pretrained Watson NLP models:
+This tutorial follows from previous tutorials serving Sentiment Analysis and Emotion Classification models. You should have a model service that is serving Watson NLP Sentiment Analysis and Emotion Classification models. The default configuration uses the models: 
 - `sentiment_document-cnn-workflow_en_stock`
 - `ensemble_classification-wf_en_emotion-stock`
-
-We will first build a container image for the application, and then run it with either Docker, or on a Kubernetes or OpenShift cluster. At the end of the tutorial, we will take a closer look at the application code.
 
 ## Architecture Diagram
 
@@ -46,8 +42,7 @@ This results in an image named `dash-app-grpc:latest`.
 In this section, we give the steps to run your application front-end locally using Docker. If you instead want to run it on your Kubernetes or OpenShift cluster, skip ahead to the next step.
 
 #### 4.1 Enable port forwarding
-
-If your model service is running on a Kubernetes or OpenShift cluster, then first enable port forwarding.  In Kubernetes:
+If your model service is running on a Kubernetes or OpenShift cluster, then enable port forwarding from your local machine to that cluster.  In Kubernetes:
 ```
 kubectl port-forward svc/watson-nlp-container 8085 
 ```
@@ -57,7 +52,6 @@ oc port-forward svc/watson-nlp-container 8085
 ```
 
 #### 4.2 Start the web service
-
 Set the following environment variables:
 - **GRPC_SERVER_URL.** Set this to the gRPC endpoint model service. The default value is `localhost:8085`. 
 - **SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL:** Set this to the name of the sentiment analysis model being served. Default value is `entiment-document-cnn-workflow-en-stock`.
@@ -73,16 +67,15 @@ docker run \
 ```
 
 #### 4.3 Test
-
 Use your browser to access the application at the following URL.
 ```
 http://localhost:8050 
 ```
 
-### 4.2 Run the application in a Kubernetes or OpenShift cluster 
-In this section we discuss the steps to running the application on the same Kubernetes or OpenShift cluster that your model is being served. 
+### 5. Run the application in your Kubernetes or OpenShift cluster 
+In this section we discuss the steps to run the application on the same Kubernetes or OpenShift cluster in which your models are being served. 
 
-#### Push the image to a container registry
+#### 5.1 Push the image to a container registry
 First you will need to push the image to a container registry that can be accessed by your cluster. Run the following commands, changing the `<Image Registry>` and `<Project Name>` in the following commands based on your configuration. 
 ```
 docker tag dash-app-grpc:latest <Image Registry>/<Project Name>/dash-app-grpc:latest 
@@ -91,8 +84,7 @@ docker tag dash-app-grpc:latest <Image Registry>/<Project Name>/dash-app-grpc:la
 docker push <Image Registry>/<Project Name>/dash-app-grpc:latest 
 ```
 
-#### 
-
+#### 5.2 Update the manifest
 The Kubernetes manifest to run the service is under the 
 
 In deployment.yaml file you need to modify set the image location based on the image you built in the previous step. 
@@ -195,8 +187,7 @@ spec:
     protocol: TCP 
     targetPort: 8050 
 ```
-#### 4.2.1 OpenShift 
-
+#### 5.3 Deploy 
 execute the below command to deploy in OpenShift Cluster.
 ```
 oc apply -f deployment/ 
@@ -212,7 +203,7 @@ or you can port forward the service to access in localhost
 ```
 oc port-forward svc/dash-app-grpc 8050 
 ```
-#### 4.2.2 Kubernetes 
+  
 execute the below command to deploy in Kubernetes Cluster.
 ```
 kubectl apply -f deployment/ 
@@ -222,7 +213,8 @@ port forward the service to access in localhost
 kubectl port-forward svc/dash-app-grpc 8050 
 ```
 
-You can now access the application at 
+#### 5.4 Test
+You can now access the application from your browser at the following URL. 
 ```
 http://localhost:8050 
 ```
