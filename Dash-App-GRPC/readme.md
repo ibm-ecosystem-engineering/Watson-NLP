@@ -53,9 +53,9 @@ oc port-forward svc/watson-nlp-container 8085
 
 #### 4.2 Start the web service
 Set the following environment variables:
-- **GRPC_SERVER_URL.** Set this to the gRPC endpoint model service. The default value is `localhost:8085`. 
-- **SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL:** Set this to the name of the sentiment analysis model being served. Default value is `entiment-document-cnn-workflow-en-stock`.
-- **EMOTION_CLASSIFICATION_STOCK_MODEL:** Set this to the name of the emotion classification model being served. Default value is `ensemble-classification-wf-en-emotion-stock`.
+- `GRPC_SERVER_URL`: Set this to the gRPC endpoint model service. The default value is `localhost:8085`. 
+- `SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL`: Set this to the name of the sentiment analysis model being served. Default value is `entiment-document-cnn-workflow-en-stock`.
+- `EMOTION_CLASSIFICATION_STOCK_MODEL`: Set this to the name of the emotion classification model being served. Default value is `ensemble-classification-wf-en-emotion-stock`.
 
 Run this command to start the web service.
 ```
@@ -132,7 +132,7 @@ oc expose service/dash-app-grpc
 ```
 oc get route
 ```
-Or, you can port forward the service to access in localhost 
+Alternatively, you can port forward the service to access in localhost 
 ```
 oc port-forward svc/dash-app-grpc 8050 
 ```
