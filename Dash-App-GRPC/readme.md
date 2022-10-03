@@ -1,4 +1,4 @@
-## Watson NLP Python Client 
+# Watson NLP Python Client 
 In this tutorial you will build and deploy a Watson NLP client application.  The sample client application is a web service built in Python that performs Sentiment Analysis and Emotion Classification on user-supplied texts.  The client application uses the Watson NLP Python SDK to interact with a back-end model service.
 
 You can adapt the sample code from this tutorial to your own projects.
@@ -9,11 +9,11 @@ This tutorial follows on from previous tutorials serving Sentiment Analysis and 
 
 We will first build a container image for the application, and then run it with either Docker, or on a Kubernetes or OpenShift cluster. At the end of the tutorial, we will take a closer look at the application code.
 
-### Architecture Diagram
+## Architecture Diagram
 
 ![Reference architecure](images/referenceArchitecturePythonClient.png)
 
-### Prerequisites
+## Prerequisites
 - Docker is installed on your local machine. 
 - Python >= 3.9 is installed on your local machine. 
 - You have access to a running instance of the Watson NLP Runtime running Sentiment Analysis and Emotion Classification models. 
@@ -61,7 +61,7 @@ Set the following environment variables:
 - **SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL:** Set this to the name of the sentiment analysis model being served. Default value is `entiment-document-cnn-workflow-en-stock`.
 - **EMOTION_CLASSIFICATION_STOCK_MODEL:** Set this to the name of the emotion classification model being served. Default value is `ensemble-classification-wf-en-emotion-stock`.
 
-The following command will start the front-end service.
+Run this command to start the web service.
 ```
 docker run \ 
 -e GRPC_SERVER_URL=${GRPC_SERVER_URL} \ 
@@ -75,7 +75,7 @@ http://localhost:8050
 ```
 
 #### 4.2 Run the application in a Kubernetes or OpenShift cluster 
-Prior to deployment push to image to a container registry. Please change the `<Image Registry>` and `<Project Name>` below based on your configuration. 
+Prior to deployment push the image to a container registry. Please change the `<Image Registry>` and `<Project Name>` in the following commands based on your configuration. 
 ```
 docker tag dash-app-grpc:latest <Image Registry>/<Project Name>/dash-app-grpc:latest 
 ```
