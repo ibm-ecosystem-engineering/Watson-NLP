@@ -42,7 +42,9 @@ This results in an image named `dash-app-grpc:latest`.
 In this section, we give the steps to run your application front-end locally using Docker. If you instead want to run it on your Kubernetes or OpenShift cluster, skip ahead to the next step.
 
 #### 4.1 Enable port forwarding
-If your model service is running on a Kubernetes or OpenShift cluster, then enable port forwarding from your local machine to that cluster.  In Kubernetes:
+If your model service is running on a Kubernetes or OpenShift cluster, then enable port forwarding from your local machine to that cluster. If this is not the case, then skip this step.
+
+In Kubernetes:
 ```
 kubectl port-forward svc/watson-nlp-container 8085 
 ```
