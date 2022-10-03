@@ -208,3 +208,4 @@ http://localhost:8050
 ```
 
 
+## Understanding the Application Code
