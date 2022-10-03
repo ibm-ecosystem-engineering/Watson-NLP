@@ -45,7 +45,7 @@ This results in an image named `dash-app-grpc:latest`.
 ### 4. Run with Docker
 In this section, we give the steps to run your application front-end locally using Docker. If you instead want to run it on your Kubernetes or OpenShift cluster, skip ahead to the next step.
 
-#### Enable port forwarding
+#### 4.1 Enable port forwarding
 
 If your model service is running on a Kubernetes or OpenShift cluster, then first enable port forwarding.  In Kubernetes:
 ```
@@ -56,7 +56,7 @@ For OpenShift:
 oc port-forward svc/watson-nlp-container 8085
 ```
 
-#### Start the web service
+#### 4.2 Start the web service
 
 Set the following environment variables:
 - **GRPC_SERVER_URL.** Set this to the gRPC endpoint model service. The default value is `localhost:8085`. 
@@ -72,9 +72,9 @@ docker run \
 -p 8050:8050 dash-app-grpc:latest 
 ```
 
-#### Test
+#### 4.3 Test
 
-You can use your browser to access the application at:
+Use your browser to access the application at the following URL.
 ```
 http://localhost:8050 
 ```
