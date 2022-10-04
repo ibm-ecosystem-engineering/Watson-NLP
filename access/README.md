@@ -17,7 +17,10 @@ Enter your Artifactory user profile and API key at the prompts.
 
 
 
-## Watson NLP SDKs
+## Watson NLP Client SDKs
 
 ### Python
-
+The Watson NLP Python Client SDK is stored in [PyPI](https://pypi.org/). Install it with the following command.
+```
+pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ watson-nlp-runtime-client
+```
