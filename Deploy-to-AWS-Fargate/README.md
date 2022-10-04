@@ -5,6 +5,7 @@ This tutorial will walk you through the steps to deploy a stand-alone Watson NLP
 
 
 ## Prerequisites
+- Ensure you have your entitlement key to access the IBM Entitled Registry
 - Ensure you have an AWS account
 - [Install](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) AWS CLI
 - [Configure](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-quickstart.html) a default profile with a proper default [region name](https://docs.aws.amazon.com/general/latest/gr/rande-manage.html)
