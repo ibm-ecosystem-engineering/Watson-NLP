@@ -26,7 +26,7 @@ The sample code for this tutorial is under the subdirectory `Watson-NLP/Watson-N
 ```
 cd Watson-NLP/Watson-NLP-Container/Runtime
 ```
-There is a Dockerfile in this directory that will be used to build the service. Have a look at the contents of this file.
+Have a look at the Dockerfile in this directory, which will be used to build the service.
 ```
 ARG WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39"
 ARG SENTIMENT_MODEL="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp_sentiment_aggregated-cnn-workflow_lang_en_stock:2.8.0"
