@@ -1,9 +1,9 @@
-# Serve Watson NLP Pretrained Models using Standalone Containers
-This tutorial will walk you through the steps to build a container image to serve pretrained Watson NLP models. Both the Watson NLP Runtime and the models will be packaged into the container image.  When the container runs it will expose REST and gRPC endpoints that client programs can use to make inference requests on the models. 
+# Serve Pretrained Models with Docker
+This tutorial will walk you through the steps to build a container image to serve pretrained Watson NLP models, and to run it with Docker. The container image will include both the Watson NLP Runtime and the models.  When the container runs it will expose REST and gRPC endpoints that client programs can use to make inference requests on the models. 
 
-These containers can run anywhere. In the tutorial you will run the container using Docker. The same image could also be run on a Kubernetes or OpenShift cluster, or on a cloud container service like IBM Code Engine or AWS Fargate.  
+These containers can run anywhere. In the tutorial you will run the container using Docker. The same image could also be run on a Kubernetes or OpenShift cluster; or on a cloud container service like IBM Code Engine or AWS Fargate.  
 
-The tutorial uses pretrained models for Sentiment Analysis and Emotion Classification, however the approach can easily be adapted to serving other pretrained models. 
+For this tutorial, we will use pretrained models for sentiment analysis and emotion classification. Though other pretrained models could be served similarly.
 
 ### Architecture diagram
 
@@ -16,62 +16,43 @@ The tutorial uses pretrained models for Sentiment Analysis and Emotion Classific
 ## Steps
 
 ### 1. Clone the GitHub repository
-This repository contains the code used in this tutorial.
+This repository contains the code used in the tutorial.
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
-Go to the root directory that contains sample code for this tutorial.
+The sample code for this tutorial is under the subdirectory.
 ```
-cd Watson-NLP/Watson-NLP-Container
+Watson-NLP/Watson-NLP-Container
 ```
 
 ### 2. Build the Docker Image
-Go to the directory with the 
 ```
 cd Watson-NLP/Watson-NLP-Container/Runtime
 ```
-The Dockerfile in this directory contains the following.
+Have a look at the Dockerfile in this directory.
 ```
 ARG WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39"
-FROM ${WATSON_RUNTIME_BASE} as base
-#################
-## Build Phase ##
-#################
-FROM base as build
+ARG SENTIMENT_MODEL="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp_sentiment_aggregated-cnn-workflow_lang_en_stock:2.8.0"
+ARG EMOTION_MODEL="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp_emotion_aggregated-workflow_lang_en_stock:2.3.1"
 
-# Args for artifactory credentials
-ARG ARTIFACTORY_USERNAME
-ARG ARTIFACTORY_API_KEY
-ENV ARTIFACTORY_USERNAME=${ARTIFACTORY_USERNAME}
-ENV ARTIFACTORY_API_KEY=${ARTIFACTORY_API_KEY}
+FROM ${SENTIMENT_MODEL} as model1
+RUN ./unpack_model.sh
 
-# Build arg to specify space-delimited names of models
-ARG MODEL_NAMES
-WORKDIR /app/models
-# Download all of the models locally to /app/models
+FROM ${EMOTION_MODEL} as model2
+RUN ./unpack_model.sh
+
+FROM ${WATSON_RUNTIME_BASE} as release
+
 RUN true && \
-    mkdir -p /app/models && \
-    arr=(${MODEL_NAMES}) && \
-    for model_name in "${arr[@]}"; do \
-        python3 -c "import watson_nlp; watson_nlp.download('${model_name}', parent_dir='/app/models')"; \
-    done && \
-    true
-
-###################
-## Release Phase ##
-###################
-FROM base as release
+    mkdir -p /app/models
 
 ENV LOCAL_MODELS_DIR=/app/models
-COPY --from=build /app/models /app/models
+COPY --from=model1 app/models /app/models
+COPY --from=model2 app/models /app/models
 ```
-Observe that the container image uses the Watson NLP Runtime as its base image.  During the build phase it downloads stock models to the machine.  These are copied into the image in the release phase.  
+The Watson NLP models are stored as container images. When these containers run they will start an `unpack_model.sh` script, which unzips the model file and copies it to the `/app/models` directory. In this Dockerfile we run the script explicity to trigger this during the build.
 
-The following arguments are passed to the build command.
-- 1WATSON_RUNTIME_BASE`: The Watson NLP Runtime image (optional).
-- **ARTIFACTORY_USERNAME**=Artifactory username to download the base image
-- **ARTIFACTORY_API_KEY**=Artifactory API key to download the base image
-- **MODEL_NAMES**=A space-separated list of stock Watson NLP models that you want served from this container.
+The Watson NLP Runtime image is used for the final build. 
 
 To build the image, run the following command.
 ```
