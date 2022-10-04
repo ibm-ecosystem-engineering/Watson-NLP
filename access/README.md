@@ -14,7 +14,16 @@ docker login https://na.artifactory.swg-devops.com
 Enter your Artifactory user profile and API key at the prompts.
 
 ### Kubernetes and OpenShift
-To allow your Kubernetes or OpenShift cluster to access the container images, 
+To allow your Kubernetes or OpenShift cluster to access the container images, you can use the methods from the [Kubernetes documentation](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/) to store your credentials as a Kubernetes Secret. 
+
+For example, use the following command to create a Secret named `regcred`.
+```
+kubectl create secret docker-registry regcred --docker-server=<your-registry-server> --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>
+```
+Where:
+- `<your-name>` is your Artifactory user profile
+- `<you-pword>` is your Artifactory API key
+- `<your-email>` is your email address
 
 ## Watson NLP Client SDKs
 ### Python
