@@ -18,7 +18,7 @@ To allow your Kubernetes or OpenShift cluster to access the container images,
 
 ## Watson NLP Client SDKs
 ### Python
-The Watson NLP Python Client SDK is stored in [PyPI](https://pypi.org/). Install it with the following command.
+The Watson NLP Python Client SDK is stored in [PyPI]([https://pypi.org/)). Install it with the following command.
 ```
 pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ watson-nlp-runtime-client
 ```
@@ -27,7 +27,7 @@ Note that the above command is only for when the SDK is in the test area. Once i
 pip install watson-nlp-runtime-client
 ```
 ## Model Packager
-This tool is used to package custom trained models into container images in the same way as are the Watson NLP pretrained models. 
+This tool is used to package custom trained models into container images in the same way as are the Watson NLP pretrained models. It is stored on public [PyPI](https://pypi.org/).
 ```
 pip install watson-embed-model-packager
 ```
