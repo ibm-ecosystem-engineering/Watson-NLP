@@ -25,7 +25,8 @@ class GrpcClient:
             sentence_sentiment=True,
             show_neutral_scores=True
         )
-        SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL = os.getenv("SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL", default="sentiment_document-cnn-workflow_en_stock")
+        SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL = os.getenv("SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL", 
+             default="watson-nlp_sentiment_aggregated-cnn-workflow_lang_en_stock")
         print("###### Calling remote GRPC model = ", SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL)
         response = self.stub.SentimentDocumentWorkflowPredict(request,metadata=[("mm-model-id", SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL)] )
         return response
@@ -35,7 +36,8 @@ class GrpcClient:
         request = common_service_pb2.EmotionDocumentWorkflowRequest(
             raw_document=dm.RawDocument(text=inputText).to_proto()
         )
-        EMOTION_CLASSIFICATION_STOCK_MODEL = os.getenv("EMOTION_CLASSIFICATION_STOCK_MODEL", default="ensemble_classification-wf_en_emotion-stock")
+        EMOTION_CLASSIFICATION_STOCK_MODEL = os.getenv("EMOTION_CLASSIFICATION_STOCK_MODEL", 
+             default="watson-nlp_emotion_aggregated-workflow_lang_en_stock")
         print("###### Calling remote GRPC model = ", EMOTION_CLASSIFICATION_STOCK_MODEL)
         response = self.stub.EmotionDocumentWorkflowPredict(request,metadata=[("mm-model-id", EMOTION_CLASSIFICATION_STOCK_MODEL)] )
         return response
