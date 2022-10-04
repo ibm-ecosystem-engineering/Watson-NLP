@@ -18,7 +18,7 @@ To allow your Kubernetes or OpenShift cluster to access the container images,
 
 ## Watson NLP Client SDKs
 ### Python
-The Watson NLP Python Client SDK is stored in [PyPI]([https://pypi.org/)). Install it with the following command.
+The Watson NLP Python Client SDK is stored in [PyPI](https://pypi.org/). Install it with the following command.
 ```
 pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ watson-nlp-runtime-client
 ```
