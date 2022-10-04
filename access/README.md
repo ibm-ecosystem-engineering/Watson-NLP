@@ -23,3 +23,7 @@ The Watson NLP Python Client SDK is stored in [PyPI](https://pypi.org/). Install
 ```
 pip install -i https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ watson-nlp-runtime-client
 ```
+The above command is only for when the SDK is in the test area. Once it is pushed to the public PyPI you will use the command:
+```
+pip install watson-nlp-runtime-client
+```
