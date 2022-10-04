@@ -65,7 +65,7 @@ Use the following command to start the service on your local machine.
 ```
 docker run -d -p 8085:8085 watson-nlp-container:v1
 ```
-The models are now being served.  The gRPC endpoint will be exposed on port 8085 at localhost.
+The models are now being served through a gRPC endpoint at port 8085.
 
 ### 4. Test 
 You can now test the service with a simple Python client program.
@@ -76,7 +76,7 @@ Ensure that the Watson NLP Python SDK is installed on your machine.
 ```
 pip3 install watson_nlp_runtime_client 
 ```
-This client command expects a single text string argument and requests inference from stock Sentiment Analysis and Emotion Classification models.  
+This client command expects a single text string argument and requests inference from stock Sentiment Analysis and Emotion Classification models. If you are serving different models, you will have to update the client code.  
 
 Run the client command as: 
 ```
