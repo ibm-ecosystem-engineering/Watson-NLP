@@ -11,8 +11,8 @@ For this tutorial, we will use pretrained models for sentiment analysis and emot
 
 ### Prerequisites
 - Install [Docker Desktop](https://docs.docker.com/get-docker/).
-- Ensure that Docker has [access](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) to the Watson NLP Runtime and pretrained models.
 - Install [Python 3.9](https://www.python.org/downloads/) or later (this is used to run the client program).
+- Ensure that Docker has [access](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) to the Watson NLP Runtime and pretrained models, and that you have installed the Python Client SDK on your machine.
 
 ## Steps
 
@@ -69,15 +69,12 @@ docker run -d -p 8085:8085 watson-nlp-container:v1
 The models are now being served through a gRPC endpoint at port 8085.
 
 ### 4. Test 
-You can now test the service with a simple Python client program.
+You can now test the service with a simple Python client program. Ensure that the [Watson NLP Python SDK](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) is installed on your machine. 
 ```
 cd ../Client 
 ```
-Ensure that the Watson NLP Python SDK is installed on your machine. 
-```
-pip3 install watson_nlp_runtime_client 
-```
-This client command expects a single text string argument and requests inference from stock Sentiment Analysis and Emotion Classification models. If you are serving different models, you will have to update the client code.  
+
+The client command expects a single text string argument and requests inference from stock Sentiment Analysis and Emotion Classification models. If you are serving different models, you will have to update the client code.  
 
 Run the client command as: 
 ```
