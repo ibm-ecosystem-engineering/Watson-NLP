@@ -22,14 +22,14 @@ Container images for Watson NLP Runtime and pretrained model images are stored i
 docker login cp.icr.io --username <user_name> --password <entitlement_key>
 ```
 
-### 1. Get the sample code
+### 2. Get the sample code
 Clone the GitHub repository that contains sample code used in this tutorial.
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
 The sample code for this tutorial is under the subdirectory `Watson-NLP/Watson-NLP-Container`.
 
-### 2. Build
+### 3. Build
 ```
 cd Watson-NLP/Watson-NLP-Container/Runtime
 ```
@@ -67,14 +67,14 @@ docker build . -t watson-nlp-container:v1
 ```
 This will create a Docker image called `watson-nlp-container:v1`.
 
-### 3. Run
+### 4. Run
 Use the following command to start the service on your local machine.
 ```
 docker run -d -p 8085:8085 watson-nlp-container:v1
 ```
 The models are now being served through a gRPC endpoint at port 8085.
 
-### 4. Test 
+### 5. Test 
 You can now test the service with a simple Python client program.
 ```
 cd ../Client 
