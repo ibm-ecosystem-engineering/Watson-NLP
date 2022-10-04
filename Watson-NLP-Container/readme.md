@@ -20,10 +20,7 @@ This repository contains the code used in the tutorial.
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
-The sample code for this tutorial is under the subdirectory.
-```
-Watson-NLP/Watson-NLP-Container
-```
+The sample code for this tutorial is under the subdirectory `Watson-NLP/Watson-NLP-Container`.
 
 ### 2. Build the Docker Image
 ```
