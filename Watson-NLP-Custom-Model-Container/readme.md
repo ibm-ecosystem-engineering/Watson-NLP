@@ -11,9 +11,9 @@ Standalone containers can be deployed anywhere include laptop with Docker; on a 
     
 ### Prerequisites
     
-- Install [Docker Desktop](https://docs.docker.com/get-docker/).
-- Install [Python 3.9](https://www.python.org/downloads/) or later (this is used to run the client program).
-- Ensure that Docker has [access](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) to the Watson NLP Runtime and pretrained models, and that you have installed the Python Client SDK on your machine.
+- Install [Docker Desktop](https://docs.docker.com/get-docker/)
+- Install [Python 3.9](https://www.python.org/downloads/) or later (this is used to run the client program)
+- Ensure that Docker has [access](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) to the Watson NLP Runtime and pretrained models, and that you have installed the Python Client SDK on your machine
     
 ## Steps
 ### 1. Clone the GitHub repository
