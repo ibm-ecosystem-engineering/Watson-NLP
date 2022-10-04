@@ -47,9 +47,12 @@ ENV LOCAL_MODELS_DIR=/app/models
 COPY --from=model1 app/models /app/models
 COPY --from=model2 app/models /app/models
 ```
-Note that Watson NLP pretrained models are stored as container images. When these containers run they will run an `unpack_model.sh` script, which unzips the model file and copies it to the `/app/models` directory. In this Dockerfile we run the script explicity to trigger this during the build.
 
-The Watson NLP Runtime image is used as the base image for the container. In this Dockerfile we set the `LOCAL_MODELS_DIR` environment variable so that the Watson NLP Runtime knows where to look for the models when it starts. Then the models files are copied from the intermediate model images to `/app/models` in the final image.
+Pretrained Watson NLP models are stored as container images. When these containers are run normally, they will invoke an `unpack_model.sh` script. The script unzips the model file and copies it to the `/app/models` directory within the container's filesystem.
+
+In this Dockerfile we run `unpack_model.sh` to trigger the unpacking during the build.
+
+The final image generated uses the Watson NLP Runtime image is used as its base image. The environment variable `LOCAL_MODELS_DIR` is used to tell the Watson NLP Runtime where to find the models it is supposed to serve. Models files are copied from the intermediate images to `/app/models` in the final image.
 
 Build the image with the following command.
 ```
