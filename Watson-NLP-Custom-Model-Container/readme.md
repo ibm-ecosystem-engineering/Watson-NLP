@@ -1,4 +1,4 @@
-## Serving Custom Watson NLP Models using Standalone Containers
+## Serve Custom Models using Standalone Containers
 In this tutorial you will export a Watson NLP model from Watson Studio and to serve it with Docker. 
 
 We will serve the model with a standalone container, in which the model is packaged into a the container image together with the Watson NLP Runtime. When the container runs it will expose REST and gRPC endpoints that client programs can use to make inference requests. 
@@ -11,11 +11,9 @@ Standalone containers can be deployed anywhere include laptop with Docker; on a 
     
 ### Prerequisites
     
-- Docker is installed on your workstation.
-- Python >= 3.9 installed in your workstation to run the client program.
-- An IBM Artifactory username and API key are required to build the Docker image. Set the following variables in your environment.
-    - ARTIFACTORY_USERNAME
-    -  ARTIFACTORY_API_KEY
+- Install [Docker Desktop](https://docs.docker.com/get-docker/).
+- Install [Python 3.9](https://www.python.org/downloads/) or later (this is used to run the client program).
+- Ensure that Docker has [access](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) to the Watson NLP Runtime and pretrained models, and that you have installed the Python Client SDK on your machine.
     
 ## Steps
 ### 1. Clone the GitHub repository
