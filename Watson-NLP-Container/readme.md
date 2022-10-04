@@ -11,24 +11,19 @@ For this tutorial, we will use pretrained models for sentiment analysis and emot
 
 ### Prerequisites
 - Install [Docker Desktop](https://docs.docker.com/get-docker/).
+- Ensure that Docker has [access](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) to the Watson NLP Runtime and pretrained models.
 - Install [Python 3.9](https://www.python.org/downloads/) or later (this is used to run the client program).
 
 ## Steps
 
-### 1. Login to the IBM Entitled Registry
-Container images for Watson NLP Runtime and pretrained model images are stored in the IBM Entitled Registry. Once you've obtained the entitlement key from the [container software library](https://myibm.ibm.com/products-services/containerlibrary) you can login to the registry with the key, and pull the images to your local machine.
-```
-docker login cp.icr.io --username <user_name> --password <entitlement_key>
-```
-
-### 2. Get the sample code
+### 1. Get the sample code
 Clone the GitHub repository that contains sample code used in this tutorial.
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
 The sample code for this tutorial is under the subdirectory `Watson-NLP/Watson-NLP-Container`.
 
-### 3. Build
+### 2. Build
 ```
 cd Watson-NLP/Watson-NLP-Container/Runtime
 ```
@@ -66,14 +61,14 @@ docker build . -t watson-nlp-container:v1
 ```
 This will create a Docker image called `watson-nlp-container:v1`.
 
-### 4. Run
+### 3. Run
 Use the following command to start the service on your local machine.
 ```
 docker run -d -p 8085:8085 watson-nlp-container:v1
 ```
 The models are now being served through a gRPC endpoint at port 8085.
 
-### 5. Test 
+### 4. Test 
 You can now test the service with a simple Python client program.
 ```
 cd ../Client 
