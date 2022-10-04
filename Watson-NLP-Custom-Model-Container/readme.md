@@ -25,9 +25,9 @@ Go to the build directory.
 ```
 cd Waton-NLP/Watson-NLP-Custom-Model-Container/Runtime 
 ```
-In this directory, you will find a Dockerfile and a models directory. The Dockerfile will be used to build the standalone container. During the build, models that reside in the models directory will be incorporated into the container image.
+In this directory is a Dockerfile and a models subdirectory. When we build the container image, any models that are in the models directory will be copied into the container image.
 
-### 2. Save the model
+### 2. Export the model
 If you have trained a model in a Watson Studio notebook, then in this step you will export it and put it in the *models* directory. If you do not have a trained model, you can download a sample model from [here](https://github.com/ibm-build-labs/Watson-NLP/releases/download/ml_model/ensemble_classification-wf_en_emotion).  Save it to the *models* directory with the name `ensemble_classification-wf_en_emotion-stock`, and then skip to step 3.
 
 Before you can export your custom model, ensure that a project token is set in the notebook environment so that your notebook can access the Cloud Object Storage (COS) bucket associated with your project.  
@@ -66,43 +66,41 @@ Using the Watson Studio GUI download the model into the *models* directory on yo
 When the model service starts, the file name that you use to save the model will be used as the model ID.  Client programs will use this model ID when making requests for inference.
 
 ### 3. Build the container image
-At this point, the models you want to serve will be in the *models* directory. Examine the contents of the Dockerfile in the directory: `Watson-NLP/Watson-NLP-Custom-Model-Container/Runtime`
+Have a look at the Dockerfile in the current directory.
 ```
 ARG WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39" 
 FROM ${WATSON_RUNTIME_BASE} as base 
 ENV LOCAL_MODELS_DIR=/app/models 
 COPY models /app/models 
 ```
-Observe that the Watson NLP Runtime image is used as the base image. (The default version of the Runtime is set Dockerfile can be overridden in the build command.)  Models are copied from the *models* directory on the build machine to the directory `/app/models` in the container at build time.
+The Watson NLP Runtime is used as the base image. Any models that are in the `models` subdirectory on the host will be opein the container at build time.
 
-Build the container image with the following command. 
+Use the following command to build the image. 
 ```
-docker build . --build-arg WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39" -t watson-nlp-custom-container:v1 
+docker build . -t watson-nlp-custom-container:v1 
 ```
-This results in a image named `watson-nlp-custom-container:v1`.  You can check this by running:
+This results in a image named `watson-nlp-custom-container:v1`.  Check that it exists:
 ```
 docker images
 ```
 
 ### 4. Run the service with Docker
-Use the following command to start serving the models. 
+Use the following command to start the service. 
 ```
 docker run -d -p 8085:8085 watson-nlp-custom-container:v1 
 ```
-The container exposes a gRPC service on port 8085. 
+The container will expose a gRPC endpoint on port 8085. 
 
 ### 5. Test the service
-Now test the model service using a client program. The client program appears in the directory `Watson-NLP/Watson-NLP-Custom-Model-Container/Client`. Note that the client code included with this tutorial will make inference requests to the sample model `ensemble_classification-wf_en_emotion-stock` that is referenced in step 2.  If you are using your own model, you will have to first update the client code.
+Now test the model service using a client program. Ensure that the [Watson NLP Python SDK](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) is installed on your machine.
 
-Ensure that the Watson NLP Python SDK is installed on your machine. 
-```
-pip3 install watson_nlp_runtime_client 
-```
-Assuming you are in the Runtime directory, go to this directory:
+The client program appears in the directory `Watson-NLP/Watson-NLP-Custom-Model-Container/Client`. Note that the client code included with this tutorial will make inference requests to the sample model `ensemble_classification-wf_en_emotion-stock` that is referenced in step 2.  If you are using your own model, you will have to first update the client code.
+
+From the `Runtime` directory:
 ```
 cd ../Client 
 ```
-Run the client program as: 
+Run the client program.
 ```
 python3 client.py "Watson NLP is awesome" 
 ```
