@@ -1,4 +1,4 @@
-# Accessing Watson NLP Assets
+# Getting Access to Watson NLP Assets
 
 This document describes how to access Watson NLP container images and other assets.
 
