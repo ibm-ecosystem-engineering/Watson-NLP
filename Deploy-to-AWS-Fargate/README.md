@@ -198,6 +198,23 @@ docker --context myecscontext compose --project-name sample-project logs
 ```
 </span>
 
+Once the Watson NLP Runtime service is ready, you should be able to send an inference request to the REST service endpoint as follows.
+
+<span style="font-size:x-small">
+
+```
+curl -s -X POST "http://${HOSTNAME}:${PORT}/v1/watson.runtime.nlp.v0/NlpService/SyntaxPredict" \
+  -H "accept: application/json" \
+  -H "grpc-metadata-mm-model-id: syntax_izumo_lang_en_stock" \
+  -H "content-type: application/json" \
+  -d "{ \"rawDocument\": { \"text\": \"This is a test.\" }, \"parsers\": [ \"TOKEN\" ]}" \
+  | jq -r .
+```
+</span>
+
+**Tip**:
+- The value of metadata `grpc-metadata-mm-model-id` should match the folder name of the model when it was downloaded and saved in `./models` in Step 2.
+
 If you get a response like the following, the Watson NLP Runtime is working properly.
 
 <span style="font-size:x-small">
