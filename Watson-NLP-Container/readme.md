@@ -12,7 +12,6 @@ For this tutorial, we will use pretrained models for sentiment analysis and emot
 ### Prerequisites
 - Install [Docker Desktop](https://docs.docker.com/get-docker/).
 - Install [Python 3.9](https://www.python.org/downloads/) or later (this is used to run the client program).
-- You must be logged in with Docker to the IBM 
 
 ## Steps
 
