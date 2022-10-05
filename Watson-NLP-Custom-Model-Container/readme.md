@@ -34,7 +34,11 @@ Go to the page for your project in the IBM Cloud Pak for Data GUI. Create an acc
 
 ![access token](Images/access_token.png)
 
-Open up your notebook for editing, and then add the token to your notebook by clicking **More > Insert project token** on the notebook action bar. This will add a code cell to your notebook similar to the following.
+Open up your notebook for editing, and then add the token to your notebook by clicking **More > Insert project token** on the notebook action bar. 
+
+![insert token](Images/insert_token.png)
+
+This will add a code cell to your notebook similar to the following.
 ```
 # @hidden_cell
 # The project token is an authorization token that is used to access project resources like data sources, connections, and used by platform APIs.
@@ -43,14 +47,7 @@ project = Project(project_id='<project-id>', project_access_token='<access-token
 pc = project.project_context
 ```
 Run this code cell. Once complete, `project` can by used to access resources associated with your project. Below, we will use it to export the model to Cloud Object Storage (COS).
-
-![insert token](Images/insert_token.png)
     
-Insert the following code at the top of your notebook in a code cell and run it, replacing the `project_id` and `project_access_token` with the values you obtained above. 
-```
-from project_lib import Project 
-project = Project(project_id='<project_id>', project_access_token='<project_access_token>') 
-```
 Add the following line to your notebook environment, and run this line in order to save your model. 
 ```
 project.save_data('<file_name>', data=<trained_model_object>.as_file_like_object(), overwrite=True)
