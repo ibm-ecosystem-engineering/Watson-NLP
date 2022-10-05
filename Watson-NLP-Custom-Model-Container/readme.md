@@ -34,7 +34,15 @@ Create an access token with *Editor* role in the IBM Cloud Pak for Data GUI: **M
 
 ![access token](Images/access_token.png)
 
-Add the token to your notebook by clicking **More > Insert project token** on the notebook action bar. By running the inserted hidden code cell, a project object is created that you can use to access project resources. This will give your notebook access the Cloud Object Storage (COS) bucket associated with your project.  
+Open up your notebook for editing, and then add the token to your notebook by clicking **More > Insert project token** on the notebook action bar. This will add a code cell to your notebook similar to the following.
+```
+# @hidden_cell
+# The project token is an authorization token that is used to access project resources like data sources, connections, and used by platform APIs.
+from project_lib import Project
+project = Project(project_id='<project-id>', project_access_token='<access-token>')
+pc = project.project_context
+```
+Run the inserted hidden code cell. Then `project` can by used to access resources associated with your project. Below, we will use it to export the model to Cloud Object Storage (COS).
 
 ![insert token](Images/insert_token.png)
 
