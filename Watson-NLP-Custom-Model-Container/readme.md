@@ -25,12 +25,12 @@ Go to the build directory.
 ```
 cd Watson-NLP/Watson-NLP-Custom-Model-Container/Runtime 
 ```
-In this directory is a `Dockerfile` and a `models` subdirectory. During the build, any models that are in the `models` directory will be copied into the container image.
+You will find in this directory a `Dockerfile` and a `models` subdirectory. When we build the container image, any models that are in the `models` directory will be copied into the image.
 
-### 2. Save your model
+### 2. Export your model
 In this step you will save a Watson NLP model to your machine.  If you have a model in a Watson Studio notebook that you want to use, then follow the instructions below to export it. Otherwise, you can complete this tutorial using this sample [model](https://github.com/ibm-build-labs/Watson-NLP/releases/download/ml_model/ensemble_classification-wf_en_emotion).  Save it to the `models` directory with the name `ensemble_classification-wf_en_emotion-stock`, and then skip ahead to step 3.
 
-Create an access token with *Editor* role in the IBM Cloud Pak for Data GUI: **Manage > Access control > Access tokens**.
+Go to the page for your project in the IBM Cloud Pak for Data GUI. Create an access token with *Editor* role using **Manage > Access control > Access tokens**.
 
 ![access token](Images/access_token.png)
 
@@ -42,13 +42,9 @@ from project_lib import Project
 project = Project(project_id='<project-id>', project_access_token='<access-token>')
 pc = project.project_context
 ```
-Run the inserted hidden code cell. Then `project` can by used to access resources associated with your project. Below, we will use it to export the model to Cloud Object Storage (COS).
+Run this code cell. Once complete, `project` can by used to access resources associated with your project. Below, we will use it to export the model to Cloud Object Storage (COS).
 
 ![insert token](Images/insert_token.png)
-
-Get your project ID from: **Manage > General > Project Id**.
-
-![project id](Images/project_id.png)
     
 Insert the following code at the top of your notebook in a code cell and run it, replacing the `project_id` and `project_access_token` with the values you obtained above. 
 ```
