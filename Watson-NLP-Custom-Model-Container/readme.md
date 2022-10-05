@@ -23,7 +23,7 @@ git clone https://github.com/ibm-build-labs/Watson-NLP
 ```
 Go to the build directory.
 ```
-cd Waton-NLP/Watson-NLP-Custom-Model-Container/Runtime 
+cd Watson-NLP/Watson-NLP-Custom-Model-Container/Runtime 
 ```
 In this directory is a `Dockerfile` and a `models` subdirectory. During the build, any models that are in the `models` directory will be copied into the container image.
 
