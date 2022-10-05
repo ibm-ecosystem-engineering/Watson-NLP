@@ -42,11 +42,11 @@ from project_lib import Project
 project = Project(project_id='<project-id>', project_access_token='<access-token>')
 pc = project.project_context
 ```
-If you do not see this cell, then add it to the notebook by clicking **More > Insert project token** from the notebook action bar. By running the inserted code cell, a project object is created that you can use to access project resources. 
+If you do not see this cell, then add it to the notebook by clicking **More > Insert project token** from the notebook action bar. Run the cell.
 
 ![insert token](Images/insert_token.png)
     
-Add the following line to your notebook and run it to save your model.
+Add the following line to your notebook and run it in order to save your model.
 ```
 project.save_data('<file_name>', data=<trained_model_object>.as_file_like_object(), overwrite=True)
 ```
