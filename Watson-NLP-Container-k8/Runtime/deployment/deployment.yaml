@@ -15,15 +15,9 @@ spec:
       containers:
       - name: watson-nlp-container
         image: image-registry.openshift-image-registry.svc:5000/openshift/watson-nlp-container:v1
-        resources:
-          requests:
-            memory: "2Gi"
-            cpu: "1000m"
-          limits:
-            memory: "4Gi"
-            cpu: "2000m"
         ports:
         - containerPort: 8085
+      serviceAccount: watson-nlp-sa
 ---
 apiVersion: v1
 kind: Service
