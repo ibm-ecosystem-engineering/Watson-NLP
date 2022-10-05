@@ -46,17 +46,17 @@ from project_lib import Project
 project = Project(project_id='<project-id>', project_access_token='<access-token>')
 pc = project.project_context
 ```
-Run this code cell. Once complete, `project` can by used to access resources associated with your project. Below, we will use it to export the model to Cloud Object Storage (COS).
+Run this code cell.
     
-Add the following line to your notebook environment, and run this line in order to save your model. 
+Then, you can add the following line to your notebook and run it to save your model.
 ```
 project.save_data('<file_name>', data=<trained_model_object>.as_file_like_object(), overwrite=True)
 ```
-In the above line you must replace the following:
+Where:
 - `<file_name>` is the exported model name 
 - `<trained_model_object>` is the model being saved
 
-The model will be saved into ZIP archive in a Cloud Object Storage (COS) bucket associated with the project. Once you have saved the model, you will be able to find it in the **Assets** tab. 
+The model will be saved as a ZIP archive in the Cloud Object Storage (COS) bucket associated with the project. Once saved, you will be able to find it in the **Assets** tab. 
 
 ![saved model](Images/saved_model.png)
     
