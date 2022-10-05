@@ -32,7 +32,7 @@ In this step you will save a Watson NLP model to your machine.  If you have a mo
 
 Before you can export your custom model, ensure that a project token is set in the notebook environment. This will allow you to access the Cloud Object Storage (COS) bucket associated with your project from the notebook.  
 
-Get your access token from the IBM Data Platform GUI from: **Manage > Access control > Access tokens**. 
+Get your access token from the IBM Cloud Pak for Data GUI: **Manage > Access control > Access tokens**. 
 
 ![access token](Images/access_token.png)
 
