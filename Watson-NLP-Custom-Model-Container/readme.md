@@ -25,7 +25,7 @@ Go to the build directory.
 ```
 cd Waton-NLP/Watson-NLP-Custom-Model-Container/Runtime 
 ```
-In this directory is a Dockerfile and a models subdirectory. When we build the container image, any models that are in the models directory will be copied into the container image.
+In this directory is a `Dockerfile` and a `models` subdirectory. During the build, any models that are in the `models` directory will be copied into the container image.
 
 ### 2. Export the model
 If you have trained a model in a Watson Studio notebook, then in this step you will export it and put it in the *models* directory. If you do not have a trained model, you can download a sample model from [here](https://github.com/ibm-build-labs/Watson-NLP/releases/download/ml_model/ensemble_classification-wf_en_emotion).  Save it to the *models* directory with the name `ensemble_classification-wf_en_emotion-stock`, and then skip to step 3.
