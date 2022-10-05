@@ -18,7 +18,9 @@ import re
 import json
 from dash.dependencies import Input, Output
 import watson_nlp
+# import time
 
+# start_time = time.time()
 
 external_stylesheets = ['assets/bootstrap.min.css']
 app = dash.Dash(external_stylesheets=external_stylesheets)
@@ -81,7 +83,7 @@ So, yeah, enjoy the film. Sit back with your bag of popcorn and enjoy the g-forc
 #     )
 sentiment_sample_input = dbc.InputGroup(
             [
-                dbc.InputGroupText("Copy Text for Sentiment Analysis"),
+                dbc.InputGroupText("Example Text for Sentiment Analysis"),
                 dcc.Textarea(
                     id='textarea-sentiment',
                     value=sentiment_sample_text,
@@ -111,7 +113,7 @@ emotion_sample_text = " Rooms were stunningly decorated and really spacious in t
 #     )
 emotion_sample_input = dbc.InputGroup(
             [
-                dbc.InputGroupText("Copy Text for Sentiment Analysis"),
+                dbc.InputGroupText("Example Text for Emotion Classification"),
                 dcc.Textarea(
                     id='textarea-emotion',
                     value=emotion_sample_text,
@@ -256,10 +258,15 @@ empty_sentiment_output = {
   }
 }
 
+# start_time_sentiment = time.time()
+sentiment_model = watson_nlp.load('models/bert_wkflow_imdb_5_epochs')
+# sentiment_model = watson_nlp.download_and_load('sentiment-aggregated_cnn-workflow_en_stock')
+# print("SENTIMENT MODEL LOADING TIME--- %s seconds ---" % (time.time() - start_time_sentiment))
+
 def get_sentiment(text):
     # load Model 
     # sentiment_model = watson_nlp.load(watson_nlp.download('sentiment_document-cnn_en_stock'))
-    sentiment_model = watson_nlp.load('models/sentiment_emotion/bert_wkflow_imdb_5_epochs')
+    # sentiment_model = watson_nlp.load('models/bert_wkflow_imdb_5_epochs')
     # sentiment_model = watson_nlp.download_and_load('sentiment-aggregated_bert-workflow_en_stock')
     # syntax_model = watson_nlp.load(watson_nlp.download('syntax_izumo_en_stock'))
     # run the syntax model
@@ -292,9 +299,12 @@ empty_emotion_output = {
   }
 }
 
+emotion_model = watson_nlp.download_and_load('ensemble_classification-wf_en_emotion-stock')
+
 def get_emotion(text):
     # Load the Emotion workflow model for English
-    emotion_model = watson_nlp.load('models/sentiment_emotion/ensemble_classification-wf_en_emotion-stock')
+    # emotion_model = watson_nlp.load('models/ensemble_classification-wf_en_emotion-stock')
+    # emotion_model = watson_nlp.download_and_load('ensemble_classification-wf_en_emotion-stock')
     if text is None:
         return empty_emotion_output
     else:
@@ -358,10 +368,13 @@ app.layout = html.Div(children=[
     State('sentiment-input', 'value')
 )
 def sentiment_analysis_callback(n_clicks, value):
+    # start_time = time.time()
     # sentiment_output_example_processed = json.dumps(sentiment_output_example)
-    sentence_sentiment = get_sentiment(value)[0]
+    sentiment_output = get_sentiment(value)
+    # sentence_sentiment = get_sentiment(value)[0]
     # print("sentence_sentiment: ****", sentence_sentiment)
-    sentence_sentiment = [(sm['score']) for sm in sentence_sentiment]
+    # sentence_sentiment = [(sm['score']) for sm in sentence_sentiment]
+    sentence_sentiment = [(sm['score']) for sm in sentiment_output[0]]
     # sentence_sentiment = [(sm['score']) for sm in sentiment_output_python.to_dict()['sentiment_mentions']]
 
     df_sentiment = pd.DataFrame()
@@ -383,7 +396,8 @@ def sentiment_analysis_callback(n_clicks, value):
     
 
     # sentiment_output_python = json.loads(sentiment_output_example)
-    sentence_sentiment = get_sentiment(value)[0]
+    # sentence_sentiment = get_sentiment(value)[0]
+    sentence_sentiment = sentiment_output[0]
     sentence_sentiment = [(sm['span']['text'], sm['label'], sm['score']) for sm in sentence_sentiment]
     # sentence_sentiment = [(sm['span']['text'], sm['label'], sm['score']) for sm in sentiment_output_python.to_dict()['sentiment_mentions']]
     # print("OUTPUT LENGTH:", len(sentence_sentiment))
@@ -402,8 +416,8 @@ def sentiment_analysis_callback(n_clicks, value):
     df_sentiment_output['Label'] = label_list
     df_sentiment_output['Score'] = score_list
 
-
-    return ("Overall Sentiment Output: ", get_sentiment(value)[1], ' | ', str(round(get_sentiment(value)[2], 2))), \
+    # print("SENTIMENT CALLBACK TIME--- %s seconds ---" % (time.time() - start_time))
+    return ("Overall Sentiment Output: ", sentiment_output[1], ' | ', str(round(sentiment_output[2], 2))), \
         fig_sentiment, df_sentiment_output.to_dict('records')
 
 @app.callback(
@@ -415,6 +429,7 @@ def sentiment_analysis_callback(n_clicks, value):
     State('emotion-input', 'value')
 )
 def update_output(n_clicks, value):
+    # start_time = time.time()
     # emotion_output_python = json.loads(emotion_output_example)
     emotion_output_python = get_emotion(value)
     class_name_list = []
@@ -431,9 +446,11 @@ def update_output(n_clicks, value):
     fig_emotion = px.bar(df_emotion, x='class_name', y='confidence')
     fig_emotion.update_layout(template=plotly_template,barmode='stack',title_text='Emotion Score', title_x=0.5,
                                 xaxis_title="Emotion", yaxis_title="Confidence Score")
-    return ("Emotion Output: ", emotion_output_python['classes'][0]['class_name'], ' | ', str(round(emotion_output_python['classes'][0]['confidence'], 2))),\
+    # print("EMOTION CALLBACK TIME--- %s seconds ---" % (time.time() - start_time))
+    return ("Prominent Emotion : ", emotion_output_python['classes'][0]['class_name'], ' | ', str(round(emotion_output_python['classes'][0]['confidence'], 2))),\
          fig_emotion, df_emotion.to_dict('records')
-    # return emotion_output_python.to_dict()['classes'][0]['class_name'], fig_emotion, df_emotion.to_dict('records')
+
+# print("TOTAL APP TIME--- %s seconds ---" % (time.time() - start_time))
 
 if __name__ == '__main__':
     SERVICE_PORT = os.getenv("SERVICE_PORT", default="8050")

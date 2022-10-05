@@ -261,7 +261,7 @@ def topic_modeling_callback(n_clicks, value):
         topic_df.explode('Keywords'),
         title="Keywords associated with the Topics",
         path=["Topic Name", "Keywords"],
-        color="Cohesiveness",
+        color="Percentage",
         color_continuous_scale=px.colors.sequential.GnBu,
     )
     fig_treemap_keywords.update_layout(template=plotly_template)
@@ -270,7 +270,7 @@ def topic_modeling_callback(n_clicks, value):
         topic_df.explode('Phrases'),
         title="Phrases associated with the Topics",
         path=["Topic Name", "Phrases"],
-        color="Cohesiveness",
+        color="Percentage",
         color_continuous_scale=px.colors.sequential.GnBu,
     )
     fig_treemap_phrases.update_layout(template=plotly_template)
