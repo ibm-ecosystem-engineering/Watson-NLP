@@ -30,15 +30,11 @@ You will find in this directory a `Dockerfile` and a `models` subdirectory. When
 ### 2. Export your model
 In this step you will save a Watson NLP model to your machine.  If you have a model in a Watson Studio notebook that you want to use, then follow the instructions below to export it. Otherwise, you can complete this tutorial using this sample [model](https://github.com/ibm-build-labs/Watson-NLP/releases/download/ml_model/ensemble_classification-wf_en_emotion).  Save it to the `models` directory with the name `ensemble_classification-wf_en_emotion-stock`, and then skip ahead to step 3.
 
-Go to the page for your project in the IBM Cloud Pak for Data GUI. Create an access token with *Editor* role using **Manage > Access control > Access tokens**.
+Go to the page for your project in the IBM Cloud Pak for Data GUI. Create an access token with *Editor* role using **Manage > Access control > Access tokens** if one does not already exist.
 
 ![access token](Images/access_token.png)
 
-Open up your notebook for editing, and then add the token to your notebook by clicking **More > Insert project token** on the notebook action bar. 
-
-![insert token](Images/insert_token.png)
-
-This will add a code cell to your notebook similar to the following.
+Open your notebook for editing.  You need to ensure that the project token is set so that you can access the project assets from the notebook.  Look for a cell similar to the following at the top of your notebook.
 ```
 # @hidden_cell
 # The project token is an authorization token that is used to access project resources like data sources, connections, and used by platform APIs.
@@ -46,9 +42,11 @@ from project_lib import Project
 project = Project(project_id='<project-id>', project_access_token='<access-token>')
 pc = project.project_context
 ```
-Run this code cell.
+If you do not see this cell, then add it to the notebook by clicking **More > Insert project token** from the notebook action bar. By running the inserted code cell, a project object is created that you can use to access project resources. 
+
+![insert token](Images/insert_token.png)
     
-Then, you can add the following line to your notebook and run it to save your model.
+Add the following line to your notebook and run it to save your model.
 ```
 project.save_data('<file_name>', data=<trained_model_object>.as_file_like_object(), overwrite=True)
 ```
