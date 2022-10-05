@@ -127,10 +127,10 @@ spec:
         resources: 
           requests: 
             memory: "2Gi" 
-            cpu: "1000m" 
+            cpu: "500m" 
           limits: 
             memory: "4Gi" 
-            cpu: "2000m" 
+            cpu: "1000m" 
         ports: 
         - containerPort: 8085 
 --- 
@@ -161,6 +161,16 @@ kubectl get pods
 kubectl get svc
 ```
 #### 3.2 Run on OpenShift
+
+In openshift it is a privileged container. Create a service account and give the accout scc previllege to give extra permission to run the model.
+```
+oc create sa watson-nlp-sa
+```
+
+```
+oc adm policy add-scc-to-user anyuid -z watson-nlp-sa
+```
+
 Run the below commands to deploy in the cluster from the project root directory `Watson-NLP/Watson-NLP-Container-k8`.
 ```
 oc apply -f Runtime/deployment/deployment.yaml 
