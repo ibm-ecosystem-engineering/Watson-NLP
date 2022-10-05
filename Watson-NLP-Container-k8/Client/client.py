@@ -22,9 +22,12 @@ except:
 client = GrpcClient()
 
 #Calling the emotion analysis model
-response = client.call_emotion_model(textInput)
+print("Sentiment model result: ")
+print("-----------------------------------------------------------")
+response = client.call_sentiment_model(textInput)
 print(response)
 
-# calling stentiment analysis model
-sentimentResponse = client.call_sentiment_document_model_workflow(textInput)
-print(sentimentResponse)
+print("Emotion model result:")
+print("-----------------------------------------------------------")
+response = client.call_emotion_model(textInput)
+print(response)
