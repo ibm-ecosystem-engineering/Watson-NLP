@@ -160,7 +160,7 @@ x-aws-cloudformation:
 
 Notice the YAML block under `x-aws-cloudformation:`, which is an overlay that customizes the properties of the `Runtime8080TargetGroup` resource, for which no specific `x-aws-*` custom extension is available. 
 
-### Step 10: Validate the `compose.yaml` file
+### Step 10: Validate the Compose file
 Not only can you generate a CloudFormation stack file from the Compose file with the `docker compose convert` command, it can also help check the Compose file for syntax errors.
 
 <span style="font-size:x-small">
