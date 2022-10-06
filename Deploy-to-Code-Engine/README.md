@@ -351,7 +351,7 @@ ibmcloud ce project delete --name my-ce-project --hard
 ```
 </span>
 
-Note: If you do not specify the 'hard' option, the project can be restored within 7 days by using either the 'project restore' or the 'reclamation restore' command.
+Note: If you do not specify the `--hard` option, the project can be restored within 7 days by using either the `project restore` or the `reclamation restore` command.
 
 Delete the ICR namespace:
 
