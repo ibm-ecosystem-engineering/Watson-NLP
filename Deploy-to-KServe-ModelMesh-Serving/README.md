@@ -31,7 +31,7 @@ You will need to [login to the IBM Kubernetes Service (IKS) cluster](https://clo
 ibmcloud login --sso
 
 # Set the context by updating the kubeconfig file set by KUBECONFIG environment variable, or ~/.kube/config by default.
-ibmcloud ks cluster config --cluster <iks-cluster-name>
+ibmcloud ks cluster-config --cluster <iks-cluster-name>
 
 # Set kubectl to use your namespace by default.
 kubectl config set-context --current --namespace=<your-namespace>
