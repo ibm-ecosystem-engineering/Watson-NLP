@@ -333,10 +333,32 @@ If you get a response like the following, the Watson NLP Runtime is working prop
 ## Clean up
 Don't forget to clean up afterwards, to avoid paying for the cloud resources you no longer need.
 
+Delete the application:
+
 <span style="font-size:x-small">
 
 ```
 ibmcloud ce app delete --name watson-nlp-runtime
+```
+</span>
+
+Delete the project:
+
+<span style="font-size:x-small">
+
+```
+ibmcloud ce project delete --name my-ce-project --hard
+```
+</span>
+
+Note: If you do not specify the 'hard' option, the project can be restored within 7 days by using either the 'project restore' or the 'reclamation restore' command.
+
+Delete the ICR namespace:
+
+<span style="font-size:x-small">
+
+```
+ibmcloud cr namespace-rm ${NAMESPACE}
 ```
 </span>
 
