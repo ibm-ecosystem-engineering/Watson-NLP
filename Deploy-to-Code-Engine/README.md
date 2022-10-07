@@ -1,14 +1,14 @@
-# Deploy a Stand-alone Watson NLP Runtime to IBM Cloud Code Engine
+# Deploy Models on IBM Cloud Code Engine
 [IBM Cloud Code Engine](https://cloud.ibm.com/docs/codeengine) is a fully managed, serverless platform that runs your containerized workloads. The Code Engine experience is designed so that you can focus on writing code and not on the infrastructure that is needed to host it. Code Engine can even build container images for you from your source code.
 
-This tutorial will walk you through the steps to deploy a stand-alone Watson NLP Runtime to IBM Cloud Code Engine.
-
+This tutorial will walk you through the steps to serve Watson NLP models on IBM Cloud Code Engine.
 
 ## Prerequisites
 - Ensure you have your entitlement key to access the IBM Entitled Registry
 - Ensure you have an IBM Cloud account
 - Install [IBM Cloud CLI](https://cloud.ibm.com/docs/cli?topic=cli-getting-started)
 - Install [Docker](https://docs.docker.com/get-docker/) or [Podman](https://podman.io/getting-started/installation)
+- Ensure that Docker has access to the [Watson NLP Runtime and pretrained model images](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md#docker).
 
 **Tip**:
 - Podman provides a Docker-compatible command line front end. Unless otherwise noted, all the the Docker commands in this tutorial should work for Podman, if you simply alias the Docker CLI with `alias docker=podman` shell command.
@@ -17,16 +17,7 @@ This tutorial will walk you through the steps to deploy a stand-alone Watson NLP
 ## Create the runtime container image
 The IBM Entitled Registry contains various container images for Watson Runtime. Once you've obtained the entitlement key from the [container software library](https://myibm.ibm.com/products-services/containerlibrary), you can login to the registry with the key, and pull the runtime images to your local machine. The Watson Runtime on its own doesn't have any models included. However, you can easily build a runtime container image to include one or more pretrained models, which are also stored as container images in the IBM Entitled Registry.
 
-### Step 1: Login to the IBM Entitled Registry
-
-<span style="font-size:x-small">
-
-```
-docker login cp.icr.io --username cp --password <your_entitlement_key>
-```
-</span>
-
-### Step 2: Download a couple of models to a local directory
+### Step 1: Download a couple of models to a local directory
 
 <span style="font-size:x-small">
 
@@ -42,7 +33,7 @@ done
 ```
 </span>
 
-### Step 3: Create a ```Dockerfile``` using a text editor of your choice
+### Step 2: Create a ```Dockerfile``` using a text editor of your choice
 
 <span style="font-size:x-small">
 
@@ -53,7 +44,7 @@ COPY models /app/models
 ```
 </span>
 
-### Step 4: Build the runtime image
+### Step 3: Build the runtime image
 
 <span style="font-size:x-small">
 
@@ -66,7 +57,7 @@ docker build -t my-watson-nlp-runtime:latest .
 ## Upload your runtime image to IBM Cloud Container Registry
 Now the runtime image is created, let's put it on [IBM Cloud Container Registry (ICR)](https://cloud.ibm.com/docs/Registry), so that it can be used for deployment.
 
-### Step 5: Install the Container Registry plug-in
+### Step 4: Install the Container Registry plug-in
 
 <span style="font-size:x-small">
 
@@ -75,7 +66,7 @@ ibmcloud plugin install cr
 ```
 </span>
 
-### Step 6: Log in to your IBM Cloud account.
+### Step 5: Log in to your IBM Cloud account.
 
 <span style="font-size:x-small">
 
@@ -86,7 +77,7 @@ ibmcloud login
 
 Use `ibmcloud login --sso` command to login, if you have a federated ID.
 
-### Step 7: Create a namespace
+### Step 6: Create a namespace
 You'll need to create a [namespace](https://cloud.ibm.com/docs/Registry?topic=Registry-registry_overview#overview_elements_namespace) before you can upload your image, and make sure you're targeting the correct ICR [region](https://cloud.ibm.com/docs/Registry?topic=Registry-registry_overview#registry_regions).
 
 Set a target region for the `ibmcloud cr` commands.
@@ -107,7 +98,7 @@ ibmcloud cr namespace-add ${NAMESPACE}
 ```
 </span>
 
-### Step 8: Login to ICR
+### Step 7: Login to ICR
 
 <span style="font-size:x-small">
 
@@ -116,7 +107,7 @@ ibmcloud cr login
 ```
 </span>
 
-### Step 9: Upload the runtime image to ICR
+### Step 8: Upload the runtime image to ICR
 Set `${REGISTRY}` to the listed Domain name for the [local registry regions](https://cloud.ibm.com/docs/Registry?topic=Registry-registry_overview#registry_regions_local) (or `icr.io` for the global registry), and run the following commands.
 <span style="font-size:x-small">
 
@@ -133,7 +124,7 @@ docker push ${REGISTRY}/${NAMESPACE}/my-watson-nlp-runtime:latest
 ## Deploy the runtime to Code Engine
 Once the runtime image is uploaded to ICR, we can use it to deploy a Code Engine application that serves Watson NLP models via a REST API.
 
-### Step 10: Install the Code Engine plug-in.
+### Step 9: Install the Code Engine plug-in.
 
 <span style="font-size:x-small">
 
@@ -142,7 +133,7 @@ ibmcloud plugin install code-engine
 ```
 </span>
 
-### Step 11: Target a [region](https://cloud.ibm.com/docs/overview?topic=overview-locations) and a [reource group](https://cloud.ibm.com/docs/account?topic=account-rgs&interface=cli)
+### Step 10: Target a [region](https://cloud.ibm.com/docs/overview?topic=overview-locations) and a [reource group](https://cloud.ibm.com/docs/account?topic=account-rgs&interface=cli)
 
 <span style="font-size:x-small">
 
@@ -151,7 +142,7 @@ ibmcloud target -r ${REGION} -g ${RESOURCE_GROUP}
 ```
 </span>
 
-### Step 12: Create a new [Code Engine project](https://cloud.ibm.com/docs/codeengine?topic=codeengine-manage-project)
+### Step 11: Create a new [Code Engine project](https://cloud.ibm.com/docs/codeengine?topic=codeengine-manage-project)
 In this example, a project named `my-ce-project` will be create in the region and resource group set by the previous command.
 
 <span style="font-size:x-small">
@@ -161,7 +152,7 @@ ibmcloud ce project create --name my-ce-project
 ```
 </span>
 
-### Step 13: Select the project as the current context
+### Step 12: Select the project as the current context
 
 <span style="font-size:x-small">
 
@@ -170,7 +161,7 @@ ibmcloud ce project select --name my-ce-project
 ```
 </span>
 
-### Step 14: Create a Code Engine managed secret from the IBM Cloud Web Console
+### Step 13: Create a Code Engine managed secret from the IBM Cloud Web Console
 If your applications in a project use an IBM Cloud Container Registry namespace that is in your account, you can let Code Engine create and manage the registry access secret for you to access the namespace from the project. The name of an automatically created registry access secret is of the format: `ce-auto-icr-private-${REGION}`, where `${REGION}` is the region, in which the namespace is created.
 
 You can trigger a workflow to have a [Code Engine managed secret](https://cloud.ibm.com/docs/codeengine?topic=codeengine-add-registry#types-registryaccesssecrets) created for you as follows:
@@ -187,7 +178,7 @@ You can trigger a workflow to have a [Code Engine managed secret](https://cloud.
 
 You should be able to see the created registry access secret with the `ibmcloud ce registry list` command. With the registry access secret successfully created, you can now close the web console without actually creating an application, and move on to the next step.
 
-### Step 15: Create an Code Engine application from the runtime image
+### Step 14: Create an Code Engine application from the runtime image
 At this point, you can simply create an application from your runtime image with a Code Engine CLI command.
 
 <span style="font-size:x-small">
@@ -205,7 +196,7 @@ ibmcloud ce application create \
 
 It may take a few minutes to complete the deployment. If the deployment is successful, you'll get the URL of the application's public endpoint from the command output. Append `/swagger` to the URL and open it in a browser to access the Swagger UI, if you want to interact with the REST API resources provided by the Watson NLP Runtime.
 
-### Step 16: Check your deployment
+### Step 15: Check your deployment
 You can check the status of the application with the following commands:
 
 <span style="font-size:x-small">
@@ -222,7 +213,7 @@ ibmcloud ce app events --application watson-nlp-runtime
 ```
 </span>
 
-### Step 17: Use curl to make a REST call
+### Step 16: Use curl to make a REST call
 Once the Watson NLP Runtime service is ready, you should be able to send an inference request to the REST service endpoint as follows.
 
 <span style="font-size:x-small">
