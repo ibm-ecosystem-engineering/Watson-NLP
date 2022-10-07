@@ -46,13 +46,11 @@ docker push <REPO>/<PROJECT_NAME>/watson-nlp-container:v1
 ```
 
 ### 3. Deploy in Kubernetes/OpenShift
-To run the service in an OpenShift or Kubernetes cluster, ensure that you have either the Kubernetes CLI (`kubectl`) or OpenShift CLI (`oc`) installed on your local machine, and that you have logged into the cluster.  Further, ensure that the Docker image you created above is in a container registry that is accessible from your Kubernetes or OpenShift cluster.
- 
-Below is an example of the YAML to use to deploy on your cluster.  This file is available in the sample code at: 
+Go here: 
 ```
-Watson-NLP/Watson-NLP-Container-k8/Runtime/deployment/deployment.yaml
+cd deployment
 ```
-Before you start the service, you will need to update the image path in the Deployment to point to your container image.
+In this directory is a Kubernetes manifest called `deployment.yaml` which can be used to deploy the model service. Before you start this service, you will need to update the image path in the `Deployment` to point to the registry you used.
 ```
 apiVersion: apps/v1 
 kind: Deployment 
