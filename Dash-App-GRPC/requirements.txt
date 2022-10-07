@@ -5,4 +5,5 @@ pandas
 plotly
 numpy
 grpcio
-protobuf
+protobuf==4.21.7
+watson-nlp-runtime-client==1.0.0
