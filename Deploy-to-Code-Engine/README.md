@@ -14,7 +14,6 @@ This tutorial will walk you through the steps to serve Watson NLP models on IBM 
 
 
 ## Create the runtime container image
-The IBM Entitled Registry contains various container images for Watson Runtime. Once you've obtained the entitlement key from the [container software library](https://myibm.ibm.com/products-services/containerlibrary), you can login to the registry with the key, and pull the runtime images to your local machine. The Watson Runtime on its own doesn't have any models included. However, you can easily build a runtime container image to include one or more pretrained models, which are also stored as container images in the IBM Entitled Registry.
 
 ### Step 1: Download a couple of models to a local directory
 
