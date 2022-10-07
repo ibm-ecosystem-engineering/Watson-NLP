@@ -10,9 +10,10 @@ For this tutorial, we will use pretrained models for sentiment analysis and emot
 ![Diagram](Images/ReferenceArchitectureRuntimeLocal.png)
 
 ### Prerequisites
-- Install [Docker Desktop](https://docs.docker.com/get-docker/).
-- Install [Python 3.9](https://www.python.org/downloads/) or later (this is used to run the client program).
-- Ensure that Docker has [access](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) to the Watson NLP Runtime and pretrained models, and that you have installed the Python client library on your machine.
+- [Docker Desktop](https://docs.docker.com/get-docker/) is installed
+- [Python 3.9](https://www.python.org/downloads/) or later is installed
+- Docker has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md#docker)
+- [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md#python) is installed
 
 ## Steps
 
