@@ -29,6 +29,7 @@ Where:
 The Watson NLP Runtime client libraries can be used by client programs to make inference requests against models that are being served using the Watson NLP Runtime.  Example code can be found [here](https://github.com/IBM/ibm-watson-embed-clients/tree/main/watson_nlp).
 
 ### Python
+[Python 3.9](https://www.python.org/downloads/) or later is required to install.
 ```
 pip install watson-nlp-runtime-client
 ```
