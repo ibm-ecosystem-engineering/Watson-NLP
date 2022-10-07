@@ -7,7 +7,6 @@
 #*****************************************************************#
 import grpc
 import os
-import watson_nlp.data_model as dm
 from watson_nlp_runtime_client import (
     common_service_pb2,
     common_service_pb2_grpc,
