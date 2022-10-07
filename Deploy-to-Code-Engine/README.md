@@ -4,7 +4,7 @@
 This tutorial will walk you through the steps to serve Watson NLP models on IBM Cloud Code Engine.
 
 ## Prerequisites
-- Ensure you have an IBM Cloud account
+- Ensure you have an [IBM Cloud account](https://cloud.ibm.com/login)
 - Install [IBM Cloud CLI](https://cloud.ibm.com/docs/cli?topic=cli-getting-started)
 - Install [Docker](https://docs.docker.com/get-docker/) or [Podman](https://podman.io/getting-started/installation)
 - Ensure that Docker has access to the [Watson NLP Runtime and pretrained model images](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md#docker).
