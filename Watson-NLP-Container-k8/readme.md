@@ -9,6 +9,7 @@ In this tutorial you will build a standalone container image to serve Watson NLP
 - [Docker Desktop](https://docs.docker.com/get-docker/) is installed
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
 - You have a Kubernetes or OpenShift cluster on which you can deploy an application
+- You have either the Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed, and configured to talk to your cluster.
 - Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models]()
 - [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md#kubernetes-and-openshift) is installed
 
