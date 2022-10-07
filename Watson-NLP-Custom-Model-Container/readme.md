@@ -60,7 +60,7 @@ The model will be saved as a ZIP archive in the Cloud Object Storage (COS) bucke
 
 ![saved model](Images/saved_model.png)
     
-Using the Watson Studio GUI download the model into the *models* directory on your local machine using the file name `bert_wkflow_imdb_5_epochs`. 
+Download the model into the *models* directory on your local machine using the file name `bert_wkflow_imdb_5_epochs`. (Use the vertical ellipsis to the right of the model name to open a menu with the download option.)
 
 ### 3. Build the container image
 Have a look at the Dockerfile in the current directory.
