@@ -13,7 +13,8 @@ Standalone containers can be deployed anywhere include laptop with Docker; on a 
     
 - Install [Docker Desktop](https://docs.docker.com/get-docker/)
 - Install [Python 3.9](https://www.python.org/downloads/) or later (this is used to run the client program)
-- Ensure that Docker has [access](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) to the Watson NLP Runtime and pretrained models, and that you have installed the Python Client SDK on your machine
+- Ensure that Docker has [access](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) to the Watson NLP Runtime and pretrained models, and that you have installed the Watson NLP Runtime Python client library
+- You have created a custom trained Watson NLP model in Watson Studio, generated using this [notebook](https://github.com/ibm-build-labs/Watson-NLP/blob/main/ML/Sentiment-Analysis/Sentiment%20Analysis%20-%20Model%20Training.ipynb) 
     
 ## Steps
 ### 1. Clone the GitHub repository
@@ -28,7 +29,7 @@ cd Watson-NLP/Watson-NLP-Custom-Model-Container/Runtime
 You will find in this directory a `Dockerfile` and a `models` subdirectory. When we build the container image, any models that are in the `models` directory will be copied into the image.
 
 ### 2. Export your model
-In this step you will save a Watson NLP model to your machine.  If you have a model in a Watson Studio notebook that you want to use, then follow the instructions below to export it. Otherwise, you can complete this tutorial using this sample [model](https://github.com/ibm-build-labs/Watson-NLP/releases/download/ml_model/ensemble_classification-wf_en_emotion).  Save it to the `models` directory with the name `ensemble_classification-wf_en_emotion-stock`, and then skip ahead to step 3.
+In this step you will export a Watson NLP model from Watson Studio on IBM Cloud.
 
 Go to the page for your project in the IBM Cloud Pak for Data GUI. Create an access token with *Editor* role using **Manage > Access control > Access tokens** if one does not already exist.
 
@@ -58,9 +59,7 @@ The model will be saved as a ZIP archive in the Cloud Object Storage (COS) bucke
 
 ![saved model](Images/saved_model.png)
     
-Using the Watson Studio GUI download the model into the *models* directory on your local machine. You can save multiple models in this directory.  
-
-When the model service starts, the file name that you use to save the model will be used as the model ID.  Client programs will use this model ID when making requests for inference.
+Using the Watson Studio GUI download the model into the *models* directory on your local machine using the file name `bert_wkflow_imdb_5_epochs`. 
 
 ### 3. Build the container image
 Have a look at the Dockerfile in the current directory.
