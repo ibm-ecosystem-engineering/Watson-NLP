@@ -6,17 +6,9 @@ In this tutorial you will build a standalone container image to serve Watson NLP
 ![Diagram](Images/ReferenceArchitectureK8.png)
 
 ### Prerequisites
-- Docker is installed on your workstation.
-- Python >= 3.9 installed in your workstation.  (This is needed to run the client program.)
-- An [IBM Artifactory](https://na.artifactory.swg-devops.com/ui/admin/artifactory/user_profile) user name and API key are required to build the Docker image. Get an Artifactory Api key from [here](https://taas.w3ibm.mybluemix.net/guides/create-apikey-in-artifactory.md)
-  - ARTIFACTORY_USERNAME 
-  - ARTIFACTORY_API_KEY
-  
-Set the following variables in your environment.
-```
-export ARTIFACTORY_USERNAME=<USER_NAME>
-export ARTIFACTORY_API_KEY=<API_KEY>
-```
+- Install [Python 3.9](https://www.python.org/downloads/) or later (this is used to run the client program)
+- Install [Docker Desktop](https://docs.docker.com/get-docker/)
+- Ensure that Docker has [access](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) to the Watson NLP Runtime and pretrained models, and that you have installed the Python client library
 
 ## Steps
 
