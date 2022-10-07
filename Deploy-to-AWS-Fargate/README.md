@@ -1,8 +1,7 @@
 # Serve Models with Amazon ECS on AWS Fargate
 [Amazon Web Services (AWS)](https://aws.amazon.com/) is a comprehensive cloud computing platform that includes infrastructure as a service (IaaS) and platform as a service (PaaS) offerings. [AWS Fargate](https://aws.amazon.com/fargate/) is a serverless, pay-as-you-go compute engine that lets you focus on building applications without managing servers. AWS Fargate is compatible with both [Amazon Elastic Container Service (ECS)](https://aws.amazon.com/ecs/) and [Amazon Elastic Kubernetes Service (EKS)](https://aws.amazon.com/eks/).
 
-This tutorial will walk you through the steps to deploy a stand-alone Watson NLP Runtime to Amazon ECS on AWS Fargate.
-
+This tutorial will walk you through the steps to deploy a standalone Watson NLP Runtime to Amazon ECS on AWS Fargate.
 
 ## Prerequisites
 - Ensure you have your entitlement key to access the IBM Entitled Registry
