@@ -26,59 +26,11 @@ Go to the build directory.
 ```
 cd Watson-NLP/Watson-NLP-Container-k8/Runtime
 ```
-This directory contains the Dockerfile with the following contents.
+There is a Dockerfile in this directory. Run the build command.
 ```
-ARG WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39"
-FROM ${WATSON_RUNTIME_BASE} as base
-#################
-## Build Phase ##
-#################
-FROM base as build
-
-# Args for artifactory credentials
-ARG ARTIFACTORY_USERNAME
-ARG ARTIFACTORY_API_KEY
-ENV ARTIFACTORY_USERNAME=${ARTIFACTORY_USERNAME}
-ENV ARTIFACTORY_API_KEY=${ARTIFACTORY_API_KEY}
-
-# Build arg to specify space-delimited names of models
-ARG MODEL_NAMES
-WORKDIR /app/models
-# Download all of the models locally to /app/models
-RUN true && \
-    mkdir -p /app/models && \
-    arr=(${MODEL_NAMES}) && \
-    for model_name in "${arr[@]}"; do \
-        python3 -c "import watson_nlp; watson_nlp.download('${model_name}', parent_dir='/app/models')"; \
-    done && \
-    true
-
-###################
-## Release Phase ##
-###################
-FROM base as release
-
-ENV LOCAL_MODELS_DIR=/app/models
-COPY --from=build /app/models /app/models
+docker build . -t watson-nlp-container:v1
 ```
-Notice that the Watson NLP Runtime image is used as the base image. Stock Watson NLP models are downloaded during the build phase, and then copied into the final image during the release phase.
-
-The following arguments are used during the build.  Set these as environment variables.  
-- **WATSON_RUNTIME_BASE**=Watson base runtime image (optional).
-- **ARTIFACTORY_USERNAME**=Artifactory username to download the base image
-- **ARTIFACTORY_API_KEY**=Artifactory API key to download the base image
-- **MODEL_NAMES**=Space-separated list of models to be served. 
-
-To build this image, run the following command.
-```
-docker build . \
---build-arg WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39" \
---build-arg MODEL_NAMES="ensemble_classification-wf_en_emotion-stock sentiment_document-cnn-workflow_en_stock" \
---build-arg ARTIFACTORY_API_KEY=$ARTIFACTORY_API_KEY \
---build-arg ARTIFACTORY_USERNAME=$ARTIFACTORY_USERNAME \
--t watson-nlp-container:v1
-```
-This will create a Docker image called `watson-nlp-container:v1`.  When the container runs, it serves two stock Watson NLP models: 
+This will create a Docker image called `watson-nlp-container:v1`.  When the container runs, it will serve two pretrained models: 
 - `sentiment_document-cnn-workflow_en_stock` 
 - `ensemble_classification-wf_en_emotion-stock`
 
