@@ -4,7 +4,6 @@
 This tutorial will walk you through the steps to serve Watson NLP models on IBM Cloud Code Engine.
 
 ## Prerequisites
-- Ensure you have your entitlement key to access the IBM Entitled Registry
 - Ensure you have an IBM Cloud account
 - Install [IBM Cloud CLI](https://cloud.ibm.com/docs/cli?topic=cli-getting-started)
 - Install [Docker](https://docs.docker.com/get-docker/) or [Podman](https://podman.io/getting-started/installation)
