@@ -26,6 +26,8 @@ Where:
 - `<your-email>` is your email address
 
 ## Watson NLP Client Libraries
+The Watson NLP Runtime client libraries can be used by client programs to make inference requests against models that are being served using the Watson NLP Runtime.  Example code can be found [here](https://github.com/IBM/ibm-watson-embed-clients/tree/main/watson_nlp).
+
 ### Python
 ```
 pip install watson-nlp-runtime-client
