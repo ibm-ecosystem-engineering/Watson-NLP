@@ -27,7 +27,7 @@ A sample Watson NLP application, written in [Dash](https://github.com/plotly/das
 
 
 ## Login with CLI
-You will need to [login to the IKS cluster](https://cloud.ibm.com/docs/containers?topic=containers-access_cluster) with the CLI tools to run the commands in this tutorial.
+You need to [login to the IKS cluster](https://cloud.ibm.com/docs/containers?topic=containers-access_cluster) with the CLI tools to run the `kubectl` commands in this tutorial.
 
 ### Step 3: Install the Kubernetes Service plug-in
 
@@ -74,12 +74,10 @@ kubectl config set-context --current --namespace=<your-namespace>
 **NOTE**:
 - The name of your `namespace` can be found in the email from TechZone when the sandbox environment is ready.
 
-## Pretrained models
-Your TechZone sandbox environment comes with 3 pretrained Watson NLP models. They are stored in an AWS S3 compatible [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage) (COS) bucket, so that they can be served by KServe ModelMesh Serving.
+## Predictors for pretrained models
+Your TechZone sandbox environment comes with 3 pretrained Watson NLP models. They are stored in an [AWS S3](https://aws.amazon.com/s3/) compatible [IBM Cloud Object Storage](https://cloud.ibm.com/docs/cloud-object-storage) (COS) bucket, so that they can be served by KServe ModelMesh Serving. A Kubernetes [custom resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) named [InferenceService](https://kserve.github.io/website/0.9/get_started/first_isvc/) must also be created to register the model with the service.
 
 ### Step 7: Check the InferenceService predictors
-In order to serve a model in KServe ModelMesh Serving, a Kubernetes [custom resource](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) named [InferenceService](https://kserve.github.io/website/0.9/get_started/first_isvc/) must be created to register the model with the service.
-
 You should be able to see the InferenceService predictors created for those 3 pretrained Watson NLP models in your namespace.
 
 <span style="font-size:x-small">
@@ -93,8 +91,10 @@ syntax-izumo-en-stock-predictor                         grpc://modelmesh-serving
 ```
 </span>
 
-### Step 8: Access KServe Modelmesh Serving from your local machine
-KServe ModelMesh Serving currently provides a gRPC API on port `8033`.
+## Access KServe Modelmesh Serving from your local machine
+KServe ModelMesh Serving currently provides a gRPC API using a ClusterIP service on port `8033`, which is on the internal network of the Kubernetes cluster.
+
+### Step 8: Check the Kubernetes service for ModelMesh Serving
 
 <span style="font-size:x-small">
 
@@ -105,7 +105,9 @@ modelmesh-serving   ClusterIP   None         <none>        8033/TCP,8008/TCP,211
 ```
 </span>
 
-You can use the `kubectl port-forward` command to forward a local port to the `modelmesh-serving` service on port `8033`.
+### Step 9: Use port forwarding to remotely access the service
+
+You can run the `kubectl port-forward` command to forward a port on your local machine to the `modelmesh-serving` service on port `8033`.
 
 <span style="font-size:x-small">
 
@@ -121,7 +123,7 @@ kubectl port-forward service/modelmesh-serving <local-port>:8033
 ## Use gRPCurl to make a gRPC call
 You can interact with the gRPC service using the `grpcurl` CLI tool on your local machine. With this tool you could browse the schema for gRPC services, either by querying a server that supports [server reflection](https://github.com/grpc/grpc/blob/master/src/proto/grpc/reflection/v1alpha/reflection.proto), or by reading [Protocol Buffers](https://developers.google.com/protocol-buffers/docs/overview) (Protobufs) source files, or `.proto` files. Since `modelmesh-serving` doesn't support server reflection, we'll use the `.proto` files here.
 
-### Step 9: Copy the protobuf files to a local directory
+### Step 10: Copy the protobuf files to a local directory
 The protobuf files are included in the Watson NLP Runtime container image. You can run the following command to retrieve them from the running pods into a local directory.
 
 <span style="font-size:x-small">
@@ -142,15 +144,15 @@ $ ls
 category-types.proto		emotion-types.proto		nounphrases-types.proto		target-mention-types.proto
 classification-types.proto	entity-types.proto		producer-types.proto		text-primitive-types.proto
 clustering-types.proto		keyword-types.proto		relation-types.proto		text-similarity-types.proto
-common-service.proto		lang-detect-types.proto	rules-types.proto			topic-types.proto
-concept-types.proto			language-types.proto	sentiment-types.proto		vectorization-types.proto
+common-service.proto		lang-detect-types.proto		rules-types.proto		topic-types.proto
+concept-types.proto		language-types.proto		sentiment-types.proto		vectorization-types.proto
 embedding-types.proto		matrix-types.proto		syntax-types.proto
 ```
 </span>
 
 
-### Step 10: Use gRPCurl to make a gRPC inference call
-Assuming you chose a local port 18033 in Step 8, you should now be able to send an inference call at `127.0.0.1:18033` to one of the pretrained models loaded into the Watson NLP Runtime on KServe ModelMesh Serving.
+### Step 11: Use gRPCurl to make gRPC inference calls
+Assuming local port 18033 was chosen in Step 9, you should now be able to send an inference call at `127.0.0.1:18033` to one of the pretrained models loaded into the Watson NLP Runtime on KServe ModelMesh Serving.
 
 <span style="font-size:x-small">
 
@@ -242,7 +244,7 @@ If you get a response like the following, the Watson NLP Runtime is working prop
 ## Upload your own model
 The KServe ModelMesh Serving instance in TechZone comes with a dedicated COS bucket, where you can store your own models and serve them through the KServe ModelMesh Serving instance. Several CLI tools can be used to upload your models to the COS bucket. We'll use the Minio Client here as an example.
 
-### Step 11: Find the HMAC credential for the COS bucket
+### Step 12: Find the HMAC credential for the COS bucket
 You will need the [HMAC credential](https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-uhc-hmac-credentials-main) stored in a Kubernetes `secret` object named `storage-config` to access the COS bucket. Here is how you can retrieve it.
 
 <span style="font-size:x-small">
@@ -272,7 +274,7 @@ $ kubectl get secret/storage-config -o json | jq -r '."data"."'$BUCKET'"' | base
 ```
 </span>
 
-### Step 12: Configure Minio Client
+### Step 13: Configure Minio Client
 To add an entry in your Minio Client configuration for your COS bucket, run the following command:
 
 <span style="font-size:x-small">
@@ -288,7 +290,7 @@ mc config host add $ALIAS $COS-ENDPOINT $ACCESS-KEY-ID $SECRET-ACCESS-KEY
 - Replace `$ACCESS-KEY-ID` with the `access_key_id` of the HMAC credential.
 - Replace `$SECRET-ACCESS-KEY` with the `secret_access_key` of the HMAC credential.
 
-### Step 13: Upload a model from a local directory to the COS bucket
+### Step 14: Upload a model from a local directory to the COS bucket
 
 Use `mc cp --recursive` command to upload your model.
 
@@ -312,7 +314,7 @@ More details regarding Minio and other tools can be found in the following IBM C
 - https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-minio
 - https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-upload
 
-### Step 14: Create an InferenceService predictor for your model
+### Step 15: Create an InferenceService predictor for your model
 A Kubernetes custom resource can be created for the uploaded model as follows.
 
 <span style="font-size:x-small">
@@ -353,7 +355,7 @@ kubectl get inferenceservice
 ```
 </span>
 
-More details regarding custom serving runtime for KServe ModelMesh Serving can be found [here](https://github.com/kserve/modelmesh-serving/blob/main/docs/runtimes/custom_runtimes.md).
+You should now be able to make inference calls to your own custom model from your local machines, in a way similar to what you did with the pretrained model. More details regarding custom serving runtime for KServe ModelMesh Serving can be found [here](https://github.com/kserve/modelmesh-serving/blob/main/docs/runtimes/custom_runtimes.md).
 
 
 ## Clean up
