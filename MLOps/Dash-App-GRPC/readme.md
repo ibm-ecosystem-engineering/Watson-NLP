@@ -10,9 +10,12 @@ This tutorial follows from previous tutorials serving Sentiment Analysis and Emo
 ![Reference architecure](images/referenceArchitecturePythonClient.png)
 
 ## Prerequisites
-- Docker is installed on your local machine. 
-- Python >= 3.9 is installed on your local machine. 
-- You have access to a running instance of the Watson NLP Runtime running Sentiment Analysis and Emotion Classification models. 
+- [Docker Desktop](https://docs.docker.com/get-docker/) is installed
+- [Python 3.9](https://www.python.org/downloads/) or later is installed
+- [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md#python) is installed
+
+**Tip**:
+- [Podman](https://podman.io/getting-started/installation) provides a Docker-compatible command line front end. Unless otherwise noted, all the the Docker commands in this tutorial should work for Podman, if you simply alias the Docker CLI with `alias docker=podman` shell command.
 
 ## Steps
 ### 1. Clone the GitHub repository
@@ -75,7 +78,7 @@ http://localhost:8050
 ```
 
 ### 5. Run the application in your Kubernetes or OpenShift cluster 
-In this section we discuss the steps to run the application on the same Kubernetes or OpenShift cluster in which your models are being served. 
+In this section we discuss the steps to run the application on the same Kubernetes or OpenShift cluster in which your models are being served.
 
 #### 5.1 Push the image to a container registry
 First you will need to push the image to a container registry that can be accessed by your cluster. Run the following commands, changing the `<Image Registry>` and `<Project Name>` in the following commands based on your configuration. 
