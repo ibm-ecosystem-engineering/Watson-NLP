@@ -22,7 +22,7 @@ git clone https://github.com/ibm-build-labs/Watson-NLP
 ```
 Go to the root directory for this tutorial.
 ```
-cd Watson-NLP/Dash-App-GRPC
+cd Watson-NLP/MLOps/Dash-App-GRPC
 ```
 ### 2. Install the client library
 Run the following command to install the Watson NLP Python client library.  
@@ -56,7 +56,7 @@ oc port-forward svc/watson-nlp-container 8085
 #### 4.2 Start the web service
 Set the following environment variables:
 - `GRPC_SERVER_URL`: Set this to the gRPC endpoint model service. The default value is `localhost:8085`. 
-- `SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL`: Set this to the name of the sentiment analysis model being served. Default value is `entiment-document-cnn-workflow-en-stock`.
+- `SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL`: Set this to the name of the sentiment analysis model being served. Default value is `sentiment-document-cnn-workflow-en-stock`.
 - `EMOTION_CLASSIFICATION_STOCK_MODEL`: Set this to the name of the emotion classification model being served. Default value is `ensemble-classification-wf-en-emotion-stock`.
 
 Run this command to start the web service.
