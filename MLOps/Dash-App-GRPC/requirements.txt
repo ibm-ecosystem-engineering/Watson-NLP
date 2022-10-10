@@ -1,0 +1,9 @@
+dash
+dash_bootstrap_components
+dash_daq
+pandas
+plotly
+numpy
+grpcio
+protobuf==4.21.7
+watson-nlp-runtime-client==1.0.0

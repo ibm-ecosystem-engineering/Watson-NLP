@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: watson-main-container
+spec:
+  selector:
+    matchLabels:
+      app: watson-main-container
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: watson-main-container
+    spec:
+      initContainers:
+      - name: initial-model-loading-emotion-classification
+        image: image-registry.openshift-image-registry.svc:5000/poc/watson-nlp_classification_ensemble-workflow_lang_en_tone-stock:2.3.1
+        volumeMounts:
+        - name: model-directory
+          mountPath: "/app/models"
+      containers:
+      - name: watson-main-container
+        image: image-registry.openshift-image-registry.svc:5000/poc/runtime:13.1.0
+        env:
+        - name: LOCAL_MODELS_DIR
+          value: "/app/models"
+        - name: LOG_LEVEL
+          value: debug
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "1000m"
+        ports:
+        - containerPort: 8080
+        - containerPort: 8085
+        volumeMounts:
+        - name: model-directory
+          mountPath: "/app/models"
+      volumes:
+      - name: model-directory
+        emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: watson-main-container
+spec:
+  type: ClusterIP
+  selector:
+    app: watson-main-container
+  ports:
+  - port: 8080
+    name: http-rest-svc
+    protocol: TCP
+    targetPort: 8080
+  - port: 8085
+    name: http-grpc-svc
+    protocol: TCP
+    targetPort: 8085
+  
