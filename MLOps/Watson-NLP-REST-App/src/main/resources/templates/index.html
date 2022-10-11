@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Watson NLP REST Client</title>
+
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}" />
+
+	<!-- custom style -->
+	<!-- link rel="stylesheet" th:href="@{/css/main.css}"/ -->
+
+</head>
+
+<body>
+	<nav class="navbar navbar-dark bg-primary">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/index">
+				<img th:src="@{/logo/ibm_logo.png}" alt="" width="60" height="40" class="d-inline-block align-text-top">
+			</a>
+			<a class="navbar-brand" href="/index">Watson NLP REST Client</a>
+			<a class="navbar-brand" href="/index">Build Labs</a>
+		</div>
+	</nav>
+
+
+	<form class="row g-3" style="margin: 20px" th:action="@{/prediction}" th:object="${commonRequest}" method="post">
+		<div class="col-md-12">
+			<label for="model_id" class="form-label">Model Id</label> <input type="text" class="form-control"
+				id="model_id" th:field="*{model_id}">
+		</div>
+		<div class="col-md-4">
+			<label for="common_service" class="form-label">Common Service</label>
+			<select id="common_service" name="common_service" class="form-select" th:field="*{common_service}">
+				<option value="" selected>Choose...</option>
+				<option value="SyntaxIzumoPredict">SyntaxIzumoPredict</option>
+			</select>
+		</div>
+		<div class="col-md-12">
+			<label for="input_text" class="form-label">Text</label>
+			<textarea class="form-control" id="input_text" rows="3" th:field="*{input_text}"></textarea>
+		</div>
+		<div class="col-12">
+			<button type="submit" class="btn btn-primary">Predict</button>
+		</div>
+		
+	</form>
+	<div class="col-md-12" style="margin: 25px">
+		<pre th:text="'RESULT: ' + ${result}"  style="white-space: pre"></pre>
+	</div>
+	<!-- Boostrap core js -->
+	<script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
+
+</body>
+
+</html>
