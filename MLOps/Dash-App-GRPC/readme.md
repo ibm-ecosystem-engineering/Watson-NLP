@@ -58,15 +58,15 @@ oc port-forward svc/watson-nlp-container 8085
 #### 4.2 Start the web service
 Set the following environment variables:
 - `GRPC_SERVER_URL`: Set this to the gRPC endpoint model service. The default value is `localhost:8085`. 
-- `SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL`: Set this to the name of the sentiment analysis model being served. Default value is `sentiment-document-cnn-workflow-en-stock`.
 - `EMOTION_CLASSIFICATION_STOCK_MODEL`: Set this to the name of the emotion classification model being served. Default value is `ensemble-classification-wf-en-emotion-stock`.
+- `NLP_MODEL_SERVICE_TYPE`: This argument indicates the type of model serving platform. If you model is running in kubernetes as a container set the value as `mm-model-id`. If your model is running in a kserve/wml serving set the value as 'mm-vmodel-id'
 
 Run this command to start the web service.
 ```
-docker run \ 
--e GRPC_SERVER_URL=${GRPC_SERVER_URL} \ 
--e SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL=${SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL} \ 
--e EMOTION_CLASSIFICATION_STOCK_MODEL=${EMOTION_CLASSIFICATION_STOCK_MODEL} \ 
+docker run \
+-e GRPC_SERVER_URL=${GRPC_SERVER_URL} \
+-e EMOTION_CLASSIFICATION_STOCK_MODEL=${EMOTION_CLASSIFICATION_STOCK_MODEL} \
+-e NLP_MODEL_SERVICE_TYPE='mm-model-id' \
 -p 8050:8050 dash-app-grpc:latest 
 ```
 
