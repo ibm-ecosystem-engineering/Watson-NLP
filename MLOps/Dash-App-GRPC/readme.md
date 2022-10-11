@@ -1,8 +1,7 @@
 # Watson NLP Python Client 
-In this tutorial you will build and deploy a Watson NLP client application.  The sample client application is a web service built in Python that performs Sentiment Analysis and Emotion Classification on user-supplied texts.  The client application uses the Watson NLP Python SDK to interact with a back-end model service. You can adapt the sample code from this tutorial to your own projects.
+In this tutorial you will build and deploy a Watson NLP client application.  The sample client application is a web service built in Python that performs Emotion Classification on user-supplied texts.  The client application uses the Watson NLP Python SDK to interact with a back-end model service. You can adapt the sample code from this tutorial to your own projects.
 
-This tutorial follows from previous tutorials serving Sentiment Analysis and Emotion Classification models. You should have a model service that is serving Watson NLP Sentiment Analysis and Emotion Classification models. The default configuration uses the models: 
-- `sentiment_document-cnn-workflow_en_stock`
+This tutorial follows from previous tutorials serving Emotion Classification models. You should have a model service that is serving Watson NLP Classification models. The default configuration uses the models: 
 - `ensemble_classification-wf_en_emotion-stock`
 
 ## Architecture Diagram
