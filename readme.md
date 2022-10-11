@@ -48,8 +48,10 @@ All the Machine Learning notebooks, tutorials, and dataset are under the [ML fol
 
 The steps below describe the 'happy path' for Data Science Engineers, Developers and MLOps engineers to train and save an NLP model (text classification) using Watson NLP in the Watson Studio env, deploy a saved model on Containerized env as easily as possible. At the end of the happy path the following assets will be built, service and application components will have been deployed:
 
-1. Sandbox Watson Studio env on IBM Cloud (![reserve](screenshots/reserve.png))
-2. Watson Studio Notebook for training the model using Watson NLP library (![training](screenshots/notebook-training.png))
+1. Sandbox Watson Studio env on IBM Cloud 
+![reserve](screenshots/reserve.png)
+2. Watson Studio Notebook for training the model using Watson NLP library 
+![training](screenshots/notebook-training.png)
 3. Watson NLP pod ([screenshot](documentation/screenshots/openshift-03.png))
   * Runtime container which provides gRCP and REST interfaces via a service
   * One model container for syntax predictions
