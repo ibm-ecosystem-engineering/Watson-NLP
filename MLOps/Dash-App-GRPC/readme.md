@@ -111,8 +111,8 @@ The format should be:
 Set the following variables in your environment.
 
 - `GRPC_SERVER_URL`: Set this to the gRPC endpoint of the model service. The value should have the form `<Service-Name>:<Port>`, e.g. `wml-serving:8033`. 
-- `SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL`: Set this to the name of the sentiment analysis model being served. Default value is `entiment-document-cnn-workflow-en-stock`.
 - `EMOTION_CLASSIFICATION_STOCK_MODEL`: Set this to the name of the emotion classification model being served. Default value is `ensemble-classification-wf-en-emotion-stock`.
+- `NLP_MODEL_SERVICE_TYPE`: This argument indicates the type of model serving platform. If you model is running in kubernetes as a container set the value as `mm-model-id`. If your model is running in a kserve/wml serving set the value as 'mm-vmodel-id'
  
 #### 5.3 Deploy 
 
