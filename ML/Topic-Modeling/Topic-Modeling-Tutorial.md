@@ -128,7 +128,7 @@ complaint_df.head()
 
 2. Extract most frequent companies in the dataset.
 
-    ![Datahead frame](most-frequent-companies.png)
+    ![Datahead frame](images/most-frequent-companies.png)
 
 #### Step 3.1 Text Pre-Processing
 
