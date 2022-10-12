@@ -13,8 +13,8 @@ Standalone containers can be deployed anywhere include laptop with Docker; on a 
     
 - [Docker Desktop](https://docs.docker.com/get-docker/) is installed
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
-- Docker has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md#docker)
-- [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md#python) is installed
+- Docker has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#docker)
+- [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
 - You have created a custom trained Watson NLP model in Watson Studio, generated using this [notebook](https://github.com/ibm-build-labs/Watson-NLP/blob/main/ML/Sentiment-Analysis/Sentiment%20Analysis%20-%20Model%20Training.ipynb) 
     
 **Tip**:
@@ -28,7 +28,7 @@ git clone https://github.com/ibm-build-labs/Watson-NLP
 ```
 Go to the build directory.
 ```
-cd Watson-NLP/Watson-NLP-Custom-Model-Container/Runtime 
+cd Watson-NLP/MLOps/Watson-NLP-Custom-Model-Container/Runtime 
 ```
 You will find in this directory a `Dockerfile` and a `models` subdirectory. When we build the container image, any models that are in the `models` directory will be copied into the image.
 
