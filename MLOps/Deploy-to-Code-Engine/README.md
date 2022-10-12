@@ -7,7 +7,7 @@ This tutorial will walk you through the steps to serve Watson NLP models on IBM 
 - Ensure you have an [IBM Cloud account](https://cloud.ibm.com/login)
 - Install [IBM Cloud CLI](https://cloud.ibm.com/docs/cli?topic=cli-getting-started)
 - Install [Docker](https://docs.docker.com/get-docker/) 
-- Ensure that Docker can access the [Watson NLP Runtime and pretrained model images](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md#docker).
+- Ensure that Docker can access the [Watson NLP Runtime and pretrained model images](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#docker).
 
 **Tip**:
 - [Podman](https://podman.io/getting-started/installation) provides a Docker-compatible command line front end. Unless otherwise noted, all the the Docker commands in this tutorial should work for Podman, if you simply alias the Docker CLI with `alias docker=podman` shell command.
