@@ -12,8 +12,8 @@ For this tutorial, we will use pretrained models for sentiment analysis and emot
 ### Prerequisites
 - [Docker Desktop](https://docs.docker.com/get-docker/) is installed
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
-- Docker has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md#docker)
-- [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md#python) is installed
+- Docker has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#docker)
+- [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
 
 **Tip**:
 - [Podman](https://podman.io/getting-started/installation) provides a Docker-compatible command line front end. Unless otherwise noted, all the the Docker commands in this tutorial should work for Podman, if you simply alias the Docker CLI with `alias docker=podman` shell command.
@@ -29,7 +29,7 @@ The sample code for this tutorial is under the subdirectory `Watson-NLP/Watson-N
 
 ### 2. Build
 ```
-cd Watson-NLP/Watson-NLP-Container/Runtime
+cd Watson-NLP/MLOps/Watson-NLP-Container/Runtime
 ```
 Have a look at the Dockerfile in this directory, which will be used to build the service.
 ```
