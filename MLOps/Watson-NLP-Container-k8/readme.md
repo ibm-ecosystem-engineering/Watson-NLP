@@ -14,8 +14,8 @@ While this tutorial uses pretrained models, the approach can be adapted to servi
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
 - You have a Kubernetes or OpenShift cluster on which you can deploy an application
 - You have either the Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed, and configured to talk to your cluster.
-- Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md#kubernetes-and-openshift)
-- [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md#python) is installed
+- Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
+- [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
 
 **Tip**:
 - [Podman](https://podman.io/getting-started/installation) provides a Docker-compatible command line front end. Unless otherwise noted, all the the Docker commands in this tutorial should work for Podman, if you simply alias the Docker CLI with `alias docker=podman` shell command.
@@ -32,7 +32,7 @@ In this step, you will build a container image to deploy. If you already have a 
 
 Go to the build directory.
 ```
-cd Watson-NLP/Watson-NLP-Container-k8/Runtime
+cd Watson-NLP/MLOps/Watson-NLP-Container-k8/Runtime
 ```
 There is a Dockerfile in this directory. Run the build command.
 ```
