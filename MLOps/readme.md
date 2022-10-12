@@ -1,2 +1,2 @@
-# Watson-NLP
-This repo is for demos of the Watson NLP library.
+# Watson NLP MLOps Tutorials
+This directory contains boilerplate code and READMEs for tutorials pertaining to the deployment and use of the Watson NLP Runtime.
