@@ -1,11 +1,12 @@
-# Serving a Custom Model on Kubernetes
+# Serving a Custom Model on a Kubernetes or OpenShift Cluster
 
-## Serve a Custom Model using Standalone Containers
-In this tutorial we will export a Watson NLP model from Watson Studio and to serve it with Docker. 
+In this tutorial we will go through the steps to:
+  - export a Watson NLP model from Watson Studio, 
+  - package it in a container image, 
+  - push it to a container registry, and
+  - serve it on a Kubernetes or OpenShift cluster as the init container of a Pod.
 
-The model will be packaged into a the container image together with the Watson NLP Runtime. When the container runs it will expose REST and gRPC endpoints that client programs can use to make inference requests. 
-
-Standalone containers can be deployed anywhere include laptop with Docker; on a Kubernetes or OpenShift cluster; or, on a cloud container service like IBM Code Engine or AWS Fargate.  
+Packaging will be done using the model builder tool.
 
 ### Architecture diagram
 
