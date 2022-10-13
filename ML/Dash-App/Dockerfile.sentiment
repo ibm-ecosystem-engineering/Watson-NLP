@@ -24,6 +24,6 @@ RUN chown -R appuser:appuser /app
 USER appuser
 
 COPY assets /app/assets
-COPY models/sentiment_emotion /app/models/sentiment_emotion
+COPY models/sentiment_emotion /app/models
 COPY Sentiment_dash_app.py /app/Sentiment_dash_app.py
 ENTRYPOINT ["python3","Sentiment_dash_app.py"]
