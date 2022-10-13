@@ -3,7 +3,7 @@
 
 This tutorial will walk you through the steps to deploy a Watson NLP model to the KServe ModelMesh Serving sandbox environment on [IBM Technology Zone](https://techzone.ibm.com/) (TechZone). 
 ## Prerequisites
-- Create a KServe ModelMesh Serving sandbox environment on TechZone
+- Create a KServe ModelMesh Serving [sandbox environment](https://techzone.ibm.com/collection/watson-nlp-serving-nlp-models#tab-3) on TechZone
 - Install IBM Cloud CLI: [ibmcloud](https://cloud.ibm.com/docs/cli?topic=cli-getting-started)
 - Install Kubernetes CLI: [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
 - Install Minio Client CLI: [mc](https://min.io/download)
@@ -124,13 +124,20 @@ kubectl port-forward service/modelmesh-serving <local-port>:8033
 You can interact with the gRPC service using the `grpcurl` CLI tool on your local machine. With this tool you could browse the schema for gRPC services, either by querying a server that supports [server reflection](https://github.com/grpc/grpc/blob/master/src/proto/grpc/reflection/v1alpha/reflection.proto), or by reading [Protocol Buffers](https://developers.google.com/protocol-buffers/docs/overview) (Protobufs) source files, or `.proto` files. Since `modelmesh-serving` doesn't support server reflection, we'll use the `.proto` files here.
 
 ### Step 10: Copy the protobuf files to a local directory
-The protobuf files are included in the Watson NLP Runtime container image. You can run the following command to retrieve them from the running pods into a local directory.
+The protobuf files are included in the Watson NLP Runtime container image. You can extract them from the running pods and save them to a local directory.
 
+Create a directory named `protos` and make it your current working directory:
 <span style="font-size:x-small">
 
 ```
-mkdir protos
-cd protos
+mkdir protos && cd protos
+```
+</span>
+
+Run the following command to extract the protobuf files:
+<span style="font-size:x-small">
+
+```
 kubectl exec deployment/modelmesh-serving-watson-nlp-runtime -c watson-nlp-runtime -- jar cM -C /app/protos . | jar x
 ```
 </span>
@@ -280,15 +287,15 @@ To add an entry in your Minio Client configuration for your COS bucket, run the 
 <span style="font-size:x-small">
 
 ```
-mc config host add $ALIAS $COS-ENDPOINT $ACCESS-KEY-ID $SECRET-ACCESS-KEY
+mc config host add $ALIAS $COS_ENDPOINT $ACCESS_KEY_ID $SECRET_ACCESS_KEY
 ```
 </span>
 
 **Note**:
 - Replace `$ALIAS` with a short alias for referencing Object Storage in commands.
-- Replace `$COS-ENDPOINT` with the `endpoint_url` of the HMAC credential.
-- Replace `$ACCESS-KEY-ID` with the `access_key_id` of the HMAC credential.
-- Replace `$SECRET-ACCESS-KEY` with the `secret_access_key` of the HMAC credential.
+- Replace `$COS_ENDPOINT` with the `endpoint_url` of the HMAC credential.
+- Replace `$ACCESS_KEY_ID` with the `access_key_id` of the HMAC credential.
+- Replace `$SECRET_ACCESS_KEY` with the `secret_access_key` of the HMAC credential.
 
 ### Step 14: Upload a model from a local directory to the COS bucket
 
@@ -297,7 +304,7 @@ Use `mc cp --recursive` command to upload your model.
 <span style="font-size:x-small">
 
 ```
-mc cp --recursive /path/to/mymodel mycos/mybucket
+mc cp --recursive /path/to/mymodel ${ALIAS}/${BUCKET}
 ```
 </span>
 
@@ -306,7 +313,7 @@ Check the content of your COS bucket with `mc tree --files` command.
 <span style="font-size:x-small">
 
 ```
-mc tree --files mycos/mybucket
+mc tree --files ${ALIAS}/${BUCKET}
 ```
 </span>
 
@@ -333,7 +340,7 @@ spec:
       modelFormat:
         name: watson-nlp
       storage:
-        path: $PATH-TO-MODEL
+        path: $PATH_TO_MODEL
         key: $BUCKET
         parameters:
           bucket: $BUCKET
@@ -343,7 +350,7 @@ EOF
 
 **Note**:
 - Replace `$NAME` with any valid unique name.
-- Replace `$PATH-TO-MODEL` with the folder path inside the bucket.
+- Replace `$PATH_TO_MODEL` with the folder path inside the bucket.
 - Replace `$BUCKET` with the name of the COS bucket.
 
 Once the model is successfully loaded, you will see the `READY` status is `True`, when checked with the following command:
