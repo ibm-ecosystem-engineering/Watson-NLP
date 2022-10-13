@@ -41,9 +41,9 @@ syntax_model = watson_nlp.load(watson_nlp.download('syntax_izumo_en_stock'))
 # Load bilstm model in WatsonNLP
 bilstm_model = watson_nlp.load(watson_nlp.download('entity-mentions_bilstm_en_stock'))
 # Load rbr model in WatsonNLP
-rbr_model = watson_nlp.load(watson_nlp.download('entity-mentions_rbr_en_stock'))
+#rbr_model = watson_nlp.load(watson_nlp.download('entity-mentions_rbr_en_stock'))
 # Load bert model in WatsonNLP
-bert_model = watson_nlp.load(watson_nlp.download('entity-mentions_bert_multi_stock'))
+#bert_model = watson_nlp.load(watson_nlp.download('entity-mentions_bert_multi_stock'))
 # Load transformer model in WatsonNLP
 #transformer_model = watson_nlp.load(watson_nlp.download('entity-mentions_transformer_multi_stock'))
 # Load noun phrases model
@@ -231,6 +231,7 @@ def extract_entities(data, model, hotel_name=None, website=None):
 
     input_text = str(data)
     text = html.unescape(input_text)
+    '''
     if model == 'rbr':
         # Run rbr model on text
         mentions = rbr_model.run(text)
@@ -243,11 +244,14 @@ def extract_entities(data, model, hotel_name=None, website=None):
         elif model == 'bert':
             # Run bert model on syntax result
             mentions = bert_model.run(syntax_result)
-        '''
         elif model == 'transformer':
             # Run transformer model on syntax result
             mentions = transformer_model.run(syntax_result)
         '''
+    syntax_result = syntax_model.run(text)
+    if model == 'bilstm':
+        # Run bilstm model on syntax result
+        mentions = bilstm_model.run(syntax_result)
         
     entities_list = mentions.to_dict()['mentions']
     ent_list=[]
@@ -395,7 +399,7 @@ app.layout = html.Div(children=[
                             children=[
                             html.Div(entity_sample_input),
                             html.Div(entity_input),
-                            dcc.Dropdown(["rbr", "bilstm", "bert"], "bilstm", id='model-dropdown',style={'color':'#00361c'}),
+                            #dcc.Dropdown(["rbr", "bilstm", "bert"], "bilstm", id='model-dropdown',style={'color':'#00361c'}),
                             html.Div(entity_button),
                             html.Div(entity_output_table),
                             ],
@@ -458,9 +462,9 @@ def search_entity_callback(n_clicks, search_entities=['asdfjkl', 'asdfjkl;'], se
     Output('entity-output-table', 'data'),
     Input('entity-button', 'n_clicks'),
     State('entity-input', 'value'),
-    Input('model-dropdown', 'value'),
+    #Input('model-dropdown', 'value'),
 )
-def text_entity_callback(n_clicks, entity_input, model_dropdown):
+def text_entity_callback(n_clicks, entity_input, model_dropdown='bilstm'):
     entities_dict = extract_entities(entity_input, model_dropdown)
     if len(entities_dict) > 0:
         entities_df = pd.DataFrame(entities_dict['Entities']).rename(columns={'ent_type':'Entity Type', 'ent_text':'Entity Text'})
