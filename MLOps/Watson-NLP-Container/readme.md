@@ -33,7 +33,7 @@ cd Watson-NLP/MLOps/Watson-NLP-Container/Runtime
 ```
 Have a look at the Dockerfile in this directory, which will be used to build the service.
 ```
-ARG WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.20.0"
+ARG WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:1.0.0"
 ARG SENTIMENT_MODEL="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp_sentiment_aggregated-cnn-workflow_lang_en_stock:2.8.0"
 ARG EMOTION_MODEL="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp_classification_ensemble-workflow_lang_en_tone-stock:2.3.1"
 
@@ -68,7 +68,7 @@ This will create a Docker image called `watson-nlp-container:v1`.
 ### 3. Run
 Use the following command to start the service on your local machine.
 ```
-docker run -d -p 8085:8085 watson-nlp-container:v1
+docker run -d -e ACCEPT_LICENSE=true -p 8085:8085 watson-nlp-container:v1
 ```
 The models are now being served through a gRPC endpoint at port 8085.
 
