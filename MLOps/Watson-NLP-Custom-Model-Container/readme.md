@@ -1,4 +1,4 @@
-## Serve Custom Models using Standalone Containers
+## Serve a Custom Model using Standalone Containers
 In this tutorial we will export a Watson NLP model from Watson Studio and to serve it with Docker. 
 
 The model will be packaged into a the container image together with the Watson NLP Runtime. When the container runs it will expose REST and gRPC endpoints that client programs can use to make inference requests. 
