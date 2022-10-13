@@ -282,7 +282,7 @@ def get_sentiment(text):
         # sentence_label = sentiment_output_python.to_dict()['label']
         document_sentiment_label = sentiment_output_python.to_dict()['label']
         document_sentiment_score = sentiment_output_python.to_dict()['score']
-        print("sentiment_output_python######", sentiment_output_python)
+        # print("sentiment_output_python######", sentiment_output_python)
         # return sentiment_output_python, sentiment_output_python.to_dict()['label']
         return sentence_sentiment, document_sentiment_label, document_sentiment_score
 
@@ -309,7 +309,7 @@ def get_emotion(text):
         return empty_emotion_output
     else:
         emotion_output_python = emotion_model.run(text)
-        print("EMOTION ####", emotion_output_python)
+        # print("EMOTION ####", emotion_output_python)
         return emotion_output_python.to_dict()
 
 sentiment_table_card = html.Div(
@@ -441,7 +441,7 @@ def update_output(n_clicks, value):
     df_emotion.drop(df_emotion.index, inplace=True)
     df_emotion['class_name'] = class_name_list
     df_emotion['confidence'] = confidence_list
-    print("df_emotion: ", df_emotion)
+    # print("df_emotion: ", df_emotion)
 
     fig_emotion = px.bar(df_emotion, x='class_name', y='confidence')
     fig_emotion.update_layout(template=plotly_template,barmode='stack',title_text='Emotion Score', title_x=0.5,
