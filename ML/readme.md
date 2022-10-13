@@ -4,7 +4,7 @@
 
 This directory contains all the Machine Learning notebooks, tutorials, and dataset which covers most of the NLP tasks available in Watson NLP library and it is being updated every week. The coverage map below shows the NLP tasks available in Watson NLP library which are being covered in this assets/accelerator repo.
 
-  ![ML Assets Coverage Map](../screenshots/ML-Assets-Coverage-Map.png)
+  ![ML Assets Coverage Map](../Screenshots/ML-Assets-Coverage-Map.png)
 
 
 The structure for the ML assets is shown below:
