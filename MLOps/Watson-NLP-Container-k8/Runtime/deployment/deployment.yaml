@@ -20,7 +20,6 @@ spec:
             value: 'true'
         ports:
         - containerPort: 8085
-      serviceAccount: watson-nlp-sa
 ---
 apiVersion: v1
 kind: Service
