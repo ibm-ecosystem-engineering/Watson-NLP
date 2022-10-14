@@ -57,7 +57,7 @@ Go here:
 ```
 cd deployment
 ```
-In this directory is a Kubernetes manifest called `deployment.yaml` which can be used to deploy the model service. Before you start this service, you will need to update the image path in the `Deployment` to point to the registry you used.
+In this directory is a Kubernetes manifest called `deployment.yaml` which can be used to deploy the model service. The default image in this deployment is `us.icr.io/watson-core-demo/watson-nlp-container:v1` hosted in IBM Container Registry. Before you start this service, you will need to update the image path in the `Deployment` to point to the registry you used.
 ```
 apiVersion: apps/v1 
 kind: Deployment 
@@ -75,7 +75,7 @@ spec:
     spec: 
       containers: 
       - name: watson-nlp-container 
-        image: image-registry.openshift-image-registry.svc:5000/openshift/watson-nlp-container:v1 
+        image: us.icr.io/watson-core-demo/watson-nlp-container:v1
         env:
           - name: ACCEPT_LICENSE
             value: true
