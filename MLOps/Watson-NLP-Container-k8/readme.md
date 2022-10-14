@@ -52,7 +52,7 @@ Push the image to upstream
 docker push <REGISTRY>/<NAMESPACE>/watson-nlp-container:v1 
 ```
 
-### 3. Deploy in Kubernetes/OpenShift
+### 4. Deploy in Kubernetes/OpenShift
 Go here: 
 ```
 cd deployment
@@ -103,8 +103,8 @@ spec:
     targetPort: 8085 
 ```
 
-####  3.1 Run on Kubernetes
-Run the below commands to deploy in the cluster from the directory `Watson-NLP/Watson-NLP-Container-k8`.
+####  4.1 Run on Kubernetes
+Run the below commands to deploy in the cluster from the directory `Watson-NLP/MLOps/Watson-NLP-Container-k8`.
 ```
 kubectl apply -f Runtime/deployment/deployment.yaml 
 ```
@@ -115,7 +115,7 @@ kubectl get pods
 ```
 kubectl get svc
 ```
-#### 3.2 Run on OpenShift
+#### 4.2 Run on OpenShift
 
 In openshift it is a privileged container. Create a service account and give the accout scc previllege to give extra permission to run the model.
 ```
@@ -139,7 +139,7 @@ oc get svc
 ```
 
 
-### 4. Test
+### 5. Test
 Finally, you can test the service using a simple Python client program. The client code is under the directory `Watson-NLP/Watson-NLP-Container-k8/Client`. Note that the client command is specific to the models. If you are using different models from the ones in the above build, you will have to change the client code. Ensure that the [Watson NLP python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) is installed on your machine. 
 
 Assuming that you start in the Runtime directory: 
