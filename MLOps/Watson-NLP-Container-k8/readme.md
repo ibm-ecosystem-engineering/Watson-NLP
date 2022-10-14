@@ -117,7 +117,13 @@ kubectl get svc
 ```
 #### 4.2 Run on OpenShift
 
+Run the below commands to deploy in the cluster from the project root directory `Watson-NLP/MLOps/Watson-NLP-Container-k8`.
+```
+oc apply -f Runtime/deployment/deployment.yaml 
+```
+
 In openshift it is a privileged container. Create a service account and give the accout scc previllege to give extra permission to run the model.
+
 ```
 oc create sa watson-nlp-sa
 ```
@@ -126,10 +132,10 @@ oc create sa watson-nlp-sa
 oc adm policy add-scc-to-user anyuid -z watson-nlp-sa
 ```
 
-Run the below commands to deploy in the cluster from the project root directory `Watson-NLP/MLOps/Watson-NLP-Container-k8`.
 ```
-oc apply -f Runtime/deployment/deployment.yaml 
+oc set serviceaccount deployment/watson-nlp-container watson-nlp-sa
 ```
+
 Check that the pod and service are running. 
 ```
 oc get pods 
