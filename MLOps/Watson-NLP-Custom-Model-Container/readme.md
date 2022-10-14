@@ -33,9 +33,18 @@ cd Watson-NLP/MLOps/Watson-NLP-Custom-Model-Container/Runtime
 In this directory you will find a `Dockerfile` and a `models` subdirectory. When we build the container image, any models that are in the `models` directory will be copied into the image.
 
 ### 2. Export the model
-In this step you will export a Watson NLP model from Watson Studio on IBM Cloud.
+Go to the page for your Consumer Complaints Classification project in the IBM Cloud Pak for Data GUI and click on the **Assets** tab. There you should find a model named `ensemble_mode` stored ZIP archive. If the model is not there, go back to the notebook and ensure that you have followed the steps in the notebook needed to save the model:
+  - Insert a project token, and
+  - Run the cell that saves the model.
+```
+project.save_data('ensemble_model', data=ensemble_model.as_file_like_object(), overwrite=True)
+```
 
-Go to the page for your project in the IBM Cloud Pak for Data GUI. Create an access token with *Editor* role using **Manage > Access control > Access tokens** if one does not already exist.
+Download the model into the *models* directory on your local machine using the file name `ensemble_model`. Use the vertical ellipsis to the right of the model name to open a menu with the download option.
+
+
+
+Create an access token with *Editor* role using **Manage > Access control > Access tokens** if one does not already exist.
 
 ![access token](Images/access_token.png)
 
@@ -63,7 +72,7 @@ The model will be saved as a ZIP archive in the Cloud Object Storage (COS) bucke
 
 ![saved model](Images/saved_model.png)
     
-Download the model into the *models* directory on your local machine using the file name `ensemble_model`. (Use the vertical ellipsis to the right of the model name to open a menu with the download option.)
+Download the model into the *models* directory on your local machine using the file name `ensemble_model`. Use the vertical ellipsis to the right of the model name to open a menu with the download option.
 
 ### 3. Build the container image
 Have a look at the Dockerfile in the current directory.
