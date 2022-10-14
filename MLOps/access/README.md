@@ -46,4 +46,4 @@ To install:
 ```
 pip install watson-embed-model-packager
 ```
-For usage information see the GitHub [repo](https://github.com/IBM/ibm-watson-embed-model-builder).
+For usage information see the GitHub [repository](https://github.com/IBM/ibm-watson-embed-model-builder).
