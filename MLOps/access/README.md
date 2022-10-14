@@ -4,12 +4,12 @@ This document describes how to access Watson NLP container images and other asse
 
 ## Watson NLP Runtime and Pretrained Models
 
-The Watson NLP Runtime and Pretrained Models are stored in Artifactory. To gain access you will need an [API key](https://na.artifactory.swg-devops.com/ui/admin/artifactory/user_profile).
+The Watson NLP Runtime and Pretrained Models are stored in Artifactory. To gain access you will need an [API key](https://na.artifactory.swg-devops.com/ui/admin/artifactory/user_profile). 
 
 ### Docker
 Run the following command to allow Docker to access the images.
 ```
-docker login https://na.artifactory.swg-devops.com
+docker login wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com
 ```
 Enter your Artifactory user profile and API key at the prompts.
 
@@ -18,7 +18,7 @@ To allow your Kubernetes or OpenShift cluster to access the container images, yo
 
 For example, use the following command to create a Secret named `regcred`.
 ```
-kubectl create secret docker-registry regcred --docker-server=<your-registry-server> --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>
+kubectl create secret docker-registry regcred --docker-server=wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>
 ```
 Where:
 - `<your-name>` is your Artifactory user profile
