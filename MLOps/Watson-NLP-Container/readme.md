@@ -7,7 +7,7 @@ For this tutorial, we will use pretrained models for sentiment analysis and emot
 
 ### Architecture diagram
 
-![Diagram](Images/ReferenceArchitectureRuntimeLocal.png)
+![Diagram](Images/ReferenceArchitecture.png)
 
 ### Prerequisites
 - [Docker Desktop](https://docs.docker.com/get-docker/) is installed
