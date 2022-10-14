@@ -42,7 +42,7 @@ npm i @ibm/watson-nlp-runtime-client
 ## Model Packager
 This tool is used to package custom trained models into container images in the same way as are the Watson NLP pretrained models. These images can be hosted on a container registry and then specified as init containers of Pods, when serving models on a Kubnernetes or OpenShift cluster.  
 
-The tool is stored on public [PyPI](https://pypi.org/). To install:
+To install:
 ```
 pip install watson-embed-model-packager
 ```
