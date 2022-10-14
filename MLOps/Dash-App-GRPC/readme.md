@@ -172,7 +172,7 @@ from watson_nlp_runtime_client import (
     syntax_types_pb2
 )
 ```
-First it creates a gRPC channel and then using the channel object it creates the client stub to communicate with the server.
+First it creates a gRPC channel and then using the channel object it creates the client stub to communicate to the server.
 ```
 GRPC_SERVER_URL = os.getenv("GRPC_SERVER_URL", default="localhost:8085")
         channel = grpc.insecure_channel(GRPC_SERVER_URL)
@@ -188,5 +188,5 @@ The client stub accepts two parameter a request object and header parameter
         response = self.stub.ClassificationPredict(request,metadata=[(self.NLP_MODEL_SERVICE_TYPE, EMOTION_CLASSIFICATION_STOCK_MODEL)] )
         return 
 ```
-
+`Emotion_dash_app.py` uses python 'dash' library to display graph and user interface.
 
