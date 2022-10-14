@@ -100,8 +100,51 @@ From the `Runtime` directory:
 ```
 cd ../Client 
 ```
-Run the client program.
+
+Please execute the below commands to prepare python environment and to install libraries
+```
+python3 -m venv client-env
+```
+```
+source client-env/bin/activate
+```
+```
+pip3 install watson-nlp-runtime-client==1.0.0
+```
+```
+pip3 install PythonTurtle
+```
+
+Run the client program. This program takes a single text string as an argument.  The result from the model is printed to the screen.
+
 ```
 python3 client.py "Watson NLP is awesome" 
 ```
-This program takes a single text string as an argument.  The result from the model is printed to the screen.
+
+
+### Note: 
+>`If you see any error during running the client program like below` 
+```
+"/usr/local/Cellar/python@3.9/3.9.14/Frameworks/Python.framework/Versions/3.9/lib/python3.9/turtle.py", line 107, in <module>
+    import tkinter as TK
+  File "/usr/local/Cellar/python@3.9/3.9.14/Frameworks/Python.framework/Versions/3.9/lib/python3.9/tkinter/__init__.py", line 37, in <module>
+    import _tkinter # If this fails your Python may not be configured for Tk
+ModuleNotFoundError: No module named '_tkinter'
+```
+Please install python tk module based on your operating system and then rerun the client program `python3 client.py "Watson NLP is awesome"`
+
+ === MacOS ===
+
+```brew install python-tk@3.9```
+
+=== UBUNTU / DEBIAN ===
+
+```sudo apt-get install python3-tk```
+
+=== Fedora ===
+
+```sudo dnf install python3-tkinter```
+
+=== CentOS ===
+
+```sudo yum install python3-tkinter```
