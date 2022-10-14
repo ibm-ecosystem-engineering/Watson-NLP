@@ -32,15 +32,17 @@ cd Watson-NLP/MLOps/Watson-NLP-Custom-Model-Container/Runtime
 ```
 In this directory you will find a `Dockerfile` and a `models` subdirectory. When we build the container image, any models that are in the `models` directory will be copied into the image.
 
-### 2. Export the model
-Go to the page for your Consumer Complaints Classification project in the IBM Cloud Pak for Data GUI and click on the **Assets** tab. There you should find a model named `ensemble_mode` stored ZIP archive. If the model is not there, go back to the notebook and ensure that you have followed the steps in the notebook needed to save the model:
-  - Insert a project token, and
+### 2. Download the model
+Go to the page for your Consumer Complaints Classification project in the IBM Cloud Pak for Data GUI and click on the **Assets** tab. There you should find a model named `ensemble_mode` stored as a ZIP archive. 
+
+If the model is not there, go back to the notebook and ensure that you have followed the steps in the notebook:
+  - Insert a project token into the notebook, and
   - Run the cell that saves the model.
 ```
 project.save_data('ensemble_model', data=ensemble_model.as_file_like_object(), overwrite=True)
 ```
 
-Download the model into the *models* directory on your local machine using the file name `ensemble_model`. Use the vertical ellipsis to the right of the model name to open a menu with the download option.
+Download the model into the *models* directory on your local machine using the file named `ensemble_model`. Use the vertical ellipsis to the right of the model name to open a menu with the download option.
 
 
 
