@@ -25,7 +25,7 @@ Clone the GitHub repository that contains sample code used in this tutorial.
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
-The sample code for this tutorial is under the subdirectory `Watson-NLP/Watson-NLP-Container`.
+The sample code for this tutorial is under the subdirectory `Watson-NLP/MLOps/Watson-NLP-Container`.
 
 ### 2. Build
 ```
