@@ -24,21 +24,13 @@ Packaging will be done using the [model builder tool](https://github.com/IBM/ibm
 - Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
     
 ## Steps
-### 1. Clone the GitHub repository
-Clone the repository that contains example code used in this tutorial. 
-```
-git clone https://github.com/ibm-build-labs/Watson-NLP 
-```
-Go to the directory containing sample code for this tutorial.
-```
-cd Watson-NLP/MLOps/custom-model-k8s
-```
-You will find in this directory a `Dockerfile` and a `models` subdirectory. When we build the container image, any models that are in the `models` directory will be copied into the image.
 
-### 2. Export your model
-In this step you will export a Watson NLP model from Watson Studio on IBM Cloud.
-
-Go to the page for your project in the IBM Cloud Pak for Data GUI. Create an access token with *Editor* role using **Manage > Access control > Access tokens** if one does not already exist.
+### 1. Export your model
+First, you will export your Watson NLP model from Watson Studio on IBM Cloud. Create a `models` directory on your local machine.
+```
+mkdir models
+```
+Now go to the page for your project in the IBM Cloud Pak for Data GUI. Create an access token with *Editor* role using **Manage > Access control > Access tokens** if one does not already exist.
 
 ![access token](Images/access_token.png)
 
@@ -66,7 +58,7 @@ The model will be saved as a ZIP archive in the Cloud Object Storage (COS) bucke
 
 ![saved model](Images/saved_model.png)
     
-Download the model into the *models* directory on your local machine using the file name `bert_wkflow_imdb_5_epochs`. (Use the vertical ellipsis to the right of the model name to open a menu with the download option.)
+Download the model into the *models* directory on your local machine using the file name `ensemble-model`. (Use the vertical ellipsis to the right of the model name to open a menu with the download option.)
 
 ### 3. Build the container image
 Have a look at the Dockerfile in the current directory.
