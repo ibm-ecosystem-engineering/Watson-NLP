@@ -1,9 +1,9 @@
 ## Serve a Custom Model using Standalone Containers
 In this tutorial you will take a Watson NLP model that you have trained in Watson Studio, package it into a container image together with the Watson NLP Runtime, and run this container with Docker. When the container runs it will expose REST and gRPC endpoints that client programs can use to make inference requests. 
 
-The image can be deployed anywhere include laptop with Docker; on a Kubernetes or OpenShift cluster; or, on a cloud container service like IBM Code Engine or AWS Fargate.  
+This image could also be deployed on a Kubernetes or OpenShift cluster, or on a cloud container service like IBM Code Engine or AWS Fargate.
 
-To complete this tutorial, you need to have first completed the [Consumer Complaint Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification#tab-1) tutorial, which includes steps on training a custom ensemble model and saving it to the Cloud Object Storage (COS) associated with the project.
+To complete this tutorial, you need to have first completed the [Consumer Complaint Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification#tab-1) tutorial, which includes steps on training a custom ensemble model and saving it to the Cloud Object Storage (COS) bucket associated with the project.
 
 ### Architecture diagram
 
@@ -15,24 +15,24 @@ To complete this tutorial, you need to have first completed the [Consumer Compla
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
 - Docker has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#docker)
 - [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
-- You have created a custom trained Watson NLP model in Watson Studio, generated using this [notebook](https://github.com/ibm-build-labs/Watson-NLP/blob/main/ML/Text-Classification/Consumer%20complaints%20Classification.ipynb) 
+- You have completed the [Consumer Complaint Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification#tab-1) tutorial, and have saved the custom trained model named `ensemble_model` to the COS bucket associated with the project. The tutorial uses this [notebook](https://github.com/ibm-build-labs/Watson-NLP/blob/main/ML/Text-Classification/Consumer%20complaints%20Classification.ipynb) 
     
 **Tip**:
 - [Podman](https://podman.io/getting-started/installation) provides a Docker-compatible command line front end. Unless otherwise noted, all the the Docker commands in this tutorial should work for Podman, if you simply alias the Docker CLI with `alias docker=podman` shell command.  
   
 ## Steps
 ### 1. Clone the GitHub repository
-Clone the repository that contains example code used in this tutorial. 
+Clone the repository that contains the sample code used in this tutorial. 
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
-Go to the build directory.
+Go to the following directory.
 ```
 cd Watson-NLP/MLOps/Watson-NLP-Custom-Model-Container/Runtime 
 ```
-You will find in this directory a `Dockerfile` and a `models` subdirectory. When we build the container image, any models that are in the `models` directory will be copied into the image.
+In this directory you will find a `Dockerfile` and a `models` subdirectory. When we build the container image, any models that are in the `models` directory will be copied into the image.
 
-### 2. Export your model
+### 2. Export the model
 In this step you will export a Watson NLP model from Watson Studio on IBM Cloud.
 
 Go to the page for your project in the IBM Cloud Pak for Data GUI. Create an access token with *Editor* role using **Manage > Access control > Access tokens** if one does not already exist.
