@@ -147,5 +147,46 @@ You can now access the application from your browser at the following URL.
 http://localhost:8050 
 ```
 
+## Understanding the Application Code
+
+This application is built on python library `watson-nlp-runtime-client`. It is a gRPC client library contains all the generated python code to make inference call.
+
+To implement this application the below libraries are needed.
+
+```
+dash
+dash_bootstrap_components
+dash_daq
+pandas
+plotly
+numpy
+grpcio
+protobuf==4.21.7
+watson-nlp-runtime-client==1.0.0
+```
+`GrpcClient.py` is making the gRPC call to the inference service using `watson-nlp-runtime-client` library
+```
+from watson_nlp_runtime_client import (
+    common_service_pb2,
+    common_service_pb2_grpc,
+    syntax_types_pb2
+)
+```
+First it creates a gRPC channel and then using the channel object it creates the client stub to communicate with the server.
+```
+GRPC_SERVER_URL = os.getenv("GRPC_SERVER_URL", default="localhost:8085")
+        channel = grpc.insecure_channel(GRPC_SERVER_URL)
+        stub = common_service_pb2_grpc.NlpServiceStub(channel)
+```
+The client stub accepts two parameter a request object and header parameter
+```
+    def call_emotion_model(self, inputText):
+        request = common_service_pb2.SentimentRequest(
+            raw_document=syntax_types_pb2.RawDocument(text=inputText)
+        )
+        EMOTION_CLASSIFICATION_STOCK_MODEL = os.getenv("EMOTION_CLASSIFICATION_STOCK_MODEL", default="ensemble_classification-wf_en_emotion-stock")
+        response = self.stub.ClassificationPredict(request,metadata=[(self.NLP_MODEL_SERVICE_TYPE, EMOTION_CLASSIFICATION_STOCK_MODEL)] )
+        return 
+```
 
 
