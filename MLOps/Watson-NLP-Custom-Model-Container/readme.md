@@ -58,7 +58,9 @@ Perform the build:
 ```
 docker build . -t watson-nlp-custom-container:v1 
 ```
-This will result in an image named `watson-nlp-custom-container:v1`. Run the following command to check that it exists:
+This will result in an image named `watson-nlp-custom-container:v1`. 
+
+Run the following command to check that it exists:
 ```
 docker images
 ```
