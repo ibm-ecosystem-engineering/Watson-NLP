@@ -408,9 +408,9 @@ app.layout = html.Div(children=[
                         dbc.Col(width=2),
                         dbc.Col(
                             children=[
-                            html.Div(entity_input),
-                            html.Div(entity_button),
-                            html.Div(entity_output_table),
+                                html.Div(entity_input),
+                                html.Div(entity_button),
+                                html.Div(entity_output_table),
                             ],
                             width=8, 
                         ),
@@ -424,7 +424,7 @@ app.layout = html.Div(children=[
                         dbc.Col(width=2),
                         dbc.Col(
                             children=[
-                                html.H4(children='The Most Common Entities and Relevant Phrases in Reviews of Three Hotels'),
+                                html.H4(children='The Most Common Entities in Reviews of Three Hotels'),
                             ],
                             width=8, 
                         ),
@@ -436,23 +436,64 @@ app.layout = html.Div(children=[
                         dbc.Col(width=2),
                         dbc.Col(
                             children=[
-                            dcc.Dropdown(["Belgrave", "Euston", "Dorset"], "Belgrave", id='hotel-dropdown',style={'width':'40%', 'color':'#00361c'}),
-                            #html.Div(hotel_button),
-                            html.Div(hotel_entities_figure),
-                            #html.Div(hotel_types_figure),
-                            html.Div(hotel_types_treemap),
+                                dcc.Dropdown(["Belgrave", "Euston", "Dorset"], "Belgrave", id='hotel-dropdown',style={'width':'100%', 'color':'#00361c'}),
+                            ],
+                            width=2,
+                        ),
+                        dbc.Col(
+                            children=[
+                                html.Div('Choose a Hotel', style={'margin-top':5})
+                            ],
+                            width=8),
+                        ],
+                    ),
+                    dbc.Row(
+                        [
+                        dbc.Col(width=2),
+                        dbc.Col(
+                            children=[
+                                html.Div(hotel_entities_figure),
+                                html.Div(hotel_types_treemap),
                             ],
                             width=8,
                         ),
                         dbc.Col(width=2),
                         ],
                     ),
+                    html.Br(),
+                    # Header for Section 4
+                    dbc.Row(
+                        [
+                        dbc.Col(width=2),
+                        dbc.Col(
+                            children=[
+                                html.H4(children='The Most Relevant Phrases in Reviews of Three Hotels'),
+                            ],
+                            width=8, 
+                        ),
+                        dbc.Col(width=2),
+                        ]
+                    ),
+                    dbc.Row(
+                        [
+                        dbc.Col(width=2),
+                        dbc.Col(
+                            children=[
+                                dcc.Dropdown(["Belgrave", "Euston", "Dorset"], "Belgrave", id='phrases-dropdown',style={'width':'100%', 'color':'#00361c'}),
+                            ],
+                            width=2,
+                        ),
+                        dbc.Col(
+                            children=[
+                                html.Div('Choose a Hotel', style={'margin-top':5})
+                            ],
+                            width=8),
+                        ],
+                    ),
                     dbc.Row(
                         [
                         dbc.Col(width=2),
                         dbc.Col([
-                            dcc.Dropdown(["Belgrave", "Euston", "Dorset"], "Belgrave", id='phrases-dropdown',style={'width':'40%', 'color':'#00361c'}),
-                            #html.Div(phrases_button),
                             html.Div(hotel_phrases_figure),
                             ],
                             width=8,
@@ -460,6 +501,8 @@ app.layout = html.Div(children=[
                         dbc.Col(width=2),
                         ],
                     ),
+                    html.Br(),
+                    html.Label("This App was built using Watson NLP library."),
                     html.Br(),
                     html.Footer(children="Please note that this content is made available by IBM Build Lab to foster Embedded AI technology adoption. \
                                     The content may include systems & methods pending patent with USPTO and protected under US Patent Laws. \
