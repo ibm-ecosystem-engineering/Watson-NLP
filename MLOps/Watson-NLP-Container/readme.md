@@ -77,6 +77,19 @@ You can now test the service with a simple Python client program. Ensure that th
 ```
 cd ../Client 
 ```
+Please execute the below commands to prepare python environment and to install libraries
+```
+python3 -m venv client-env
+```
+```
+source client-env/bin/activate
+```
+```
+pip3 install watson-nlp-runtime-client==1.0.0
+```
+```
+pip3 install PythonTurtle
+```
 
 The client command expects a single text string argument and requests inference from stock Sentiment Analysis and Emotion Classification models. If you are serving different models, you will have to update the client code.  
 
@@ -126,3 +139,4 @@ producer_id {
   version: "0.0.1"
 }
 ```
+
