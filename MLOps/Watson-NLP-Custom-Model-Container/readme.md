@@ -87,7 +87,7 @@ docker images
 ### 4. Run the service with Docker
 Use the following command to start the service. 
 ```
-docker run -d -p 8085:8085 watson-nlp-custom-container:v1 
+docker run -d -e ACCEPT_LICENSE=true -p 8085:8085 watson-nlp-custom-container:v1 
 ```
 The container will expose a gRPC endpoint on port 8085. 
 
