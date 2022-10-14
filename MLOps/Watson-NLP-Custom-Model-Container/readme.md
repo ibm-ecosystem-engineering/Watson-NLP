@@ -45,20 +45,20 @@ project.save_data('ensemble_model', data=ensemble_model.as_file_like_object(), o
 Download the model into the *models* directory on your local machine. Use the vertical ellipsis to the right of the model name to open a menu with the download option. Ensure that you use the file name `ensemble_model` when saving the file.
 
 ### 3. Build the container image
-Have a look at the Dockerfile in the current directory.
+This is content of the Dockerfile.
 ```
-ARG WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:0.13.1_ubi8_py39" 
-FROM ${WATSON_RUNTIME_BASE} as base 
-ENV LOCAL_MODELS_DIR=/app/models 
-COPY models /app/models 
+ARG WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:1.0.0"
+FROM ${WATSON_RUNTIME_BASE} as base
+ENV LOCAL_MODELS_DIR=/app/models
+COPY models /app/models
 ```
-The Watson NLP Runtime is used as the base image. Any models that are in the `models` subdirectory on the host will be opein the container at build time.
+Notice that the Watson NLP Runtime image is used as the base image for the build. Any models that are in the `models` subdirectory on the host will be copied into the container at build time.
 
-Use the following command to build the image. 
+Perform the build: 
 ```
 docker build . -t watson-nlp-custom-container:v1 
 ```
-This results in a image named `watson-nlp-custom-container:v1`.  Check that it exists.
+This will result in an image named `watson-nlp-custom-container:v1`. Run the following command to check that it exists:
 ```
 docker images
 ```
