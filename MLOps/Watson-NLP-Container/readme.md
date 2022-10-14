@@ -151,12 +151,19 @@ ModuleNotFoundError: No module named '_tkinter'
 ```
 Please install python tk module based on your operating system
  === MacOS ===
+
 ```brew install python-tk@3.9```
+
 === UBUNTU / DEBIAN ===
+
 ```sudo apt-get install python3-tk```
+
 === Fedora ===
+
 ```sudo dnf install python3-tkinter```
+
 === CentOS ===
+
 ```sudo yum install python3-tkinter```
 
     
