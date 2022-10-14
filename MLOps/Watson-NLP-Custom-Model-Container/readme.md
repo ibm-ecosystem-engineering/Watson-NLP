@@ -123,7 +123,7 @@ python3 client.py "Watson NLP is awesome"
 
 
 ### Note: 
->`If you see any error during running the client program like below` 
+If you see any error when running similar to the following: 
 ```
 "/usr/local/Cellar/python@3.9/3.9.14/Frameworks/Python.framework/Versions/3.9/lib/python3.9/turtle.py", line 107, in <module>
     import tkinter as TK
