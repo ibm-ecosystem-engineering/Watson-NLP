@@ -43,13 +43,13 @@ This will create a Docker image called `watson-nlp-container:v1`.  When the co
 - `ensemble_classification-wf_en_emotion-stock`
 
 ### 3. Copy the image to a container registry
-To deploy this image in Kubernetes or OpenShift cluster, you must first provision the image to a container repository that your cluster can access.  Tag your image with proper repository and namespace/project name. Replace `<REPO>` and `<PROJECT_NAME>` in the following commands based on your configuration.
+To deploy this image in Kubernetes or OpenShift cluster, you must first provision the image to a container repository that your cluster can access.  Tag your image with proper repository and namespace/project name. Replace `<REGISTRY>` and `<NAMESPACE>` in the following commands based on your configuration.
 ```
-docker tag watson-nlp-container:v1 <REPO>/<PROJECT_NAME>/watson-nlp-container:v1 
+docker tag watson-nlp-container:v1 <REGISTRY>/<NAMESPACE>/watson-nlp-container:v1 
 ```
 Push the image to upstream
 ```
-docker push <REPO>/<PROJECT_NAME>/watson-nlp-container:v1 
+docker push <REGISTRY>/<NAMESPACE>/watson-nlp-container:v1 
 ```
 
 ### 3. Deploy in Kubernetes/OpenShift
@@ -76,6 +76,9 @@ spec:
       containers: 
       - name: watson-nlp-container 
         image: image-registry.openshift-image-registry.svc:5000/openshift/watson-nlp-container:v1 
+        env:
+          - name: ACCEPT_LICENSE
+            value: true
         resources: 
           requests: 
             memory: "2Gi" 
