@@ -15,7 +15,7 @@ Standalone containers can be deployed anywhere include laptop with Docker; on a 
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
 - Docker has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#docker)
 - [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
-- You have created a custom trained Watson NLP model in Watson Studio, generated using this [notebook](https://github.com/ibm-build-labs/Watson-NLP/blob/main/ML/Sentiment-Analysis/Sentiment%20Analysis%20-%20Model%20Training.ipynb) 
+- You have created a custom trained Watson NLP model in Watson Studio, generated using this [notebook](https://github.com/ibm-build-labs/Watson-NLP/blob/main/ML/Text-Classification/Consumer%20complaints%20Classification.ipynb) 
     
 **Tip**:
 - [Podman](https://podman.io/getting-started/installation) provides a Docker-compatible command line front end. Unless otherwise noted, all the the Docker commands in this tutorial should work for Podman, if you simply alias the Docker CLI with `alias docker=podman` shell command.  
@@ -63,7 +63,7 @@ The model will be saved as a ZIP archive in the Cloud Object Storage (COS) bucke
 
 ![saved model](Images/saved_model.png)
     
-Download the model into the *models* directory on your local machine using the file name `bert_wkflow_imdb_5_epochs`. (Use the vertical ellipsis to the right of the model name to open a menu with the download option.)
+Download the model into the *models* directory on your local machine using the file name `ensemble_model`. (Use the vertical ellipsis to the right of the model name to open a menu with the download option.)
 
 ### 3. Build the container image
 Have a look at the Dockerfile in the current directory.
@@ -94,7 +94,7 @@ The container will expose a gRPC endpoint on port 8085.
 ### 5. Test the service
 Now test the model service using a client program. Ensure that the [Watson NLP Python SDK](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) is installed on your machine.
 
-The client program appears in the directory `Watson-NLP/Watson-NLP-Custom-Model-Container/Client`. Note that the client code included with this tutorial will make inference requests to the sample model `ensemble_classification-wf_en_emotion-stock` that is referenced in step 2.  If you are using your own model, you will have to first update the client code.
+The client program appears in the directory `Watson-NLP/Watson-NLP-Custom-Model-Container/Client`. Note that the client code included with this tutorial will make inference requests to the sample model `ensemble_model`.  If using a different model, be sure to update the client code.
 
 From the `Runtime` directory:
 ```
