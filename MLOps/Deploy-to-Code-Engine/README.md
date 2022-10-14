@@ -204,7 +204,10 @@ You can trigger a workflow to have a [Code Engine managed secret](https://cloud.
 9. Select the image tag `latest`.
 10. Click `Done` at the bottom, and, because the image is in an ICR namespace in your account, Code Engine automatically creates the registry access secret for you.
 
-You should be able to see the created registry access secret with the `ibmcloud ce registry list` command. With the registry access secret successfully created, you can now close the web console without actually creating an application, and move on to the next step.
+**Tip**:
+- If you don't see a list of ICR registry locations or get error message, such as `Failed to create registry binding for 'IBM Registry Dallas'`, you may not have the required permissions to create a Code Engine managed secret. In that case, you can either ask the owner or Administrator of the IBM Cloud account for help, or create a registry access secret manually. See the [Code Engine documentation](https://cloud.ibm.com/docs/codeengine?topic=codeengine-add-registry) for more details.
+
+With the registry access secret successfully created, you should be able to list it with the `ibmcloud ce registry list` command. Now close the web console without actually creating an application, and move on to the next step.
 
 ### Step 14: Create an Code Engine application from the runtime image
 At this point, you can simply create an application from your runtime image with a Code Engine CLI command.
