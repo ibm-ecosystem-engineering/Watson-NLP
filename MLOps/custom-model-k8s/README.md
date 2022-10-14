@@ -78,19 +78,19 @@ This results in a image named `watson-nlp-custom-container:v1`.  Check that it e
 docker images
 ```
 
-### 4. Run the service with Docker
-Use the following command to start the service. 
-```
-docker run -d -p 8085:8085 watson-nlp-custom-container:v1 
-```
-The container will expose a gRPC endpoint on port 8085. 
+### 4. Serve the models
 
 ### 5. Test the service
-Now test the model service using a client program. Install the Watson NLP Runtime client library.
+Now test the model service using a client program on your local machine. Install the Watson NLP Runtime client library.
 ```
 pip install watson-nlp-runtime-client
 ```
 The client program appears in the directory `Watson-NLP/Watson-NLP-Custom-Model-Container/Client`. Note that the client code included with this tutorial will make inference requests to the sample model `ensemble_classification-wf_en_emotion-stock` that is referenced in step 2.  If you are using your own model, you will have to first update the client code.
+
+Enable port forwarding. On Kubernetes:
+
+OpenShift:
+
 
 From the `Runtime` directory:
 ```
