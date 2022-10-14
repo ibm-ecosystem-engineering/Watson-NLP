@@ -1,10 +1,10 @@
 # Serving a Custom Model on a Kubernetes or OpenShift Cluster
 
 This tutorial is aimed at Data Scientists, Developers or MLOps Engineers who want to take custom trained model that has been developed in Watson Studio, and serve it on a Kubernetes or OpenShift cluster.  The approach we take is to:
-  - download the model from Watson Studio,
-  - package it up as a container image,
-  - push the image to a container registry, and
-  - serve the model on a Kubernetes or OpenShift cluster.
+  - Download the model from Watson Studio
+  - Package it up as a container image,
+  - Push the image to a container registry, and
+  - Serve the model on a Kubernetes or OpenShift cluster.
  
 Packaging will be done using the [model builder tool](https://github.com/IBM/ibm-watson-embed-model-builder).  The model image will be packaged in the same way as are the pretrained Watson NLP models, so serving them in a Kubernetes or OpenShift cluster. This allows for a consistent deployment pattern to the one used for pretrained models: model images will be specified as init containers of Watson NLP Runtime Pods.
 
@@ -19,6 +19,9 @@ Packaging will be done using the [model builder tool](https://github.com/IBM/ibm
 - Docker has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#docker)
 - [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
 - You have created a custom trained Watson NLP model in Watson Studio, generated using this [notebook](https://github.com/ibm-build-labs/Watson-NLP/blob/main/ML/Sentiment-Analysis/Sentiment%20Analysis%20-%20Model%20Training.ipynb) 
+- You have a Kubernetes or OpenShift cluster on which you can deploy an application
+- You have either the Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed, and configured to talk to your cluster.
+- Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
     
 **Tip**:
 - [Podman](https://podman.io/getting-started/installation) provides a Docker-compatible command line front end. Unless otherwise noted, all the the Docker commands in this tutorial should work for Podman, if you simply alias the Docker CLI with `alias docker=podman` shell command.  
