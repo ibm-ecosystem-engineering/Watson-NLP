@@ -23,18 +23,15 @@ Packaging will be done using the [model builder tool](https://github.com/IBM/ibm
 - You have either the Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed, and configured to talk to your cluster.
 - Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
     
-**Tip**:
-- [Podman](https://podman.io/getting-started/installation) provides a Docker-compatible command line front end. Unless otherwise noted, all the the Docker commands in this tutorial should work for Podman, if you simply alias the Docker CLI with `alias docker=podman` shell command.  
-  
 ## Steps
 ### 1. Clone the GitHub repository
 Clone the repository that contains example code used in this tutorial. 
 ```
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
-Go to the build directory.
+Go to the directory containing sample code for this tutorial.
 ```
-cd Watson-NLP/MLOps/Watson-NLP-Custom-Model-Container/Runtime 
+cd Watson-NLP/MLOps/custom-model-k8s
 ```
 You will find in this directory a `Dockerfile` and a `models` subdirectory. When we build the container image, any models that are in the `models` directory will be copied into the image.
 
