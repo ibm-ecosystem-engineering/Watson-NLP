@@ -140,7 +140,8 @@ producer_id {
 }
 ```
 
-> Note: If you see any error during running the client program like below 
+### Note: 
+>`If you see any error during running the client program like below` 
 ```
 "/usr/local/Cellar/python@3.9/3.9.14/Frameworks/Python.framework/Versions/3.9/lib/python3.9/turtle.py", line 107, in <module>
     import tkinter as TK
@@ -148,5 +149,14 @@ producer_id {
     import _tkinter # If this fails your Python may not be configured for Tk
 ModuleNotFoundError: No module named '_tkinter'
 ```
-Please install python tk module
+Please install python tk module based on your operating system
+ === MacOS ===
+```brew install python-tk@3.9```
+=== UBUNTU / DEBIAN ===
+```sudo apt-get install python3-tk```
+=== Fedora ===
+```sudo dnf install python3-tkinter```
+=== CentOS ===
+```sudo yum install python3-tkinter```
+
     
