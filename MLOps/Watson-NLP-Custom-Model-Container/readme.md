@@ -1,9 +1,9 @@
 ## Serve a Custom Model using Standalone Containers
-In this tutorial we will export a Watson NLP model from Watson Studio and to serve it with Docker. 
+In this tutorial you will take a Watson NLP model that you have trained in Watson Studio, package it into a container image together with the Watson NLP Runtime, and run this container with Docker. When the container runs it will expose REST and gRPC endpoints that client programs can use to make inference requests. 
 
-The model will be packaged into a the container image together with the Watson NLP Runtime. When the container runs it will expose REST and gRPC endpoints that client programs can use to make inference requests. 
+The image can be deployed anywhere include laptop with Docker; on a Kubernetes or OpenShift cluster; or, on a cloud container service like IBM Code Engine or AWS Fargate.  
 
-Standalone containers can be deployed anywhere include laptop with Docker; on a Kubernetes or OpenShift cluster; or, on a cloud container service like IBM Code Engine or AWS Fargate.  
+To complete this tutorial, you need to have first completed the [Consumer Complaint Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification#tab-1) tutorial, which includes steps on training a custom ensemble model and saving it to the Cloud Object Storage (COS) associated with the project.
 
 ### Architecture diagram
 
