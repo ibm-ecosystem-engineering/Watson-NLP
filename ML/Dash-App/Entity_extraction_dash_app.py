@@ -365,35 +365,6 @@ app.layout = html.Div(children=[
                         dbc.Col(width=2),
                         dbc.Col(
                             children=[
-                                html.H4(children='Entity Extraction - Text Document'),
-                            ],
-                            width=8, 
-                        ),
-                        dbc.Col(width=2),
-                        ]
-                    ),
-                    # Text input/ouput
-                    dbc.Row(
-                        [
-                        dbc.Col(width=2),
-                        dbc.Col(
-                            children=[
-                            html.Div(entity_input),
-                            html.Div(entity_button),
-                            html.Div(entity_output_table),
-                            ],
-                            width=8, 
-                        ),
-                        dbc.Col(width=2),
-                        ],
-                    ),
-                    html.Br(),
-                    # Header for Section 2
-                    dbc.Row(
-                        [
-                        dbc.Col(width=2),
-                        dbc.Col(
-                            children=[
                                 html.H4(children='Searching for Hotels with Matching Entities and Phrases'),
                             ],
                             width=8, 
@@ -419,6 +390,35 @@ app.layout = html.Div(children=[
                     ),
                     html.Br(),
                     # Header for Section 2
+                    dbc.Row(
+                        [
+                        dbc.Col(width=2),
+                        dbc.Col(
+                            children=[
+                                html.H4(children='Entity Extraction - Text Document'),
+                            ],
+                            width=8, 
+                        ),
+                        dbc.Col(width=2),
+                        ]
+                    ),
+                    # Text input/ouput
+                    dbc.Row(
+                        [
+                        dbc.Col(width=2),
+                        dbc.Col(
+                            children=[
+                            html.Div(entity_input),
+                            html.Div(entity_button),
+                            html.Div(entity_output_table),
+                            ],
+                            width=8, 
+                        ),
+                        dbc.Col(width=2),
+                        ],
+                    ),
+                    html.Br(),
+                    # Header for Section 3
                     dbc.Row(
                         [
                         dbc.Col(width=2),
