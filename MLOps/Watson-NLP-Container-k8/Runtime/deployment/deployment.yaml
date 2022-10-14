@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: watson-nlp-container
-        image: image-registry.openshift-image-registry.svc:5000/openshift/watson-nlp-container:v1
+        image: us.icr.io/watson-core-demo/watson-nlp-container:v1
         env:
           - name: ACCEPT_LICENSE
             value: true
