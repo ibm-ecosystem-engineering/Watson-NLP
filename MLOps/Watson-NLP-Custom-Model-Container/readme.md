@@ -66,7 +66,7 @@ docker images
 ```
 
 ### 4. Run the service with Docker
-Use the following command to start the service. 
+Run the command to start the service. 
 ```
 docker run -d -e ACCEPT_LICENSE=true -p 8085:8085 watson-nlp-custom-container:v1 
 ```
