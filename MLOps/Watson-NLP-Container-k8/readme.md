@@ -137,16 +137,30 @@ oc get svc
 
 
 ### 4. Test
-Finally, you can test the service using a simple Python client program. The client code is under the directory `Watson-NLP/Watson-NLP-Container-k8/Client`. Note that the client command is specific to the models. If you are using different models from the ones in the above build, you will have to change the client code.
+Finally, you can test the service using a simple Python client program. The client code is under the directory `Watson-NLP/Watson-NLP-Container-k8/Client`. Note that the client command is specific to the models. If you are using different models from the ones in the above build, you will have to change the client code. Ensure that the [Watson NLP python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) is installed on your machine. 
 
 Assuming that you start in the Runtime directory: 
 ```
 cd ../Client 
 ```
-Ensure that the Watson NLP Python SDK is installed on your machine. 
+
+Please execute the below commands to prepare python environment and to install libraries
+```
+python3 -m venv client-env
+```
+```
+source client-env/bin/activate
+```
+```
+pip3 install watson-nlp-runtime-client==1.0.0
+```
+```
+pip3 install PythonTurtle
+```
 ```
 pip3 install watson_nlp_runtime_client 
 ```
+
 Enable port forwarding from your local machine prior to running the test. For a Kubernetes cluster:
 ```
 kubectl port-forward svc/watson-nlp-container 8085 
@@ -204,3 +218,29 @@ producer_id {
   version: "0.0.1"
 }
 ```
+### Note: 
+>`If you see any error during running the client program like below` 
+```
+"/usr/local/Cellar/python@3.9/3.9.14/Frameworks/Python.framework/Versions/3.9/lib/python3.9/turtle.py", line 107, in <module>
+    import tkinter as TK
+  File "/usr/local/Cellar/python@3.9/3.9.14/Frameworks/Python.framework/Versions/3.9/lib/python3.9/tkinter/__init__.py", line 37, in <module>
+    import _tkinter # If this fails your Python may not be configured for Tk
+ModuleNotFoundError: No module named '_tkinter'
+```
+Please install python tk module based on your operating system and then rerun the client program `python3 client.py "Watson NLP is awesome"`
+
+ === MacOS ===
+
+```brew install python-tk@3.9```
+
+=== UBUNTU / DEBIAN ===
+
+```sudo apt-get install python3-tk```
+
+=== Fedora ===
+
+```sudo dnf install python3-tkinter```
+
+=== CentOS ===
+
+```sudo yum install python3-tkinter```
