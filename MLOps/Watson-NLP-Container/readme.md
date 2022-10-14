@@ -57,7 +57,7 @@ Pretrained Watson NLP models are stored as container images. When these containe
 
 In this Dockerfile we run `unpack_model.sh` to trigger the unpacking during the build.
 
-The final image generated uses the Watson NLP Runtime image is used as its base image. The environment variable `LOCAL_MODELS_DIR` is used to tell the Watson NLP Runtime where to find the models it is supposed to serve. Models files are copied from the intermediate images to `/app/models` in the final image.
+The final image generated uses the Watson NLP Runtime image as its base image. The environment variable `LOCAL_MODELS_DIR` is used to tell the Watson NLP Runtime where to find the models it is supposed to serve. Models are copied from the intermediate images to `/app/models` in the final image.
 
 Build the image with the following command.
 ```
@@ -73,7 +73,7 @@ docker run -d -e ACCEPT_LICENSE=true -p 8085:8085 watson-nlp-container:v1
 The models are now being served through a gRPC endpoint at port 8085.
 
 ### 4. Test 
-You can now test the service with a simple Python client program. Ensure that the [Watson NLP python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) is installed on your machine. 
+You can now test the service with a simple Python client program. Ensure that the `Watson NLP python client library` is installed on your machine. 
 ```
 cd ../Client 
 ```
