@@ -126,7 +126,7 @@ oc create sa watson-nlp-sa
 oc adm policy add-scc-to-user anyuid -z watson-nlp-sa
 ```
 
-Run the below commands to deploy in the cluster from the project root directory `Watson-NLP/Watson-NLP-Container-k8`.
+Run the below commands to deploy in the cluster from the project root directory `Watson-NLP/MLOps/Watson-NLP-Container-k8`.
 ```
 oc apply -f Runtime/deployment/deployment.yaml 
 ```
