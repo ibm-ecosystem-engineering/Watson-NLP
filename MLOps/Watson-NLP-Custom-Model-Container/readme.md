@@ -42,39 +42,7 @@ If the model is not there, go back to the notebook and ensure that you have foll
 project.save_data('ensemble_model', data=ensemble_model.as_file_like_object(), overwrite=True)
 ```
 
-Download the model into the *models* directory on your local machine using the file named `ensemble_model`. Use the vertical ellipsis to the right of the model name to open a menu with the download option.
-
-
-
-Create an access token with *Editor* role using **Manage > Access control > Access tokens** if one does not already exist.
-
-![access token](Images/access_token.png)
-
-Open your notebook for editing.  You need to ensure that the project token is set so that you can access the project assets from the notebook.  Look for a cell similar to the following at the top of your notebook.
-```
-# @hidden_cell
-# The project token is an authorization token that is used to access project resources like data sources, connections, and used by platform APIs.
-from project_lib import Project
-project = Project(project_id='<project-id>', project_access_token='<access-token>')
-pc = project.project_context
-```
-If you do not see this cell, then add it to the notebook by clicking **More > Insert project token** from the notebook action bar. Run the cell.
-
-![insert token](Images/insert_token.png)
-    
-Add the following line to your notebook and run it in order to save your model.
-```
-project.save_data('<file_name>', data=<trained_model_object>.as_file_like_object(), overwrite=True)
-```
-Where:
-- `<file_name>` is the exported model name 
-- `<trained_model_object>` is the model being saved
-
-The model will be saved as a ZIP archive in the Cloud Object Storage (COS) bucket associated with the project. Once saved, you will be able to find it in the **Assets** tab. 
-
-![saved model](Images/saved_model.png)
-    
-Download the model into the *models* directory on your local machine using the file name `ensemble_model`. Use the vertical ellipsis to the right of the model name to open a menu with the download option.
+Download the model into the *models* directory on your local machine. Use the vertical ellipsis to the right of the model name to open a menu with the download option. Ensure that you use the file name `ensemble_model` when saving the file.
 
 ### 3. Build the container image
 Have a look at the Dockerfile in the current directory.
