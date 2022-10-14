@@ -101,7 +101,7 @@ From the `Runtime` directory:
 cd ../Client 
 ```
 
-Please execute the below commands to prepare python environment and to install libraries
+Execute the following commands to prepare your Python environment.
 ```
 python3 -m venv client-env
 ```
