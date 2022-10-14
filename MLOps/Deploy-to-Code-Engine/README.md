@@ -17,15 +17,38 @@ This tutorial will walk you through the steps to serve Watson NLP models on IBM 
 
 ### Step 1: Download a couple of models to a local directory
 
+Create a directory named `models`:
 <span style="font-size:x-small">
 
 ```
 mkdir models
+```
+</span>
+
+Set variable `REGISTRY` as follows to pull the images from IBM Entitled Registry. IBMers with access to Artifactory can follow the instructions [here](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#docker). 
+
+<span style="font-size:x-small">
+
+```
 REGISTRY=cp.icr.io/cp/ai
+```
+</span>
+
+Use a variable `MODELS` to provide the list of models you want to download:
+<span style="font-size:x-small">
+
+```
 MODELS="watson-nlp_syntax_izumo_lang_en_stock:0.0.4 watson-nlp_syntax_izumo_lang_fr_stock:0.0.4"
+```
+</span>
+
+Down the models into the local directory `models`:
+<span style="font-size:x-small">
+
+```
 for i in $MODELS
 do
-  image=$REGISTRY/$i
+  image=${REGISTRY}/$i
   docker run -it --rm -e ACCEPT_LICENSE=true -v `pwd`/models:/app/models $image
 done
 ```
@@ -36,8 +59,9 @@ done
 <span style="font-size:x-small">
 
 ```
-ARG TAG=0.0.1
-FROM cp.icr.io/cp/ai/watson-nlp-runtime:${TAG}
+ARG REGISTRY
+ARG TAG=1.0.0
+FROM ${REGISTRY}/watson-nlp-runtime:${TAG}
 COPY models /app/models
 ```
 </span>
@@ -47,7 +71,7 @@ COPY models /app/models
 <span style="font-size:x-small">
 
 ```
-docker build -t my-watson-nlp-runtime:latest .
+docker build . -t my-watson-nlp-runtime:latest --build-arg REGISTRY=${REGISTRY}
 ```
 </span>
 
@@ -106,14 +130,20 @@ ibmcloud cr login
 </span>
 
 ### Step 8: Upload the runtime image to ICR
-Set `${REGISTRY}` to the listed Domain name for the [local registry regions](https://cloud.ibm.com/docs/Registry?topic=Registry-registry_overview#registry_regions_local) (or `icr.io` for the global registry), and run the following commands.
+Set variable `$REGISTRY` to the listed Domain name for the [local registry regions](https://cloud.ibm.com/docs/Registry?topic=Registry-registry_overview#registry_regions_local) (or `icr.io` for the global registry), and run the following commands.
+
+Tag the image:
 <span style="font-size:x-small">
 
 ```
-# Tag the image
 docker tag my-watson-nlp-runtime:latest ${REGISTRY}/${NAMESPACE}/my-watson-nlp-runtime:latest
+```
+</span>
 
-# Push the image
+Push the image:
+<span style="font-size:x-small">
+
+```
 docker push ${REGISTRY}/${NAMESPACE}/my-watson-nlp-runtime:latest
 ```
 </span>
@@ -188,25 +218,36 @@ ibmcloud ce application create \
   --min-scale 1 --max-scale 2 \
   --cpu 2 --memory 4G \
   --image private.${REGISTRY}/${NAMESPACE}/my-watson-nlp-runtime:latest \
-  --registry-secret ce-auto-icr-private-${REGION}
+  --registry-secret ce-auto-icr-private-${REGION} \
+  --env ACCEPT_LICENSE=true
 ```
 </span>
 
 It may take a few minutes to complete the deployment. If the deployment is successful, you'll get the URL of the application's public endpoint from the command output. Append `/swagger` to the URL and open it in a browser to access the Swagger UI, if you want to interact with the REST API resources provided by the Watson NLP Runtime.
 
 ### Step 15: Check your deployment
-You can check the status of the application with the following commands:
+You can check the status of the application with the following commands.
 
+List the applications:
 <span style="font-size:x-small">
 
 ```
-# List the applications
 ibmcloud ce app list
+```
+</span>
 
-# Check the application logs.
+Check the application logs:
+<span style="font-size:x-small">
+
+```
 ibmcloud ce app logs --application watson-nlp-runtime
+```
+</span>
 
-# Check the events
+Check the events:
+<span style="font-size:x-small">
+
+```
 ibmcloud ce app events --application watson-nlp-runtime
 ```
 </span>
@@ -217,7 +258,7 @@ Once the Watson NLP Runtime service is ready, you should be able to send an infe
 <span style="font-size:x-small">
 
 ```
-curl -s -X POST "${PUBLIC_ENDPOINT}/v1/watson.runtime.nlp.v0/NlpService/SyntaxPredict" \
+curl -s -X POST "${PUBLIC_ENDPOINT}/v1/watson.runtime.nlp.v1/NlpService/SyntaxPredict" \
   -H "accept: application/json" \
   -H "grpc-metadata-mm-model-id: syntax_izumo_lang_en_stock" \
   -H "content-type: application/json" \
@@ -227,7 +268,7 @@ curl -s -X POST "${PUBLIC_ENDPOINT}/v1/watson.runtime.nlp.v0/NlpService/SyntaxPr
 </span>
 
 **Tip**:
-- The metadata value for `grpc-metadata-mm-model-id` should match the folder name of the model when it was downloaded and saved in `./models` in Step 2.
+- The metadata value for `grpc-metadata-mm-model-id` should match the folder name of the model when it was downloaded and saved in `./models` in Step 1.
 
 If you get a response like the following, the Watson NLP Runtime is working properly.
 
