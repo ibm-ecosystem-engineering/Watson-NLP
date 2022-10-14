@@ -149,7 +149,8 @@ producer_id {
     import _tkinter # If this fails your Python may not be configured for Tk
 ModuleNotFoundError: No module named '_tkinter'
 ```
-Please install python tk module based on your operating system
+Please install python tk module based on your operating system and then rerun the client program `python3 client.py "Watson NLP is awesome"`
+
  === MacOS ===
 
 ```brew install python-tk@3.9```
