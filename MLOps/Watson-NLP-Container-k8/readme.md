@@ -28,7 +28,7 @@ Clone the repository containing the code used in this tutorial.
 git clone https://github.com/ibm-build-labs/Watson-NLP 
 ```
 ### 2. Build the container image 
-In this step, you will build a container image to deploy. If you already have a standalone container image to serve stock and/or custom Watson NLP models that you prefer to use, you can skip this step.
+In this step, you will build a container image to deploy. If you already have a standalone container image to serve pretrained and/or custom Watson NLP models that you prefer to use, you can skip this step.
 
 Go to the build directory.
 ```
