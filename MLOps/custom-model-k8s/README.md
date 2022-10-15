@@ -63,9 +63,22 @@ This will create a Docker image with the name `watson-nlp_ensemble_model`. Verif
 docker images
 ```
 
-### 3. Serve the models
+### 3. Copy the model to a container registry
 
-### 4. Test the service
+To deploy this image in Kubernetes or OpenShift cluster, you must first provision the image to a container repository that your cluster can access.  Tag your image with proper repository and namespace/project name. Replace `<REGISTRY>` and `<NAMESPACE>` in the following commands based on your configuration.
+```
+docker tag watson-nlp-container:v1 <REGISTRY>/<NAMESPACE>/watson-nlp-container:v1 
+```
+Push the image to upstream
+```
+docker push <REGISTRY>/<NAMESPACE>/watson-nlp-container:v1 
+```
+
+### 4. Serve the models
+
+
+
+### 5. Test the service
 Now test the model service using a client program on your local machine. Install the Watson NLP Runtime client library.
 ```
 pip install watson-nlp-runtime-client
@@ -75,6 +88,7 @@ The client program appears in the directory `Watson-NLP/Watson-NLP-Custom-Model-
 Enable port forwarding. On Kubernetes:
 
 OpenShift:
+
 
 
 From the `Runtime` directory:
