@@ -41,3 +41,13 @@ Dash-App/hotel-reviews/london_hotel_reviews.csv
 Dash-App/models/bert_wkflow_imdb_5_epochs
 Topic-Modeling/Topic Modeling Visualizations.ipynb
 Dash-App/models/svm_model_complaints_classification.zip
+ML/Dash-App/entity-mentions_bilstm_en_stock/vocab_files/vocab.chars.txt
+ML/Dash-App/entity-mentions_bilstm_en_stock/vocab_files/vocab.tags.txt
+ML/Dash-App/entity-mentions_bilstm_en_stock/vocab_files/vocab.words.txt
+ML/Dash-App/keywords_text-rank_en_stock/model_data/ngram_np_phrase.txt
+ML/Dash-App/keywords_text-rank_en_stock/model_data/stopwords.txt
+ML/Dash-App/Text_classification_dash_app.py
+Screenshots/ML-Assets-Coverage-Map.xmind
+ML/Dash-App/hotel-reviews/london_hotel_reviews.csv
+Screenshots/Watson-Core-Libraries.xmind
+Screenshots/MLOps-Assets-Coverage-Map.xmind
