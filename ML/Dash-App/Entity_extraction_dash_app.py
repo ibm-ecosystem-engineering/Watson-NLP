@@ -98,21 +98,12 @@ entity_input = dbc.InputGroup(
     className="mb-3",
 )
 
-search_entities_input = dbc.InputGroup(
+search_input = dbc.InputGroup(
     [
-        dbc.InputGroupText("Enter entities for search (separate by commas)"),
-        dbc.Textarea(id="search-entities-input", 
-                     value='clean, receptionist, location',
+        dbc.InputGroupText("Enter entities and phrases for search (separate by commas)"),
+        dbc.Textarea(id="search-input", 
+                     value='clean bathroom, nice receptionist, tube station, good breakfast, great location',
                      placeholder="Entities for Search"),
-    ]
-)
-
-search_phrases_input = dbc.InputGroup(
-    [
-        dbc.InputGroupText("Enter phrases for search (separate by commas)"),
-        dbc.Textarea(id="search-phrases-input", 
-                     value='breakfast food, tube station',
-                     placeholder="Phrases for Search"),
     ]
 )
 
@@ -333,9 +324,9 @@ def explode_phrases2(hotels_df):
     exp_phrases = exp_phrases[exp_phrases.phrase_length > 2]
     return exp_phrases
 
-def search_entity(hotels_df, entities_list, phrases_list):
-    search_df = hotels_df[(hotels_df['ent_text'].str.lower().str.contains('|'.join(entities_list).lower())) & 
-                          (hotels_df['phrase'].str.lower().str.contains('|'.join(phrases_list).lower()))]
+def search_entity(hotels_df, entities_phrases):
+    search_df = hotels_df[(hotels_df['ent_text'].str.lower().str.contains('|'.join(entities_phrases).lower())) & 
+                          (hotels_df['phrase'].str.lower().str.contains('|'.join(entities_phrases).lower()))]
     search_df = search_df[['Hotel Name', 'Document', 'phrase', 'ent_text']]
     hotel_count = search_df['Hotel Name'].value_counts().to_dict()
     return search_df, hotel_count
@@ -378,8 +369,7 @@ app.layout = html.Div(children=[
                         dbc.Col(width=2,),
                         dbc.Col(
                             children=[
-                                html.Div(search_entities_input),
-                                html.Div(search_phrases_input),
+                                html.Div(search_input),
                                 html.Div(search_button),
                                 html.Div(search_output_table),
                             ],
@@ -512,14 +502,12 @@ app.layout = html.Div(children=[
 @app.callback(
     Output('search-output-table', 'data'),
     Input('search-button', 'n_clicks'),
-    State('search-entities-input', 'value'),
-    State('search-phrases-input', 'value'),
+    State('search-input', 'value'),
 )
-def search_entity_callback(n_clicks, search_entities=['asdfjkl', 'asdfjkl;'], search_phrases=['asdfjkl;', 'asdfjkl;']):
+def search_entity_callback(n_clicks, search_text):
+    search_text = search_text.split(', ')
     compressed_hotels = pd.read_csv('hotel-reviews/compressed_hotels.csv')
-    search_entities = search_entities.split(', ')
-    search_phrases = search_phrases.split(', ')
-    search_df, hotel_count = search_entity(compressed_hotels, search_entities, search_phrases)
+    search_df, hotel_count = search_entity(compressed_hotels, search_text)
     return search_df.to_dict('records')
 
 @app.callback(
@@ -584,7 +572,7 @@ def hotel_reviews_entity_callback(hotel_dropdown):
         color="ent_type",
         color_continuous_scale=px.colors.sequential.GnBu,
     )
-    fig_treemap_types.update_layout(template=plotly_template)
+    fig_treemap_types.update_layout(template=plotly_template, title_text='Entities Types from Hotel Reviews', title_x=0.5)
     return entities_fig, fig_treemap_types #types_fig, fig_treemap_types
 
 @app.callback(
