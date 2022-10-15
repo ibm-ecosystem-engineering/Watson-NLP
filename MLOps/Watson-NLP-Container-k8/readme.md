@@ -76,16 +76,6 @@ spec:
       containers: 
       - name: watson-nlp-container 
         image: us.icr.io/watson-core-demo/watson-nlp-container:v1
-        env:
-          - name: ACCEPT_LICENSE
-            value: true
-        resources: 
-          requests: 
-            memory: "2Gi" 
-            cpu: "500m" 
-          limits: 
-            memory: "4Gi" 
-            cpu: "1000m" 
         ports: 
         - containerPort: 8085 
 --- 
@@ -146,7 +136,7 @@ oc get svc
 
 
 ### 5. Test
-Finally, you can test the service using a simple Python client program. The client code is under the directory `Watson-NLP/Watson-NLP-Container-k8/Client`. Note that the client command is specific to the models. If you are using different models from the ones in the above build, you will have to change the client code. Ensure that the [Watson NLP python client library](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md) is installed on your machine. 
+Finally, you can test the service using a simple Python client program. The client code is under the directory `Watson-NLP/MLOps/Watson-NLP-Container-k8/Client`. Note that the client command is specific to the models. If you are using different models from the ones in the above build, you will have to change the client code. Ensure that the [Watson NLP python client library](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md) is installed on your machine. 
 
 Assuming that you start in the Runtime directory: 
 ```
@@ -162,12 +152,6 @@ source client-env/bin/activate
 ```
 ```
 pip3 install watson-nlp-runtime-client==1.0.0
-```
-```
-pip3 install PythonTurtle
-```
-```
-pip3 install watson_nlp_runtime_client 
 ```
 
 Enable port forwarding from your local machine prior to running the test. For a Kubernetes cluster:
