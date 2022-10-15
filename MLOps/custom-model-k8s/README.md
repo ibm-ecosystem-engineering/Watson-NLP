@@ -5,8 +5,7 @@ To complete this tutorial, you need to have first completed the [Consumer Compla
 
 ### Architecture diagram
 
-![reference architecture](Images/reference_architecture.png)
-    
+
 ### Prerequisites
     
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
