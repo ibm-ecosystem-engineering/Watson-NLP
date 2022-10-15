@@ -58,7 +58,9 @@ Run the build command.
 ```
 python3 -m watson_embed_model_packager build --config model-manifest.csv
 ```
-This will create a Docker image with the name `watson-nlp_ensemble_model`. Verify the existence of this image:
+This will create a Docker image with the name `watson-nlp_ensemble_model`. 
+
+Verify the existence of this image:
 ```
 docker images
 ```
