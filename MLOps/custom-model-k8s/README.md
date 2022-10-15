@@ -29,7 +29,7 @@ First, you will export your Watson NLP model from Watson Studio on IBM Cloud. Cr
 ```
 mkdir models
 ```
-Go to the page for your Consumer Complaints Classification project in the IBM Cloud Pak for Data GUI and click on the **Assets** tab. There you should find a model named `ensemble_mode` stored as a ZIP archive. 
+In the IBM Cloud Pak for Data GUI, navigate to the page for your Consumer Complaints Classification project. Click on the **Assets** tab. There you should find a model named `ensemble_mode` stored as a ZIP archive. 
 
 If the model is not there, go back to the notebook and ensure that you have followed the steps in the notebook:
   - Insert a project token into the notebook, and
@@ -42,7 +42,27 @@ Download the model into the *models* directory on your local machine. Use the ve
 
 ### 2. Build the container image
 
-Install the 
+Install the [model builder](https://github.com/IBM/ibm-watson-embed-model-builder) package.
+```
+pip install watson-embed-model-packager
+```
+Run the setup for the model builder package.
+```
+python3 -m watson_embed_model_packager setup \
+    --library-version watson_nlp:3.2.0 \
+    --local-model-dir /path/to/models \
+    --output-csv model-manifest.csv
+```
+Ensure that you replace `/path/to/models` in the above command with the path to your `models` directory.  This command will generate the file `model-manifest.csv` that will be used during the build.
+
+Run the build command.
+```
+python3 -m watson_embed_model_packager build --config model-manifest.csv
+```
+This will create a Docker image with the name `watson-nlp_ensemble_model`. Verify the existence of this image:
+```
+docker images
+```
 
 ### 3. Serve the models
 
