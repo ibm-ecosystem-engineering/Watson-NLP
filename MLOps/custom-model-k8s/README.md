@@ -1,12 +1,7 @@
 # Serving a Custom Model on a Kubernetes or OpenShift Cluster
+In this tutorial you will take a Watson NLP model that you have trained in Watson Studio and serve it on a Kubernetes or OpenShift cluster. The model will be packaged as a container image using the [model builder](https://github.com/IBM/ibm-watson-embed-model-builder). The container images can be used in the same way as the pretrained Watson NLP models, i.e. specified as init containers of Watson NLP Runtime Pods.
 
-This tutorial is aimed at Data Scientists, Developers or MLOps Engineers who want to take custom trained model that has been developed in Watson Studio, and serve it on a Kubernetes or OpenShift cluster.  The approach we take is to:
-  - Download the model from Watson Studio
-  - Package it up as a container image,
-  - Push the image to a container registry, and
-  - Serve the model on a Kubernetes or OpenShift cluster.
- 
-Packaging will be done using the [model builder tool](https://github.com/IBM/ibm-watson-embed-model-builder).  The model image will be packaged in the same way as are the pretrained Watson NLP models, so serving them in a Kubernetes or OpenShift cluster. This allows for a consistent deployment pattern to the one used for pretrained models: model images will be specified as init containers of Watson NLP Runtime Pods.
+To complete this tutorial, you need to have first completed the [Consumer Complaint Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification#tab-1) tutorial, which includes steps on training a custom ensemble model and saving it to the Cloud Object Storage (COS) bucket associated with the project.
 
 ### Architecture diagram
 
