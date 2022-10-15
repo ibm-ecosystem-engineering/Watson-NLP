@@ -92,9 +92,6 @@ source client-env/bin/activate
 ```
 pip3 install watson-nlp-runtime-client==1.0.0
 ```
-```
-pip3 install PythonTurtle
-```
 
 Run the client program. This program takes a single text string as an argument.  The result from the model is printed to the screen.
 
