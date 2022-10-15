@@ -40,7 +40,7 @@ project.save_data('ensemble_model', data=ensemble_model.as_file_like_object(), o
 
 Download the model into the *models* directory on your local machine. Use the vertical ellipsis to the right of the model name to open a menu with the download option. Ensure that you use the file name `ensemble_model` when saving the file.
 
-### 2. Build the container image
+### 2. Build the model image
 
 Install the [model builder](https://github.com/IBM/ibm-watson-embed-model-builder) package.
 ```
