@@ -6,7 +6,6 @@
 # deposited with the U.S. Copyright Office.                       #
 #*****************************************************************#
 import sys
-from turtle import textinput
 from GrpcClient import GrpcClient
 
 #Getting user input
