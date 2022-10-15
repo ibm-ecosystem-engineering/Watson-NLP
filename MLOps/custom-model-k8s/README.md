@@ -67,15 +67,36 @@ docker images
 
 To deploy this image in Kubernetes or OpenShift cluster, you must first provision the image to a container repository that your cluster can access.  Tag your image with proper repository and namespace/project name. Replace `<REGISTRY>` and `<NAMESPACE>` in the following commands based on your configuration.
 ```
-docker tag watson-nlp-container:v1 <REGISTRY>/<NAMESPACE>/watson-nlp-container:v1 
+docker tag watson-nlp_ensemble_model:v1 <REGISTRY>/<NAMESPACE>/:v1 
 ```
 Push the image to upstream
 ```
-docker push <REGISTRY>/<NAMESPACE>/watson-nlp-container:v1 
+docker push <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:v1 
 ```
 
 ### 4. Serve the models
 
+Clone the GitHub repository containing sample code for this tutorial.
+```
+git clone https://github.com/ibm-build-labs/Watson-NLP
+```
+Go to the directory for this tutorial.
+```
+cd Watson-NLP/MLOps/custom-model-k8s
+```
+Open the following file with your favorite text editor.
+```
+Runtime/deployment/deployment.yaml
+```
+Update the init container image in this file to point to your custom model image `watson-nlp_ensemble_model`.
+
+Deploy the model service.
+
+#### Kubernetes
+
+
+
+#### OpenShift
 
 
 ### 5. Test the service
