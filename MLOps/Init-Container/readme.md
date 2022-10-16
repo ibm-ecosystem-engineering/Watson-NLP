@@ -44,11 +44,11 @@ pip3 install watson_nlp_runtime_client
 ```
 Enable port forwarding from your local machine. For a Kubernetes cluster:
 ```
-kubectl port-forward svc/watson-nlp-container 8085 
+kubectl port-forward svc/watson-nlp-runtime-service 8085 
 ```
 If you are using OpenShift:
 ```
-oc port-forward svc/watson-nlp-container 8085
+oc port-forward svc/watson-nlp-runtime-service 8085
 ```
 Go to the directory with the client program and run it.   
 ```
