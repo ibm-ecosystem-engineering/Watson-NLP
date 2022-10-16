@@ -126,7 +126,36 @@ Go to the directory with the client program and run it.
 ```
 cd client
 ```
+Run the program with a single string argument.
 ```
 python3 client.py "Watson NLP is awesome" 
 ```
-The client command expects a single text string argument. The client will print out the inference response returned by the model.
+The program will return output similar to the following.
+```
+###### Calling GRPC endpoint =  localhost:8085
+###### Calling remote GRPC model =  ensemble_model
+classes {
+  class_name: "Credit reporting, credit repair services, or other personal consumer reports"
+  confidence: 0.328219473
+}
+classes {
+  class_name: "Debt collection"
+  confidence: 0.262635
+}
+classes {
+  class_name: "Credit card or prepaid card"
+  confidence: 0.16425848
+}
+classes {
+  class_name: "Checking or savings account"
+  confidence: 0.102090739
+}
+classes {
+  class_name: "Mortgage"
+  confidence: 0.0733666793
+}
+producer_id {
+  name: "Voting based Ensemble"
+  version: "0.0.1"
+}
+```
