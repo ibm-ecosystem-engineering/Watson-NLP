@@ -3,9 +3,6 @@ In this tutorial you will take a Watson NLP model that you have trained in Watso
 
 To complete this tutorial, you need to have first completed the [Consumer Complaint Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification#tab-1) tutorial, which includes steps on training a custom ensemble model and saving it to the Cloud Object Storage (COS) bucket associated with the project.
 
-### Architecture diagram
-
-
 ### Prerequisites
     
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
