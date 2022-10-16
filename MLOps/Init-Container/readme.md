@@ -113,7 +113,7 @@ This manifest consists of a Kubernetes Deployment and a Service. Pods of the Dep
         - name: ACCEPT_LICENSE
           value: 'true'       
 ```
-The init container will run to completion before the Watson NLP Runtime image starts. It mounts the Pod's `emptyDir` volume at path `/app/models`. The image's entrypoint script will copy the model files to this location when it runs.
+In each Pod the init container will run to completion before the Watson NLP Runtime image starts. It mounts the Pod's `emptyDir` volume at path `/app/models`. The image's entrypoint script will copy the model files to this location when it runs.
 
 The Pod's main application container image is the Watson NLP Runtime.
 ```
