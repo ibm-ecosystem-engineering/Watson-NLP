@@ -60,11 +60,11 @@ docker images
 
 ### 3. Copy the model to a container registry
 
-To deploy this image in Kubernetes or OpenShift cluster, you must first provision the image to a container repository that your cluster can access.  Tag your image with proper repository and namespace/project name. Replace `<REGISTRY>` and `<NAMESPACE>` in the following commands based on your configuration.
+To deploy this image in Kubernetes or OpenShift cluster, you must first provision the image to a container repository.  Tag your image with proper repository and namespace/project name. Replace `<REGISTRY>` and `<NAMESPACE>` in the following commands based on your configuration.
 ```
 docker tag watson-nlp_ensemble_model:v1 <REGISTRY>/<NAMESPACE>/:v1 
 ```
-Push the image to upstream
+Push the image to the registry.
 ```
 docker push <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:v1 
 ```
@@ -79,11 +79,19 @@ Go to the directory for this tutorial.
 ```
 cd Watson-NLP/MLOps/custom-model-k8s
 ```
-Open the following file with your favorite text editor.
+Open the Kubernetes manifest for editing.
 ```
-Runtime/deployment/deployment.yaml
+vim Runtime/deployment/deployment.yaml
 ```
-Update the init container image in this file to point to your custom model image `watson-nlp_ensemble_model`.
+Update the init container line in the file to point to your custom model image.
+```
+    spec:
+      initContainers:
+      - name: ensemble-model
+        image: <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:v1
+```
+
+Create a secret in the namespace to give credentials to the registry used, and add this secret to the `imagePullSecrets` section, so that your Pod can pull the image from the registry. 
 
 Deploy the model service.  
 
