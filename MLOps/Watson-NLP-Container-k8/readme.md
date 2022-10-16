@@ -112,20 +112,6 @@ Run the below commands to deploy in the cluster from the project root directoryâ
 oc apply -f Runtime/deployment/deployment.yaml 
 ```
 
-In openshift it is a privileged container. Create a service account and give the accout scc previllege to give extra permission to run the model.
-
-```
-oc create sa watson-nlp-sa
-```
-
-```
-oc adm policy add-scc-to-user anyuid -z watson-nlp-sa
-```
-
-```
-oc set serviceaccount deployment/watson-nlp-container watson-nlp-sa
-```
-
 Check that the pod and service are running. 
 ```
 oc get pods 
