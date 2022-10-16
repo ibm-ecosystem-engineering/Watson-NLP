@@ -72,7 +72,7 @@ docker run -d -e ACCEPT_LICENSE=true -p 8085:8085 watson-nlp-custom-container:v1
 The container will expose a gRPC endpoint on port 8085. 
 
 ### 5. Test the service
-The client program appears in the directory `Watson-NLP/Watson-NLP-Custom-Model-Container/Client`. Note that the client code included with this tutorial will make inference requests to the sample model `ensemble_model`.  If using a different model, be sure to update the client code.
+The client program appears in the directory `Watson-NLP/MLOps/Watson-NLP-Custom-Model-Container/Client`. Note that the client code included with this tutorial will make inference requests to the sample model `ensemble_model`.  If using a different model, be sure to update the client code.
 
 From the `Runtime` directory:
 ```
