@@ -125,6 +125,7 @@ producer_id {
 ```
 
 **Tip:**
+
 If you see an error similar to the following: 
 ```
 "/usr/local/Cellar/python@3.9/3.9.14/Frameworks/Python.framework/Versions/3.9/lib/python3.9/turtle.py", line 107, in <module>
