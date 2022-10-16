@@ -13,15 +13,17 @@ spec:
         app: watson-main-container
     spec:
       initContainers:
-      - name: initial-model-loading-emotion-classification
-        image: image-registry.openshift-image-registry.svc:5000/poc/watson-nlp_classification_ensemble-workflow_lang_en_tone-stock:2.3.1
+      - name: ensemble-workflow_lang_en_tone-stock
+        image: wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp_classification_ensemble-workflow_lang_en_tone-stock:2.3.1
         volumeMounts:
         - name: model-directory
           mountPath: "/app/models"
       containers:
-      - name: watson-main-container
-        image: image-registry.openshift-image-registry.svc:5000/poc/runtime:13.1.0
+      - name: watson-nlp-runtime
+        image: wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:1.0.0
         env:
+        - name: ACCEPT_LICENSE
+          value: 'true'
         - name: LOCAL_MODELS_DIR
           value: "/app/models"
         - name: LOG_LEVEL
