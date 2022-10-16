@@ -9,7 +9,7 @@ When using this approach, models are kept in separate containers from the runtim
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
 - You have a Kubernetes or OpenShift cluster on which you can deploy an application
 - You have either the Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed, and configured to talk to your cluster.
-- Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
+- Your Kubernetes or OpenShift cluster namespace has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
 - [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
 
 ## Steps
@@ -97,31 +97,36 @@ producer_id {
 
 ## Understanding the Kubernetes Manifest
 
-Examine the Kubernetes manifest used to deploy the model service.  
+The Kubernetes manifest to deploy the service is here.  
 ```
 cat deployment/deployment.yaml
 ```
-This manifest consists of a Kubernetes Deployment and a Service. The Pods of the Deployment will all serve the same set of models. The Service provides an endpoint for the service, and load balancing.
+This manifest consists of a Kubernetes Deployment and a Service.
 
-Observe that the Pods of the Deployment have an init container specified, which use the container image of a Watson NLP pretrained model. 
+Pods of the Deployment have an init container specified. The init container image specifies a pretrained model. 
 ```
       initContainers:
-      - name: initial-model-loading-emotion-classification
-        image: image-registry.openshift-image-registry.svc:5000/poc/watson-nlp_classification_ensemble-workflow_lang_en_tone-stock:2.3.1
+      - name: ensemble-workflow-lang-en-tone-stock
+        image: wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp_classification_ensemble-workflow_lang_en_tone-stock:1.0.3
         volumeMounts:
         - name: model-directory
-          mountPath: "/app/models"       
+          mountPath: "/app/models"
+        env:
+        - name: ACCEPT_LICENSE
+          value: 'true'       
 ```
-The init containers of a Pod will run to completion before the main application container starts. These containers will provision the models so that the Watson NLP Runtime can find them. You can change the image name to serve other pretrained models. As well, you can serve multiple models at once by specifying multiple init containers.
+This init container will run to completion before the Watson NLP Runtime image starts. It will provision the model within the Pod, so that the Watson NLP Runtime can find it.
 
 The model container mounts the Pod's `emptyDir` volume at path `/app/models`. The entrypoint script for the model container will copy the model to this location when it runs.
 
 The main application container image is the Watson NLP Runtime.
 ```
       containers:
-      - name: watson-main-container
-        image: image-registry.openshift-image-registry.svc:5000/poc/runtime:13.1.0
+      - name: watson-nlp-runtime
+        image: wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:1.0.0
         env:
+        - name: ACCEPT_LICENSE
+          value: 'true'
         - name: LOCAL_MODELS_DIR
           value: "/app/models"
         - name: LOG_LEVEL
