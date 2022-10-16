@@ -6,15 +6,11 @@ You will create a Kubernetes Deployment to run the Watson NLP Runtime image. In 
 When using this approach, models are kept in separate containers from the runtime. To change the set of served models you need only to update the Kubernetes manifest. 
 
 ### Prerequisites
-- [Docker Desktop](https://docs.docker.com/get-docker/) is installed
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
 - You have a Kubernetes or OpenShift cluster on which you can deploy an application
 - You have either the Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed, and configured to talk to your cluster.
 - Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
 - [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
-
-**Tip**:
-- [Podman](https://podman.io/getting-started/installation) provides a Docker-compatible command line front end. Unless otherwise noted, all the the Docker commands in this tutorial should work for Podman, if you simply alias the Docker CLI with `alias docker=podman` shell command.
 
 ## Steps
 
