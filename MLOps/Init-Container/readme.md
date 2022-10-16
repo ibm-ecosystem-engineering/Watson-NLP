@@ -101,9 +101,7 @@ The Kubernetes manifest to deploy the service is here.
 ```
 cat deployment/deployment.yaml
 ```
-This manifest consists of a Kubernetes Deployment and a Service.
-
-Pods of the Deployment have an init container specified. The init container image specifies a pretrained model. 
+This manifest consists of a Kubernetes Deployment and a Service. Pods of the Deployment specify a pretrained model image as an init container.
 ```
       initContainers:
       - name: ensemble-workflow-lang-en-tone-stock
@@ -115,11 +113,9 @@ Pods of the Deployment have an init container specified. The init container imag
         - name: ACCEPT_LICENSE
           value: 'true'       
 ```
-This init container will run to completion before the Watson NLP Runtime image starts. It will provision the model within the Pod, so that the Watson NLP Runtime can find it.
+The init container will run to completion before the Watson NLP Runtime image starts. It mounts the Pod's `emptyDir` volume at path `/app/models`. The image's entrypoint script will copy the model files to this location when it runs.
 
-The model container mounts the Pod's `emptyDir` volume at path `/app/models`. The entrypoint script for the model container will copy the model to this location when it runs.
-
-The main application container image is the Watson NLP Runtime.
+The Pod's main application container image is the Watson NLP Runtime.
 ```
       containers:
       - name: watson-nlp-runtime
@@ -145,4 +141,6 @@ The main application container image is the Watson NLP Runtime.
         - name: model-directory
           mountPath: "/app/models"
 ```
-Note that this container also mounts the Pod's `emptyDir` volume at path `/app/models`. The environment variable `LOCAL_MODELS_DIR` is set to `/app/models` to inform the Watson NLP Runtime where to find the models.
+This container also mounts the Pod's `emptyDir` volume at path `/app/models`. The environment variable `LOCAL_MODELS_DIR` is set to `/app/models` to inform the Watson NLP Runtime where to find the models.
+
+Note that for both runtime and models the `ACCEPT_LICENSE` environment variable must be set to `true`.
