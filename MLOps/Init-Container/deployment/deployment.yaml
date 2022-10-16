@@ -45,7 +45,7 @@ spec:
         - name: model-directory
           mountPath: "/app/models"
       imagePullSecrets:
-      - name: regcred
+      - name: watson-nlp
       volumes:
       - name: model-directory
         emptyDir: {}
