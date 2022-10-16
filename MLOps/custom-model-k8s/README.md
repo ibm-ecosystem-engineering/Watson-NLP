@@ -92,34 +92,40 @@ Runtime/deployment/deployment.yaml
 ```
 Update the init container image in this file to point to your custom model image `watson-nlp_ensemble_model`.
 
-Deploy the model service.
+Deploy the model service.  
 
-#### Kubernetes
-
-
-
-#### OpenShift
-
+If using Kubernetes:
+```
+kubectl apply -f deployment/deployment.yaml
+```
+If using OpenShift:
+```
+oc apply -f deployment/deployment.yaml
+```
+The model service is now deployed. 
 
 ### 5. Test the service
-Now test the model service using a client program on your local machine. Install the Watson NLP Runtime client library.
+Run a simple Python client program to test that the model is being served. Note that the client code is specific to the model. If you serve a different model you will need to update the client program.
+
+Install the Python client library on your machine. 
 ```
-pip install watson-nlp-runtime-client
+pip3 install watson_nlp_runtime_client 
 ```
-The client program appears in the directory `Watson-NLP/Watson-NLP-Custom-Model-Container/Client`. Note that the client code included with this tutorial will make inference requests to the sample model `ensemble_classification-wf_en_emotion-stock` that is referenced in step 2.  If you are using your own model, you will have to first update the client code.
+Enable port forwarding from your local machine. 
 
-Enable port forwarding. On Kubernetes:
-
-OpenShift:
-
-
-
-From the `Runtime` directory:
+If running the service in a Kubernetes cluster:
 ```
-cd ../Client 
+kubectl port-forward svc/watson-nlp-container 8085 
 ```
-Run the client program.
+For OpenShift:
+```
+oc port-forward svc/watson-nlp-container 8085
+```
+Go to the directory with the client program and run it.   
+```
+cd client
+```
 ```
 python3 client.py "Watson NLP is awesome" 
 ```
-This program takes a single text string as an argument.  The result from the model is printed to the screen.
+The client command expects a single text string argument. The client will print out the inference response returned by the model.
