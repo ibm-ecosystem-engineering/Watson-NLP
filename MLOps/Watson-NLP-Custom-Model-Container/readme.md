@@ -14,7 +14,6 @@ To complete this tutorial, you need to have first completed the [Consumer Compla
 - [Docker Desktop](https://docs.docker.com/get-docker/) is installed
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
 - Docker has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#docker)
-- [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
 - You have completed the [Consumer Complaint Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification#tab-1) tutorial, and have saved the custom trained model named `ensemble_model` to the COS bucket associated with the project. The tutorial uses this [notebook](https://github.com/ibm-build-labs/Watson-NLP/blob/main/ML/Text-Classification/Consumer%20complaints%20Classification.ipynb).
     
 **Tip**:
@@ -73,8 +72,6 @@ docker run -d -e ACCEPT_LICENSE=true -p 8085:8085 watson-nlp-custom-container:v1
 The container will expose a gRPC endpoint on port 8085. 
 
 ### 5. Test the service
-Now test the model service using a client program. Ensure that the [Watson NLP Python SDK](https://github.com/ibm-build-labs/Watson-NLP/blob/main/access/README.md) is installed on your machine.
-
 The client program appears in the directory `Watson-NLP/Watson-NLP-Custom-Model-Container/Client`. Note that the client code included with this tutorial will make inference requests to the sample model `ensemble_model`.  If using a different model, be sure to update the client code.
 
 From the `Runtime` directory:
@@ -94,7 +91,6 @@ pip3 install watson-nlp-runtime-client==1.0.0
 ```
 
 Run the client program. This program takes a single text string as an argument.  
-
 ```
 python3 client.py "Watson NLP is awesome" 
 ```
