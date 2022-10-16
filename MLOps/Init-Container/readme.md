@@ -10,7 +10,6 @@ When using this approach, models are kept in separate containers from the runtim
 - You have a Kubernetes or OpenShift cluster on which you can deploy an application
 - You have either the Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed, and configured to talk to your cluster.
 - Your Kubernetes or OpenShift cluster namespace has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
-- [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
 
 ## Steps
 
@@ -25,6 +24,8 @@ cd Watson-NLP/MLOps/Init-Container
 ```
 
 ### 2. Deploy the service
+Create a namespace in which to deploy the service, and set that as your current namespace.
+
 If using Kubernetes:
 ```
 kubectl apply -f deployment/deployment.yaml
@@ -33,7 +34,11 @@ If using OpenShift:
 ```
 oc apply -f deployment/deployment.yaml
 ```
-The model service is now deployed.  
+The model service is now deployed. 
+
+**Tip:**
+
+Ensure that you have created a secret named `regcred` in the namespace in which you created the Deployment, to allow the images to be pulled. See the instructions [here](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift).
 
 ### 3. Test the service
 Run a simple Python client program to test that the model is being served. Note that the client code is specific to the model. If you serve a different model you will need to update the client program.
