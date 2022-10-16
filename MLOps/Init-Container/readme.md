@@ -43,6 +43,15 @@ Ensure that you have created a secret named `regcred` in the namespace in which 
 ### 3. Test the service
 Run a simple Python client program to test that the model is being served. Note that the client code is specific to the model. If you serve a different model you will need to update the client program.
 
+Enable port forwarding from your local machine. For a Kubernetes cluster:
+```
+kubectl port-forward svc/watson-nlp-runtime-service 8085 
+```
+If you are using OpenShift:
+```
+oc port-forward svc/watson-nlp-runtime-service 8085
+```
+
 Execute the following commands to prepare your Python environment.
 ```
 python3 -m venv client-env
@@ -52,15 +61,6 @@ source client-env/bin/activate
 ```
 ```
 pip3 install watson-nlp-runtime-client==1.0.0
-```
-
-Enable port forwarding from your local machine. For a Kubernetes cluster:
-```
-kubectl port-forward svc/watson-nlp-runtime-service 8085 
-```
-If you are using OpenShift:
-```
-oc port-forward svc/watson-nlp-runtime-service 8085
 ```
 Go to the directory with the client program and run it.   
 ```
