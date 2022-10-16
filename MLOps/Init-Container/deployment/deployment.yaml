@@ -1,23 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: watson-main-container
+  name: watson-nlp-runtime
 spec:
   selector:
     matchLabels:
-      app: watson-main-container
+      app: watson-nlp-runtime
   replicas: 1
   template:
     metadata:
       labels:
-        app: watson-main-container
+        app: watson-nlp-runtime
     spec:
       initContainers:
-      - name: ensemble-workflow_lang_en_tone-stock
-        image: wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp_classification_ensemble-workflow_lang_en_tone-stock:2.3.1
+      - name: ensemble-workflow-lang-en-tone-stock
+        image: wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp_classification_ensemble-workflow_lang_en_tone-stock:1.0.3
         volumeMounts:
         - name: model-directory
           mountPath: "/app/models"
+        env:
+        - name: ACCEPT_LICENSE
+          value: 'true'
       containers:
       - name: watson-nlp-runtime
         image: wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:1.0.0
@@ -41,6 +44,8 @@ spec:
         volumeMounts:
         - name: model-directory
           mountPath: "/app/models"
+      imagePullSecrets:
+      - name: regcred
       volumes:
       - name: model-directory
         emptyDir: {}
@@ -48,11 +53,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: watson-main-container
+  name: watson-nlp-runtime-service
 spec:
   type: ClusterIP
   selector:
-    app: watson-main-container
+    app: watson-nlp-runtime
   ports:
   - port: 8080
     name: http-rest-svc
