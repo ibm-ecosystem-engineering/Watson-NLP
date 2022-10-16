@@ -93,12 +93,40 @@ source client-env/bin/activate
 pip3 install watson-nlp-runtime-client==1.0.0
 ```
 
-Run the client program. This program takes a single text string as an argument.  The result from the model is printed to the screen.
+Run the client program. This program takes a single text string as an argument.  
 
 ```
 python3 client.py "Watson NLP is awesome" 
 ```
-
+You will see output similar to the following.
+```
+###### Calling GRPC endpoint =  localhost:8085
+###### Calling remote GRPC model =  ensemble_model
+classes {
+  class_name: "Credit reporting, credit repair services, or other personal consumer reports"
+  confidence: 0.37752074
+}
+classes {
+  class_name: "Debt collection"
+  confidence: 0.241654217
+}
+classes {
+  class_name: "Credit card or prepaid card"
+  confidence: 0.215988144
+}
+classes {
+  class_name: "Mortgage"
+  confidence: 0.0913072601
+}
+classes {
+  class_name: "Checking or savings account"
+  confidence: 0.0882223696
+}
+producer_id {
+  name: "Voting based Ensemble"
+  version: "0.0.1"
+}
+```
 
 ### Note: 
 If you see any error when running similar to the following: 
