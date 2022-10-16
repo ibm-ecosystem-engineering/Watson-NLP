@@ -54,10 +54,46 @@ Go to the directory with the client program and run it.
 ```
 cd client
 ```
+Run the client command with a single string argument.
 ```
 python3 client.py "Watson NLP is awesome" 
 ```
-The client command expects a single text string argument. The client will print out the inference response returned by the model.
+The client will print out the inference response returned by the model similar to the following.
+```
+###### Calling GRPC endpoint =  localhost:8085
+classes {
+  class_name: "excited"
+  confidence: 0.541912198
+}
+classes {
+  class_name: "satisfied"
+  confidence: 0.474965394
+}
+classes {
+  class_name: "polite"
+  confidence: 0.193365365
+}
+classes {
+  class_name: "sympathetic"
+  confidence: 0.106541924
+}
+classes {
+  class_name: "sad"
+  confidence: 0.0195402242
+}
+classes {
+  class_name: "frustrated"
+  confidence: 0.0112322783
+}
+classes {
+  class_name: "impolite"
+  confidence: 0.00411729887
+}
+producer_id {
+  name: "Voting based Ensemble"
+  version: "0.0.1"
+}
+```
 
 ## Understanding the Kubernetes Manifest
 
