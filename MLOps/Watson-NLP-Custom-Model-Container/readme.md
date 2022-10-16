@@ -133,7 +133,7 @@ If you see any error when running similar to the following:
     import _tkinter # If this fails your Python may not be configured for Tk
 ModuleNotFoundError: No module named '_tkinter'
 ```
-Please install python tk module based on your operating system and then rerun the client program `python3 client.py "Watson NLP is awesome"`
+Please install python tk module then rerun the program. 
 
  === MacOS ===
 
