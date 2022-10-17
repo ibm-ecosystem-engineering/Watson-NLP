@@ -33,6 +33,13 @@ Download the model into the *models* directory on your local machine. Use the ve
 
 ### 2. Build the model image
 
+Prepare your Python environment.
+```
+python3 -m venv client-env
+```
+```
+source client-env/bin/activate
+```
 Install the [model builder](https://github.com/IBM/ibm-watson-embed-model-builder) package.
 ```
 pip install watson-embed-model-packager
