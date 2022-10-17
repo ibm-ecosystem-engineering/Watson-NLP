@@ -24,17 +24,16 @@ If the model is not there, go back to the notebook and ensure that you have foll
 ```
 project.save_data('ensemble_model', data=ensemble_model.as_file_like_object(), overwrite=True)
 ```
+Use the vertical ellipsis to the right of the model name to open a menu with the download option. Download the model to your local machine. 
 
-Download the model to your local machine. Use the vertical ellipsis to the right of the model name to open a menu with the download option. 
-
-Create a directory to unzip the file into.
+Next, we will unzip the file. Create a directory to unzip the file into.
 ```
 mkdir models
 ```
 ```
 mkdir models/ensemble_model
 ```
-Unzip the file. You may need to specify the path to the ZIP file if it is not in the current directory.
+Unzip the file into the newly created directory. You may need to specify the path to the ZIP file if it is not in the current directory.
 ```
 unzip ensemble_model -d models/ensemble_model
 ```
