@@ -138,13 +138,13 @@ GRPC_SERVER_URL = os.getenv("GRPC_SERVER_URL", default="localhost:8085")
 The client stub accepts two parameter a request object and header parameter
 
 ```
-    def call_emotion_model(self, inputText):
-        request = common_service_pb2.SentimentRequest(
+    def call_tone_model(self, inputText):
+        request = common_service_pb2.EmotionRequest(
             raw_document=syntax_types_pb2.RawDocument(text=inputText)
         )
-        EMOTION_CLASSIFICATION_STOCK_MODEL = os.getenv("EMOTION_CLASSIFICATION_STOCK_MODEL", default="ensemble_classification-wf_en_emotion-stock")
-        response = self.stub.ClassificationPredict(request,metadata=[(self.NLP_MODEL_SERVICE_TYPE, EMOTION_CLASSIFICATION_STOCK_MODEL)] )
-        return 
+        TONE_CLASSIFICATION_STOCK_MODEL = os.getenv("TONE_CLASSIFICATION_STOCK_MODEL", default="classification_ensemble-workflow_lang_en_tone-stock")
+        response = self.stub.ClassificationPredict(request,metadata=[(self.NLP_MODEL_SERVICE_TYPE, TONE_CLASSIFICATION_STOCK_MODEL)] )
+        return response
 ```
 
 `Emotion_dash_app.py` uses python 'dash' library to display graph and user interface.
