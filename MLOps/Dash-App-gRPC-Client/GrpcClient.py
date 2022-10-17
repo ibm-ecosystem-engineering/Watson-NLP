@@ -26,10 +26,10 @@ class GrpcClient:
 
     # emotion analysis ensemble_classification-wf_en_emotion-stock
     def call_tone_model(self, inputText):
-        request = common_service_pb2.SentimentRequest(
+        request = common_service_pb2.EmotionRequest(
             raw_document=syntax_types_pb2.RawDocument(text=inputText)
         )
-        EMOTION_CLASSIFICATION_STOCK_MODEL = os.getenv("EMOTION_CLASSIFICATION_STOCK_MODEL", default="classification_ensemble-workflow_lang_en_tone-stock")
-        print("###### Calling remote GRPC model = ", EMOTION_CLASSIFICATION_STOCK_MODEL)
-        response = self.stub.ClassificationPredict(request,metadata=[(self.NLP_MODEL_SERVICE_TYPE, EMOTION_CLASSIFICATION_STOCK_MODEL)] )
+        TONE_CLASSIFICATION_STOCK_MODEL = os.getenv("TONE_CLASSIFICATION_STOCK_MODEL", default="classification_ensemble-workflow_lang_en_tone-stock")
+        print("###### Calling remote GRPC model = ", TONE_CLASSIFICATION_STOCK_MODEL)
+        response = self.stub.ClassificationPredict(request,metadata=[(self.NLP_MODEL_SERVICE_TYPE, TONE_CLASSIFICATION_STOCK_MODEL)] )
         return response

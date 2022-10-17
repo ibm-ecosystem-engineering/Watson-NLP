@@ -88,7 +88,7 @@ pip3 install -r requirements.txt
 #### 3.2 Run the application
 
 ```
-python3 Emotion_dash_app.py
+python3 Tone_dash_app.py
 ```
 
 #### 3.3 Test
