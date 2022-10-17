@@ -39,7 +39,7 @@ pip install watson-embed-model-packager
 ```
 Run the setup for the model builder package.
 ```
-python3 -m watson_embed_model_packager setup \
+python -m watson_embed_model_packager setup \
     --library-version watson_nlp:3.2.0 \
     --local-model-dir /path/to/models \
     --output-csv model-manifest.csv
@@ -48,7 +48,7 @@ Ensure that you replace `/path/to/models` in the above command with the path to 
 
 Run the build command.
 ```
-python3 -m watson_embed_model_packager build --config model-manifest.csv
+python -m watson_embed_model_packager build --config model-manifest.csv
 ```
 This will create a Docker image with the name `watson-nlp_ensemble_model`. 
 
@@ -109,7 +109,7 @@ Run a simple Python client program to test that the model is being served. Note 
 
 Install the Python client library on your machine. 
 ```
-pip3 install watson_nlp_runtime_client 
+pip install watson_nlp_runtime_client 
 ```
 Enable port forwarding from your local machine. 
 
@@ -127,7 +127,7 @@ cd client
 ```
 Run the program with a single string argument.
 ```
-python3 client.py "Watson NLP is awesome" 
+python client.py "Watson NLP is awesome" 
 ```
 The program will return output similar to the following.
 ```
