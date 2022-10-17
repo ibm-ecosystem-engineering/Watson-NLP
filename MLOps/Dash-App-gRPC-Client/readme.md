@@ -1,6 +1,6 @@
 # Watson NLP Python Client
 
-In this tutorial you will build and deploy a Watson NLP client application.  The sample client application is a web service built in Python that performs Emotion Classification on user-supplied texts.  The client application uses the Watson NLP Python SDK to interact with a back-end model service. You can adapt the sample code from this tutorial to your own projects.
+In this tutorial you will build and deploy a Watson NLP client application.  The sample client application is a web service built in Python that performs Tone Classification on user-supplied texts.  The client application uses the Watson NLP Python SDK to interact with a back-end model service. You can adapt the sample code from this tutorial to your own projects.
 
 ## Architecture Diagram
 
@@ -34,7 +34,7 @@ cd Watson-NLP/MLOps/Dash-App-gRPC-Client
 
 ### 2. Start the model runtime
 
-To start, we are going to build the watson nlp runtime image with model `ensemble_classification-wf_en_emotion-stock`
+To start, we are going to build the watson nlp runtime image with model `classification_ensemble-workflow_lang_en_tone-stock`
 
 Follow the below steps to build and run the model runtime container.
 
