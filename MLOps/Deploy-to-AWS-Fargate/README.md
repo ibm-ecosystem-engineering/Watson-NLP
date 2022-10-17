@@ -18,7 +18,6 @@ This tutorial will walk you through the steps to deploy a standalone Watson NLP 
 - If you don't have an AWS account, you may want to consider [AWS Free Tier](https://aws.amazon.com/free/free-tier/).
 - Follow the [security best practices](https://docs.aws.amazon.com/accounts/latest/reference/best-practices-root-user.html) for the root user of your AWS account, and [create an admin user](https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html) for daily use.
 - Make sure you have [required permissions](https://docs.docker.com/cloud/ecs-integration/#requirements) on AWS account to run applications on ECS.
-- [Podman](https://podman.io/getting-started/installation) provides a Docker-compatible command line front end. Unless otherwise noted, all the the Docker commands in this tutorial should work for Podman, if you simply alias the Docker CLI with `alias docker=podman` shell command.
 
 
 ## Create the runtime container image
@@ -26,15 +25,38 @@ The IBM Entitled Registry contains various container images for Watson Runtime. 
 
 ### Step 1: Download a couple of models to a local directory
 
+Create a directory named `models`:
 <span style="font-size:x-small">
 
 ```
 mkdir models
-REGISTRY=wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com
+```
+</span>
+
+Set variable `REGISTRY` as follows to pull the images from IBM Entitled Registry. IBMers with access to Artifactory can follow the instructions [here](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#docker). 
+
+<span style="font-size:x-small">
+
+```
+REGISTRY=cp.icr.io/cp/ai
+```
+</span>
+
+Use a variable `MODELS` to provide the list of models you want to download:
+<span style="font-size:x-small">
+
+```
 MODELS="watson-nlp_syntax_izumo_lang_en_stock:0.0.4 watson-nlp_syntax_izumo_lang_fr_stock:0.0.4"
+```
+</span>
+
+Down the models into the local directory `models`:
+<span style="font-size:x-small">
+
+```
 for i in $MODELS
 do
-  image=$REGISTRY/$i
+  image=${REGISTRY}/$i
   docker run -it --rm -e ACCEPT_LICENSE=true -v `pwd`/models:/app/models $image
 done
 ```
