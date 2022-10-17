@@ -30,7 +30,7 @@ The IBM Entitled Registry contains various container images for Watson Runtime. 
 
 ```
 mkdir models
-REGISTRY=cp.icr.io/cp/ai
+REGISTRY=wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com
 MODELS="watson-nlp_syntax_izumo_lang_en_stock:0.0.4 watson-nlp_syntax_izumo_lang_fr_stock:0.0.4"
 for i in $MODELS
 do
@@ -45,7 +45,7 @@ done
 <span style="font-size:x-small">
 
 ```
-ARG TAG=0.0.1
+ARG TAG=1.0.0
 FROM cp.icr.io/cp/ai/watson-nlp-runtime:${TAG}
 COPY models /app/models
 ```
