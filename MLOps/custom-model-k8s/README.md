@@ -90,7 +90,7 @@ Update the init container line in the file to point to your custom model image.
         image: <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:v1
 ```
 
-Create a secret in the namespace to give credentials to the registry used, and add this secret to the `imagePullSecrets` section, so that your Pod can pull the image from the registry. 
+Create a [secret](https://kubernetes.io/docs/tasks/configmap-secret/managing-secret-using-kubectl/) in the namespace to give credentials to the registry used, and add this secret to the `imagePullSecrets` section, so that your Pod can pull the image from the registry. 
 
 Deploy the model service.  
 
