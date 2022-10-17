@@ -16,11 +16,14 @@ To complete this tutorial, you need to have first completed the [Consumer Compla
 ## Steps
 
 ### 1. Save your model
-First, you will export your Watson NLP model from Watson Studio on IBM Cloud. Create a `models` directory on your local machine.
+First, you will export your Watson NLP model from Watson Studio on IBM Cloud. Create a directory for your model on your local machine.
 ```
 mkdir models
 ```
-In the IBM Cloud Pak for Data GUI, navigate to the page for your Consumer Complaints Classification project. Click on the **Assets** tab. There you should find a model named `ensemble_mode` stored as a ZIP archive. 
+```
+mkdir models/ensemble_model
+```
+In the IBM Cloud Pak for Data GUI, navigate to the page for your Consumer Complaints Classification project. Click on the **Assets** tab. There you should find a model named `ensemble_mode` stored as a ZIP file. 
 
 If the model is not there, go back to the notebook and ensure that you have followed the steps in the notebook:
   - Insert a project token into the notebook, and
@@ -29,7 +32,19 @@ If the model is not there, go back to the notebook and ensure that you have foll
 project.save_data('ensemble_model', data=ensemble_model.as_file_like_object(), overwrite=True)
 ```
 
-Download the model into the *models* directory on your local machine. Use the vertical ellipsis to the right of the model name to open a menu with the download option. Ensure that you use the file name `ensemble_model` when saving the file.
+Download the model to your local machine. Use the vertical ellipsis to the right of the model name to open a menu with the download option. 
+
+Create a directory to unzip the file into.
+```
+mkdir models
+```
+```
+mkdir models/ensemble_model
+```
+Unzip the file. You may need to specify the path to the ZIP file if it is not in the current directory.
+```
+unzip ensemble_model -d models/ensemble_model
+```
 
 ### 2. Build the model image
 
