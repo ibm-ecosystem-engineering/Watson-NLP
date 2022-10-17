@@ -4,7 +4,7 @@ In this tutorial you will build and deploy a Watson NLP client application.  The
 
 ## Architecture Diagram
 
-![Reference architecure](images/referenceArchitecturePythonClient.png)
+![Reference architecure](images/gRPC_dash_app_architecture.png)
 
 ## Prerequisites
 
