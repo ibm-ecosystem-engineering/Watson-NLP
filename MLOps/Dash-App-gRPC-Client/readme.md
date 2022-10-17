@@ -39,7 +39,7 @@ To start, we are going to build the watson nlp runtime image with model `classif
 Follow the below steps to build and run the model runtime container.
 
 ```
-cd rutime
+cd runtime
 ```
 
 Build
