@@ -61,7 +61,7 @@ docker images
 
 To deploy this image in Kubernetes or OpenShift cluster, you must first provision the image to a container repository.  Tag your image with proper repository and namespace/project name. Replace `<REGISTRY>` and `<NAMESPACE>` in the following commands based on your configuration.
 ```
-docker tag watson-nlp_ensemble_model:v1 <REGISTRY>/<NAMESPACE>/:v1 
+docker tag watson-nlp_ensemble_model:v1 <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:v1 
 ```
 Push the image to the registry.
 ```
