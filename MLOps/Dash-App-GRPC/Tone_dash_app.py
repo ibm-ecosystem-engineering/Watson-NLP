@@ -144,6 +144,12 @@ app.layout = html.Div(children=[
                     # align="center",
                     # className="w-0",
                 ),
+                html.Br(),
+                html.Label("This App was built using Watson NLP library."),
+                html.Br(),
+                html.Footer(children="Please note that this content is made available by IBM Build Lab to foster Embedded AI technology adoption. \
+                                The content may include systems & methods pending patent with USPTO and protected under US Patent Laws. \
+                                Copyright - 2022 IBM Corporation")
 ])
 
 @app.callback(
