@@ -62,7 +62,7 @@ docker ps
 
 ### 3. Run the gRPC dash application
 
-Change to the root directory of the project `Watson-NLP/MLOps/Dash-App-gRPC-Client ass` assuming you are at the runtime directory
+Change to the root directory of the project `Watson-NLP/MLOps/Dash-App-gRPC-Client` assuming you are at the runtime directory
 
 ```
 cd .. 
