@@ -25,7 +25,7 @@ class GrpcClient:
         self.stub = common_service_pb2_grpc.NlpServiceStub(channel)
 
     # emotion analysis ensemble_classification-wf_en_emotion-stock
-    def call_emotion_model(self, inputText):
+    def call_tone_model(self, inputText):
         request = common_service_pb2.SentimentRequest(
             raw_document=syntax_types_pb2.RawDocument(text=inputText)
         )
