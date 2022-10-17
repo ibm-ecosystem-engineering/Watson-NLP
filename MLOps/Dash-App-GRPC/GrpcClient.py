@@ -35,28 +35,6 @@ class GrpcClient:
         response = self.stub.SyntaxIzumoPredict(request, metadata=[(self.NLP_MODEL_SERVICE_TYPE, SYNTAX_IZUMO_EN_STOCK_MODEL)])
         return response
 
-    # a method calling sentiment_document-cnn-workflow_en_stock
-    def call_sentiment_document_workflow(self, inputText):
-        request = common_service_pb2.SentimentRequest(
-            raw_document=syntax_types_pb2.RawDocument(text=inputText),
-        #    sentence_sentiment=True,
-        #    show_neutral_scores=True
-        )
-        SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL = os.getenv("SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL", default="sentiment_document-cnn-workflow_en_stock")
-        print("###### Calling remote GRPC model = ", SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL)
-        response = self.stub.SentimentPredict(request,metadata=[(self.NLP_MODEL_SERVICE_TYPE, SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL)] )
-        return response
-
-    # emotion analysis ensemble_classification-wf_en_emotion-stock
-    def call_emotion_model(self, inputText):
-        request = common_service_pb2.SentimentRequest(
-            raw_document=syntax_types_pb2.RawDocument(text=inputText)
-        )
-        EMOTION_CLASSIFICATION_STOCK_MODEL = os.getenv("EMOTION_CLASSIFICATION_STOCK_MODEL", default="ensemble_classification-wf_en_emotion-stock")
-        print("###### Calling remote GRPC model = ", EMOTION_CLASSIFICATION_STOCK_MODEL)
-        response = self.stub.ClassificationPredict(request,metadata=[(self.NLP_MODEL_SERVICE_TYPE, EMOTION_CLASSIFICATION_STOCK_MODEL)] )
-        return response
-
     # tone analysis classification_ensemble-workflow_lang_en_tone-stock
     def call_tone_model(self, inputText):
         request = common_service_pb2.SentimentRequest(

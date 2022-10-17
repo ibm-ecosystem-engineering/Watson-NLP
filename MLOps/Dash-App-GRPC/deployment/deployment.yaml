@@ -26,11 +26,6 @@ spec:
               configMapKeyRef:
                 key: GRPC_SERVER_URL
                 name: dashapp-config
-          - name: SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL
-            valueFrom:
-              configMapKeyRef:
-                key: SENTIMENT_DOCUMENT_CNN_WORKFLOW_MODEL
-                name: dashapp-config
           - name: SYNTAX_IZUMO_EN_STOCK_MODEL
             valueFrom:
               configMapKeyRef:
