@@ -79,7 +79,7 @@ http://localhost:8050
 
 This application relies on the Watson NLP Python client library `watson-nlp-runtime-client` to communicate with the Watson NLP Runtime using gRPC.
 
-The gRPC code is in `GrpcClient.py`. In the following codd fragment, it creates a gRPC channel and then using the channel object it creates the client stub to communicate to the server.
+The gRPC code is in `GrpcClient.py`. The following code fragment creates a gRPC channel and then using the channel object it creates the client stub to communicate to the server.
 
 ```
 GRPC_SERVER_URL = os.getenv("GRPC_SERVER_URL", default="localhost:8085")
@@ -87,7 +87,7 @@ GRPC_SERVER_URL = os.getenv("GRPC_SERVER_URL", default="localhost:8085")
         stub = common_service_pb2_grpc.NlpServiceStub(channel)
 ```
 
-The client stub accepts two parameter a request object and header parameter.
+The client stub accepts two parameters: a request object, and header parameter.
 
 ```
     def call_tone_model(self, inputText):
