@@ -77,33 +77,9 @@ http://localhost:8050
 
 ## Understanding the Application Code
 
-This application is built on python library `watson-nlp-runtime-client`. It is a gRPC client library contains all the generated python code to make inference call.
+This application relies on the Watson NLP Python client library `watson-nlp-runtime-client` to communicate with the Watson NLP Runtime using gRPC.
 
-To implement this application the below libraries are needed.
-
-```
-dash
-dash_bootstrap_components
-dash_daq
-pandas
-plotly
-numpy
-grpcio
-protobuf==4.21.7
-watson-nlp-runtime-client==1.0.0
-```
-
-`GrpcClient.py` is making the gRPC call to the inference service using `watson-nlp-runtime-client` library
-
-```
-from watson_nlp_runtime_client import (
-    common_service_pb2,
-    common_service_pb2_grpc,
-    syntax_types_pb2
-)
-```
-
-First it creates a gRPC channel and then using the channel object it creates the client stub to communicate to the server.
+The gRPC code is in `GrpcClient.py`. In the following codd fragment, it creates a gRPC channel and then using the channel object it creates the client stub to communicate to the server.
 
 ```
 GRPC_SERVER_URL = os.getenv("GRPC_SERVER_URL", default="localhost:8085")
@@ -111,7 +87,7 @@ GRPC_SERVER_URL = os.getenv("GRPC_SERVER_URL", default="localhost:8085")
         stub = common_service_pb2_grpc.NlpServiceStub(channel)
 ```
 
-The client stub accepts two parameter a request object and header parameter
+The client stub accepts two parameter a request object and header parameter.
 
 ```
     def call_tone_model(self, inputText):
@@ -123,4 +99,4 @@ The client stub accepts two parameter a request object and header parameter
         return response
 ```
 
-`Emotion_dash_app.py` uses python 'dash' library to display graph and user interface.
+
