@@ -88,6 +88,15 @@ Now the runtime image is created, let's put it on [Amazon ECR](https://aws.amazo
 
 ### Step 4: Login to the default registry
 
+Set an environment variable for the default private registry as appropriate:
+<span style="font-size:x-small">
+
+```
+export DEFAULT_REGISTRY=<your-12-digit-account-id>.dkr.ecr.<region>.amazonaws.com
+```
+</span>
+
+Login to the default private registry:
 <span style="font-size:x-small">
 
 ```
@@ -106,13 +115,18 @@ aws ecr create-repository --repository-name my-watson-nlp-runtime
 
 ### Step 6: Upload the image to Amazon ECR
 
+Tag the image:
 <span style="font-size:x-small">
 
 ```
-# Tag the image
 docker tag my-watson-nlp-runtime:latest ${DEFAULT_REGISTRY}/my-watson-nlp-runtime:latest
+```
+</span>
 
-# Push the image
+Push the image:
+<span style="font-size:x-small">
+
+```
 docker push ${DEFAULT_REGISTRY}/my-watson-nlp-runtime:latest
 ```
 </span>
