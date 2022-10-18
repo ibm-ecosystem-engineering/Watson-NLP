@@ -47,31 +47,22 @@ docker ps
 
 ### 3. Run the gRPC dash application
 
-Change to the root directory of the project `Watson-NLP/MLOps/Dash-App-gRPC-Client` assuming you are at the runtime directory
-
+Return to this tutorial's root directory.
 ```
 cd .. 
 ```
-
-Please execute the below commands to prepare python environment and to install libraries
-
+Prepare your Python environment.
 ```
 python3 -m venv client-env
 ```
-
 ```
 source client-env/bin/activate
 ```
-
-#### 3.1 Install the required libraries
-
-
+Install the required libraries.
 ```
 pip3 install -r requirements.txt 
 ```
-
-#### 3.2 Run the application
-
+Run the application.
 ```
 python3 Tone_dash_app.py
 ```
