@@ -10,7 +10,6 @@ In this tutorial you will build and deploy a Watson NLP client application.  The
 
 - [Docker Desktop](https://docs.docker.com/get-docker/) is installed
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
-- [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
 
 **Tip**:
 
@@ -62,6 +61,8 @@ Install the required libraries.
 ```
 pip3 install -r requirements.txt 
 ```
+Note that this will install the Watson NLP Runtime client library, among other things.
+
 Run the application.
 ```
 python3 Tone_dash_app.py
