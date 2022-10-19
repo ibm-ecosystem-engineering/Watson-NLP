@@ -508,6 +508,7 @@ def topic_modeling_callback(value):
         # color_continuous_scale=px.colors.sequential.GnBu,
     )
     fig_treemap_keywords.update_layout(template=plotly_template)
+    fig_treemap_keywords.update_traces(hovertemplate='%{label}<br>%{value}<extra></extra>')
     
     fig_treemap_phrases = px.treemap(
         topic_df.explode('Phrases'),
@@ -517,6 +518,7 @@ def topic_modeling_callback(value):
         # color_continuous_scale=px.colors.sequential.GnBu,
     )
     fig_treemap_phrases.update_layout(template=plotly_template)
+    fig_treemap_phrases.update_traces(hovertemplate='%{label}<br>%{value}<extra></extra>')
 
 
     # return fig_topic,  "data:image/png;base64,{}".format(fig_keywords), "data:image/png;base64,{}".format(fig_phrases), \
