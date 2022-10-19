@@ -287,14 +287,6 @@ LEFT_COLUMN = dbc.Container(
             },
             value=20,
         ),
-        html.Label("Select a bank", style={"marginTop": 50}, className="lead"),
-        html.P(
-            "(You can use the dropdown or click the barchart on the right)",
-            style={"fontSize": 10, "font-weight": "lighter"},
-        ),
-        dcc.Dropdown(
-            id="bank-drop", clearable=False, style={"marginBottom": 50, "font-size": 12, "color": "black"}
-        ),
         html.Label("Select time frame", className="lead"),
         html.Div(
             dcc.RangeSlider(min=GLOBAL_DF['Date received'].min().year, max=GLOBAL_DF['Date received'].max().year, id="time-window-slider"), style={"marginBottom": 10}),
@@ -578,7 +570,7 @@ def populate_time_slider(value):
         (max_epoch - min_epoch) / (len(list(marks.keys())) * 3),
         [min_epoch, max_epoch],
     )
-
+'''
 @app.callback(
     Output("bank-drop", "options"),
     [Input("time-window-slider", "value"), Input("n-selection-slider", "value")],
@@ -592,7 +584,7 @@ def populate_bank_dropdown(time_values, n_value):
     bank_names, counts = get_complaint_count_by_company(GLOBAL_DF)
     counts.append(1)
     return make_options_bank_drop(bank_names)
-
+'''
 @app.callback(
     [Output("bank-sample", "figure"), Output("no-data-alert-bank", "style")],
     [Input("n-selection-slider", "value"), Input("time-window-slider", "value")],
