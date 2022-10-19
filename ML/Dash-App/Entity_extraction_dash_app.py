@@ -37,7 +37,7 @@ plotly_template = pio.templates["plotly_dark"]
 pio.templates["plotly_dark_custom"] = pio.templates["plotly_dark"]
 
 # Load a syntax model to split the text into sentences and tokens
-syntax_model = watson_nlp.load(watson_nlp.download('syntax_izumo_en_stock'))
+syntax_model = watson_nlp.load('syntax_izumo_en_stock')
 # Load bilstm model in WatsonNLP
 bilstm_model = watson_nlp.load(watson_nlp.download('entity-mentions_bilstm_en_stock'))
 # Load noun phrases model
