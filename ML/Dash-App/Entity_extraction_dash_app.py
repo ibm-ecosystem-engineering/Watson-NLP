@@ -229,7 +229,7 @@ def extract_entities(data, hotel_name=None, website=None):
 def clean(doc):
     import html
 
-    wnlp_stop_words = watson_nlp.download_and_load('text_stopwords_classification_ensemble_en_stock').stopwords
+    wnlp_stop_words = watson_nlp.load('text_stopwords_classification_ensemble_en_stock').stopwords
     stop_words = list(wnlp_stop_words)
     stop_words.remove('keep')
     stop_words.extend(["gimme", "lemme", "cause", "'cuz", "imma", "gonna", "wanna", 
@@ -616,4 +616,4 @@ def hotel_reviews_phrases_callback(phrases_dropdown):
 
 if __name__ == '__main__':
     SERVICE_PORT = os.getenv("SERVICE_PORT", default="8051")
-    app.run(host="0.0.0.0", port=SERVICE_PORT, debug=True)
+    app.run(host="0.0.0.0", port=SERVICE_PORT, debug=True, dev_tools_hot_reload=False)
