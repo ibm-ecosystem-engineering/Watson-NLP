@@ -37,15 +37,20 @@ plotly_template = pio.templates["plotly_dark"]
 pio.templates["plotly_dark_custom"] = pio.templates["plotly_dark"]
 
 # Load a syntax model to split the text into sentences and tokens
+#watson_nlp.download('syntax_izumo_en_stock')
 syntax_model = watson_nlp.load('syntax_izumo_en_stock')
 # Load bilstm model in WatsonNLP
-bilstm_model = watson_nlp.load(watson_nlp.download('entity-mentions_bilstm_en_stock'))
+#watson_nlp.download('entity-mentions_bilstm_en_stock')
+bilstm_model = watson_nlp.load('entity-mentions_bilstm_en_stock')
 # Load noun phrases model
-noun_phrases_model = watson_nlp.load(watson_nlp.download('noun-phrases_rbr_en_stock'))
+#watson_nlp.download('noun-phrases_rbr_en_stock')
+noun_phrases_model = watson_nlp.load('noun-phrases_rbr_en_stock')
 # Load keywords model 
-keywords_model = watson_nlp.load(watson_nlp.download('keywords_text-rank_en_stock'))
+#watson_nlp.download('keywords_text-rank_en_stock')
+keywords_model = watson_nlp.load('keywords_text-rank_en_stock')
 # Load sentiment model
-sentiment_extraction_model = watson_nlp.load(watson_nlp.download('targets-sentiment_sequence-bert_multi_stock'))
+#watson_nlp.download('targets-sentiment_sequence-bert_multi_stock')
+sentiment_extraction_model = watson_nlp.load('targets-sentiment_sequence-bert_multi_stock')
 
 navbar_main = dbc.Navbar(
         [
