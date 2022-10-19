@@ -137,7 +137,7 @@ oc port-forward svc/watson-nlp-runtime-service 8085
 ```
 Go to the directory with the client program and run it.   
 ```
-cd client
+cd Client
 ```
 Run the program with a single string argument.
 ```
