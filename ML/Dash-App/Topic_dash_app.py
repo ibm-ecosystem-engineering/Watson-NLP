@@ -58,7 +58,7 @@ navbar_main = dbc.Navbar(
                     ],
                     className="w-0",
                 ),
-                style={"textDecoration": "bold", "margin-right": "20%"},
+                style={"textDecoration": "bold", "marginRight": "20%"},
             ),
             dbc.Col(
                 [
@@ -265,7 +265,7 @@ LEFT_COLUMN = dbc.Container(
         html.Label("Select percentage of dataset", className="lead"),
         html.P(
             "(Lower is faster. Higher is more precise)",
-            style={"fontSize": 10, "font-weight": "lighter"},
+            style={"fontSize": 10, "fontWeight": "lighter"},
         ),
         dcc.Slider(
             id="n-selection-slider",
@@ -292,7 +292,7 @@ LEFT_COLUMN = dbc.Container(
             dcc.RangeSlider(min=GLOBAL_DF['Date received'].min().year, max=GLOBAL_DF['Date received'].max().year, id="time-window-slider"), style={"marginBottom": 10}),
         html.P(
             "(You can define the time frame down to month granularity)",
-            style={"fontSize": 10, "font-weight": "lighter"},
+            style={"fontSize": 10, "fontWeight": "lighter"},
         ),
     ]
 )
@@ -337,22 +337,22 @@ def make_marks_time_slider(mini, maxi):
         if current.month == 1:
             ret[current_str] = {
                 "label": str(current.year),
-                "style": {"font-weight": "bold"},
+                "style": {"fontWeight": "bold"},
             }
         elif current.month == 4:
             ret[current_str] = {
                 "label": "Q2",
-                "style": {"font-weight": "lighter", "font-size": 7},
+                "style": {"fontWeight": "lighter", "fontSize": 7},
             }
         elif current.month == 7:
             ret[current_str] = {
                 "label": "Q3",
-                "style": {"font-weight": "lighter", "font-size": 7},
+                "style": {"fontWeight": "lighter", "fontSize": 7},
             }
         elif current.month == 10:
             ret[current_str] = {
                 "label": "Q4",
-                "style": {"font-weight": "lighter", "font-size": 7},
+                "style": {"fontWeight": "lighter", "fontSize": 7},
             }
         else:
             pass
@@ -626,4 +626,4 @@ def update_bank_sample_plot(n_value, time_values):
 
 if __name__ == '__main__':
     SERVICE_PORT = os.getenv("SERVICE_PORT", default="8051")
-    app.run(host="0.0.0.0", port=SERVICE_PORT, debug=True)
+    app.run(host="0.0.0.0", port=SERVICE_PORT, debug=True, dev_tools_hot_reload=False)

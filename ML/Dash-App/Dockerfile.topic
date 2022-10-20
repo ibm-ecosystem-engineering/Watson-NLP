@@ -2,11 +2,7 @@ ARG WATSON_RUNTIME_BASE=wcp-ai-foundation-team-docker-virtual.artifactory.swg-de
 FROM ${WATSON_RUNTIME_BASE} as base
 
 # Args for artifactory credentials
-ARG ARTIFACTORY_USERNAME
-ARG ARTIFACTORY_API_KEY
 ARG SERVICE_PORT=8050
-ENV ARTIFACTORY_USERNAME ${ARTIFACTORY_USERNAME}
-ENV ARTIFACTORY_API_KEY ${ARTIFACTORY_API_KEY}
 ENV SERVICE_PORT ${SERVICE_PORT}
 EXPOSE ${SERVICE_PORT}
 
@@ -20,6 +16,7 @@ RUN groupadd appuser && adduser -g appuser appuser && usermod -aG appuser appuse
 RUN chown -R appuser:appuser /app
 USER appuser
 COPY assets /app/assets
+COPY data /app/data
 COPY models /app/models
 COPY Topic_dash_app.py /app/Topic_dash_app.py
 ENTRYPOINT ["python3","Topic_dash_app.py"]
