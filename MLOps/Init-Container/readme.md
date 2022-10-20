@@ -5,7 +5,11 @@ You will create a Kubernetes Deployment to run the Watson NLP Runtime image. In 
 
 When using this approach, models are kept in separate containers from the runtime. To change the set of served models you need only to update the Kubernetes manifest. 
 
-### Prerequisites
+## Reference Architecture
+
+![Reference architecure](Images/ref-arch-pretrained-models.png)
+
+## Prerequisites
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
 - You have a Kubernetes or OpenShift cluster on which you can deploy an application
 - You have either the Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed, and configured to talk to your cluster.
