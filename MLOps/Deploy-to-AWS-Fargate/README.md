@@ -41,7 +41,7 @@ mkdir models
 ```
 </span>
 
-Set variable `REGISTRY` as follows to pull the images from IBM Entitled Registry. IBMers with access to Artifactory can follow the instructions [here](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#docker). 
+Set variable `REGISTRY` as follows to pull the images from IBM Entitled Registry.
 
 <span style="font-size:x-small">
 
@@ -70,7 +70,7 @@ done
 ```
 </span>
 
-### Step 3: Create a ```Dockerfile``` using a text editor of your choice
+### Step 3: Create a `Dockerfile` using a text editor of your choice
 
 <span style="font-size:x-small">
 
