@@ -35,7 +35,7 @@ mkdir models
 ```
 </span>
 
-Set variable `REGISTRY` as follows to pull the images from IBM Entitled Registry. IBMers with access to Artifactory can follow the instructions [here](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#docker).
+Set variable `REGISTRY` as follows to pull the images from IBM Entitled Registry.
 <span style="font-size:x-small">
 
 ```
@@ -47,7 +47,7 @@ Use a variable `MODELS` to provide the list of models you want to download:
 <span style="font-size:x-small">
 
 ```
-MODELS="watson-nlp_syntax_izumo_lang_en_stock:0.0.4 watson-nlp_syntax_izumo_lang_fr_stock:0.0.4"
+MODELS="watson-nlp_syntax_izumo_lang_en_stock:1.0.6 watson-nlp_syntax_izumo_lang_fr_stock:1.0.6"
 ```
 </span>
 
@@ -69,7 +69,7 @@ done
 
 ```
 ARG REGISTRY
-ARG TAG=1.0.0
+ARG TAG=1.0.18
 FROM ${REGISTRY}/watson-nlp-runtime:${TAG}
 COPY models /app/models
 ```
