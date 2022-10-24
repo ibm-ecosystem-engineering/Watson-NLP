@@ -4,10 +4,10 @@ This document describes how to access Watson NLP container images and other asse
 
 ## Watson NLP Runtime and Pretrained Models
 
-The Watson NLP Runtime and Pretrained Models are stored in IBM Entitled Registry. To gain access you will need an entitlement key from the [container software library](https://myibm.ibm.com/products-services/containerlibrary). 
+The Watson NLP Runtime and Pretrained Models are stored in IBM Entitled Registry. To gain access you will need an entitlement key from the [container software library](https://myibm.ibm.com/products-services/containerlibrary). Set the environment variable `IBM_ENTITLEMENT_KEY` to your entitlement key. 
 
-### Docker
-Set the environment variable `IBM_ENTITLEMENT_KEY` to your entitlement key. Then run the following command.
+### Docker 
+Run the following command.
 ```
 echo $IBM_ENTITLEMENT_KEY | docker login -u cp --password-stdin cp.icr.io
 ```
