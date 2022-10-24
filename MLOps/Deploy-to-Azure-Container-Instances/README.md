@@ -82,7 +82,7 @@ You can now copy the container images of a Watson NLP Runtime and a pretrained m
 ```
 REGISTRY1=cp.icr.io/cp/ai
 REGISTRY2=${REGISTRY}.azurecr.io
-IMAGES="watson-nlp-runtime:1.0.0 watson-nlp_syntax_izumo_lang_en_stock:0.0.4"
+IMAGES="watson-nlp-runtime:1.0.18 watson-nlp_syntax_izumo_lang_en_stock:1.0.6"
 for i in $IMAGES
 do
   image1=${REGISTRY1}/$i
@@ -122,7 +122,7 @@ services:
   runtime:
     environment:
       - ACCEPT_LICENSE=true
-    image: ${REGISTRY}.azurecr.io/watson-nlp-runtime:1.0.0
+    image: ${REGISTRY}.azurecr.io/watson-nlp-runtime:1.0.18
     domainname: $DOMAIN
     ports:
       - target: 8080
@@ -189,7 +189,7 @@ docker --context myacicontext run \
   --name model1 \
   -v ${STORAGEACCOUNT}/models:/app/models \
   -e ACCEPT_LICENSE=true \
-  ${REGISTRY}.azurecr.io/watson-nlp_syntax_izumo_lang_en_stock:0.0.4
+  ${REGISTRY}.azurecr.io/watson-nlp_syntax_izumo_lang_en_stock:1.0.6
 ```
 </span>
 
