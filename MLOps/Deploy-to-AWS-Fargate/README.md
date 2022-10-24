@@ -54,7 +54,7 @@ Use a variable `MODELS` to provide the list of models you want to download:
 <span style="font-size:x-small">
 
 ```
-MODELS="watson-nlp_syntax_izumo_lang_en_stock:0.0.4 watson-nlp_syntax_izumo_lang_fr_stock:0.0.4"
+MODELS="watson-nlp_syntax_izumo_lang_en_stock:1.0.6 watson-nlp_syntax_izumo_lang_fr_stock:1.0.6"
 ```
 </span>
 
@@ -75,7 +75,7 @@ done
 <span style="font-size:x-small">
 
 ```
-ARG TAG=1.0.0
+ARG TAG=1.0.18
 FROM cp.icr.io/cp/ai/watson-nlp-runtime:${TAG}
 COPY models /app/models
 ```
