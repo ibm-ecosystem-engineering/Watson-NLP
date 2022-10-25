@@ -75,14 +75,36 @@ az acr login --name $REGISTRY
 </span>
 
 ### Step 6: Copy container images to ACR
-You can now copy the container images of a Watson NLP Runtime and a pretrained model from IBM Entitled Registry to the ACR registry you just created. 
+You can now copy the container images of a Watson NLP Runtime and some pretrained models from IBM Entitled Registry to the ACR registry you just created. 
 
+Set the source registry:
 <span style="font-size:x-small">
 
 ```
 REGISTRY1=cp.icr.io/cp/ai
+```
+</span>
+
+Set the destination registry:
+<span style="font-size:x-small">
+
+```
 REGISTRY2=${REGISTRY}.azurecr.io
+```
+</span>
+
+Specify the container images you need:
+<span style="font-size:x-small">
+
+```
 IMAGES="watson-nlp-runtime:1.0.18 watson-nlp_syntax_izumo_lang_en_stock:1.0.6"
+```
+</span>
+
+Copy the container images:
+<span style="font-size:x-small">
+
+```
 for i in $IMAGES
 do
   image1=${REGISTRY1}/$i
@@ -120,9 +142,9 @@ version: "3.8"
 
 services:
   runtime:
+    image: ${REGISTRY}.azurecr.io/watson-nlp-runtime:1.0.18
     environment:
       - ACCEPT_LICENSE=true
-    image: ${REGISTRY}.azurecr.io/watson-nlp-runtime:1.0.18
     domainname: $DOMAIN
     ports:
       - target: 8080
@@ -193,15 +215,20 @@ docker --context myacicontext run \
 ```
 </span>
 
-### Step 12: Restart the deployed runtime to load the model from the storage volume
+### Step 12: Restart the deployed runtime container to load the model from the storage volume
 
+Stop the runtime container:
 <span style="font-size:x-small">
 
 ```
-# Stop the container
 docker --context myacicontext stop myproject
+```
+</span>
 
-# Start the container
+Start the runtime container:
+<span style="font-size:x-small">
+
+```
 docker --context myacicontext start myproject
 ```
 </span>
