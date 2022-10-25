@@ -121,7 +121,7 @@ This manifest consists of a Kubernetes Deployment and a Service. Pods of the Dep
 ```
       initContainers:
       - name: ensemble-workflow-lang-en-tone-stock
-        image: wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp_classification_ensemble-workflow_lang_en_tone-stock:1.0.3
+        image: cp.icr.io/cp/ai/watson-nlp_classification_ensemble-workflow_lang_en_tone-stock:1.0.6
         volumeMounts:
         - name: model-directory
           mountPath: "/app/models"
@@ -135,7 +135,7 @@ The Pod's main application container image is the Watson NLP Runtime.
 ```
       containers:
       - name: watson-nlp-runtime
-        image: wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:1.0.0
+        image: cp.icr.io/cp/ai/watson-nlp-runtime:1.0.18
         env:
         - name: ACCEPT_LICENSE
           value: 'true'
