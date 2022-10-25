@@ -64,7 +64,7 @@ python3 -m venv client-env
 source client-env/bin/activate
 ```
 ```
-pip3 install watson-nlp-runtime-client==1.0.0
+pip3 install watson-nlp-runtime-client
 ```
 Go to the directory with the client program and run it.   
 ```
