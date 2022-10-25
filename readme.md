@@ -77,4 +77,9 @@ The steps below describe the 'happy path' for Data Science Engineers, Developers
   * [Watson NLP - Creating Client Applications](https://techzone.ibm.com/collection/watson-nlp-creating-client-applications)
   * [Watson NLP - Serving Models with Standalone Containers](https://techzone.ibm.com/collection/watson-nlp-serving-models-with-standalone-containers)
   * [Watson NLP - Serving Models with Kubernetes and OpenShift](https://techzone.ibm.com/collection/watson-nlp-serving-nlp-models)
+* IBM Developer Tutorials
+  * [Watson NLP - Text Classification]()
+  * [Watson NLP - Entities & Keywords extraction]()
+  * [Watson NLP - Topic Modeling]()
+  * [Watson NLP - Sentiment and Emotion Analysis]()
 
