@@ -1,4 +1,4 @@
-# Serve Models with Amazon ECS on AWS Fargate
+# Serve Models on Amazon ECS with AWS Fargate
 [Amazon Web Services (AWS)](https://aws.amazon.com/) is a comprehensive cloud computing platform that includes infrastructure as a service (IaaS) and platform as a service (PaaS) offerings. [AWS Fargate](https://aws.amazon.com/fargate/) is a serverless, pay-as-you-go compute engine that lets you focus on building applications without managing servers. AWS Fargate is compatible with both [Amazon Elastic Container Service (ECS)](https://aws.amazon.com/ecs/) and [Amazon Elastic Kubernetes Service (EKS)](https://aws.amazon.com/eks/).
 
 This tutorial will walk you through the steps to deploy a standalone Watson NLP Runtime to Amazon ECS on AWS Fargate.
@@ -58,7 +58,7 @@ MODELS="watson-nlp_syntax_izumo_lang_en_stock:1.0.6 watson-nlp_syntax_izumo_lang
 ```
 </span>
 
-Down the models into the local directory `models`:
+Copy the models into the local directory `models`:
 <span style="font-size:x-small">
 
 ```
@@ -176,6 +176,8 @@ version: "3.8"
 services:
   runtime:
     image: "${DEFAULT_REGISTRY}/my-watson-nlp-runtime:latest"
+    environment:
+      - ACCEPT_LICENSE=true
     deploy:
       x-aws-autoscaling: 
         min: 1
