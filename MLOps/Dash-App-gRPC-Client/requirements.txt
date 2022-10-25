@@ -6,4 +6,4 @@ plotly
 numpy
 grpcio
 protobuf==4.21.7
-watson-nlp-runtime-client==1.0.0
+watson-nlp-runtime-client
