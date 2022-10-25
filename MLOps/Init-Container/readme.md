@@ -146,10 +146,10 @@ The Pod's main application container image is the Watson NLP Runtime.
         resources:
           requests:
             memory: "2Gi"
-            cpu: "1000m"
+            cpu: "200m"
           limits:
             memory: "4Gi"
-            cpu: "1000m"
+            cpu: "400m"
         ports:
         - containerPort: 8080
         - containerPort: 8085
