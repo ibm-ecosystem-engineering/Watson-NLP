@@ -46,7 +46,7 @@ Download the model into the *models* directory on your local machine. Use the ve
 ### 3. Build the container image
 This is content of the Dockerfile.
 ```
-ARG WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:1.0.0"
+ARG WATSON_RUNTIME_BASE="cp.icr.io/cp/ai/watson-nlp-runtime:1.0.18"
 FROM ${WATSON_RUNTIME_BASE} as base
 ENV LOCAL_MODELS_DIR=/app/models
 COPY models /app/models

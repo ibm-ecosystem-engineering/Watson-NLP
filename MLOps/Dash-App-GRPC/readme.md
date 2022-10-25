@@ -205,7 +205,7 @@ plotly
 numpy
 grpcio
 protobuf==4.21.7
-watson-nlp-runtime-client==1.0.0
+watson-nlp-runtime-client
 ```
 
 `GrpcClient.py` is making the gRPC call to the inference service using `watson-nlp-runtime-client` library

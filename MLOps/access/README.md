@@ -4,27 +4,21 @@ This document describes how to access Watson NLP container images and other asse
 
 ## Watson NLP Runtime and Pretrained Models
 
-The Watson NLP Runtime and Pretrained Models are stored in Artifactory. To gain access you will need an [API key](https://na.artifactory.swg-devops.com/ui/admin/artifactory/user_profile). 
+The Watson NLP Runtime and Pretrained Models are stored in IBM Entitled Registry. To gain access you will need an entitlement key from the [container software library](https://myibm.ibm.com/products-services/containerlibrary). Set the environment variable `IBM_ENTITLEMENT_KEY` to your entitlement key. 
 
-### Docker
-Run the following command to allow Docker to access the images.
+### Docker 
+Run the following command.
 ```
-docker login wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com
+echo $IBM_ENTITLEMENT_KEY | docker login -u cp --password-stdin cp.icr.io
 ```
-Enter your Artifactory user profile and API key at the prompts.
 
 ### Kubernetes and OpenShift
 To allow your Kubernetes or OpenShift cluster to access the container images, you can use the methods from the [Kubernetes documentation](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/) to store your credentials as a Kubernetes Secret. 
 
 Use the following command to create a Secret named `watson-nlp` in the namespace in which you want to deploy the Watson NLP Runtime or pretrained models.
 ```
-kubectl create secret docker-registry watson-nlp --docker-server=wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>
+kubectl create secret docker-registry watson-nlp --docker-server=cp.icr.io/cp --docker-username=cp --docker-password=$IBM_ENTITLEMENT_KEY
 ```
-Where:
-- `<your-name>` is your Artifactory user profile
-- `<you-pword>` is your Artifactory API key
-- `<your-email>` is your email address
-
 Once the secret is created, you can add an `imagePullSecrets` section to Pods.
 ```
       imagePullSecrets:

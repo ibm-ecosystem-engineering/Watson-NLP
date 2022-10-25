@@ -33,9 +33,9 @@ cd Watson-NLP/MLOps/Watson-NLP-Container/Runtime
 ```
 Have a look at the Dockerfile in this directory, which will be used to build the service.
 ```
-ARG WATSON_RUNTIME_BASE="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp-runtime:1.0.0"
-ARG SENTIMENT_MODEL="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp_sentiment_aggregated-cnn-workflow_lang_en_stock:2.8.0"
-ARG EMOTION_MODEL="wcp-ai-foundation-team-docker-virtual.artifactory.swg-devops.com/watson-nlp_classification_ensemble-workflow_lang_en_tone-stock:2.3.1"
+ARG WATSON_RUNTIME_BASE="cp.icr.io/cp/ai/watson-nlp-runtime:1.0.18"
+ARG SENTIMENT_MODEL="cp.icr.io/cp/ai/watson-nlp_sentiment_aggregated-cnn-workflow_lang_en_stock:1.0.6"
+ARG EMOTION_MODEL="cp.icr.io/cp/ai/watson-nlp_classification_ensemble-workflow_lang_en_tone-stock:1.0.6"
 
 FROM ${SENTIMENT_MODEL} as model1
 RUN ./unpack_model.sh
@@ -85,7 +85,7 @@ python3 -m venv client-env
 source client-env/bin/activate
 ```
 ```
-pip3 install watson-nlp-runtime-client==1.0.0
+pip3 install watson-nlp-runtime-client
 ```
 
 The client command expects a single text string argument and requests inference from stock Sentiment Analysis and Emotion Classification models. If you are serving different models, you will have to update the client code.  
