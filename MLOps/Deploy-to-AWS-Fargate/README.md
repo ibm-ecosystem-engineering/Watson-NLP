@@ -75,8 +75,9 @@ done
 <span style="font-size:x-small">
 
 ```
+ARG REGISTRY
 ARG TAG=1.0.18
-FROM cp.icr.io/cp/ai/watson-nlp-runtime:${TAG}
+FROM ${REGISTRY}/watson-nlp-runtime:${TAG}
 COPY models /app/models
 ```
 </span>
@@ -86,7 +87,7 @@ COPY models /app/models
 <span style="font-size:x-small">
 
 ```
-docker build -t my-watson-nlp-runtime:latest .
+docker build . -t my-watson-nlp-runtime:latest --build-arg REGISTRY=${REGISTRY}
 ```
 </span>
 
