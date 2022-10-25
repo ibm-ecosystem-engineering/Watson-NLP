@@ -85,7 +85,7 @@ python3 -m venv client-env
 source client-env/bin/activate
 ```
 ```
-pip3 install watson-nlp-runtime-client==1.0.0
+pip3 install watson-nlp-runtime-client
 ```
 
 The client command expects a single text string argument and requests inference from stock Sentiment Analysis and Emotion Classification models. If you are serving different models, you will have to update the client code.  
