@@ -5,11 +5,11 @@
 🔴 IMPORTANT: At this point this functionality is experimental only and subject to change.
 
 Key Technologies:
-* [IBM Watson NLP](https://ibmdocs-test.mybluemix.net/docs/en/watson-libraries?topic=watson-natural-language-processing-home) (Natural Language Processing) comes with a wide variety of text processing capabilities, such as emotion analysis and topic modeling. Watson NLP is built on top of the best AI open source software. Additionally it provides stable and supported interfaces, it handles a wide range of languages and its quality is enterprise proven. The cloud-native Watson NLP containers can be deployed on various Kubernetes-based platforms.
+* [IBM Watson NLP](https://ibmdocs-test.mybluemix.net/docs/en/watson-libraries?topic=watson-natural-language-processing-home) (Natural Language Processing) comes with a wide variety of text processing capabilities, such as emotion analysis and topic modeling. Watson NLP is built on top of the best AI open source software. It provides stable and supported interfaces, it handles a wide range of languages and its quality is enterprise proven. The cloud-native Watson NLP containers can be deployed on various Kubernetes-based platforms.
 
 ## Outline
 
-All the Machine Learning notebooks, tutorials, and dataset are under the [ML folder](ML/) and the MLOps assets are under the [MLOps folder](MLOps/). Go to the respective folders to learn more about the assets development and deployment.
+Machine Learning notebooks, tutorials, and datasets focused on supporting a Data Scientist are under the [ML folder](ML/). Assets focused on deployment are under the [MLOps folder](MLOps/). Go to the respective folders to learn more about these assets.
 
 * [ML Assets](ML/)
     * [Emotion Classification](ML/Emotion-Classification/)
