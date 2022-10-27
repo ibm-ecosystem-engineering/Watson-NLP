@@ -2,14 +2,12 @@
 
 [Assets/Accelerators for Watson NLP](https://github.com/ibm-build-labs/Watson-NLP) (this repo) contains self-serve notebooks and documentation on how to create NLP models using Watson NLP library, how to serve Watson NLP models, and how to make inference requests from custom applications. With an IBM Cloud account a full production sample can be deployed in roughly one hour.
 
-🔴 IMPORTANT: At this point this functionality is experimental only and subject to change.
-
 Key Technologies:
-* [IBM Watson NLP](https://ibmdocs-test.mybluemix.net/docs/en/watson-libraries?topic=watson-natural-language-processing-home) (Natural Language Processing) comes with a wide variety of text processing capabilities, such as emotion analysis and topic modeling. Watson NLP is built on top of the best AI open source software. It provides stable and supported interfaces, it handles a wide range of languages and its quality is enterprise proven. The cloud-native Watson NLP containers can be deployed with Docker, on various Kubernetes-based platforms, or using cloud-based container services.
+* [IBM Watson NLP](https://ibmdocs-test.mybluemix.net/docs/en/watson-libraries?topic=watson-natural-language-processing-home) (Natural Language Processing) comes with a wide variety of text processing capabilities, such as emotion analysis and topic modeling. Watson NLP is built on top of the best AI open source software. It provides stable and supported interfaces, it handles a wide range of languages and its quality is enterprise proven. The Watson NLP containers can be deployed with Docker, on various Kubernetes-based platforms, or using cloud-based container services.
 
 ## Outline
 
-Machine Learning notebooks, tutorials, and datasets focused on supporting a Data Scientist are under the [ML folder](ML/). Assets focused on deployment are under the [MLOps folder](MLOps/). Go to the respective folders to learn more about these assets.
+Machine Learning notebooks, tutorials, and datasets focused on supporting a Data Science Engineer are under the [ML folder](ML/). Assets focused on deployment are under the [MLOps folder](MLOps/). Go to the respective folders to learn more about these assets.
 
 * [ML Assets](ML/)
     * [Emotion Classification](ML/Emotion-Classification/)
@@ -48,30 +46,12 @@ Machine Learning notebooks, tutorials, and datasets focused on supporting a Data
     * [Serve Models with KServe ModelMesh](MLOps/Deploy-to-KServe-ModelMesh-Serving)
     * [Create an NLP Python Client](MLOps/Dash-App-gRPC-Client)
 
-**Happy Path**
-
-The steps below describe the 'happy path' for Data Science Engineers, Developers and MLOps engineers to train and save an NLP model (text classification) using Watson NLP in the Watson Studio env, deploy a saved model on Containerized env as easily as possible. At the end of the happy path the following assets will be built, service and application components will have been deployed:
-
-1. Sandbox Watson Studio env on IBM Cloud 
-![reserve](Screenshots/reserve.png)
-2. Watson Studio Notebook for training the model using Watson NLP library 
-![training](Screenshots/notebook-training.png)
-3. Watson NLP pod ([screenshot](documentation/Screenshots/openshift-03.png))
-  * Runtime container which provides gRCP and REST interfaces via a service
-  * One model container for syntax predictions
-4. Sample consumer application pod ([screenshot](documentation/Screenshots/openshift-08.png))
-  * UBI container which is configured to run a command which invokes the Watson NLP runtime container via REST
-5. Snippets to invoke Watson NLP via gRCP and REST from a local environment ([screenshot](documentation/Screenshots/validation-01.png))
-
 ## Resources
 
 * IBM Watson NLP
-  * **TO BE DONE** Announcement
-  * [Documentation](https://ibmdocs-test.mybluemix.net/docs/en/watson-libraries?topic=watson-natural-language-processing-home)
-  * [Watson NLP Helm Chart](https://github.com/cloud-native-toolkit/toolkit-charts/tree/main/stable/watson-nlp)
-  * **TO BE DONE** [Syntax model](https://ibmdocs-test.mybluemix.net/docs/en/watson-libraries?topic=models-syntax)
-  * [Samples](https://github.com/ibm-build-labs/Watson-NLP)
-* [IBM Embeddable AI Home Page](https://dce.blabs.cloud/) **TO BE DONE**
+  * [Software Announcement](https://www.ibm.com/common/ssi/ShowDoc.wss?docURL=/common/ssi/rep_ca/1/897/ENUS222-291/index.html&lang=en&request_locale=en)
+  * [Documentation]([https://ibmdocs-test.mybluemix.net/docs/en/watson-libraries?topic=watson-natural-language-processing-home](https://www.ibm.com/docs/en/watson-libraries?topic=watson-natural-language-processing-library-embed-home))
+* [IBM Developer Embeddable AI Homepage](https://developer.ibm.com/technologies/embeddable-ai/)
 * IBM Technology Zone assets
   * [Watson NLP - Text Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification)
   * [Watson NLP - Entities & Keywords extraction](https://techzone.ibm.com/collection/watson-nlp-entities-keywords-extraction)
