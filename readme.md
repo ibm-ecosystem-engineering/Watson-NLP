@@ -42,7 +42,9 @@ Machine Learning notebooks, tutorials, and datasets focused on supporting a Data
         * [Dash App for Entities Extraction](ML/Dash-App/Entity_extraction_dash_app.py)
         * [Dash App for Text Classification](ML/Dash-App/Text_classification_dash_app.py)
 * [MLOps Assets](MLOps/)
-    * []
+    * 
+    * [Python NLP Application](MLOps/Dash-App-gRPC-Client)
+    * 
 
 **Happy Path**
 
