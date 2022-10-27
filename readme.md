@@ -53,11 +53,11 @@ Machine Learning notebooks, tutorials, and datasets focused on supporting a Data
   * [Documentation](https://www.ibm.com/docs/en/watson-libraries?topic=watson-natural-language-processing-library-embed-home)
 * [IBM Developer Embeddable AI Homepage](https://developer.ibm.com/technologies/embeddable-ai/)
 * IBM Technology Zone assets
+  * [Embeddable AI](https://techzone.ibm.com/collection/embedded-ai)
   * [Watson NLP - Text Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification)
   * [Watson NLP - Entities & Keywords extraction](https://techzone.ibm.com/collection/watson-nlp-entities-keywords-extraction)
   * [Watson NLP - Topic Modeling](https://techzone.ibm.com/collection/watson-nlp-topic-modeling)
   * [Watson NLP - Sentiment and Emotion Analysis](https://techzone.ibm.com/collection/watson-core-nlp)
-  * [Embeddable AI](https://techzone.ibm.com/collection/embedded-ai)
   * [Watson NLP - Creating Client Applications](https://techzone.ibm.com/collection/watson-nlp-creating-client-applications)
   * [Watson NLP - Serving Models with Standalone Containers](https://techzone.ibm.com/collection/watson-nlp-serving-models-with-standalone-containers)
   * [Watson NLP - Serving Models with Kubernetes and OpenShift](https://techzone.ibm.com/collection/watson-nlp-serving-nlp-models)
