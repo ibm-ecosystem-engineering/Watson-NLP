@@ -42,16 +42,16 @@ Machine Learning notebooks, tutorials, and datasets focused on supporting a Data
         * [Dash App for Entities Extraction](ML/Dash-App/Entity_extraction_dash_app.py)
         * [Dash App for Text Classification](ML/Dash-App/Text_classification_dash_app.py)
 * [MLOps Assets](MLOps/)
-    * [Watson NLP Python Client](MLOps/Dash-App-gRPC-Client)
+    * [Serve Pretrained Models using Docker](MLOps/Watson-NLP-Container)
+    * [Serve Custom Models using Docker](MLOps/Watson-NLP-Custom-Model-Container)
+    * [Serve Models with Standalone Containers on Kubernetes or OpenShift](MLOps/Watson-NLP-Container-k8)
     * [Serve Models with AWS Fargate](MLOps/Deploy-to-AWS-Fargate)
     * [Serve Models with Azure Container Instances](MLOps/Deploy-to-Azure-Container-Instances)
     * [Serve Models with IBM Code Engine](MLOps/Deploy-to-Code-Engine)
-    * [Serve Models with KServe ModelMesh](MLOps/Deploy-to-KServe-ModelMesh-Serving)
     * [Serve Pretrained Models on Kubernetes or OpenShift](MLOps/Init-Container)
-    * [Serve Models with Standalone Containers on Kubernetes or OpenShift](MLOps/Watson-NLP-Container-k8)
-    * [Serve Pretrained Models using Docker](MLOps/Watson-NLP-Container)
-    * [Serve Custom Models using Docker](MLOps/Watson-NLP-Custom-Model-Container)
     * [Serve Custom Models with Kubernetes or OpenShift](MLOps/custom-model-k8s)
+    * [Serve Models with KServe ModelMesh](MLOps/Deploy-to-KServe-ModelMesh-Serving)
+    * [Create an NLP Python Client](MLOps/Dash-App-gRPC-Client)
 
 **Happy Path**
 
