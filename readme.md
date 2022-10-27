@@ -51,7 +51,6 @@ Machine Learning notebooks, tutorials, and datasets focused on supporting a Data
 * IBM Watson NLP
   * [Software Announcement](https://www.ibm.com/common/ssi/ShowDoc.wss?docURL=/common/ssi/rep_ca/1/897/ENUS222-291/index.html&lang=en&request_locale=en)
   * [Documentation](https://www.ibm.com/docs/en/watson-libraries?topic=watson-natural-language-processing-library-embed-home)
-* [IBM Developer Embeddable AI Homepage](https://developer.ibm.com/technologies/embeddable-ai/)
 * IBM Technology Zone assets
   * [Embeddable AI](https://techzone.ibm.com/collection/embedded-ai)
   * [Watson NLP - Text Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification)
@@ -62,6 +61,7 @@ Machine Learning notebooks, tutorials, and datasets focused on supporting a Data
   * [Watson NLP - Serving Models with Standalone Containers](https://techzone.ibm.com/collection/watson-nlp-serving-models-with-standalone-containers)
   * [Watson NLP - Serving Models with Kubernetes and OpenShift](https://techzone.ibm.com/collection/watson-nlp-serving-nlp-models)
 * IBM Developer Tutorials
+  * [Embeddable AI Homepage](https://developer.ibm.com/technologies/embeddable-ai/)
   * [Set up your Watson NLP Environment](https://developer.ibm.com/tutorials/set-up-your-ibm-watson-libraries-environment/)
   * [Use the Watson NLP library to perform Emotion Classification](https://developer.ibm.com/tutorials/use-the-watson-nlp-library-to-perform-emotion-classification/)
   * [Use the Watson NLP library to perform Sentiment Analysis](https://developer.ibm.com/tutorials/use-the-watson-core-nlp-library-to-perform-sentiment-analysis/)
