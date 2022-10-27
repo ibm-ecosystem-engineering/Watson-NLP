@@ -50,7 +50,7 @@ Machine Learning notebooks, tutorials, and datasets focused on supporting a Data
 
 * IBM Watson NLP
   * [Software Announcement](https://www.ibm.com/common/ssi/ShowDoc.wss?docURL=/common/ssi/rep_ca/1/897/ENUS222-291/index.html&lang=en&request_locale=en)
-  * [Documentation]([https://ibmdocs-test.mybluemix.net/docs/en/watson-libraries?topic=watson-natural-language-processing-home](https://www.ibm.com/docs/en/watson-libraries?topic=watson-natural-language-processing-library-embed-home))
+  * [Documentation](https://www.ibm.com/docs/en/watson-libraries?topic=watson-natural-language-processing-library-embed-home)
 * [IBM Developer Embeddable AI Homepage](https://developer.ibm.com/technologies/embeddable-ai/)
 * IBM Technology Zone assets
   * [Watson NLP - Text Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification)
