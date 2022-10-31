@@ -14,7 +14,7 @@ https://techzone.ibm.com/collection/watson-nlp-serving-models-with-standalone-co
 
 ![Step 2](images/step2.png)
 
-### Step 3: Scroll down the page, look for a box `Sandbox Environment: Watson NLP Standalone Containers on IBM RedHat OpenShift Kubernetes Service (ROKS) and hit the reserve button`
+### Step 3: Scroll down the page, look for a box `Sandbox Environment: Watson NLP Standalone Containers on IBM RedHat OpenShift Kubernetes Service (ROKS)` and hit the reserve button
 
 ![Step 3](images/step3.png)
 
