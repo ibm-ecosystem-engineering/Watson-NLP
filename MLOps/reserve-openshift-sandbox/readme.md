@@ -20,7 +20,7 @@ https://techzone.ibm.com/collection/watson-nlp-serving-models-with-standalone-co
 
 ![Step 3](images/step3.png)
 
-### Step 4: Pick between `Reserve now` or `Schedule for later`
+### Step 4: Pick up the option between `Reserve now` and `Schedule for later`
 
 ![Step 4](images/step4.png)
 
