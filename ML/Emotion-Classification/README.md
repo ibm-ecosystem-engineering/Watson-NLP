@@ -1,1 +1,3 @@
 Emotion classification using Watson NLP is designed to demonstrate the capabilities of Watson NLP using which you can easily classify the emotions in the text corpus. This collection will guide you through getting started with Watson NLP library in Watson Studio. You will be using an Out-of-the-box (OOTB) model for making inference on the on tweets mentioning various companies. Then you will progress to training/fine-tuning a custom models using Watson NLP to get much better results. 
+
+Follow the [tutorial](https://developer.ibm.com/tutorials/use-the-watson-nlp-library-to-perform-emotion-classification/) to learn how to use the Watson NLP library to perform emotion classification.
