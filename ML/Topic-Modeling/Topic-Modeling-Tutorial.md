@@ -15,6 +15,7 @@ To follow the steps in this tutorial, you need:
 * An [IBMid](https://cloud.ibm.com/login?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg)
 * A Watson Studio project
 * A [Python notebook](https://github.com/ibm-build-labs/Watson-NLP/blob/main/Emotion-Classification/Emotion%20Classification%20-%20Pre-Trained%20Models.ipynb)
+
 * **What are the helper libraries that you need to import?**
 
 Before working through the tutorial, you should have an understanding of IBM Watson Studio and Jupyter Notebooks.
@@ -26,111 +27,14 @@ It should take you approximately 1 hour to complete this tutorial.
 ## Steps
 The steps in this tutorial use an example of  [Consumer complaint database](https://www.consumerfinance.gov/data-research/consumer-complaints) to walk you through the process.
 
-### Setting up your environment
-
-To begin, you set up a Python notebook environment using Watson Studio on IBM Cloud so that you can use the watson_nlp_ library.
-
-#### Reserve your env
-
-** How does this work outside of Tech Zone when you can't reserve an env? This process needs to be documented here for people outside of IBM.**
-(Note: If you can't reserve an env on Tech Zone but if you have access to Watson Studio instance, you can skip steps 1 and 2 to complete the tutorial)
-
-1. Under the [Topic Modeling](https://techzone.ibm.com/collection/watson-nlp-topic-modeling) tab, find the environment tile and click **Reserve** to reserve a Watson Studio environment.
-
-    ![reserve](images/reserve.png)
-
-2. Shortly, you will receive an email inviting you to join an IBM cloud account. Follow the instructions in the email to join.  Your environment should be ready within a few minutes.  When it is ready, you will recieve a second email similar to the following.
-
-    ![env_details](images/env_details.png)
-
-3. Log in to [IBM Cloud Pak for Data](https://dataplatform.cloud.ibm.com?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg). After you log in, ensure that you are using cloud account **2577353 - tsglwatson**. You can check the name of the current account on the top right of the screen.  Change the account if necessary using the drop-down menu.  From the IBM Cloud Pak for Data dashboad, find the tile for the Project that you want to work with.  For the Consumer complaints classification tutorial, the name of this Project will have the prefix **watson-nlp-topic-modelling**.  Once the Project is open, you can view the notebooks and data assets of the project using the **Assets** tab.
-
-    (Note: If you are not using the TechZone environment, you will not have access to this IBM cloud account. You can load the [Compliant Data Topic Modelling notebook](https://github.com/ibm-build-labs/Watson-NLP/blob/main/Topic-Modeling/Complaint%20Data%20Topic%20Modeling.ipynb) into your Watson Studio project directly. Follow [instructions for creating notebook from URL](https://www.ibm.com/docs/en/cloud-paks/cp-data/4.5.x?topic=notebooks-creating)).
-
-    ![assets](images/assets.png)
-
-4. Before working with the notebooks, you must define the environment in which these notebooks will run. To get started on that, click on the **Manage** tab.
-
-    ![manage_tab](images/manage_tab.png)
-
-5. Click on **Environments** from the side Navbar. Next click on **Templates** tab. Finally, click on **New template**
-
-    ![env](images/env.png)
-
-6. We will create an environment template that contains the Watson NLP library. Give your environment template a name like **Topic Modelling**. In the Hardware configuration, select at least **4 vCPU and 16 GB RAM**  (Note: For better performance, select higher Hardware configuration). For Software, select **DO + NLP Runtime 22.1 on Python 3.9**. Finally click **Create**
-
-    ![new_env_settings](images/new_env_settings.png)
-
-7. Now we will set an environment for a notebook.  Click on the **Assets** tab. Find the notebook you want to work with among the assets.  Click on the ellipsis (the three dots) to the right of the notebook name in order to open a drop-down menu.  Within this menu click **Change environment**.
-
-    ![change_env](images/change_env.png)
-
-8. Select the environment template that you created previously and click **Change**.
- 
-    ![change](images/change.png)
-
-9. You will be able to run the notebook by clicking the ellipsis and selecting **Edit**.
-
-![edit](images/edit.png)
-
-10. Your notebook will load. You can follow the instructions in your notebook to complete the tutorials on Watson NLP.
-
-    ![loaded](images/loaded.png)
-
-
 ### Step 1. Collecting the data set
 
 (Note: If you are reserving the env through TechZone, you don't need to collect the data manually. The env comes with the Watson Studio project pre-created for you. You can skip the rest of the steps here and follow the instructions in the notebook to complete the Topic Modelling tutorial. However, if you are not reserving the env through TechZone and you have a Watson Studio instance, then you should follow the steps described below)
 
-1. The Consumer Financial complaint database collected from [Consumer complaint database](https://www.consumerfinance.gov/data-research/consumer-complaints). Download the dataset from this [GitHub Repo](https://github.com/ibm-build-labs/Watson-NLP/raw/main/Sentiment-Analysis/movies_small.csv).  To use here we normalize this dataset by removing which rows does not have value of consumer complaints. This data set contains 999285 consumer complaints with the date received, submitted via, products, sub-products and company information.  .
+1. The Consumer Financial complaint database collected from [Consumer complaint database](https://www.consumerfinance.gov/data-research/consumer-complaints). Download the dataset from this [GitHub Repo](https://github.com/ibm-build-labs/Watson-NLP/raw/main/Sentiment-Analysis/movies_small.csv).  To use here we normalize this dataset by removing which rows does not have value of consumer complaints. This data set contains 999285 consumer complaints with the date received, submitted via, products, sub-products and company information.
 
-2. Upload the data set to your Watson Studio project by going to the Assets tab and then dropping the data files as shown in the following figure.
-
-    ![Collecting the data set](images/collect-the-dataset.png)
-
-3. After you have added the dataset to the project, you might have to reload the Notebook. You have two options of accessing the dataset from the Jupyter Notebook depending on the level of access you have.
-
-    A. If you are a project administrator, then
-
-    i) You can just insert the project token as shown below:
-
-    ![ws-project.mov](https://media.giphy.com/media/jSVxX2spqwWF9unYrs/giphy.gif)
-
-    ii) After inserting the project token, you can continue executing all the cells in the notebook. This cell in particular will load your dataset in the notebook.'
-    ![Reading the data set using project token](images/read-data-token.png)
-
-    B. If you are not a Watson Studio project administrator, then you cannot create a project token.
-
-    i) Create a new cell under Step 2 - Data Loading by clicking on **Insert** menu and then selecting **Insert Cell Below** or **Esc+B** shortcut key. Highlight the code cell shown in the image below by clicking it.
-
-    ![insert-cell.png](images/insert-cell.png)
-
-
-    ii) Ensure you place the cursor below the commented line. Click the Find and add data icon (01/00) on the top right corner. Choose the Files tab, and pick the `complaint_updated.csv` file. Click Insert to code and choose pandas DataFrame. Rename the dataframe from `df_data_1` to `complaint_df`.
-
-    ![insert-dataset.png](images/insert-dataset.png)
-
-4. After you've added the data set to the project, you can access it from the Jupyter Notebook, and read the csv file into a pandas DataFrame.
-
-    ![Datahead frame](images/datahead-frame.png)
-
-### Step 3. Data Processing & EDA
-
-1. Convert the recieved date into date time format.
-
-```
-for index in range(len(complaint_df['Date received'])):
-    date_str = complaint_df['Date received'][index]
-    complaint_df.at[index,'Date received'] =datetime.strptime(date_str, '%Y-%m-%d')
-
-complaint_df.head()
-```
-
-2. Extract most frequent companies in the dataset.
-
-    ![Datahead frame](images/most-frequent-companies.png)
-
-#### Step 3.1 Text Pre-Processing
+### Step 2. Data Processing
+#### Step 2.1 Text Pre-Processing
 
 Our first step is to pre-process the documents in a way that cleans distracting signals and makes them easier to process and analyze. This is a standard step in many NLP pipelines. Here we perform two types of pre-processing:
 
@@ -139,8 +43,6 @@ Our first step is to pre-process the documents in a way that cleans distracting 
     c. Lemmatization
 
 1. We rely on WatsonNLP's stock list of stop-words and customize it. For example, we might assume that a word like 'keep' can be useful for separating the data, so we remove it from the list. In addition, we might want to add a few other words to the list. For instance, common informal contractions that aren't part of the stock list.
-
-
 
 ```
 # added sub-products & products into stop word list to know more about what people are talking about
@@ -190,8 +92,7 @@ def custom_tokenizer(text):
     return " ".join(terms)
 ```
 
-### Step 4. Model Building
-
+### Step 3. Model Building
 
 1. Import required libraries for Topic modeling
 
@@ -208,7 +109,7 @@ buffer = project.get_file("stopwords.txt")
 topic_model_stopwords = pd.read_csv(buffer,delimiter="\n",encoding='utf-8')
 ```
 
-#### Step 4.1. Training a Summary Model
+#### Step 3.1. Training a Summary Model
 
 1. Supply the train parameters for the summary model.
 
@@ -239,14 +140,14 @@ complaint_df_up.head()
 summary_model = NGramSummary.train(train_data=syntax_data,train_params=train_params)
 ```
 
-#### Step 4.2 Train a Hierarchical Topic Model
+#### Step 3.2 Train a Hierarchical Topic Model
 
 1. Supply the train parameters for the Hierarchical Topic Model.
 ```
 train_params = { 'king_cluster_min_ratio': .5, 'min_records_per_king_cluster': 10, 'num_topics_per_iteration': 40, 'max_num_iters_per_model': 4, 'min_word_support': 0.01, 'max_word_support': 0.7, 'max_ngrams_per_topic': 10, }
 ```
 
-2. Train the Heirachical topic model
+2. Train the Hierachical topic model
 ```
 topic_model = HierarchicalClustering.train(train_data=syntax_data, 
                                            summary_model=summary_model,
@@ -261,7 +162,7 @@ topic_model = HierarchicalClustering.train(train_data=syntax_data,
 
     ![Topic Modeling Output](images/topic-modeling-output.png)
 
-### Step 5. Save Model
+### Step 4. Save Model
 
 ```
 topic_model.save('complaint_topic_model_synchrony')
