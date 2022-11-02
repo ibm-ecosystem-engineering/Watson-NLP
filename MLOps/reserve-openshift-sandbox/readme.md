@@ -2,7 +2,7 @@
 
 ## Watson NLP Standalone Containers on IBM RedHat OpenShift Kubernetes Service (ROKS)
 
-Please follow the below steps to reserve an OpenShift sanbox in IBM Cloud
+## Steps to reserve an OpenShift sanbox in IBM Cloud
 
 ### Step 1: Please click on the below url and login with your credentials
 
@@ -37,3 +37,30 @@ Please make a note about the information in the email
 - Integrated OpenShift container image registry
 - Project name
 - Project URL
+
+## Steps to publish image to OpenShift container registry
+
+### Step 1: Set variable `REGISTRY` and `NAMESPACE` as follows to push the image to OpenShift internal registry
+
+```
+REGISTRY=<Integrated OpenShift container image registry: you received in the email>
+```
+
+```
+NAMESPACE=<Project name: you received in the email>
+```
+
+### Step 2: Log in to your IBM Cloud account
+
+```
+ibmcloud login
+```
+
+Use ibmcloud login --sso command to login, if you have a federated ID.
+
+### Step 3: Go to the project URL in the email and login to your OpenShift cluster
+
+![Step 7](images/step7.png)
+
+### Step 4: Copy the command line login command 
+
