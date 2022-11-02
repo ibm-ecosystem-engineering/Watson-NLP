@@ -171,8 +171,6 @@ The [Compose file](https://docs.docker.com/compose/compose-file/) is a YAML file
 <span style="font-size:x-small">
 
 ```
-version: "3.8"
-
 services:
   runtime:
     image: "${DEFAULT_REGISTRY}/my-watson-nlp-runtime:latest"
@@ -183,7 +181,7 @@ services:
         min: 1
         max: 2 #required
         cpu: 75
-        #mem: - mutualy exlusive with cpu
+        #mem: - mutually exclusive with cpu
       resources:
         limits:
           cpus: '2'
