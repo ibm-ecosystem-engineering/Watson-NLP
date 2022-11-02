@@ -118,7 +118,7 @@ python3 client.py "Watson NLP is awesome"
 
 You will see output similar to the following.
 
-```json
+```sh
 classes {
   class_name: "joy"
   confidence: 0.9687168002128601
