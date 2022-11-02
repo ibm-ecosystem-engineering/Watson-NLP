@@ -8,10 +8,10 @@
 import sys
 from GrpcClient import GrpcClient
 
-#Getting user input
+# Getting user input
 try:
-    textInput=sys.argv[1]
-    if(not len(textInput.strip())):
+    textInput = sys.argv[1]
+    if not len(textInput.strip()):
         print("Input string is required")
         quit()
 except:
@@ -20,7 +20,7 @@ except:
 
 client = GrpcClient()
 
-#Calling the emotion analysis model
+# Calling the emotion analysis model
 print("Sentiment model result: ")
 print("-----------------------------------------------------------")
 response = client.call_sentiment_model(textInput)
@@ -30,6 +30,3 @@ print("Emotion model result:")
 print("-----------------------------------------------------------")
 response = client.call_emotion_model(textInput)
 print(response)
-
-
-
