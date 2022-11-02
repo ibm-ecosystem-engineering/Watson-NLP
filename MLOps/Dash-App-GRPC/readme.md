@@ -14,7 +14,7 @@ This tutorial follows from previous tutorials serving Emotion Classification mod
 
 - [Docker Desktop](https://docs.docker.com/get-docker/) is installed
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
-- [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
+- [Watson NLP Runtime Python client library](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
 
 **Tip**:
 
@@ -27,7 +27,7 @@ This tutorial follows from previous tutorials serving Emotion Classification mod
 Clone the repository that contains the sample code used in this tutorial.
 
 ```shell
-git clone https://github.com/ibm-build-labs/Watson-NLP
+git clone https://github.com/ibm-build-lab/Watson-NLP
 ```
 
 Go to the root directory for this tutorial.

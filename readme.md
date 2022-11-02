@@ -1,6 +1,6 @@
 # Self-Serve Assets for Embeddable AI using Watson NLP
 
-[Assets/Accelerators for Watson NLP](https://github.com/ibm-build-labs/Watson-NLP) (this repo) contains self-serve notebooks and documentation on how to create NLP models using Watson NLP library, how to serve Watson NLP models, and how to make inference requests from custom applications. With an IBM Cloud account a full production sample can be deployed in roughly one hour.
+[Assets/Accelerators for Watson NLP](https://github.com/ibm-build-lab/Watson-NLP) (this repo) contains self-serve notebooks and documentation on how to create NLP models using Watson NLP library, how to serve Watson NLP models, and how to make inference requests from custom applications. With an IBM Cloud account a full production sample can be deployed in roughly one hour.
 
 Key Technologies:
 
@@ -13,7 +13,7 @@ Machine Learning notebooks, tutorials, and datasets focused on supporting a Data
 - [ML Assets](ML/)
   - [Emotion Classification](ML/Emotion-Classification/)
     - [Emotion Classification Tutorial](ML/Emotion-Classification/Emotion%20Classification%20Tutorial.md)
-    - [Emotion Classification Pre-trained Notebook](ML/Emotion-Classification/Emotion%20Classification%20-%20Pre-Trained%20Models.ipynb)
+    - [Emotion Classification Pretrained Notebook](ML/Emotion-Classification/Emotion%20Classification%20-%20Pre-Trained%20Models.ipynb)
     - [Emotion Classification Custom Training Notebook](ML/Emotion-Classification/Emotion%20Classification%20-%20Custom%20Model%20Training.ipynb)
     - [Emotion Classification Dataset](ML/Emotion-Classification/emotion-tweets.csv)
   - [Entities & Keywords Extraction](ML/Emotion-Classification/)
@@ -24,7 +24,7 @@ Machine Learning notebooks, tutorials, and datasets focused on supporting a Data
     - [Euston Hotel Dataset](ML/Entities-Keywords-Extraction/uk_england_london_euston_square_hotel.csv)
   - [Sentiment Analysis](ML/Sentiment-Analysis/)
     - [Sentiment Analysis Tutorial](ML/Sentiment-Analysis/Sentiment%20Analysis%20Tutorial%20extended.md)
-    - [Sentiment Analysis Pre-trained Notebook](ML/Sentiment-Analysis/Sentiment%20Analysis%20-%20Pre-Trained%20models.ipynb)
+    - [Sentiment Analysis Pretrained Notebook](ML/Sentiment-Analysis/Sentiment%20Analysis%20-%20Pre-Trained%20models.ipynb)
     - [Sentiment Analysis Fine-tune/Re-training Notebook](ML/Sentiment-Analysis/Sentiment%20Analysis%20-%20Model%20Training.ipynb)
     - [Sentiment Analysis Dataset](ML/Sentiment-Analysis/movies_small.csv)
   - [Text Classification](ML/Text-Classification)

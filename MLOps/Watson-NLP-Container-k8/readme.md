@@ -14,8 +14,8 @@ While this tutorial uses pretrained models, the approach can be adapted to servi
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
 - You have a Kubernetes or OpenShift cluster on which you can deploy an application
 - You have either the Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed, and configured to talk to your cluster.
-- Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
-- [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
+- Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
+- [Watson NLP Runtime Python client library](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
 
 **Tip**:
 - [Podman](https://podman.io/getting-started/installation) provides a Docker-compatible command line front end. Unless otherwise noted, all the the Docker commands in this tutorial should work for Podman, if you simply alias the Docker CLI with `alias docker=podman` shell command.
@@ -25,7 +25,7 @@ While this tutorial uses pretrained models, the approach can be adapted to servi
 ### 1. Clone the GitHub repository
 Clone the repository containing the code used in this tutorial.  
 ```
-git clone https://github.com/ibm-build-labs/Watson-NLP 
+git clone https://github.com/ibm-build-lab/Watson-NLP 
 ```
 ### 2. Build the container image 
 In this step, you will build a container image to deploy. If you already have a standalone container image to serve pretrained and/or custom Watson NLP models that you prefer to use, you can skip this step.

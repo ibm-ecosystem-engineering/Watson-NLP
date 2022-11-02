@@ -14,7 +14,7 @@ To follow the steps in this tutorial, you need:
 
 * An [IBMid](https://cloud.ibm.com/login?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg)
 * A Watson Studio project
-* A [Python notebook](https://github.com/ibm-build-labs/Watson-NLP/blob/main/Emotion-Classification/Emotion%20Classification%20-%20Pre-Trained%20Models.ipynb)
+* A [Python notebook](https://github.com/ibm-build-lab/Watson-NLP/blob/main/Emotion-Classification/Emotion%20Classification%20-%20Pre-Trained%20Models.ipynb)
 
 * **What are the helper libraries that you need to import?**
 
@@ -31,7 +31,7 @@ The steps in this tutorial use an example of  [Consumer complaint database](http
 
 (Note: If you are reserving the env through TechZone, you don't need to collect the data manually. The env comes with the Watson Studio project pre-created for you. You can skip the rest of the steps here and follow the instructions in the notebook to complete the Topic Modelling tutorial. However, if you are not reserving the env through TechZone and you have a Watson Studio instance, then you should follow the steps described below)
 
-1. The Consumer Financial complaint database collected from [Consumer complaint database](https://www.consumerfinance.gov/data-research/consumer-complaints). Download the dataset from this [GitHub Repo](https://github.com/ibm-build-labs/Watson-NLP/raw/main/Sentiment-Analysis/movies_small.csv).  To use here we normalize this dataset by removing which rows does not have value of consumer complaints. This data set contains 999285 consumer complaints with the date received, submitted via, products, sub-products and company information.
+1. The Consumer Financial complaint database collected from [Consumer complaint database](https://www.consumerfinance.gov/data-research/consumer-complaints). Download the dataset from this [GitHub Repo](https://github.com/ibm-build-lab/Watson-NLP/raw/main/Sentiment-Analysis/movies_small.csv).  To use here we normalize this dataset by removing which rows does not have value of consumer complaints. This data set contains 999285 consumer complaints with the date received, submitted via, products, sub-products and company information.
 
 ### Step 2. Data Processing
 #### Step 2.1 Text Pre-Processing

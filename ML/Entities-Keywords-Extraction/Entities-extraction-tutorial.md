@@ -8,7 +8,7 @@ The `watson_nlp` library is available on IBM Watson Studio as a runtime library 
 
 IBM Watson NLP is a standard embeddable AI library that is designed to tie together the pieces of IBM Natural Language Processing. It provides a standard base natural language processing layer along with a single integrated roadmap, a common architecture, and a common code stack designed for widespread adoption across IBM products.
 
-IBM Watson NLP now provides the ability to automatically extract entities, keywords and phrases using pre-trained models Out of the box. 
+IBM Watson NLP now provides the ability to automatically extract entities, keywords and phrases using pretrained models Out of the box. 
 
 This tutorial explains the fundamentals of IBM Watson NLP and walks you through the process of extracting entities, keywords and phrases.
 
@@ -18,7 +18,7 @@ To follow the steps in this tutorial, you need:
 
 * An [IBMid](https://cloud.ibm.com/login?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg)
 * A Watson Studio project
-* A [Python notebook](https://github.com/ibm-build-labs/Watson-NLP/blob/main/Emotion-Classification/Emotion%20Classification%20-%20Pre-Trained%20Models.ipynb)
+* A [Python notebook](https://github.com/ibm-build-lab/Watson-NLP/blob/main/Emotion-Classification/Emotion%20Classification%20-%20Pre-Trained%20Models.ipynb)
 
 ## Estimated time
 
@@ -34,7 +34,7 @@ The steps in this tutorial use an example of IMDB movie reviews from Kaggle to w
 (Note: If you are reserving the env through TechZone, you don't need to collect the data manually. The env comes with the Watson Studio project pre-created for you. You can skip the rest of the steps here and follow the instructions in the notebook to complete the Text Classification tutorial. However, if you are not reserving the env through TechZone and you have a Watson Studio instance, then you should follow the steps described below)
 
 1. The data is publicly available at [Kaggle 515K Hotel Reviews Data in Europe](https://www.kaggle.com/datasets/jiashenliu/515k-hotel-reviews-data-in-europe) and [OpinRank Review Dataset] (https://archive.ics.uci.edu/ml/datasets/OpinRank+Review+Dataset).
-We will use 3 hotels for analysis and comparison and they have been saved for you on the GitHub. The data for each of the hotels can be downloaded from Github: [Hotel 1](https://github.com/ibm-build-labs/Watson-NLP/blob/main/Entities-Keywords-Extraction/uk_england_london_belgrave_hotel.csv), [Hotel 2](https://github.com/ibm-build-labs/Watson-NLP/blob/main/Entities-Keywords-Extraction/uk_england_london_dorset_square.csv), [Hotel 3](https://github.com/ibm-build-labs/Watson-NLP/blob/main/Entities-Keywords-Extraction/uk_england_london_euston_square_hotel.csv).
+We will use 3 hotels for analysis and comparison and they have been saved for you on the GitHub. The data for each of the hotels can be downloaded from Github: [Hotel 1](https://github.com/ibm-build-lab/Watson-NLP/blob/main/Entities-Keywords-Extraction/uk_england_london_belgrave_hotel.csv), [Hotel 2](https://github.com/ibm-build-lab/Watson-NLP/blob/main/Entities-Keywords-Extraction/uk_england_london_dorset_square.csv), [Hotel 3](https://github.com/ibm-build-lab/Watson-NLP/blob/main/Entities-Keywords-Extraction/uk_england_london_euston_square_hotel.csv).
 
 2. Upload the data set to your Watson Studio project by going to the Assets tab and then dropping the data files as shown in the following figure.
 

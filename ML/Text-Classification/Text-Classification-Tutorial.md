@@ -20,7 +20,7 @@ To follow the steps in this tutorial, you need:
 
 * An [IBMid](https://cloud.ibm.com/login?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg)
 * A Watson Studio project
-* A [Python notebook](https://github.com/ibm-build-labs/Watson-NLP/blob/main/Emotion-Classification/Emotion%20Classification%20-%20Pre-Trained%20Models.ipynb)
+* A [Python notebook](https://github.com/ibm-build-lab/Watson-NLP/blob/main/Emotion-Classification/Emotion%20Classification%20-%20Pre-Trained%20Models.ipynb)
 
 * **What are the helper libraries that you need to import?**
 
@@ -194,6 +194,6 @@ This notebook shows you how to use the Watson NLP library and how quickly and ea
 
 ## Next steps
 
-You can run this <a href="https://github.com/ibm-build-labs/Watson-NLP/blob/main/Social-Media-Analytics/Hotel%20Reviews%20Text%20Classification.ipynb" target="_blank" rel="noopener noreferrer">Jupyter Notebook</a> to see how training a text classification model using Watson NLP works. The notebook demonstrates how to train text classification model on hotel reviews using Watson Natural Language Processing.
+You can run this <a href="https://github.com/ibm-build-lab/Watson-NLP/blob/main/Social-Media-Analytics/Hotel%20Reviews%20Text%20Classification.ipynb" target="_blank" rel="noopener noreferrer">Jupyter Notebook</a> to see how training a text classification model using Watson NLP works. The notebook demonstrates how to train text classification model on hotel reviews using Watson Natural Language Processing.
 
 In this notebook, you will learn how to prepare your data, train a custom SVM model and an ensemble model, save the model and score data and compare model quality on test data.

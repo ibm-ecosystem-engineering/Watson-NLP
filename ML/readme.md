@@ -11,7 +11,7 @@ The structure for the ML assets is shown below:
 
 * [Emotion Classification](Emotion-Classification/)
     * [Emotion Classification Tutorial](Emotion-Classification/Emotion%20Classification%20Tutorial.md)
-    * [Emotion Classification Pre-trained notebook](Emotion-Classification/Emotion%20Classification%20-%20Pre-Trained%20Models.ipynb)
+    * [Emotion Classification Pretrained notebook](Emotion-Classification/Emotion%20Classification%20-%20Pre-Trained%20Models.ipynb)
     * [Emotion Classification Custom trainining notebook](Emotion-Classification/Emotion%20Classification%20-%20Custom%20Model%20Training.ipynb)
     * [Emotion Classification dataset](Emotion-Classification/emotion-tweets.csv)
 * [Entities & Keywords Extraction](Emotion-Classification/)
@@ -22,7 +22,7 @@ The structure for the ML assets is shown below:
     * [Euston Hotel dataset](Entities-Keywords-Extraction/uk_england_london_euston_square_hotel.csv)
 * [Sentiment Analysis](Sentiment-Analysis/)
     * [Sentiment Analysis Tutorial](Sentiment-Analysis/Sentiment%20Analysis%20Tutorial%20extended.md)
-    * [Sentiment Analysis Pre-trained notebook](Sentiment-Analysis/Sentiment%20Analysis%20-%20Pre-Trained%20models.ipynb)
+    * [Sentiment Analysis Pretrained notebook](Sentiment-Analysis/Sentiment%20Analysis%20-%20Pre-Trained%20models.ipynb)
     * [Sentiment Analysis Fine-tune/re-training Notebook](Sentiment-Analysis/Sentiment%20Analysis%20-%20Model%20Training.ipynb)
     * [Sentiment Analysis dataset](Sentiment-Analysis/movies_small.csv)
 * [Text Classification](Text-Classification)
@@ -46,7 +46,7 @@ The structure for the ML assets is shown below:
   * [Documentation](https://ibmdocs-test.mybluemix.net/docs/en/watson-libraries?topic=watson-natural-language-processing-home)
   * [Watson NLP Helm Chart](https://github.com/cloud-native-toolkit/toolkit-charts/tree/main/stable/watson-nlp)
   * **TO BE DONE** [Syntax model](https://ibmdocs-test.mybluemix.net/docs/en/watson-libraries?topic=models-syntax)
-  * [Samples](https://github.com/ibm-build-labs/Watson-NLP)
+  * [Samples](https://github.com/ibm-build-lab/Watson-NLP)
 * [IBM Embeddable AI Home Page](https://dce.blabs.cloud/) **TO BE DONE**
 * IBM Technology Zone assets
   * [Watson NLP - Text Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification)
