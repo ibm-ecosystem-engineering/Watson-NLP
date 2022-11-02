@@ -62,5 +62,10 @@ Use ibmcloud login --sso command to login, if you have a federated ID.
 
 ![Step 7](images/step7.png)
 
-### Step 4: Copy the command line login command 
+### Step 4: Click on the top right corner on your Id, a drop down will be show and click on the `Copy login command'. A popup window will open.
 
+![Step 8](images/step8.png)
+
+### Step 5: Click on the display token and copy the command 'Login in with this token`
+
+![Step 9](images/step9.png)
