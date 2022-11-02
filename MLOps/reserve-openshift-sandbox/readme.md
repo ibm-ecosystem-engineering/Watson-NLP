@@ -1,7 +1,5 @@
 # Sandbox Environment
 
-## Watson NLP Standalone Containers on IBM RedHat OpenShift Kubernetes Service (ROKS)
-
 ## Steps to reserve an OpenShift sanbox in IBM Cloud
 
 ### Step 1: Please click on the below url and login with your credentials
