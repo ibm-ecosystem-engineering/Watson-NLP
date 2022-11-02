@@ -69,3 +69,29 @@ Use ibmcloud login --sso command to login, if you have a federated ID.
 ### Step 5: Click on the display token and copy the command 'Login in with this token`
 
 ![Step 9](images/step9.png)
+
+### Step 6: Login to docker internal registry
+
+```
+echo $(oc whoami -t) | docker login $REGISTRY -u $(oc whoami) --password-stdin
+```
+
+### Step 7: Tag the docker image
+
+```
+docker tag watson-nlp-container:v1 $REGISTRY/$NAMESPACE/<IMAGE_NAME>:<IMAGE_TAG>
+```
+
+`IMAGE_NAME` the image you built using docker build command
+`IMAGE_TAG` the tag name you set when you built your docker image
+
+### Step 8. Push the docker image to openshift internal registry
+
+````
+docker push $REGISTRY/$NAMESPACE/<IMAGE_NAME>:<IMAGE_TAG>
+```
+
+Your image is ready to use in your OpenShift project.
+
+
+
