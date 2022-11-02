@@ -8,10 +8,10 @@
 import sys
 from GrpcClient import GrpcClient
 
-#Getting user input
+# Getting user input
 try:
-    textInput=sys.argv[1]
-    if(not len(textInput.strip())):
+    textInput = sys.argv[1]
+    if not len(textInput.strip()):
         print("Input string is required")
         quit()
 except:
@@ -20,6 +20,6 @@ except:
 
 client = GrpcClient()
 
-#Calling the watson nlp model
+# Calling the watson nlp model
 response = client.call_nlp_model(textInput)
 print(response)
