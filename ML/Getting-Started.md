@@ -8,7 +8,7 @@ This guide will show you how to set up a Python notebook environment using Watso
 
 ![reserve](Screenshots/reserve.png)
 
-2. Shortly, you will receive an email inviting you to join an IBM cloud account. Follow the instructions in the email to join.  Your environment should be ready within a few minutes.  When it is ready, you will recieve a second email similar to the following.
+2. Shortly, you will receive an email inviting you to join an IBM cloud account. Follow the instructions in the email to join.  Your environment should be ready within a few minutes.  When it is ready, you will receive a second email similar to the following.
 
 ![env_details](Screenshots/env_details.png)
 

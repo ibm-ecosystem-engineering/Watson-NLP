@@ -1,6 +1,6 @@
 # Watson NLP Python Client
 
-In this tutorial you will build and deploy a Watson NLP client application.  The sample client application is a web service built in Python that performs Tone Classification on user-supplied texts.  The client application uses the Watson NLP Python client library to interact with a back-end model service. You can adapt the sample code from this tutorial to your own projects.
+In this tutorial you will build and deploy a Watson NLP client application. The sample client application is a web service built in Python that performs Tone Classification on user-supplied texts. The client application uses the Watson NLP Python client library to interact with a back-end model service. You can adapt the sample code from this tutorial to your own projects.
 
 ## Architecture Diagram
 
@@ -20,51 +20,68 @@ In this tutorial you will build and deploy a Watson NLP client application.  The
 ### 1. Clone the GitHub repository
 
 Clone the repository containing the sample code used in this tutorial.
-```
+
+```sh
 git clone https://github.com/ibm-build-lab/Watson-NLP
 ```
+
 Go to the root directory for this tutorial.
-```
+
+```sh
 cd Watson-NLP/MLOps/Dash-App-gRPC-Client
 ```
 
 ### 2. Start the model service
+
 Follow the steps below to build a model image and run it, to serve the Watson NLP pretrained model `classification_ensemble-workflow_lang_en_tone-stock`.
-```
+
+```sh
 cd runtime
 ```
-```
+
+```sh
 docker build . -t watson-nlp-container:v1
 ```
-```
+
+```sh
 docker run -d -e ACCEPT_LICENSE=true -p 8085:8085 watson-nlp-container:v1
 ```
+
 Check that the service is running.
-```
+
+```sh
 docker ps
 ```
 
 ### 3. Run the gRPC dash application
 
 Return to this tutorial's root directory.
+
+```sh
+cd ..
 ```
-cd .. 
-```
+
 Prepare your Python environment.
-```
+
+```sh
 python3 -m venv client-env
 ```
-```
+
+```sh
 source client-env/bin/activate
 ```
+
 Install the required libraries.
+
+```sh
+pip3 install -r requirements.txt
 ```
-pip3 install -r requirements.txt 
-```
+
 Note that this will install the Watson NLP Runtime client library, among other things.
 
 Run the application.
-```
+
+```sh
 python3 Tone_dash_app.py
 ```
 
@@ -72,8 +89,8 @@ python3 Tone_dash_app.py
 
 You can now access the application from your browser at the following URL.
 
-```
-http://localhost:8050 
+```url
+http://localhost:8050
 ```
 
 ## Understanding the Application Code
@@ -82,22 +99,26 @@ This application relies on the Watson NLP Python client library `watson-nlp-runt
 
 The gRPC code is in `GrpcClient.py`. The following code fragment creates a gRPC channel and then using the channel object it creates the client stub to communicate to the server.
 
-```
+```python
 GRPC_SERVER_URL = os.getenv("GRPC_SERVER_URL", default="localhost:8085")
-        channel = grpc.insecure_channel(GRPC_SERVER_URL)
-        stub = common_service_pb2_grpc.NlpServiceStub(channel)
+channel = grpc.insecure_channel(GRPC_SERVER_URL)
+self.stub = common_service_pb2_grpc.NlpServiceStub(channel)
 ```
 
 The client stub accepts two parameters: a request object, and header parameter.
 
+```python
+def call_tone_model(self, inputText):
+    request = common_service_pb2.EmotionRequest(
+        raw_document=syntax_types_pb2.RawDocument(text=inputText)
+    )
+    TONE_CLASSIFICATION_STOCK_MODEL = os.getenv(
+        "TONE_CLASSIFICATION_STOCK_MODEL",
+        default="classification_ensemble-workflow_lang_en_tone-stock",
+    )
+    response = self.stub.ClassificationPredict(
+        request,
+        metadata=[(self.NLP_MODEL_SERVICE_TYPE, TONE_CLASSIFICATION_STOCK_MODEL)],
+    )
+    return response
 ```
-    def call_tone_model(self, inputText):
-        request = common_service_pb2.EmotionRequest(
-            raw_document=syntax_types_pb2.RawDocument(text=inputText)
-        )
-        TONE_CLASSIFICATION_STOCK_MODEL = os.getenv("TONE_CLASSIFICATION_STOCK_MODEL", default="classification_ensemble-workflow_lang_en_tone-stock")
-        response = self.stub.ClassificationPredict(request,metadata=[(self.NLP_MODEL_SERVICE_TYPE, TONE_CLASSIFICATION_STOCK_MODEL)] )
-        return response
-```
-
-

@@ -1,6 +1,6 @@
 # Watson NLP Python Client
 
-In this tutorial you will build and deploy a Watson NLP client application.  The sample client application is a web service built in Python that performs Emotion Classification on user-supplied texts.  The client application uses the Watson NLP Python SDK to interact with a back-end model service. You can adapt the sample code from this tutorial to your own projects.
+In this tutorial you will build and deploy a Watson NLP client application. The sample client application is a web service built in Python that performs Emotion Classification on user-supplied texts. The client application uses the Watson NLP Python SDK to interact with a back-end model service. You can adapt the sample code from this tutorial to your own projects.
 
 This tutorial follows from previous tutorials serving Emotion Classification models. You should have a model service that is serving Watson NLP Classification models. The default configuration uses the model:
 
@@ -26,13 +26,13 @@ This tutorial follows from previous tutorials serving Emotion Classification mod
 
 Clone the repository that contains the sample code used in this tutorial.
 
-```shell
+```sh
 git clone https://github.com/ibm-build-lab/Watson-NLP
 ```
 
 Go to the root directory for this tutorial.
 
-```shell
+```sh
 cd Watson-NLP/MLOps/Dash-App-GRPC
 ```
 
@@ -40,18 +40,18 @@ cd Watson-NLP/MLOps/Dash-App-GRPC
 
 Run the following command to install the Watson NLP Python client library.
 
-```shell
-pip3 install watson_nlp_runtime_client 
+```sh
+pip3 install watson_nlp_runtime_client
 ```
 
 This is a packaged gRPC stub library that is used to communicate with the Watson NLP Runtime.
 
 ### 3. Build docker image
 
-There is a Dockerfile in the root directory for this tutorial. Build the container image with the following command.
+There is a `Dockerfile` in the root directory for this tutorial. Build the container image with the following command.
 
-```shell
-docker build -t dash-app-grpc:latest . 
+```sh
+docker build -t dash-app-grpc:latest .
 ```
 
 This results in an image named `dash-app-grpc:latest`.
@@ -66,13 +66,13 @@ If your model service is running on a Kubernetes or OpenShift cluster, then enab
 
 In Kubernetes:
 
-```shell
-kubectl port-forward svc/watson-nlp-container 8085 
+```sh
+kubectl port-forward svc/watson-nlp-container 8085
 ```
 
 For OpenShift:
 
-```shell
+```sh
 oc port-forward svc/watson-nlp-container 8085
 ```
 
@@ -86,12 +86,12 @@ Set the following environment variables:
 
 Run this command to start the web service.
 
-```shell
+```sh
 docker run \
 -e GRPC_SERVER_URL=${GRPC_SERVER_URL} \
 -e TONE_CLASSIFICATION_STOCK_MODEL=${TONE_CLASSIFICATION_STOCK_MODEL} \
 -e NLP_MODEL_SERVICE_TYPE='mm-model-id' \
--p 8050:8050 dash-app-grpc:latest 
+-p 8050:8050 dash-app-grpc:latest
 ```
 
 #### 4.3 Test
@@ -99,7 +99,7 @@ docker run \
 Use your browser to access the application at the following URL.
 
 ```url
-http://localhost:8050 
+http://localhost:8050
 ```
 
 ### 5. Run the application in your Kubernetes or OpenShift cluster
@@ -110,16 +110,16 @@ In this section we discuss the steps to run the application on the same Kubernet
 
 First you will need to push the image to a container registry that can be accessed by your cluster. Run the following commands, changing the `<Image Registry>` and `<Project Name>` in the following commands based on your configuration.
 
-```shell
-docker tag dash-app-grpc:latest <Image Registry>/<Project Name>/dash-app-grpc:latest 
-docker push <Image Registry>/<Project Name>/dash-app-grpc:latest 
+```sh
+docker tag dash-app-grpc:latest <Image Registry>/<Project Name>/dash-app-grpc:latest
+docker push <Image Registry>/<Project Name>/dash-app-grpc:latest
 ```
 
 #### 5.2 Update the manifest
 
 Starting at the root directory for this tutorial, go to the directory with the Kubernetes manifest.
 
-```shell
+```sh
 cd deployment
 ```
 
@@ -131,14 +131,14 @@ There are three files in the directory.
 
 In `deployment.yaml` update the image line to point to the image that you pushed to a registry, i.e. change this line:
 
-```text
-       image: image-registry.openshift-image-registry.svc:5000/openshift/dash-app-grpc:2022083111 
+```yaml
+       image: image-registry.openshift-image-registry.svc:5000/openshift/dash-app-grpc:2022083111
 ```
 
 The format should be:
 
-```text
-       image: <Image Registry>/<Project Name>/dash-app-grpc:latest` 
+```yaml
+       image: <Image Registry>/<Project Name>/dash-app-grpc:latest`
 ```
 
 #### 5.3 Set environment variables
@@ -153,33 +153,33 @@ Set the following variables in your environment.
 
 **Kubernetes.** Execute the following command to deploy.
 
-```shell
-kubectl apply -f deployment/ 
+```sh
+kubectl apply -f deployment/
 ```
 
 Enable port-forward to the service in order to access it from your local machine.
 
-```shell
-kubectl port-forward svc/dash-app-grpc 8050 
+```sh
+kubectl port-forward svc/dash-app-grpc 8050
 ```
 
 **OpenShift.** Execute the below command to deploy.
 
-```shell
-oc apply -f deployment/ 
+```sh
+oc apply -f deployment/
 ```
 
 You can expose the service as a route, or you can do a port-forward to test the application as a route.
 
-```shell
-oc expose service/dash-app-grpc 
+```sh
+oc expose service/dash-app-grpc
 oc get route
 ```
 
 Alternatively, you can port forward the service to access in localhost
 
-```shell
-oc port-forward svc/dash-app-grpc 8050 
+```sh
+oc port-forward svc/dash-app-grpc 8050
 ```
 
 #### 5.4 Test
@@ -187,7 +187,7 @@ oc port-forward svc/dash-app-grpc 8050
 You can now access the application from your browser at the following URL.
 
 ```url
-http://localhost:8050 
+http://localhost:8050
 ```
 
 ## Understanding the Application Code
@@ -214,7 +214,7 @@ watson-nlp-runtime-client
 from watson_nlp_runtime_client import (
     common_service_pb2,
     common_service_pb2_grpc,
-    syntax_types_pb2
+    syntax_types_pb2,
 )
 ```
 
@@ -222,20 +222,26 @@ First it creates a gRPC channel and then using the channel object it creates the
 
 ```python
 GRPC_SERVER_URL = os.getenv("GRPC_SERVER_URL", default="localhost:8085")
-        channel = grpc.insecure_channel(GRPC_SERVER_URL)
-        stub = common_service_pb2_grpc.NlpServiceStub(channel)
+channel = grpc.insecure_channel(GRPC_SERVER_URL)
+self.stub = common_service_pb2_grpc.NlpServiceStub(channel)
 ```
 
-The client stub accepts two parameter a request object and header parameter
+The client stub accepts two parameters, a request object and header parameter
 
 ```python
-    def call_tone_model(self, inputText):
-        request = common_service_pb2.SentimentRequest(
-            raw_document=syntax_types_pb2.RawDocument(text=inputText)
-        )
-        TONE_CLASSIFICATION_STOCK_MODEL = os.getenv("TONE_CLASSIFICATION_STOCK_MODEL", default="ensemble_classification-wf_en_tone-stock")
-        response = self.stub.ClassificationPredict(request,metadata=[(self.NLP_MODEL_SERVICE_TYPE, TONE_CLASSIFICATION_STOCK_MODEL)] )
-        return 
+def call_tone_model(self, inputText):
+    request = common_service_pb2.SentimentRequest(
+        raw_document=syntax_types_pb2.RawDocument(text=inputText)
+    )
+    TONE_CLASSIFICATION_STOCK_MODEL = os.getenv(
+        "TONE_CLASSIFICATION_STOCK_MODEL",
+        default="classification_ensemble-workflow_lang_en_tone-stock",
+    )
+    response = self.stub.ClassificationPredict(
+        request,
+        metadata=[(self.NLP_MODEL_SERVICE_TYPE, TONE_CLASSIFICATION_STOCK_MODEL)],
+    )
+    return response
 ```
 
-`Tone_dash_app.py` uses python 'dash' library to display graph and user interface.
+`Tone_dash_app.py` uses python 'dash' library to display its graphs and user interface.
