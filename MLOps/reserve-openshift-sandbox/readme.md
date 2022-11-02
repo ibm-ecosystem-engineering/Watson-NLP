@@ -36,7 +36,7 @@ Please make a note about the information in the email
 - Project name
 - Project URL
 
-## Steps to publish image to OpenShift container registry
+## Steps to publish image to OpenShift internal container registry
 
 ### Step 1: Set variable `REGISTRY` and `NAMESPACE` as follows to push the image to OpenShift internal registry
 
