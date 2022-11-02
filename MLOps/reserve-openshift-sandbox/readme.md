@@ -28,4 +28,12 @@ https://techzone.ibm.com/collection/watson-nlp-serving-models-with-standalone-co
 
 ![Step 5](images/step5.png)
 
-#### Wait for the sandbox environment being ready
+### Step 6: When the enviroment is ready, you will receive an email like below.
+
+![Step 6](images/step6.png)
+
+Please make a note about the information in the email
+
+- Integrated OpenShift container image registry
+- Project name
+- Project URL
