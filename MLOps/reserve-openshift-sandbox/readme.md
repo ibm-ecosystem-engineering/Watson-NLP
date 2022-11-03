@@ -32,64 +32,51 @@ https://techzone.ibm.com/collection/watson-nlp-serving-models-with-standalone-co
 
 Please make a note about the information in the email
 
-- Integrated OpenShift container image registry
-- Project name
-- Project URL
+- ***Integrated OpenShift container image registry*** is the openshift internal `REGISTRY`
+- ***Project name*** is the namespace of the OpenShift platform as well as the internal container registry `NAMESPACE`
+- ***Project URL*** is the path to login to OpenShift clsuter
 
-## Steps to publish image to OpenShift internal container registry
 
-### Step 1: Set variable `REGISTRY` and `NAMESPACE` as follows to push the image to OpenShift internal registry
+## Steps to login to OpenShift Cluster
 
-```
-REGISTRY=<Integrated OpenShift container image registry: you received in the email>
-```
+Assuming that
+- You have an [IBM Cloud account](https://cloud.ibm.com/login)
+- You have installed [IBM Cloud CLI](https://cloud.ibm.com/docs/cli?topic=cli-getting-started)
 
-```
-NAMESPACE=<Project name: you received in the email>
-```
+### Step 1: Log in to your IBM Cloud account
 
-### Step 2: Log in to your IBM Cloud account
+From the command terminal execute the below command
 
 ```
 ibmcloud login
 ```
 
-Use ibmcloud login --sso command to login, if you have a federated ID.
+<sub>Use ibmcloud login --sso command to login, if you have a federated ID.</sub>
 
-### Step 3: Go to the project URL in the email and login to your OpenShift cluster
+### Step 2: Go to the project URL in the email and login to your OpenShift cluster
 
 ![Step 7](images/step7.png)
 
-### Step 4: Click on the top right corner on your Id, a drop down will be show and click on the `Copy login command'. A popup window will open.
+### Step 3: Click on the top right corner on your Id, a drop down will be show and click on the `Copy login command'. A popup window will open.
 
 ![Step 8](images/step8.png)
 
-### Step 5: Click on the display token and copy the command 'Login in with this token`
+### Step 4: Click on the display token and copy the command 'Login in with this token`
 
 ![Step 9](images/step9.png)
 
-### Step 6: Login to docker internal registry
+### Step 5: Login to OpenShift internal container registry
 
 ```
 echo $(oc whoami -t) | docker login $REGISTRY -u $(oc whoami) --password-stdin
 ```
 
-### Step 7: Tag the docker image
+### Step 6: check status
 
 ```
-docker tag watson-nlp-container:v1 $REGISTRY/$NAMESPACE/<IMAGE_NAME>:<IMAGE_TAG>
+oc get all
 ```
 
-`IMAGE_NAME` the image you built using docker build command
-`IMAGE_TAG` the tag name you set when you built your docker image
-
-### Step 8. Push the docker image to openshift internal registry
-
-````
-docker push $REGISTRY/$NAMESPACE/<IMAGE_NAME>:<IMAGE_TAG>
-```
-
-Your image is ready to use in your OpenShift project.
 
 
 
