@@ -63,7 +63,7 @@ ibmcloud login
 
 ### Step 4: Click on the display token and copy the command 'Login in with this token`
 
-![Step 9](images/step9.png)
+![Step 9](images/step10.png)
 
 ### Step 5: Login to OpenShift internal container registry
 
