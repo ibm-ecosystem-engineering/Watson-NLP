@@ -47,11 +47,11 @@ To deploy this image in Kubernetes or OpenShift cluster, you must first provisio
 
 ***If you reserved a sandbox in [TechZone](https://github.com/ibm-build-lab/Watson-NLP/tree/sandbox-reserve-ht/MLOps/reserve-openshift-sandbox#readme), you will find `<REGISTRY>` and `<NAMESPACE>` in the confirmation email you received when the sandbox was ready. Please see the below screenshot***
 
-![emailscreenshot](Images/emailscreeshot.png)
-
 <***REGISTRY***>=<***Integrated OpenShift container image registry: you received in the email***>
 
 <***NAMESPACE***>=<***Project name: you received in the email***>
+
+![emailscreenshot](Images/emailscreeshot.png)
 
 
 ```
