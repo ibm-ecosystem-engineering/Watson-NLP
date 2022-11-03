@@ -8,7 +8,7 @@ The `watson_nlp` library is available on IBM Watson Studio as a runtime library 
 
 IBM Watson NLP is a standard embeddable AI library that is designed to tie together the pieces of IBM Natural Language Processing. It provides a standard base natural language processing layer along with a single integrated roadmap, a common architecture, and a common code stack designed for widespread adoption across IBM products.
 
-IBM Watson NLP now provides the ability to automatically extract entities, keywords and phrases using pretrained models Out of the box.
+IBM Watson NLP now provides the ability to automatically extract entities, keywords and phrases using pre-trained models Out of the box.
 
 This tutorial explains the fundamentals of IBM Watson NLP and walks you through the process of extracting entities, keywords and phrases.
 

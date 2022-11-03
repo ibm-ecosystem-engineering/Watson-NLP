@@ -10,7 +10,7 @@ IBM Watson NLP is a standard embeddable AI library that is designed to tie toget
 
 Text Classification is usually manually processed by humans to gather groups of qualitative data. Having the ability to automatically gather and process larger data sets of text through customer feedback, comments, or an entire article written on your product is a strong tool to gain insight into the most common emotional responses in a group of people or a block of text.
 
-IBM Watson NLP now provides the ability to automatically classify the input text into one or more of pre-determined set of labels. We are able to infer upon a certain emotion through syntax analysis and the emotion workflows provided by IBM AI libraries by using pretrained and custom models.
+IBM Watson NLP now provides the ability to automatically classify the input text into one or more of pre-determined set of labels. We are able to infer upon a certain emotion through syntax analysis and the emotion workflows provided by IBM AI libraries by using pre-trained and custom models.
 
 This tutorial explains the fundamentals of IBM Watson NLP and walks you through the process of training and evaluating the models to perform text classification.
 
