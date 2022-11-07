@@ -23,7 +23,7 @@ To follow the steps in this tutorial, you need:
 * A [Python notebook](https://github.com/ibm-build-labs/Watson-NLP/blob/main/Emotion-Classification/Emotion%20Classification%20-%20Pre-Trained%20Models.ipynb)
 * Your [environment set up](https://developer.ibm.com/tutorials/set-up-your-ibm-watson-libraries-environment/)
 
-* **What are the helper libraries that you need to import?**
+**What are the helper libraries that you need to import?**
 
 Before working through the tutorial, you should have an understanding of IBM Watson Studio and Jupyter Notebooks.
 
