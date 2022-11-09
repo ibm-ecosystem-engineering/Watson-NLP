@@ -45,7 +45,14 @@ This will create a Docker image called `watson-nlp-container:v1`.  When the co
 ### 3. Copy the image to a container registry
 To deploy this image in Kubernetes or OpenShift cluster, you must first provision the image to a container repository that your cluster can access.  Tag your image with proper repository and namespace/project name. Replace `<REGISTRY>` and `<NAMESPACE>` in the following commands based on your configuration.
 
-***If you reserved a sandbox in TechZone, you will the instruction [here](https://github.com/ibm-build-lab/Watson-NLP/tree/sandbox-reserve-ht/MLOps/reserve-openshift-sandbox#readme) to push image in OpenShift internal registry.*** 
+***If you reserved a sandbox in [TechZone](https://github.com/ibm-build-lab/Watson-NLP/tree/sandbox-reserve-ht/MLOps/reserve-openshift-sandbox#readme), you will find `<REGISTRY>` and `<NAMESPACE>` in the confirmation email you received when the sandbox was ready. Please see the below screenshot***
+
+<***REGISTRY***>=<***Integrated OpenShift container image registry: you received in the email***>
+
+<***NAMESPACE***>=<***Project name: you received in the email***>
+
+![emailscreenshot](Images/techzoneemail.png)
+
 
 ```
 docker tag watson-nlp-container:v1 <REGISTRY>/<NAMESPACE>/watson-nlp-container:v1 
