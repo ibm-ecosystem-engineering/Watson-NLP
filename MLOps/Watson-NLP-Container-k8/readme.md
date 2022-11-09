@@ -51,7 +51,7 @@ To deploy this image in Kubernetes or OpenShift cluster, you must first provisio
 
 <***NAMESPACE***>=<***Project name: you received in the email***>
 
-![emailscreenshot](Images/emailscreeshot.png)
+![emailscreenshot](Images/techzoneemail.png)
 
 
 ```
