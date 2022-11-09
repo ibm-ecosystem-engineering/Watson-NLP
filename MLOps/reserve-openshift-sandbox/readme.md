@@ -26,7 +26,7 @@ https://techzone.ibm.com/collection/watson-nlp-serving-models-with-standalone-co
 
 ![Step 5](images/step5.png)
 
-### Step 6: When the enviroment is ready, you will receive an email like below.
+### Step 6: When the enviroment is ready, you will receive an email like below
 
 ![Step 6](images/step6.png)
 
@@ -36,10 +36,10 @@ Please make a note about the information in the email
 - ***Project name*** is the namespace of the OpenShift platform as well as the internal container registry `NAMESPACE`
 - ***Project URL*** is the path to login to OpenShift cluster
 
-
 ## Steps to login to OpenShift Cluster
 
 Assuming that
+
 - You have an [IBM Cloud account](https://cloud.ibm.com/login)
 - You have installed [IBM Cloud CLI](https://cloud.ibm.com/docs/cli?topic=cli-getting-started)
 
@@ -57,13 +57,11 @@ ibmcloud login
 
 ![Step 7](images/step7.png)
 
-### Step 3: Click on the top right corner on your Id, a drop down will be show and click on the `Copy login command'. A popup window will open.
+### Step 3: Click on the top right corner on your Id, a drop down will be show and click on the `Copy login command'. A popup window will open
 
 ![Step 8](images/step8.png)
 
-### Step 4: Click on the display token and copy the command 'Login in with this token`
-
-![Step 9](images/step10.png)
+### Step 4: Click on the display token and copy the command 'Login in with this token` and execute in the terminal window
 
 ### Step 5: Login to OpenShift internal container registry
 
@@ -76,7 +74,3 @@ echo $(oc whoami -t) | docker login $REGISTRY -u $(oc whoami) --password-stdin
 ```
 oc get all
 ```
-
-
-
-
