@@ -34,7 +34,7 @@ Please make a note about the information in the email
 
 - ***Integrated OpenShift container image registry*** is the openshift internal `REGISTRY`
 - ***Project name*** is the namespace of the OpenShift platform as well as the internal container registry `NAMESPACE`
-- ***Project URL*** is the path to login to OpenShift clsuter
+- ***Project URL*** is the path to login to OpenShift cluster
 
 
 ## Steps to login to OpenShift Cluster
