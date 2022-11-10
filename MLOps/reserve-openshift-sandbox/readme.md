@@ -1,6 +1,8 @@
-# Sandbox Environment
+# Sandbox Environment for Watson NLP
 
-## Steps to Reserve an OpenShift Sandbox on IBM Cloud
+## Reserve an Environment
+
+This document describes the steps to reserve a sandbox OpenShift environment on IBM Cloud in order to complete tutorials on Watson NLP. The environment itself consists of a namespace in a ROKS cluster on which you can deploy applications.
 
 ### Step 1: Go to the TechZone Collection
 Navigate with your browser to the following URL and log in to TechZone.
@@ -38,24 +40,28 @@ Take note of the following information in the email.
 - ***Project name***: The OpenShift namespace to be used, as well as the name of the internal container registry `NAMESPACE`.
 - ***Project URL***: The path to log in to OpenShift cluster.
 
-## Steps to login to OpenShift Cluster
+## Log in to your Environment
 
-Assuming that
+Below, we describe the steps to log in to the OpenShift from the command line, so that you can access your environment.
+
+Assumptions:
 
 - You have an [IBM Cloud account](https://cloud.ibm.com/login)
 - You have installed [IBM Cloud CLI](https://cloud.ibm.com/docs/cli?topic=cli-getting-started)
 
-### Step 1: Log in to your IBM Cloud account
+### Step 1: Log in to IBM Cloud 
 
-From the command terminal execute the below command
-
+Log in from your terminal.
 ```
 ibmcloud login
 ```
+If you have a federated ID, use:
+```
+ibmcloud login --sso 
+```
 
-<sub>Use ibmcloud login --sso command to login, if you have a federated ID.</sub>
-
-### Step 2: Go to the project URL in the email and login to your OpenShift cluster
+### Step 2: Log in to the OpenShift GUI
+Go to the project URL in from the earlire email, and open the OpenShift cluster GUI.
 
 ![Step 7](images/step7.png)
 
