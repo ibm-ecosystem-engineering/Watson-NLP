@@ -12,7 +12,7 @@ While this tutorial uses pretrained models, the approach can be adapted to servi
 ### Prerequisites
 - [Docker Desktop](https://docs.docker.com/get-docker/) is installed
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
-- You have a Kubernetes or OpenShift cluster on which you can deploy an application or you can reserve an OpenShift Sandbox [here](https://github.com/ibm-build-lab/Watson-NLP/tree/sandbox-reserve-ht/MLOps/reserve-openshift-sandbox#readme) to try out this tutorial
+- You have a Kubernetes or OpenShift cluster on which you can deploy an application or you can reserve an OpenShift Sandbox [here](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox) to try out this tutorial
 - You have either the Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed, and configured to talk to your cluster.
 - Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
 - [Watson NLP Runtime Python client library](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
