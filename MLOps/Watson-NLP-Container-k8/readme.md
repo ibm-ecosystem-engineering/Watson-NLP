@@ -7,7 +7,7 @@ While this tutorial uses pretrained models, the approach can be adapted to servi
 
 ### Architecture diagram
 
-![Diagram](Images/ReferenceArchitectureOpenshift.png)
+![Diagram](Images/ArchitectureDiagram.png)
 
 ### Prerequisites
 - [Docker Desktop](https://docs.docker.com/get-docker/) is installed
