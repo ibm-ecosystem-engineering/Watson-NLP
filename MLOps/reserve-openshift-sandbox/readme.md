@@ -61,15 +61,9 @@ ibmcloud login
 
 ![Step 8](images/step8.png)
 
-### Step 4: Click on the display token and copy the command 'Login in with this token` and execute in the terminal window
+### Step 4: Click on the display token and copy the command `Login in with this token` and execute in the terminal window
 
-### Step 5: Login to OpenShift internal container registry
-
-```
-echo $(oc whoami -t) | docker login $REGISTRY -u $(oc whoami) --password-stdin
-```
-
-### Step 6: check status
+### Step 5: check status
 
 ```
 oc get all
