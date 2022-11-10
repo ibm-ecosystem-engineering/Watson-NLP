@@ -1,16 +1,14 @@
 # Sandbox Environment
 
-## Steps to reserve an OpenShift sanbox in IBM Cloud
+## Steps to Reserve an OpenShift Sandbox on IBM Cloud
 
-### Step 1: Please click on the below url and login with your credentials
+### Step 1: Click on the URL below and login with your credentials
 
 ```
-
 https://techzone.ibm.com/collection/watson-nlp-serving-models-with-standalone-containers
-
 ```
 
-### Step 2: Click on the tab run on Kubernetes or OpenShift
+### Step 2: Click on the tab `Run on Kubernetes or OpenShift`
 
 ![Step 2](images/step2.png)
 
