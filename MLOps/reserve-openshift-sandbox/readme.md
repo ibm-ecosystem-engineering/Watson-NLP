@@ -32,7 +32,7 @@ https://techzone.ibm.com/collection/watson-nlp-serving-models-with-standalone-co
 
 Please make a note about the information in the email
 
-- ***Integrated OpenShift container image registry*** is the openshift internal `REGISTRY`
+- ***Integrated OpenShift container image registry*** is the OpenShift internal `REGISTRY`
 - ***Project name*** is the namespace of the OpenShift platform as well as the internal container registry `NAMESPACE`
 - ***Project URL*** is the path to login to OpenShift cluster
 
