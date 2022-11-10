@@ -22,7 +22,7 @@ https://techzone.ibm.com/collection/watson-nlp-serving-models-with-standalone-co
 
 ![Step 4](images/step4.png)
 
-### Step 5: Fill up the form and submt
+### Step 5: Fill up the form and submit
 
 ![Step 5](images/step5.png)
 
