@@ -3,7 +3,7 @@
 [Assets/Accelerators for Watson NLP](https://github.com/ibm-build-labs/Watson-NLP) (this repo) contains self-serve notebooks and documentation on how to create NLP models using Watson NLP library, how to serve Watson NLP models, and how to make inference requests from custom applications. With an IBM Cloud account a full production sample can be deployed in roughly one hour.
 
 Key Technologies:
-* [IBM Watson NLP](https://ibmdocs-test.mybluemix.net/docs/en/watson-libraries?topic=watson-natural-language-processing-home) (Natural Language Processing) comes with a wide variety of text processing capabilities, such as emotion analysis and topic modeling. Watson NLP is built on top of the best AI open source software. It provides stable and supported interfaces, it handles a wide range of languages and its quality is enterprise proven. The Watson NLP containers can be deployed with Docker, on various Kubernetes-based platforms, or using cloud-based container services.
+* [IBM Watson NLP](https://www.ibm.com/docs/en/watson-libraries?topic=watson-natural-language-processing-library-embed-home) (Natural Language Processing) comes with a wide variety of text processing capabilities, such as emotion analysis and topic modeling. Watson NLP is built on top of the best AI open source software. It provides stable and supported interfaces, it handles a wide range of languages and its quality is enterprise proven. The Watson NLP containers can be deployed with Docker, on various Kubernetes-based platforms, or using cloud-based container services.
 
 ## Outline
 
