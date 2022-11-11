@@ -5,7 +5,6 @@ public class InputDocument {
 
 	public InputDocument() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public InputDocument(RawDocument rawDocument) {

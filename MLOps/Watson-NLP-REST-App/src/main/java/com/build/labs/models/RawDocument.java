@@ -2,7 +2,7 @@ package com.build.labs.models;
 
 public class RawDocument {
 	private String text;
-	
+
 	public RawDocument(String text) {
 		super();
 		this.text = text;
@@ -10,7 +10,6 @@ public class RawDocument {
 
 	public RawDocument() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getText() {
