@@ -73,9 +73,9 @@ Go to the project URL in from the earlire email, and open the OpenShift cluster 
 
 ![Step 7](images/step7.png)
 
-### Step 3: Get the OpenShift Login Command
+### Step 3: Log in to the OpenShift Cluster
 
-Click on the top right corner on your ID. Select the option `Copy login command' from the drop down menu. 
+Click on the top right corner on your ID in the OpenShift GUI. Select the option `Copy login command' from the drop down menu. 
 
 ![Step 8](images/step8.png)
 
