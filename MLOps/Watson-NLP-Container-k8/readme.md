@@ -8,13 +8,13 @@ While this tutorial uses pretrained models, the approach can be adapted to servi
 
 ## Architecture diagram
 
-![Diagram](Images/ReferenceArchitectureOpenshift.png)
+![Diagram](Images/ArchitectureDiagram.png)
 
 ## Prerequisites
 
 - [Docker Desktop](https://docs.docker.com/get-docker/) is installed
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
-- You have a Kubernetes or OpenShift cluster on which you can deploy an application or you can reserve an OpenShift Sandbox [here](https://github.com/ibm-build-lab/Watson-NLP/tree/sandbox-reserve-ht/MLOps/reserve-openshift-sandbox#readme) to try out this tutorial
+- You have a Kubernetes or OpenShift cluster on which you can deploy an application or you can reserve an OpenShift Sandbox [here](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox) to try out this tutorial
 - You have either the Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed, and configured to talk to your cluster.
 - Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
 - [Watson NLP Runtime Python client library](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md#python) is installed
@@ -58,7 +58,14 @@ This will create a Docker image called `watson-nlp-container:v1`. When the con
 
 To deploy this image in Kubernetes or OpenShift cluster, you must first provision the image to a container repository that your cluster can access.  Tag your image with proper repository and namespace/project name. Replace `<REGISTRY>` and `<NAMESPACE>` in the following commands based on your configuration.
 
-***If you reserved a sandbox in TechZone, you will the instruction [here](https://github.com/ibm-build-lab/Watson-NLP/tree/sandbox-reserve-ht/MLOps/reserve-openshift-sandbox#readme) to push image in OpenShift internal registry.*** 
+***If you reserved a sandbox in [TechZone](https://github.com/ibm-build-lab/Watson-NLP/tree/sandbox-reserve-ht/MLOps/reserve-openshift-sandbox#readme), you will find `<REGISTRY>` and `<NAMESPACE>` in the confirmation email you received when the sandbox was ready. Please see the below screenshot***
+
+<***REGISTRY***>=<***Integrated OpenShift container image registry: you received in the email***>
+
+<***NAMESPACE***>=<***Project name: you received in the email***>
+
+![emailscreenshot](Images/techzoneemail.png)
+
 
 ```sh
 docker tag watson-nlp-container:v1 <REGISTRY>/<NAMESPACE>/watson-nlp-container:v1 
