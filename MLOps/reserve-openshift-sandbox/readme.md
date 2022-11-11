@@ -4,7 +4,7 @@
 
 This document describes the steps to reserve a sandbox OpenShift environment on IBM Cloud in order to complete tutorials on Watson NLP. The environment itself consists of a namespace in a ROKS cluster on which you can deploy applications.
 
-### Step 1: Go to the TechZone Collection
+### Step 1: Navigate to the TechZone Collection
 
 Navigate with your browser to the following URL and log in to TechZone.
 
@@ -12,7 +12,7 @@ Navigate with your browser to the following URL and log in to TechZone.
 https://techzone.ibm.com/collection/watson-nlp-serving-models-with-standalone-containers
 ```
 
-### Step 2: Go to the Journey
+### Step 2: Navigate to the Journey
 
 Click on the tab `Run on Kubernetes or OpenShift`.
 
@@ -20,7 +20,7 @@ Click on the tab `Run on Kubernetes or OpenShift`.
 
 ### Step 3: Request an Environment
 
-Scroll down the page, look for `Sandbox Environment: Watson NLP Standalone Containers on IBM RedHat OpenShift Kubernetes Service (ROKS)` and click the reserve button.
+Scroll down the page, find the tile `Sandbox Environment: Watson NLP Standalone Containers on IBM RedHat OpenShift Kubernetes Service (ROKS)` and click the reserve button.
 
 ![Step 3](images/step3.png)
 
@@ -36,7 +36,7 @@ Choose either to `Reserve now` and `Schedule for later`.
 
 ### Step 6: Wait for your Environment
 
-When the enviroment is ready, you will receive an email similar to the following.
+When your enviroment is ready, you will receive an email similar to the following. 
 
 ![Step 6](images/step6.png)
 
@@ -57,14 +57,12 @@ Assumptions:
 
 ### Step 1: Log in to IBM Cloud
 
-Log in from your terminal.
+Log in to IBM Cloud from your terminal.
 
 ```sh
 ibmcloud login
 ```
-
 If you have a federated ID, use:
-
 ```sh
 ibmcloud login --sso
 ```
@@ -75,20 +73,20 @@ Go to the project URL in from the earlire email, and open the OpenShift cluster 
 
 ![Step 7](images/step7.png)
 
-### Step 3: Click on the top right corner on your Id, a drop down will be show and click on the `Copy login command'. A popup window will open
+### Step 3: Get the OpenShift Login Command
+
+Click on the top right corner on your ID. Select the option `Copy login command' from the drop down menu. 
 
 ![Step 8](images/step8.png)
 
-### Step 4: Click on the display token and copy the command 'Login in with this token` and execute in the terminal window
+Copy the login command and execute it in your terminal window. You should now be able to use OpenShift from your terminal. You can try:
+```sh
+oc get all
+```
 
-### Step 5: Login to OpenShift internal container registry
+### Step 4: Log in to OpenShift Internal Container Registry
 
 ```sh
 echo $(oc whoami -t) | docker login $REGISTRY -u $(oc whoami) --password-stdin
 ```
-
-### Step 6: check status
-
-```sh
-oc get all
-```
+This provides you a place to store container images for use in the OpenShift cluster.
