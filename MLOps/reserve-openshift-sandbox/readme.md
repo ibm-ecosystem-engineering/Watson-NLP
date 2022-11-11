@@ -4,7 +4,7 @@
 
 This document describes the steps to reserve a sandbox OpenShift environment on IBM Cloud in order to complete tutorials on Watson NLP. The environment itself consists of a namespace in a ROKS cluster on which you can deploy applications.
 
-### Step 1: Navigate to the TechZone Collection
+### Step 1: Go to the TechZone Collection
 
 Navigate with your browser to the following URL and log in to TechZone.
 
@@ -12,7 +12,7 @@ Navigate with your browser to the following URL and log in to TechZone.
 https://techzone.ibm.com/collection/watson-nlp-serving-models-with-standalone-containers
 ```
 
-### Step 2: Navigate to the Journey
+### Step 2: Select the Journey
 
 Click on the tab `Run on Kubernetes or OpenShift`.
 
