@@ -14,7 +14,7 @@ spec:
     spec:
       initContainers:
       - name: ensemble-model
-        image: <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:v1 
+        image: <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:latest
         volumeMounts:
         - name: model-directory
           mountPath: "/app/models"
