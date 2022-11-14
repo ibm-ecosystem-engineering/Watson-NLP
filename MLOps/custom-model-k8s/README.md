@@ -99,13 +99,13 @@ docker images
 To deploy this image in Kubernetes or OpenShift cluster, you must first provision the image to a container repository. Tag your image with proper repository and namespace/project name. Replace `<REGISTRY>` and `<NAMESPACE>` in the following commands based on your configuration.
 
 ```sh
-docker tag watson-nlp_ensemble_model:v1 <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:v1
+docker tag watson-nlp_ensemble_model:latest <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:latest
 ```
 
 Push the image to the registry.
 
 ```sh
-docker push <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:v1
+docker push <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:latest
 ```
 
 ### 4. Serve the models
@@ -125,7 +125,7 @@ cd Watson-NLP/MLOps/custom-model-k8s
 Open the Kubernetes manifest for editing.
 
 ```sh
-vim Runtime/deployment/deployment.yaml
+vim deployment/deployment.yaml
 ```
 
 Update the init container line in the file to point to your custom model image.
@@ -134,7 +134,7 @@ Update the init container line in the file to point to your custom model image.
     spec:
       initContainers:
       - name: ensemble-model
-        image: <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:v1
+        image: <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:latest
 ```
 
 Create a [secret](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#registry-secret-existing-credentials) in the namespace to give credentials to the registry used, and [add this secret](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) to the `imagePullSecrets` section, so that your Pod can pull the image from the registry.
