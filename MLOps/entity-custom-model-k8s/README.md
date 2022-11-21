@@ -204,36 +204,34 @@ cd Client
 Run the program with a single string argument.
 
 ```sh
-python client.py "Watson NLP is awesome"
+python3 client.py 'I work at California and Portland.'
 ```
 
 The program will return output similar to the following.
 
 ```sh
 ###### Calling GRPC endpoint =  localhost:8085
-###### Calling remote GRPC model =  ensemble_model
-classes {
-  class_name: "Credit reporting, credit repair services, or other personal consumer reports"
-  confidence: 0.328219473
+###### Calling remote GRPC model =  sire_custom
+mentions {
+  span {
+    begin: 10
+    end: 20
+    text: "California"
+  }
+  type: "Duration"
+  confidence: 0.989479959
 }
-classes {
-  class_name: "Debt collection"
-  confidence: 0.262635
-}
-classes {
-  class_name: "Credit card or prepaid card"
-  confidence: 0.16425848
-}
-classes {
-  class_name: "Checking or savings account"
-  confidence: 0.102090739
-}
-classes {
-  class_name: "Mortgage"
-  confidence: 0.0733666793
+mentions {
+  span {
+    begin: 25
+    end: 33
+    text: "Portland"
+  }
+  type: "Location"
+  confidence: 0.999098361
 }
 producer_id {
-  name: "Voting based Ensemble"
+  name: "Entity-Mentions SIRE Workflow"
   version: "0.0.1"
 }
 ```
