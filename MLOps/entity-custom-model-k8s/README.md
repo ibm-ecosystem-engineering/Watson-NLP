@@ -22,7 +22,7 @@ To complete this tutorial, you need to have first completed the [Entity Extracti
 
 ### 1. Save your model
 
-First, you will export your Watson NLP model from Watson Studio on IBM Cloud. In the IBM Cloud Pak for Data GUI, navigate to the page for your Consumer Complaints Classification project. Click on the **Assets** tab. There you should find a model named `ensemble_mode` stored as a ZIP file.
+First, you will export your Watson NLP model from Watson Studio on IBM Cloud. In the IBM Cloud Pak for Data GUI, navigate to the page for your Consumer Complaints Classification project. Click on the **Assets** tab. There you should find a model named `sire_custom` stored as a ZIP file.
 
 If the model is not there, go back to the notebook and ensure that you have followed the steps in the notebook:
 
@@ -42,13 +42,13 @@ mkdir models
 ```
 
 ```sh
-mkdir models/ensemble_model
+mkdir models/sire_custom
 ```
 
 Unzip the file into the newly created directory. You may need to specify the path to the ZIP file if it is not in the current directory.
 
 ```sh
-unzip ensemble_model -d models/sire_custom
+unzip sire_custom -d models/sire_custom
 ```
 
 it will look like below
