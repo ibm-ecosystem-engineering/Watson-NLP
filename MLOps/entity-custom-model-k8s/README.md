@@ -115,7 +115,7 @@ docker images
 To deploy this image in Kubernetes or OpenShift cluster, you must first provision the image to a container repository. Tag your image with proper repository and namespace/project name. Replace `<REGISTRY>` and `<NAMESPACE>` in the following commands based on your configuration.
 
 ```sh
-docker tag watson-nlp_ensemble_model:latest <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:latest
+docker tag watson-nlp_sire_custom:latest <REGISTRY>/<NAMESPACE>/watson-nlp_sire_custom:latest
 ```
 
 Push the image to the registry.
@@ -149,7 +149,7 @@ Update the init container line in the file to point to your custom model image.
 ```yaml
     spec:
       initContainers:
-      - name: ensemble-model
+      - name: sire-custom
         image: <REGISTRY>/<NAMESPACE>/watson-nlp_sire_custom:latest
 ```
 
