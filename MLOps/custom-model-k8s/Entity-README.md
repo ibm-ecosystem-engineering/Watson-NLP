@@ -2,7 +2,7 @@
 
 In this tutorial you will take a Watson NLP model that you have trained in Watson Studio and serve it on a Kubernetes or OpenShift cluster. The model will be packaged as a container image using the [model builder](https://github.com/IBM/ibm-watson-embed-model-builder). The container images can be used in the same way as the pretrained Watson NLP models, i.e. specified as init containers of Watson NLP Runtime Pods.
 
-To complete this tutorial, you need to have first completed the [Consumer Complaints Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification#tab-1) tutorial, which includes steps on training a custom ensemble model and saving it to the Cloud Object Storage (COS) bucket associated with the project.
+To complete this tutorial, you need to have first completed the [Entity Extraction Model](https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/Entity-Extraction-Labeled/Train%20Entity%20Extraction%20Model.ipynb) notebook, which includes steps on training a Entity Extraction Modeland saving it to the Cloud Object Storage (COS) bucket associated with the project.
 
 ## Reference Architecture
 
@@ -16,7 +16,7 @@ To complete this tutorial, you need to have first completed the [Consumer Compla
 - You have a Kubernetes or OpenShift cluster on which you can deploy an application
 - You have either the Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed, and logged into your cluster. The current namespace should be set to the namespace in which you will deploy the model service
 - Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
-- You have completed the [Consumer Complaints Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification#tab-1) tutorial, and have saved the custom trained model named `ensemble_model` to the COS bucket associated with the project. The tutorial uses this [notebook](https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/Text-Classification/Consumer%20complaints%20Classification.ipynb).
+- You have completed the [Entity Extraction](https://techzone.ibm.com/collection/watson-nlp-text-classification#tab-1) tutorial, and have saved the custom trained model named `sire_custom` to the COS bucket associated with the project. The tutorial uses this [notebook]([https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/Entity-Extraction-Labeled/Train%20Entity%20Extraction%20Model.ipynb](https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/Entity-Extraction-Labeled/Train%20Entity%20Extraction%20Model.ipynb)).
 
 ## Steps
 
@@ -30,7 +30,7 @@ If the model is not there, go back to the notebook and ensure that you have foll
 - Run the cell that saves the model.
 
 ```python
-project.save_data('ensemble_model', data=ensemble_model.as_file_like_object(), overwrite=True)
+project.save_data('sire_custom', data=sire_custom.as_file_like_object(), overwrite=True)
 ```
 
 Use the vertical ellipsis to the right of the model name to open a menu with the download option. Download the model to your local machine.
