@@ -48,7 +48,23 @@ mkdir models/ensemble_model
 Unzip the file into the newly created directory. You may need to specify the path to the ZIP file if it is not in the current directory.
 
 ```sh
-unzip ensemble_model -d models/ensemble_model
+unzip ensemble_model -d models/sire_custom
+```
+
+it will look like below
+
+```sh
+models
+└── sire_custom
+    ├── config.yml
+    ├── mentions
+    │   ├── config.yml
+    │   ├── entity-mentions_sire.bin
+    │   └── extractor_0
+    │       ├── config.yml
+    │       └── executor.zip
+    └── syntax
+        └── config.yml
 ```
 
 ### 2. Build the model image
@@ -86,7 +102,7 @@ Run the build command.
 python -m watson_embed_model_packager build --config model-manifest.csv
 ```
 
-This will create a Docker image with the name `watson-nlp_ensemble_model`.
+This will create a Docker image with the name `watson-nlp_sire_custom`.
 
 Verify the existence of this image:
 
@@ -105,7 +121,7 @@ docker tag watson-nlp_ensemble_model:latest <REGISTRY>/<NAMESPACE>/watson-nlp_en
 Push the image to the registry.
 
 ```sh
-docker push <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:latest
+docker push <REGISTRY>/<NAMESPACE>/watson-nlp_sire_custom:latest
 ```
 
 ### 4. Serve the models
@@ -134,7 +150,7 @@ Update the init container line in the file to point to your custom model image.
     spec:
       initContainers:
       - name: ensemble-model
-        image: <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:latest
+        image: <REGISTRY>/<NAMESPACE>/watson-nlp_sire_custom:latest
 ```
 
 Create a [secret](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#registry-secret-existing-credentials) in the namespace to give credentials to the registry used, and [add this secret](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/#create-a-pod-that-uses-your-secret) to the `imagePullSecrets` section, so that your Pod can pull the image from the registry.
