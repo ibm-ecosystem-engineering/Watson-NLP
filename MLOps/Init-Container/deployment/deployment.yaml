@@ -21,6 +21,13 @@ spec:
         env:
         - name: ACCEPT_LICENSE
           value: 'true'
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "100m"
+          limits:
+            memory: "200Mi"
+            cpu: "200m"
       containers:
       - name: watson-nlp-runtime
         image: cp.icr.io/cp/ai/watson-nlp-runtime:1.0.18
@@ -33,11 +40,11 @@ spec:
           value: debug
         resources:
           requests:
-            memory: "2Gi"
-            cpu: "200m"
+            memory: "1Gi"
+            cpu: "500m"
           limits:
             memory: "4Gi"
-            cpu: "400m"
+            cpu: "2"
         ports:
         - containerPort: 8080
         - containerPort: 8085
