@@ -155,6 +155,13 @@ This manifest consists of a Kubernetes Deployment and a Service. Pods of the Dep
         env:
         - name: ACCEPT_LICENSE
           value: 'true'
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "100m"
+          limits:
+            memory: "200Mi"
+            cpu: "200m"
 ```
 
 In each Pod the init container will run to completion before the Watson NLP Runtime image starts. It mounts the Pod's `emptyDir` volume at path `/app/models`. The image's entrypoint script will copy the model files to this location when it runs.
@@ -174,11 +181,11 @@ The Pod's main application container image is the Watson NLP Runtime.
           value: debug
         resources:
           requests:
-            memory: "2Gi"
-            cpu: "200m"
+            memory: "1Gi"
+            cpu: "500m"
           limits:
             memory: "4Gi"
-            cpu: "400m"
+            cpu: "2"
         ports:
         - containerPort: 8080
         - containerPort: 8085
