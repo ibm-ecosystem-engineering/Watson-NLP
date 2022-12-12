@@ -11,24 +11,23 @@ import com.build.labs.services.CommonModelService;
 
 @Controller
 public class HomeController {
-	
+
 	private final CommonModelService commonService;
 
 	public HomeController(CommonModelService commonService) {
 		super();
 		this.commonService = commonService;
 	}
-	
-	@GetMapping({"/", "", "/index", "/home"})
-    public String homepage(Model model) {
+
+	@GetMapping({ "/", "", "/index", "/home" })
+	public String homepage(Model model) {
 		model.addAttribute("commonRequest", new CommonRequestDto());
 		model.addAttribute("result", "");
-        return "index";
-    }
-	
-	
+		return "index";
+	}
+
 	@PostMapping("/prediction")
-    public String callIzumoModel(@ModelAttribute CommonRequestDto commonRequestDto, Model model){
+	public String callIzumoModel(@ModelAttribute CommonRequestDto commonRequestDto, Model model) {
 		String result = commonService.predict(commonRequestDto);
 		model.addAttribute("commonRequest", commonRequestDto);
 		model.addAttribute("result", result);

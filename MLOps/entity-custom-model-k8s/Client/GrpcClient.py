@@ -8,16 +8,13 @@
 import grpc
 import os
 from watson_nlp_runtime_client import (
-    common_service_pb2,
     common_service_pb2_grpc,
+    common_service_pb2,
     syntax_types_pb2,
 )
 
 
 class GrpcClient:
-
-    NLP_MODEL_SERVICE_TYPE = os.getenv("NLP_MODEL_SERVICE_TYPE", default="mm-model-id")
-
     # Default constructor
     def __init__(self):
         GRPC_SERVER_URL = os.getenv("GRPC_SERVER_URL", default="localhost:8085")
@@ -25,18 +22,14 @@ class GrpcClient:
         channel = grpc.insecure_channel(GRPC_SERVER_URL)
         self.stub = common_service_pb2_grpc.NlpServiceStub(channel)
 
-    # Emotion analysis ensemble_classification-wf_en_emotion-stock
-    def call_tone_model(self, inputText):
-        request = common_service_pb2.EmotionRequest(
-            raw_document=syntax_types_pb2.RawDocument(text=inputText)
+    def call_nlp_model(self, inputText):
+        request = common_service_pb2.EntityMentionsRequest(
+            raw_document=syntax_types_pb2.RawDocument(text=inputText),
         )
-        TONE_CLASSIFICATION_STOCK_MODEL = os.getenv(
-            "TONE_CLASSIFICATION_STOCK_MODEL",
-            default="classification_ensemble-workflow_lang_en_tone-stock",
-        )
-        print("###### Calling remote GRPC model = ", TONE_CLASSIFICATION_STOCK_MODEL)
-        response = self.stub.ClassificationPredict(
-            request,
-            metadata=[(self.NLP_MODEL_SERVICE_TYPE, TONE_CLASSIFICATION_STOCK_MODEL)],
+
+        WATSON_NLP_MODEL_ID = os.getenv("WATSON_NLP_MODEL_ID", default="sire_custom")
+        print("###### Calling remote GRPC model = ", WATSON_NLP_MODEL_ID)
+        response = self.stub.EntityMentionsPredict(
+            request, metadata=[("mm-model-id", WATSON_NLP_MODEL_ID)]
         )
         return response
