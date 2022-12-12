@@ -48,7 +48,7 @@ MODELS="watson-nlp_syntax_izumo_lang_en_stock:1.0.6 watson-nlp_syntax_izumo_lang
 Down the models into the local directory `models`:
 
 ```sh
-for i in $MODELS
+for i in $(echo "$MODELS")
 do
   image=${REGISTRY}/$i
   docker run -it --rm -e ACCEPT_LICENSE=true -v `pwd`/models:/app/models $image
