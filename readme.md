@@ -4,8 +4,7 @@
 
 Key Technologies:
 
-* [IBM Watson NLP](https://www.ibm.com/docs/en/watson-libraries?topic=watson-natural-language-processing-library-embed-home) (Natural Language Processing) comes with a wide variety of text processing capabilities, such as emotion analysis and topic modeling. Watson NLP is built on top of the best AI open source software. It provides stable and supported interfaces, it handles a wide range of languages and its quality is enterprise proven. The Watson NLP containers can be deployed with Docker, on various Kubernetes-based platforms, or using cloud-based container services.
-
+- [IBM Watson NLP](https://www.ibm.com/docs/en/watson-libraries?topic=watson-natural-language-processing-library-embed-home) (Natural Language Processing) comes with a wide variety of text processing capabilities, such as emotion analysis and topic modeling. Watson NLP is built on top of the best AI open source software. It provides stable and supported interfaces, it handles a wide range of languages and its quality is enterprise proven. The Watson NLP containers can be deployed with Docker, on various Kubernetes-based platforms, or using cloud-based container services.
 
 ## Outline
 
@@ -13,27 +12,26 @@ Machine Learning notebooks, tutorials, and datasets focused on supporting a Data
 
 - [ML Assets](ML/)
   - [Emotion Classification](ML/Emotion-Classification/)
-    - [Emotion Classification Tutorial](ML/Emotion-Classification/Emotion%20Classification%20Tutorial.md)
+    - [Emotion Classification Tutorial](https://developer.ibm.com/tutorials/use-the-watson-nlp-library-to-perform-emotion-classification/)
     - [Emotion Classification Pretrained Notebook](ML/Emotion-Classification/Emotion%20Classification%20-%20Pre-Trained%20Models.ipynb)
     - [Emotion Classification Custom Training Notebook](ML/Emotion-Classification/Emotion%20Classification%20-%20Custom%20Model%20Training.ipynb)
     - [Emotion Classification Dataset](ML/Emotion-Classification/emotion-tweets.csv)
-  - [Entities & Keywords Extraction](ML/Emotion-Classification/)
-    - [Entities, Keywords & Phrases Extraction Tutorial](ML/Entities-Keywords-Extraction/Entities-extraction-Tutorial.md)
+  - [Entities & Keywords Extraction](ML/ML/Entities-Keywords-Extraction/)
+    - [Entities, Keywords & Phrases Extraction Tutorial](ML/Entities-Keywords-Extraction/Entities-extraction-tutorial.md)
     - [Entities, Keywords & Phrases Extraction Notebook](ML/Entities-Keywords-Extraction/Hotel%20Reviews%20Analysis%20-%20Entities%20and%20Keywords.ipynb)
     - [Belgrave Hotel Dataset](ML/Entities-Keywords-Extraction/uk_england_london_belgrave_hotel.csv)
     - [Dorset Hotel Dataset](ML/Entities-Keywords-Extraction/uk_england_london_dorset_square.csv)
     - [Euston Hotel Dataset](ML/Entities-Keywords-Extraction/uk_england_london_euston_square_hotel.csv)
   - [Sentiment Analysis](ML/Sentiment-Analysis/)
-    - [Sentiment Analysis Tutorial](ML/Sentiment-Analysis/Sentiment%20Analysis%20Tutorial%20extended.md)
+    - [Sentiment Analysis Tutorial](https://developer.ibm.com/tutorials/use-the-watson-core-nlp-library-to-perform-sentiment-analysis/)
     - [Sentiment Analysis Pretrained Notebook](ML/Sentiment-Analysis/Sentiment%20Analysis%20-%20Pre-Trained%20models.ipynb)
     - [Sentiment Analysis Fine-tune/Re-training Notebook](ML/Sentiment-Analysis/Sentiment%20Analysis%20-%20Model%20Training.ipynb)
     - [Sentiment Analysis Dataset](ML/Sentiment-Analysis/movies_small.csv)
   - [Text Classification](ML/Text-Classification)
-    - [Text Classification Tutorial](ML/Text-Classification/Text-Classification-Tutorial.md)
     - [Consumer Complaint Text Classification Notebook](ML/Text-Classification/Consumer%20complaints%20Classification.ipynb)
     - [Hotel Reviews Text Classification](ML/Text-Classification/Hotel%20Reviews%20Classification.ipynb)
   - [Topic Modeling](ML/Topic-Modeling)
-    - [Topic Modeling Tutorial](ML/Topic-Modeling/Topic-Modeling-Tutorial.md)
+    - [Topic Modeling Tutorial](ML/Topic-Modeling/Topic%20Modeling%20using%20Watson%20NLP.pdf)
     - [Topic Modeling Notebook](ML/Topic-Modeling/Complaint%20Data%20Topic%20Modeling.ipynb)
     - [Topic Modeling Comparison with LDA Notebook](ML/Topic-Modeling/Complaint%20Data%20Topic%20Modeling%20-%20Compare%20With%20LDA.ipynb)
 - [MLOps Assets](MLOps/)
