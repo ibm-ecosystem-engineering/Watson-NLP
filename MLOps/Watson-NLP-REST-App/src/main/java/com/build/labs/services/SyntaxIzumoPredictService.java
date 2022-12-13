@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SyntaxIzumoPredictService implements BaseService {
-	
+
 	public SyntaxIzumoPredictService() {
 	}
 
@@ -27,7 +27,6 @@ public class SyntaxIzumoPredictService implements BaseService {
 		try {
 			mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;

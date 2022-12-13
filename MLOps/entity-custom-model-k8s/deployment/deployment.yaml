@@ -13,8 +13,8 @@ spec:
         app: watson-nlp-runtime
     spec:
       initContainers:
-      - name: ensemble-model
-        image: <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:latest
+      - name: sire-custom
+        image: <REGISTRY>/<NAMESPACE>/watson-nlp_sire_custom:latest
         volumeMounts:
         - name: model-directory
           mountPath: "/app/models"
