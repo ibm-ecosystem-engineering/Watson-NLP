@@ -12,7 +12,7 @@ Machine Learning notebooks, tutorials, and datasets focused on supporting a Data
 
 - [ML Assets](ML/)
   - [Emotion Classification](ML/Emotion-Classification/)
-    - [Emotion Classification Tutorial](ML/Emotion-Classification/Emotion%20Classification%20Tutorial.md)
+    - [Emotion Classification Tutorial](https://developer.ibm.com/tutorials/use-the-watson-nlp-library-to-perform-emotion-classification/)
     - [Emotion Classification Pretrained Notebook](ML/Emotion-Classification/Emotion%20Classification%20-%20Pre-Trained%20Models.ipynb)
     - [Emotion Classification Custom Training Notebook](ML/Emotion-Classification/Emotion%20Classification%20-%20Custom%20Model%20Training.ipynb)
     - [Emotion Classification Dataset](ML/Emotion-Classification/emotion-tweets.csv)
