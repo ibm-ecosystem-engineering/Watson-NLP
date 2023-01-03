@@ -1,0 +1,5 @@
+# Topic Modeling
+
+Topic modeling is an unsupervised machine learning algorithm that is used to convert unstructured content into structured formats by detecting word and phrase patterns within the content, and clustering word groups and similar expressions that best characterize a set of similar documents. The volume of unstructured data has increased exponentially since the inception of social media. Therefore, it's a time-consuming and overloading process for people trying to handle the volume of unstructured data and converting it into a structured format. By using a topic analysis model, a machine can sort through endless lists of unstructured content and turn it into similar documents, saving time and money. IBM Watson NLP provides all NLP tasks at one place, which you can use to train the models on data and get useful insights from unstructured content.
+
+Follow the [tutorial](https://developer.ibm.com/tutorials/train-a-topic-modeling-model-using-watson-nlp/) to learn how to train the Topic Modeling model by using Watson NLP. The watson_nlp library is available on IBM Watson Studio as a runtime library, so you can directly use it for model training. 
