@@ -1,5 +1,5 @@
 # Serve Watson NLP Models with Azure Container Instances
-[Azure Container Instances (ACI)](https://aws.amazon.com/) offers the fastest and simplest way to run a container in Azure, without having to manage any virtual machines and without having to adopt a higher-level service.
+[Azure Container Instances (ACI)](https://azure.microsoft.com/en-us/products/container-instances) offers the fastest and simplest way to run a container in Azure, without having to manage any virtual machines and without having to adopt a higher-level service.
 
 This tutorial will walk you through the steps to deploy a standalone Watson NLP Runtime to Azure Container Instances.
 

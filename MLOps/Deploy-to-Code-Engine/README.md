@@ -136,7 +136,7 @@ Once the runtime image is uploaded to ICR, we can use it to deploy a Code Engine
 ibmcloud plugin install code-engine
 ```
 
-### Step 11: Target a [region](https://cloud.ibm.com/docs/overview?topic=overview-locations) and a [reource group](https://cloud.ibm.com/docs/account?topic=account-rgs&interface=cli)
+### Step 11: Target a [region](https://cloud.ibm.com/docs/overview?topic=overview-locations) and a [resource group](https://cloud.ibm.com/docs/account?topic=account-rgs&interface=cli)
 
 ```sh
 ibmcloud target -r ${REGION} -g ${RESOURCE_GROUP}
