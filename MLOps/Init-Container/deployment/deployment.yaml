@@ -44,8 +44,8 @@ spec:
             cpu: "1"
             ephemeral-storage: "4Gi"
           limits:
-            memory: "8Gi"
-            cpu: "4"
+            memory: "4Gi"
+            cpu: "2"
             ephemeral-storage: "4Gi"
         ports:
         - containerPort: 8080
