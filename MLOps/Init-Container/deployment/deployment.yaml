@@ -40,16 +40,26 @@ spec:
           value: debug
         resources:
           requests:
-            memory: "2Gi"
-            cpu: "1"
-            ephemeral-storage: "2Gi"
-          limits:
             memory: "4Gi"
             cpu: "2"
+            ephemeral-storage: "2Gi"
+          limits:
+            memory: "6Gi"
+            cpu: "3"
             ephemeral-storage: "2Gi"
         ports:
         - containerPort: 8080
         - containerPort: 8085
+        livenessProbe:
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:8085"]
+          initialDelaySeconds: 120
+        readinessProbe:
+          httpGet:
+            path: /swagger/
+            port: 8080
+          initialDelaySeconds: 45
+          periodSeconds: 5
         volumeMounts:
         - name: model-directory
           mountPath: "/app/models"
