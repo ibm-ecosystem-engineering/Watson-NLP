@@ -53,15 +53,10 @@ spec:
         - containerPort: 8080
         - containerPort: 8085
         livenessProbe:
-          exec:
-            command: ["/bin/grpc_health_probe", "-addr=:8085"]
-          initialDelaySeconds: 120
-        readinessProbe:
           httpGet:
             path: /swagger/
             port: 8080
-          initialDelaySeconds: 45
-          periodSeconds: 5
+          initialDelaySeconds: 150
         volumeMounts:
         - name: model-directory
           mountPath: "/app/models"
