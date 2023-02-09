@@ -209,6 +209,14 @@ Note: Ensure that the container image value in service.yaml matches the containe
   oc get configuration  
   ```
   
+  Output:
+  
+  ```sh
+  NAME            LATESTCREATED         LATESTREADY           READY   REASON
+  watson-nlp-kn   watson-nlp-kn-00001   watson-nlp-kn-00001   True    
+
+  ```
+  
 ##### Get the service url
 
   ```sh
@@ -229,11 +237,12 @@ There should not see any pod runnng. If you see the 'watson-nlp-kn' is running w
   
 #### Observe the pod status changing
 
+  Open a new terminal to exceute the below command to watch pod status changing 
   ```sh
   oc get pods -w
   ```
   
-  Now lets put some traffice in the service, Please ope a new terminal to execute the below command.
+  In the current terminal run the below commands to put some traffice in the service, 
   
   ```sh
   curl ${SERVICE_URL}
