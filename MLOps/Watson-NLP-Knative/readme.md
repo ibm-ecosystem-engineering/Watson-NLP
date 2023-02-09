@@ -101,9 +101,9 @@ I am going to show the both type of deployment. You may choose any of the method
   
 To start, lets create a new project in OpenShift Cluster
 
-``sh
+```sh
 oc new-project knative-demo
-``
+```
 
 #### 5.1 Deploy using Knative cli tool
 
