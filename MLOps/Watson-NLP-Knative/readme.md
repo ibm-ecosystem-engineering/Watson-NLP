@@ -100,6 +100,12 @@ We can deploy the model in Knative serverless in two ways
 
 I am going to show the both type of deployment. You may choose any of the method.
   
+To start, lets create a new project in OpenShift Cluster
+
+``sh
+oc new-project knative-demo
+``
+
 #### 5.1 Deploy using Knative cli tool
 
 Make sure you have installed Knative [cli tool](https://knative.dev/docs/client/install-kn/). 
@@ -110,8 +116,48 @@ Create a knative service
 ```sh
 kn service create watson-nlp-kn \
   --image us.icr.io/watson-core-demo/watson-nlp-container:v1 \
-  --env ACCEPT_LICENSE=true
+  --env ACCEPT_LICENSE=true \
   --env LOG_LEVEL=debug
+```
+you should see a log message like below
+
+```
+Creating service 'watson-nlp-kn' in namespace 'knative-demo':
+
+  0.211s The Route is still working to reflect the latest desired specification.
+  0.221s ...
+  0.265s Configuration "watson-nlp-kn" is waiting for a Revision to become ready.
+ 81.742s ...
+ 81.812s Ingress has not yet been reconciled.
+ 82.037s Waiting for load balancer to be ready
+ 82.218s Ready to serve.
+
+Service 'watson-nlp-kn' created to latest revision 'watson-nlp-kn-00001' is available at URL:
+```
+
+Check if the serivce is working
+
+```sh
+kn service list
+```
+
+check the revision
+
+```
+kn revision list
+```
+
+output:
+
+```
+NAME                  SERVICE         TRAFFIC   TAGS   GENERATION   AGE     CONDITIONS   READY   REASON
+watson-nlp-kn-00001   watson-nlp-kn   100%             1            2m43s   3 OK / 4     True 
+```
+
+Find the domain url for your service
+
+```sh
+kn service describe watson-nlp-kn -o url
 ```
 
 #### 5.2 Deploy using Kubernetes manifest
@@ -152,5 +198,17 @@ Note: Ensure that the container image value in service.yaml matches the containe
 5.2 Run it on Red Hat OpenShift
 
 ```sh
-oc apply -f Runtime/deployment/deployment.yaml
+oc apply -f Runtime/deployment/knative-service.yaml
+```
+
+## Deleting the app
+
+```sh
+kn service delete watson-nlp-kn
+
+```
+
+
+```
+oc delete -f knative-service.yaml
 ```
