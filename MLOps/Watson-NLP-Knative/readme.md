@@ -92,8 +92,7 @@ During the creation of a Service, Knative performs the following steps:
 - Network programming to create a Route, ingress, Service, and load balancer for your app.
 - Automatically scale your pods up and down, including scaling down to zero active pods.
 
-  
-We can deploy the model in Knative serverless in two ways 
+We can deploy the model in Knative serverless in two ways
   
 - using knative commandline tool `kn`
 - standard Kubernetes manifest
@@ -108,7 +107,7 @@ oc new-project knative-demo
 
 #### 5.1 Deploy using Knative cli tool
 
-Make sure you have installed Knative [cli tool](https://knative.dev/docs/client/install-kn/). 
+Make sure you have installed Knative [cli tool](https://knative.dev/docs/client/install-kn/).
 In this deployment, we are using the image us.icr.io/watson-core-demo/watson-nlp-container:v1, is hosted in the IBM Container Registry. Please replace the image url in the command below to the one you built.
 
 ##### Create a knative service
@@ -119,6 +118,7 @@ kn service create watson-nlp-kn \
   --env ACCEPT_LICENSE=true \
   --env LOG_LEVEL=debug
 ```
+
 you should see a log message like below
 
 ```
@@ -199,14 +199,13 @@ spec:
   
 Note: Ensure that the container image value in service.yaml matches the container you built in the previous step.
 
-
   ```sh
   oc apply -f knative-service.yaml
   ```
 
 ##### Check if the service is up and running
   
-  ```
+  ```sh
   oc get configuration  
   ```
   
@@ -216,30 +215,31 @@ Note: Ensure that the container image value in service.yaml matches the containe
   export SERVICE_URL=$(oc get ksvc watson-nlp-kn  -o jsonpath="{.status.url}")
   ```
   
-### Testing Knative autoscaling
+### Step 6. Testing Knative autoscaling
   
 With Knative autoscaling, code runs when it needs to, with Knative starting and stopping instances automatically. When there is no traffic no instance will be running of the app
   
 lets Check currently running pods
 
-  ```
+  ```sh
   oc get pods
   ```
+
 There should not see any pod runnng. If you see the 'watson-nlp-kn' is running wait for a minute and the instance should be terminated automatically.
   
-##### Observe the pod status changing
+#### Observe the pod status changing
 
-  ```
+  ```sh
   oc get pods -w
   ```
   
-  Now lets put some traffice in service
+  Now lets put some traffice in the service, Please ope a new terminal to execute the below command.
   
-  ```
+  ```sh
   curl ${SERVICE_URL}
   ```
   
-  ```
+  ```sh
   NAME                                             READY   STATUS    RESTARTS   AGE
   watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Pending   0          0s
   watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Pending   0          0s
@@ -258,13 +258,27 @@ There should not see any pod runnng. If you see the 'watson-nlp-kn' is running w
   
   if you observe the status of the pod, when you put some traffic pod started to wake up and then after a while it got terminated.
   
-### Deleting the app
+### Step 7. Testing ML Model serving
+
+  #### Calling the `ensemble_classification-wf_en_emotion-stock` model
+ 
+  ```sh
+    curl -X POST "${SERVICE_URL}/v1/watson.runtime.nlp.v1/NlpService/ClassificationPredict" -H "accept: application/json" -H "grpc-metadata-mm-model-id: classification_ensemble-workflow_lang_en_tone-stock" -H "content-type: application/json" -d "{ \"rawDocument\": { \"text\": \"Watson nlp is awesome! works in knative\" }}"
+  ```
+  #### Calling the `sentiment_document-cnn-workflow_en_stock` model
+  
+  ```
+  curl -X POST "${SERVICE_URL}/v1/watson.runtime.nlp.v1/NlpService/SentimentPredict" -H "accept: application/json" -H "grpc-metadata-mm-model-id: sentiment_aggregated-cnn-workflow_lang_en_stock" -H "content-type: application/json" -d "{ \"rawDocument\": { \"text\": \"Watson nlp is awesome! works in knative\" }, \"languageCode\": \"en\", \"documentSentiment\": true, \"targetPhrases\": [ \"string\" ], \"showNeutralScores\": true}"
+  ```
+  
+  
+### Step 8. Deleting the app
 
   ```sh
   kn service delete watson-nlp-kn
 
   ```
 
-  ```
+  ```sh
   oc delete -f knative-service.yaml
   ```
