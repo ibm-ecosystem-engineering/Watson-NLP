@@ -29,7 +29,7 @@ In this tutorial we are using OpenShift Serverless Operator for knative serving.
 
 - [Install the OpenShift Serverless Operator](https://docs.openshift.com/container-platform/4.10/serverless/install/install-serverless-operator.html)
 - [Install Knative Serving](https://docs.openshift.com/container-platform/4.10/serverless/install/installing-knative-serving.html)
-- [Install the Knative CLI](https://knative.dev/docs/client/install-kn/)
+- Optional. The Knative CLI client kn can be used to simplify the deployment. [Install the Knative CLI](https://knative.dev/docs/client/install-kn/)
 
 ### Step 2. Clone the GitHub repository
 
@@ -100,9 +100,10 @@ We can deploy the model in Knative serverless in two ways
 
 I am going to show the both type of deployment. You may choose any of the method.
   
-#### 5.1 Deploy using Knative commandline tool
+#### 5.1 Deploy using Knative cli tool
 
-In this deployment, we are using the image us.icr.io/watson-core-demo/watson-nlp-container:v1, is hosted in the IBM Container Registry. Please replace the image point to the one you built.
+Make sure you have installed Knative [cli tool](https://knative.dev/docs/client/install-kn/). 
+In this deployment, we are using the image us.icr.io/watson-core-demo/watson-nlp-container:v1, is hosted in the IBM Container Registry. Please replace the image url in the command below to the one you built.
 
 Create a knative service
 
