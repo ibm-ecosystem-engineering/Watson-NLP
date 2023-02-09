@@ -111,7 +111,7 @@ oc new-project knative-demo
 Make sure you have installed Knative [cli tool](https://knative.dev/docs/client/install-kn/). 
 In this deployment, we are using the image us.icr.io/watson-core-demo/watson-nlp-container:v1, is hosted in the IBM Container Registry. Please replace the image url in the command below to the one you built.
 
-Create a knative service
+##### Create a knative service
 
 ```sh
 kn service create watson-nlp-kn \
@@ -135,13 +135,13 @@ Creating service 'watson-nlp-kn' in namespace 'knative-demo':
 Service 'watson-nlp-kn' created to latest revision 'watson-nlp-kn-00001' is available at URL:
 ```
 
-Check if the serivce is working
+##### Check if the serivce is working
 
 ```sh
 kn service list
 ```
 
-check the revision
+###### check the revision
 
 ```
 kn revision list
@@ -154,10 +154,16 @@ NAME                  SERVICE         TRAFFIC   TAGS   GENERATION   AGE     COND
 watson-nlp-kn-00001   watson-nlp-kn   100%             1            2m43s   3 OK / 4     True 
 ```
 
-Find the domain url for your service
+##### Find the domain url for your service
 
 ```sh
 kn service describe watson-nlp-kn -o url
+```
+
+Set the service url in a varaible for testing in the next section
+  
+```sh
+export SERVICE_URL=$(kn service describe watson-nlp-kn -o url)
 ```
 
 #### 5.2 Deploy using Kubernetes manifest
@@ -174,8 +180,7 @@ In the directory, you should find a Kubernetes manifest called deployment.yaml w
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: watson-nlp
-  namespace: knative-serving
+  name: watson-nlp-kn
 spec:
   template:
     metadata:
@@ -195,20 +200,71 @@ spec:
 Note: Ensure that the container image value in service.yaml matches the container you built in the previous step.
 
 
-5.2 Run it on Red Hat OpenShift
+  ```sh
+  oc apply -f knative-service.yaml
+  ```
 
-```sh
-oc apply -f Runtime/deployment/knative-service.yaml
-```
+##### Check if the service is up and running
+  
+  ```
+  oc get configuration  
+  ```
+  
+##### Get the service url
 
-## Deleting the app
+  ```sh
+  export SERVICE_URL=$(oc get ksvc watson-nlp-kn  -o jsonpath="{.status.url}")
+  ```
+  
+### Testing Knative autoscaling
+  
+With Knative autoscaling, code runs when it needs to, with Knative starting and stopping instances automatically. When there is no traffic no instance will be running of the app
+  
+lets Check currently running pods
 
-```sh
-kn service delete watson-nlp-kn
+  ```
+  oc get pods
+  ```
+There should not see any pod runnng. If you see the 'watson-nlp-kn' is running wait for a minute and the instance should be terminated automatically.
+  
+##### Observe the pod status changing
 
-```
+  ```
+  oc get pods -w
+  ```
+  
+  Now lets put some traffice in service
+  
+  ```
+  curl ${SERVICE_URL}
+  ```
+  
+  ```
+  NAME                                             READY   STATUS    RESTARTS   AGE
+  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Pending   0          0s
+  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Pending   0          0s
+  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     ContainerCreating   0          0s
+  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     ContainerCreating   0          1s
+  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     ContainerCreating   0          1s
+  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   1/2     Running             0          2s
+  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   2/2     Running             0          30s
+  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   2/2     Terminating         0          90s
+  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   1/2     Terminating         0          110s
+  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   1/2     Terminating         0          2m1s
+  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0          2m1s
+  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0          2m1s
+  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0          2m1s
+  ```
+  
+  if you observe the status of the pod, when you put some traffic pod started to wake up and then after a while it got terminated.
+  
+### Deleting the app
 
+  ```sh
+  kn service delete watson-nlp-kn
 
-```
-oc delete -f knative-service.yaml
-```
+  ```
+
+  ```
+  oc delete -f knative-service.yaml
+  ```
