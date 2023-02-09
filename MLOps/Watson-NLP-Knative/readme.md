@@ -1,6 +1,6 @@
 # Serve watson nlp model on a serverless Knative serving
 
-With IBM Watson NLP, IBM introduced a common library for natural language processing, document understanding, translation, and trust. IBM Watson NLP brings everything under one umbrella for consistency and ease of development and deployment. This tutorial shows you how to build a stand-alone container image to serve Watson NLP models, and then run it on a ***Knative*** in Openshift cluster.
+With IBM Watson NLP, IBM introduced a common library for natural language processing, document understanding, translation, and trust. IBM Watson NLP brings everything under one umbrella for consistency and ease of development and deployment. This tutorial shows you how to build a stand-alone container image to serve Watson NLP models, and then run it on a ***Knative Serving*** in Openshift cluster.
 
 ***Knative*** is an Open-Source Enterprise-level solution to build Serverless and Event Driven Applications in Kubernetes / Openshift cluster. For more information please go [here](https://knative.dev/docs/).
 
@@ -46,7 +46,7 @@ Build a container image to deploy. If you already have a stand-alone container i
 3.1 Go to the build directory.
 
 ```sh
-cd Watson-NLP/MLOps/Watson-NLP-Container-k8/Runtime
+cd Watson-NLP/MLOps/Watson-NLP-Knative/runtime
 ```
 
 3.2 There should be a Dockerfile in this directory. Run the build command.
@@ -82,10 +82,24 @@ Push the image to upstream.
 docker push <REGISTRY>/<NAMESPACE>/watson-nlp-container:v1
 ```
 
-### Step 5. Deploy in Red Hat OpenShift Knative serving
+### Step 5. Deploying the app in Red Hat OpenShift Knative serving
 
-We can deploy the model using standard Kubernetes manifest or using knative commandline tool `kn`
+After the building the docker image and pushed to registry, you can deploy the app into your cluster.
 
+During the creation of a Service, Knative performs the following steps:
+
+- Create a new immutable revision for this version of the app.
+- Network programming to create a Route, ingress, Service, and load balancer for your app.
+- Automatically scale your pods up and down, including scaling down to zero active pods.
+
+  
+We can deploy the model in Knative serverless in two ways 
+  
+- using knative commandline tool `kn`
+- standard Kubernetes manifest
+
+I am going to show the both type of deployment. You may choose any of the method.
+  
 #### 5.1 Deploy using Knative commandline tool
 
 In this deployment, we are using the image us.icr.io/watson-core-demo/watson-nlp-container:v1, is hosted in the IBM Container Registry. Please replace the image point to the one you built.
@@ -130,6 +144,9 @@ spec:
         ports:
         - containerPort: 8080
 ```
+  
+Note: Ensure that the container image value in service.yaml matches the container you built in the previous step.
+
 
 5.2 Run it on Red Hat OpenShift
 
