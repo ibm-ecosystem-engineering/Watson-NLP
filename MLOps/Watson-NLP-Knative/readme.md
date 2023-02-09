@@ -66,8 +66,9 @@ To deploy this image in Kubernetes or Red Hat OpenShift cluster, you must first 
 
 **Note:** If you reserved a sandbox in the IBM TechZone, you will find ***<REGISTRY>*** and ***<NAMESPACE>*** in the confirmation email that you received when the sandbox was ready. See the following image.
 
-***<REGISTRY>=<Integrated OpenShift container image registry: you received in the email>***
-***<NAMESPACE>=<Project name: you received in the email>***
+***REGISTRY*** = Integrated OpenShift container image registry: you received in the email
+  
+***NAMESPACE*** = Project name: you received in the email
 
 ![Reference architecure](images/techzoneemail.png)
 
