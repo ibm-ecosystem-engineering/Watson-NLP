@@ -217,6 +217,13 @@ Note: Ensure that the container image value in service.yaml matches the containe
 
   ```
   
+  check revision
+  
+  ```sh
+  oc get revisions
+  
+  ```
+  
 ##### Get the service url
 
   ```sh
