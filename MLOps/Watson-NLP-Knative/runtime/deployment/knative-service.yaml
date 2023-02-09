@@ -1,8 +1,7 @@
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: watson-nlp
-  namespace: knative-serving
+  name: watson-nlp-kn
 spec:
   template:
     metadata:
