@@ -1,0 +1,19 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: watson-nlp
+  namespace: knative-serving
+spec:
+  template:
+    metadata:
+    spec:
+      containers:
+      - name: watson-nlp-runtime
+        image: us.icr.io/watson-core-demo/watson-nlp-container:v1
+        env:
+        - name: ACCEPT_LICENSE
+          value: 'true'
+        - name: LOG_LEVEL
+          value: debug
+        ports:
+        - containerPort: 8080
