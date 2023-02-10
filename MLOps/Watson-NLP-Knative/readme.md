@@ -29,7 +29,7 @@ alias docker=podman
 
 ### Step 1. Install Knative
 
-In this tutorial we are using OpenShift Serverless Operator for knative serving. There are two step processs to install knative serving
+In this tutorial we will use the OpenShift Serverless Operator to install Knative Serving. There are two steps:
 
 - [Install the OpenShift Serverless Operator](https://docs.openshift.com/container-platform/4.10/serverless/install/install-serverless-operator.html)
 - [Install Knative Serving](https://docs.openshift.com/container-platform/4.10/serverless/install/installing-knative-serving.html)
@@ -37,7 +37,7 @@ In this tutorial we are using OpenShift Serverless Operator for knative serving.
 
 ### Step 2. Clone the GitHub repository
 
-Clone the repository that contains the code used in this tutorial.
+Clone the repository containing code used in this tutorial.
 
 ```sh
 git clone https://github.com/ibm-build-labs/Watson-NLP
@@ -45,7 +45,7 @@ git clone https://github.com/ibm-build-labs/Watson-NLP
 
 ### Step 3. Build the container image
 
-Build a container image to deploy. If you already have a stand-alone container image to serve pretrained or custom Watson NLP models that you prefer to use, you can skip this step.
+In this step you will build a standalone container image that uses the Watson NLP Runtime image as the base image, and includes the models to be served. If you already have a standalone container image to serve pretrained or custom Watson NLP models that you prefer to use, you can skip this step.
 
 Go to the build directory.
 
@@ -53,16 +53,16 @@ Go to the build directory.
 cd Watson-NLP/MLOps/Watson-NLP-Knative/runtime
 ```
 
-There should be a Dockerfile in this directory. Run the build command.
+Run the build command.
 
 ```sh
 docker build . -t watson-nlp-container:v1
 ```
 
-This creates a Docker image called watson-nlp-container:v1. When the container runs, it will serve 2 pretrained models:
+This creates a Docker image called ```watson-nlp-container:v1```. When the container runs, it will serve 2 pretrained models:
 
-- sentiment_document-cnn-workflow_en_stock
-- ensemble_classification-wf_en_emotion-stock
+- ```sentiment_document-cnn-workflow_en_stock```
+- ```ensemble_classification-wf_en_emotion-stock```
 
 ### Step 4. Copy the image to a container registry
 
