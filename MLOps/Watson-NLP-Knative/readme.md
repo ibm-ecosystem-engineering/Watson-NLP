@@ -1,8 +1,8 @@
 # Serve Watson MLP Models Using Knative Serving
 
-With IBM Watson NLP, IBM introduced a common library for natural language processing, document understanding, translation, and trust. IBM Watson NLP brings everything under one umbrella for consistency and ease of development and deployment. This tutorial shows you how to build a standalone container image to serve Watson NLP models, and then run it using **Knative Serving** in an Openshift cluster.
+With IBM Watson NLP, IBM introduced a common library for natural language processing, document understanding, translation, and trust. IBM Watson NLP brings everything under one umbrella for consistency and ease of development and deployment. This tutorial shows you how to build a standalone container image to serve Watson NLP models, and then run it using **Knative Serving** in an OpenShift cluster.
 
-**Knative Serving** is an Open-Source Enterprise-level solution to build Serverless and Event Driven Applications in Kubernetes / Openshift cluster. For more information see [https://knative.dev/docs/](https://knative.dev/docs/).
+**Knative Serving** is an Open-Source Enterprise-level solution to build Serverless and Event Driven Applications in Kubernetes / OpenShift cluster. For more information see [https://knative.dev/docs/](https://knative.dev/docs/).
 
 A standalone container image includes both the Watson NLP Runtime as well as the models to be served. When the container runs, it exposes gRPC and REST endpoints that clients can use to run inference on the served models.
 
@@ -14,10 +14,9 @@ To follow this tutorial, you need:
 
 - [Docker Desktop](https://docs.docker.com/get-docker/) installed.
 - [Python 3.9](https://www.python.org/downloads/) or later installed.
-- A Red Hat OpenShift cluster on which you can deploy an application. For this tutorial, you can reserve an [OpenShift Sandbox](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox).
+- You have access to an OpenShift Container Platform account with cluster administrator access.
 - Red Hat OpenShift CLI (```oc```) installed, and configured to talk to your cluster.
-- Your Kubernetes or Red Hat OpenShift cluster must be able to access Watson NLP Runtime and pretrained models. Follow the directions [here](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift).
-- The [Watson NLP Runtime Python client library installed](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python)
+- Your Red Hat OpenShift cluster must be able to access Watson NLP Runtime and pretrained models. Follow the directions [here](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift).
 
 **Tip:** Podman provides a Docker-compatible command-line front end. Unless otherwise noted, all of the Docker commands in this tutorial should work for Podman if you alias the Docker CLI with the shell command:
 
@@ -66,16 +65,7 @@ This creates a Docker image called ```watson-nlp-container:v1```. When the con
 
 ### Step 4. Copy the image to a container registry
 
-In this step Kubernetes you will push the image to a container registry that your cluster can access. Tag the image with proper registry and namespace/project names. Replace ```<REGISTRY>``` and ```<NAMESPACE>``` in the following commands based on your configuration.
-
-If you reserved a sandbox environment in IBM TechZone you will find the needed information in the confirmation email that you received when the envirnment became ready.
-
-![Reference architecure](images/techzoneemail.png)
-
-In this email:
-- ```<REGISTRY>``` = *Integrated OpenShift container image registry* 
-- ```<NAMESPACE>``` = *Project name* 
-
+In this step, you will push the image to a container registry that your cluster can access. Tag the image with proper registry and namespace/project names. Replace ```<REGISTRY>``` and ```<NAMESPACE>``` in the following commands based on your configuration.
 
 ```sh
 docker tag watson-nlp-container:v1 <REGISTRY>/<NAMESPACE>/watson-nlp-container:v1
