@@ -66,15 +66,16 @@ This creates a Docker image called ```watson-nlp-container:v1```. When the con
 
 ### Step 4. Copy the image to a container registry
 
-In this step Kubernetes you will push the image to a container registry that your cluster can access. Tag the image with proper registry and namespace/project names. Replace ***<REGISTRY>*** and ***<NAMESPACE>*** in the following commands based on your configuration.
+In this step Kubernetes you will push the image to a container registry that your cluster can access. Tag the image with proper registry and namespace/project names. Replace ```<REGISTRY>``` and ```<NAMESPACE>``` in the following commands based on your configuration.
 
-**Note:** If you reserved a sandbox in IBM TechZone you will find ***<REGISTRY>*** and ***<NAMESPACE>*** in the confirmation email that you received when the sandbox was ready. See the following image.
-
-***REGISTRY*** = Integrated OpenShift container image registry: you received in the email
-  
-***NAMESPACE*** = Project name: you received in the email
+If you reserved a sandbox environment in IBM TechZone you will find the needed information in the confirmation email that you received when the envirnment became ready.
 
 ![Reference architecure](images/techzoneemail.png)
+
+In this email:
+- ```<REGISTRY>``` = *Integrated OpenShift container image registry* 
+- ```<NAMESPACE>``` = *Project name* 
+
 
 ```sh
 docker tag watson-nlp-container:v1 <REGISTRY>/<NAMESPACE>/watson-nlp-container:v1
@@ -86,24 +87,22 @@ Push the image to upstream.
 docker push <REGISTRY>/<NAMESPACE>/watson-nlp-container:v1
 ```
 
-### Step 5. Deploying the app in Red Hat OpenShift Knative serving
+### Step 5. Deploying the Watson NLP Microservice
 
-After the building the docker image and pushed to registry, you can deploy the app into your cluster.
+In this step you will deploy the container image to Knative Serving. During the creation of a Service, Knative performs the following steps:
 
-During the creation of a Service, Knative performs the following steps:
+- Creates a new immutable revision for this version of the application.
+- Creates a Route, Ingress, Service, and Load Balancer for your app.
+- Automatically scales your pods up and down, including scaling down to zero active pods.
 
-- Create a new immutable revision for this version of the app.
-- Network programming to create a Route, ingress, Service, and load balancer for your app.
-- Automatically scale your pods up and down, including scaling down to zero active pods.
-
-We can deploy the model in Knative serverless in two ways
+Below, we will demonstrate two alternative approaches to doing the deployment operation:
   
-- using knative commandline tool `kn`
-- standard Kubernetes manifest
+- Use Knative CLI (```kn```), and
+- Use a Kubernetes manifest.
 
-I am going to show the both type of deployment. You may choose any of the method.
+You may choose either method.
   
-To start, lets create a new project in OpenShift Cluster
+To start, create a new project in OpenShift Cluster for the application.
 
 ```sh
 oc new-project knative-demo
