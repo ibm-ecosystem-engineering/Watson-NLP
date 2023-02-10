@@ -66,9 +66,9 @@ This creates a Docker image called ```watson-nlp-container:v1```. When the con
 
 ### Step 4. Copy the image to a container registry
 
-To deploy this image in Kubernetes or Red Hat OpenShift cluster, you must first provision the image to a container repository that your cluster can access. Tag your image with proper repository and namespace/project names. Replace ***<REGISTRY>*** and ***<NAMESPACE>*** in the following commands based on your configuration.
+In this step Kubernetes you will push the image to a container registry that your cluster can access. Tag the image with proper registry and namespace/project names. Replace ***<REGISTRY>*** and ***<NAMESPACE>*** in the following commands based on your configuration.
 
-**Note:** If you reserved a sandbox in the IBM TechZone, you will find ***<REGISTRY>*** and ***<NAMESPACE>*** in the confirmation email that you received when the sandbox was ready. See the following image.
+**Note:** If you reserved a sandbox in IBM TechZone you will find ***<REGISTRY>*** and ***<NAMESPACE>*** in the confirmation email that you received when the sandbox was ready. See the following image.
 
 ***REGISTRY*** = Integrated OpenShift container image registry: you received in the email
   
