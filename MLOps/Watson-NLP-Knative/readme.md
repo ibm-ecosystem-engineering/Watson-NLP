@@ -19,7 +19,11 @@ To follow this tutorial, you need:
 - Your Kubernetes or Red Hat OpenShift cluster must be able to access Watson NLP Runtime and pretrained models. Follow the directions [here](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift).
 - The [Watson NLP Runtime Python client library installed](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python)
 
-**Tip:** Podman provides a Docker-compatible command-line front end. Unless otherwise noted, all of the Docker commands in this tutorial should work for Podman if you simply alias the Docker CLI with the alias docker=podman shell command.
+**Tip:** Podman provides a Docker-compatible command-line front end. Unless otherwise noted, all of the Docker commands in this tutorial should work for Podman if you alias the Docker CLI with the shell command:
+
+```bash
+alias docker=podman
+```
 
 ## Steps
 
