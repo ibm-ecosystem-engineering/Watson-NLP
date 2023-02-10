@@ -1,10 +1,10 @@
-# Serve Watson MLP Models on Serverless Knative Serving
+# Serve Watson MLP Models Using Knative Serving
 
-With IBM Watson NLP, IBM introduced a common library for natural language processing, document understanding, translation, and trust. IBM Watson NLP brings everything under one umbrella for consistency and ease of development and deployment. This tutorial shows you how to build a stand-alone container image to serve Watson NLP models, and then run it on a ***Knative Serving*** in Openshift cluster.
+With IBM Watson NLP, IBM introduced a common library for natural language processing, document understanding, translation, and trust. IBM Watson NLP brings everything under one umbrella for consistency and ease of development and deployment. This tutorial shows you how to build a standalone container image to serve Watson NLP models, and then run it using **Knative Serving** in an Openshift cluster.
 
-***Knative*** is an Open-Source Enterprise-level solution to build Serverless and Event Driven Applications in Kubernetes / Openshift cluster. For more information please go [here](https://knative.dev/docs/).
+**Knative Serving** is an Open-Source Enterprise-level solution to build Serverless and Event Driven Applications in Kubernetes / Openshift cluster. For more information see [https://knative.dev/docs/](https://knative.dev/docs/).
 
-The stand-alone container image includes both the Watson NLP Runtime as well as models. When the container runs, it exposes gRPC and REST endpoints that clients can use to run inference against the served models.
+A standalone container image includes both the Watson NLP Runtime as well as the models to be served. When the container runs, it exposes gRPC and REST endpoints that clients can use to run inference on the served models.
 
 This tutorial uses pretrained models, however the approach can be adapted to serving custom models.
 
@@ -12,11 +12,11 @@ This tutorial uses pretrained models, however the approach can be adapted to ser
 
 To follow this tutorial, you need:
 
-- [Docker Desktop](https://docs.docker.com/get-docker/) installed
-- [Python 3.9](https://www.python.org/downloads/) or later installed
-- A Red Hat OpenShift cluster on which you can deploy an application, or you can reserve an [OpenShift Sandbox](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox) to try out this tutorial
-- A command-line interface -- Red Hat OpenShift (oc) installed and configured to talk to your cluster
-- A Kubernetes or Red Hat OpenShift cluster with access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
+- [Docker Desktop](https://docs.docker.com/get-docker/) installed.
+- [Python 3.9](https://www.python.org/downloads/) or later installed.
+- A Red Hat OpenShift cluster on which you can deploy an application. For this tutorial, you can reserve an [OpenShift Sandbox](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox).
+- Red Hat OpenShift CLI (```oc```) installed, and configured to talk to your cluster.
+- Your Kubernetes or Red Hat OpenShift cluster must be able to access Watson NLP Runtime and pretrained models. Follow the directions [here](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift).
 - The [Watson NLP Runtime Python client library installed](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#python)
 
 **Tip:** Podman provides a Docker-compatible command-line front end. Unless otherwise noted, all of the Docker commands in this tutorial should work for Podman if you simply alias the Docker CLI with the alias docker=podman shell command.
@@ -43,19 +43,19 @@ git clone https://github.com/ibm-build-labs/Watson-NLP
 
 Build a container image to deploy. If you already have a stand-alone container image to serve pretrained or custom Watson NLP models that you prefer to use, you can skip this step.
 
-3.1 Go to the build directory.
+Go to the build directory.
 
 ```sh
 cd Watson-NLP/MLOps/Watson-NLP-Knative/runtime
 ```
 
-3.2 There should be a Dockerfile in this directory. Run the build command.
+There should be a Dockerfile in this directory. Run the build command.
 
 ```sh
 docker build . -t watson-nlp-container:v1
 ```
 
-This creates a Docker image called watson-nlp-container:v1. When the container runs, it should serve 2 pretrained models:
+This creates a Docker image called watson-nlp-container:v1. When the container runs, it will serve 2 pretrained models:
 
 - sentiment_document-cnn-workflow_en_stock
 - ensemble_classification-wf_en_emotion-stock
