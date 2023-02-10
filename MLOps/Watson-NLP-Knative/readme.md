@@ -246,6 +246,8 @@ There should not see any pod runnng. If you see the 'watson-nlp-kn' is running w
   curl ${SERVICE_URL}
   ```
   
+  Observe the status of the pod. When you put some traffic, pod started to wake up and then after a while it got terminated automatically.
+
   ```sh
   NAME                                             READY   STATUS    RESTARTS   AGE
   watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Pending   0          0s
@@ -263,7 +265,6 @@ There should not see any pod runnng. If you see the 'watson-nlp-kn' is running w
   watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0          2m1s
   ```
   
-  if you observe the status of the pod, when you put some traffic pod started to wake up and then after a while it got terminated.
   
 ### Step 6. Testing ML Model serving
 
