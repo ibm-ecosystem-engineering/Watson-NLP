@@ -1,4 +1,4 @@
-# Serve watson nlp model on a serverless Knative serving
+# Serve Watson MLP Models on Serverless Knative Serving
 
 With IBM Watson NLP, IBM introduced a common library for natural language processing, document understanding, translation, and trust. IBM Watson NLP brings everything under one umbrella for consistency and ease of development and deployment. This tutorial shows you how to build a stand-alone container image to serve Watson NLP models, and then run it on a ***Knative Serving*** in Openshift cluster.
 
