@@ -19,7 +19,6 @@ To follow this tutorial, you need:
     - [Install Knative Serving](https://docs.openshift.com/container-platform/4.10/serverless/install/installing-knative-serving.html)
 - (Optional) The Knative CLI client ```kn``` can be used to simplify the deployment. [Install the Knative CLI](https://knative.dev/docs/client/install-kn/)
 - Red Hat OpenShift CLI (```oc```) installed, and configured to talk to your cluster.
-- Your Red Hat OpenShift cluster must be able to access Watson NLP Runtime and pretrained models. Follow the directions [here](https://github.com/ibm-build-labs/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift).
 
 **Tip:** Podman provides a Docker-compatible command-line front end. Unless otherwise noted, all of the Docker commands in this tutorial should work for Podman if you alias the Docker CLI with the shell command:
 
