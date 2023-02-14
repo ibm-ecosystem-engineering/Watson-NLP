@@ -1,12 +1,12 @@
-# Serve Watson MLP Models Using Knative Serving
+# Serve Watson MLP Models Using Knative Serving init-container method
 
-With IBM Watson NLP, IBM introduced a common library for natural language processing, document understanding, translation, and trust. IBM Watson NLP brings everything under one umbrella for consistency and ease of development and deployment. This tutorial shows you how to build a standalone container image to serve Watson NLP models, and then run it using **Knative Serving** in an OpenShift cluster.
+With IBM Watson NLP, IBM introduced a common library for natural language processing, document understanding, translation, and trust. IBM Watson NLP brings everything under one umbrella for consistency and ease of development and deployment. This tutorial walks you through the steps to serve pretrained Watson NLP models using **Knative Serving** in a Red Hat OpenShift cluster.
 
 **Knative Serving** is an Open-Source Enterprise-level solution to build Serverless and Event Driven Applications in Kubernetes / OpenShift cluster. For more information see [https://knative.dev/docs/](https://knative.dev/docs/).
 
-A standalone container image includes both the Watson NLP Runtime as well as the models to be served. When the container runs, it exposes gRPC and REST endpoints that clients can use to run inference on the served models.
+In the tutorial, you create a `Knative Service` to run the Watson NLP runtime image. In the Knative Service Manifest, pretrained model images are specified as init containers. These init containers run to completion before the main application starts, and provision models to the emptyDir volume of the Pod. When the Watson NLP Runtime container starts, it loads the models and begins serving them.
 
-This tutorial uses pretrained models, however the approach can be adapted to serving custom models.
+When using this approach, models are kept in separate containers from the runtime. To change the set of served models you need only to update the Knative service Manifest.
 
 ## Prerequisites
 
@@ -19,6 +19,7 @@ To follow this tutorial, you need:
     - [Install Knative Serving](https://docs.openshift.com/container-platform/4.10/serverless/install/installing-knative-serving.html)
 - (Optional) The Knative CLI client ```kn``` can be used to simplify the deployment. [Install the Knative CLI](https://knative.dev/docs/client/install-kn/)
 - Red Hat OpenShift CLI (```oc```) installed, and configured to talk to your cluster.
+- Your Kubernetes or Red Hat OpenShift cluster namespace must have access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
 
 **Tip:** Podman provides a Docker-compatible command-line front end. Unless otherwise noted, all of the Docker commands in this tutorial should work for Podman if you alias the Docker CLI with the shell command:
 
@@ -28,7 +29,35 @@ alias docker=podman
 
 ## Steps
 
-### Step 1. Clone the GitHub repository
+### Step 1. Enable `init-containers` and `volumes-emptydir` in Knative configuration
+
+> Please skip this step if you have reserved your sandbox environment in [techzone](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox)
+
+Save `config-features` config map in your current directory.
+
+``sh
+oc get configmap/config-features -n knative-serving -o yaml > config-feature.yaml
+
+``
+
+Modify the saved yaml `config-feature.yaml` with your favourite editor and add the following lines in the data section. Please do not modify any other section and content.
+
+> There is an example file `deployment/config-feature.yaml` in deployment directory for your reference.
+
+```yaml
+apiVersion: v1
+data:
+  kubernetes.podspec-init-containers: enabled
+  kubernetes.podspec-volumes-emptydir: enabled
+```
+
+Apply the configuration
+
+```sh
+oc apply -f config-feature.yaml 
+```
+
+### Step 2. Clone the GitHub repository
 
 Clone the repository containing code used in this tutorial.
 
@@ -36,51 +65,7 @@ Clone the repository containing code used in this tutorial.
 git clone https://github.com/ibm-build-labs/Watson-NLP
 ```
 
-### Step 2. Build the container image
-
-In this step you will build a standalone container image that uses the Watson NLP Runtime image as the base image, and includes the models to be served. If you already have a standalone container image to serve pretrained or custom Watson NLP models that you prefer to use, you can skip this step.
-
-Go to the build directory.
-
-```sh
-cd Watson-NLP/MLOps/Watson-NLP-Knative/runtime
-```
-
-Run the build command.
-
-```sh
-docker build . -t watson-nlp-container:v1
-```
-
-This creates a Docker image called ```watson-nlp-container:v1```. When the container runs, it will serve 2 pretrained models:
-
-- ```sentiment_document-cnn-workflow_en_stock```
-- ```ensemble_classification-wf_en_emotion-stock```
-
-### Step 3. Copy the image to a container registry
-
-In this step Kubernetes you will push the image to a container registry that your cluster can access. Tag the image with proper registry and namespace/project names. Replace ```<REGISTRY>``` and ```<NAMESPACE>``` in the following commands based on your configuration.
-
-If you reserved a sandbox environment in IBM TechZone you will find the needed information in the confirmation email that you received when the envirnment became ready.
-
-![Reference architecure](images/techzoneemail.png)
-
-In this email:
-- ```<REGISTRY>``` = *Integrated OpenShift container image registry* 
-- ```<NAMESPACE>``` = *Project name* 
-
-
-```sh
-docker tag watson-nlp-container:v1 <REGISTRY>/<NAMESPACE>/watson-nlp-container:v1
-```
-
-Push the image to upstream.
-
-```sh
-docker push <REGISTRY>/<NAMESPACE>/watson-nlp-container:v1
-```
-
-### Step 4. Deploying the Watson NLP Microservice
+### Step 3. Deploy the service
 
 In this step you will deploy the container image to Knative Serving. During the creation of a Service, Knative performs the following steps:
 
@@ -88,118 +73,19 @@ In this step you will deploy the container image to Knative Serving. During the 
 - Creates a Route, Ingress, Service, and Load Balancer for your app.
 - Automatically scales your pods up and down, including scaling down to zero active pods.
 
-Below, we will demonstrate two alternative approaches to doing the deployment operation:
-  
-- Use Knative CLI (```kn```), and
-- Use a Kubernetes manifest.
+***To deploy execute the below command.***
 
-You may choose either method.
-
-#### 4.1 Deploy using Knative cli tool
-
-Make sure you have installed Knative [cli tool](https://knative.dev/docs/client/install-kn/).
-In this deployment, we are using the image us.icr.io/watson-core-demo/watson-nlp-container:v1, is hosted in the IBM Container Registry. Please replace the image url in the command below to the one you built.
-
-##### Create a knative service
-
-```sh
-kn service create watson-nlp-kn \
-  --image us.icr.io/watson-core-demo/watson-nlp-container:v1 \
-  --env ACCEPT_LICENSE=true \
-  --env LOG_LEVEL=debug
-```
-
-you should see a log message like below
-
-```
-Creating service 'watson-nlp-kn' in namespace 'knative-demo':
-
-  0.211s The Route is still working to reflect the latest desired specification.
-  0.221s ...
-  0.265s Configuration "watson-nlp-kn" is waiting for a Revision to become ready.
- 81.742s ...
- 81.812s Ingress has not yet been reconciled.
- 82.037s Waiting for load balancer to be ready
- 82.218s Ready to serve.
-
-Service 'watson-nlp-kn' created to latest revision 'watson-nlp-kn-00001' is available at URL:
-```
-
-##### Check if the serivce is working
-
-```sh
-kn service list
-```
-
-###### check the revision
-
-```
-kn revision list
-```
-
-output:
-
-```
-NAME                  SERVICE         TRAFFIC   TAGS   GENERATION   AGE     CONDITIONS   READY   REASON
-watson-nlp-kn-00001   watson-nlp-kn   100%             1            2m43s   3 OK / 4     True 
-```
-
-##### Find the domain url for your service
-
-```sh
-kn service describe watson-nlp-kn -o url
-```
-
-Set the service url in a varaible for testing in the next section
-  
-```sh
-export SERVICE_URL=$(kn service describe watson-nlp-kn -o url)
-```
-
-#### 4.2 Deploy using Kubernetes manifest
-
-Go to the deployment directory.
-
-```sh
-cd deployment
-```
-
-In the directory, you should find a Kubernetes manifest called deployment.yaml which can be used to deploy the model service. The default image in this deployment, us.icr.io/watson-core-demo/watson-nlp-container:v1, is hosted in the IBM Container Registry. Before you start this service, you must update the image path in the Deployment to point to the registry you used.
-
-```yaml
-apiVersion: serving.knative.dev/v1
-kind: Service
-metadata:
-  name: watson-nlp-kn
-spec:
-  template:
-    metadata:
-    spec:
-      containers:
-      - name: watson-nlp-runtime
-        image: us.icr.io/watson-core-demo/watson-nlp-container:v1
-        env:
-        - name: ACCEPT_LICENSE
-          value: 'true'
-        - name: LOG_LEVEL
-          value: debug
-        ports:
-        - containerPort: 8080
-```
-  
-Note: Ensure that the container image value in service.yaml matches the container you built in the previous step.
-
-  ```sh
+ ```sh
   oc apply -f knative-service.yaml
   ```
 
-##### Check if the service is up and running
+***Check if the service is up and running***
   
   ```sh
   oc get configuration  
   ```
   
-  Output:
+***Output:***
   
   ```sh
   NAME            LATESTCREATED         LATESTREADY           READY   REASON
@@ -207,22 +93,28 @@ Note: Ensure that the container image value in service.yaml matches the containe
 
   ```
   
-  check revision
+***check revision***
   
   ```sh
   oc get revisions
   
   ```
   
-##### Get the service url
+***Get the service url***
 
+  ```sh
+  oc get ksvc watson-nlp-kn  -o jsonpath="{.status.url}"
+  ```
+
+***Set the SERVICE_URL***
+  
   ```sh
   export SERVICE_URL=$(oc get ksvc watson-nlp-kn  -o jsonpath="{.status.url}")
   ```
+
+### Step 4. Testing Knative autoscaling
   
-### Step 5. Testing Knative autoscaling
-  
-With Knative autoscaling, code runs when it needs to, with Knative starting and stopping instances automatically. When there is no traffic no instance will be running of the app
+With Knative autoscaling, code runs when it needs to, with Knative starting and stopping instances automatically. When there is no traffic no instance will be running of the app.
   
 lets Check currently running pods
 
@@ -230,16 +122,17 @@ lets Check currently running pods
   oc get pods
   ```
 
-There should not see any pod runnng. If you see the 'watson-nlp-kn' is running wait for a minute and the instance should be terminated automatically.
+You should not see any pod runnng. If you see the 'watson-nlp-kn' is running wait for a minute and the instance should be terminated automatically.
   
 #### Observe the pod status changing
 
-  Open a new terminal to exceute the below command to watch pod status changing 
+  Open a new terminal to exceute the below command to watch pod status changing
+
   ```sh
   oc get pods -w
   ```
   
-  In the current terminal run the below commands to put some traffice in the service, 
+  In the current terminal run the below commands to put some traffice in the service,
   
   ```sh
   curl ${SERVICE_URL}
@@ -263,29 +156,15 @@ There should not see any pod runnng. If you see the 'watson-nlp-kn' is running w
   watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0          2m1s
   watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0          2m1s
   ```
-  
-  
-### Step 6. Testing ML Model serving
 
-  #### Calling the `ensemble_classification-wf_en_emotion-stock` model
- 
+### Step 5. Testing ML Model serving
+
+Exceute the curl command to the inference service.
+
   ```sh
     curl -X POST "${SERVICE_URL}/v1/watson.runtime.nlp.v1/NlpService/ClassificationPredict" -H "accept: application/json" -H "grpc-metadata-mm-model-id: classification_ensemble-workflow_lang_en_tone-stock" -H "content-type: application/json" -d "{ \"rawDocument\": { \"text\": \"Watson nlp is awesome! works in knative\" }}"
   ```
-  #### Calling the `sentiment_document-cnn-workflow_en_stock` model
-  
-  ```
-  curl -X POST "${SERVICE_URL}/v1/watson.runtime.nlp.v1/NlpService/SentimentPredict" -H "accept: application/json" -H "grpc-metadata-mm-model-id: sentiment_aggregated-cnn-workflow_lang_en_stock" -H "content-type: application/json" -d "{ \"rawDocument\": { \"text\": \"Watson nlp is awesome! works in knative\" }, \"languageCode\": \"en\", \"documentSentiment\": true, \"targetPhrases\": [ \"string\" ], \"showNeutralScores\": true}"
-  ```
-  
-  
-### Step 7. Deleting the app
 
-  ```sh
-  kn service delete watson-nlp-kn
+### Conclusion
 
-  ```
-
-  ```sh
-  oc delete -f knative-service.yaml
-  ```
+This tutorial walked you through the steps to to serve pretrained Watson NLP models using Knative serving on a Red Hat OpenShift cluster. Also you observed how the Knative autoscaling scale the pod to zero when there is no traffice and if there is a traffic how the pod spins up automatically. In the tutorial, you learned how to create a Knative Deployment to run the Watson NLP runtime image.
