@@ -31,7 +31,7 @@ alias docker=podman
 
 ### Step 1. Enable `init-containers` and `volumes-emptydir` in Knative configuration
 
-> Please skip this step if you have reserved your sandbox environment in [techzone](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox)
+> Please skip this step if you had reserved a sandbox environment in [techzone](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox)
 
 Save `config-features` config map in your current directory.
 
@@ -42,14 +42,13 @@ oc get configmap/config-features -n knative-serving -o yaml > config-feature.yam
 
 Modify the saved yaml `config-feature.yaml` with your favourite editor and add the following lines in the data section. Please do not modify any other section and content.
 
-> There is an example file `deployment/config-feature.yaml` in deployment directory for your reference.
-
 ```yaml
 apiVersion: v1
 data:
   kubernetes.podspec-init-containers: enabled
   kubernetes.podspec-volumes-emptydir: enabled
 ```
+> There is an example file `deployment/config-feature.yaml` in deployment directory for your reference.
 
 Apply the configuration
 
