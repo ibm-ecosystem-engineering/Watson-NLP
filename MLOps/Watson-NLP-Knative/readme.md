@@ -34,10 +34,10 @@ alias docker=podman
 
 Save `config-features` config map in your current directory.
 
-``sh
+```sh
 oc get configmap/config-features -n knative-serving -o yaml > config-feature.yaml
 
-``
+```
 
 Modify the saved yaml `config-feature.yaml` with your favourite editor and add the following lines in the data section. Please do not modify any other section and content.
 
