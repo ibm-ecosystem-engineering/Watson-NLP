@@ -156,7 +156,7 @@ You should not see any pod runnng. If you see the 'watson-nlp-kn' is running wai
   watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0          2m1s
   ```
 
-### Step 5. Testing ML Model serving
+### Step 5. Testing inference service
 
 Exceute the curl command to the inference service.
 
