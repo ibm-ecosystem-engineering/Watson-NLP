@@ -17,7 +17,6 @@ To follow this tutorial, you need:
   - If you are using your own cluster, please follow the below instructions to install Knative Serving. In this tutorial we will use the OpenShift Serverless Operator to install Knative Serving.
     - [Install the OpenShift Serverless Operator](https://docs.openshift.com/container-platform/4.10/serverless/install/install-serverless-operator.html)
     - [Install Knative Serving](https://docs.openshift.com/container-platform/4.10/serverless/install/installing-knative-serving.html)
-- (Optional) The Knative CLI client ```kn``` can be used to simplify the deployment. [Install the Knative CLI](https://knative.dev/docs/client/install-kn/)
 - Red Hat OpenShift CLI (```oc```) installed, and configured to talk to your cluster.
 - Your Kubernetes or Red Hat OpenShift cluster namespace must have access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
 
