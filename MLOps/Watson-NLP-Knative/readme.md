@@ -61,6 +61,7 @@ Clone the repository containing code used in this tutorial.
 
 ```sh
 git clone https://github.com/ibm-build-labs/Watson-NLP
+cd Watson-NLP/MLOps/Watson-NLP-Knative/deployment
 ```
 
 ### Step 3. Deploy the service
