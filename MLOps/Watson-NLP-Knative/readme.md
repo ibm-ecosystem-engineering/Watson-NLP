@@ -10,10 +10,10 @@ Using approach allows for models to be kept in separate container images from th
 
 ## Prerequisites
 
-To follow this tutorial you need:
+To follow this tutorial you need the following.
 
-- [Docker Desktop](https://docs.docker.com/get-docker/) installed.
-- You have access to an OpenShift Container Platform account with cluster administrator access. For this tutorial, you can reserve an [OpenShift Sandbox](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox).
+- Install [Docker Desktop](https://docs.docker.com/get-docker/).
+- You must have access to an OpenShift Container Platform account with cluster administrator access. For this tutorial, you can reserve an [OpenShift Sandbox](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox).
   - If you are using your own cluster, please follow the below instructions to install Knative Serving. In this tutorial we will use the OpenShift Serverless Operator to install Knative Serving.
     - [Install the OpenShift Serverless Operator](https://docs.openshift.com/container-platform/4.10/serverless/install/install-serverless-operator.html)
     - [Install Knative Serving](https://docs.openshift.com/container-platform/4.10/serverless/install/installing-knative-serving.html)
