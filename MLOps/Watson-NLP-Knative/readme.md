@@ -1,16 +1,16 @@
-# Serve Watson MLP Models Using Knative Serving init-container method
+# Serve Watson MLP Models Using Knative Serving 
 
-With IBM Watson NLP, IBM introduced a common library for natural language processing, document understanding, translation, and trust. IBM Watson NLP brings everything under one umbrella for consistency and ease of development and deployment. This tutorial walks you through the steps to serve pretrained Watson NLP models using **Knative Serving** in a Red Hat OpenShift cluster.
+With IBM Watson NLP, IBM introduced a common library for natural language processing, document understanding, translation, and trust. IBM Watson NLP brings everything under one umbrella for consistency and ease of development and deployment. This tutorial walks you through the steps to serve pretrained Watson NLP models using Knative Serving in a Red Hat OpenShift cluster.
 
-**Knative Serving** is an Open-Source Enterprise-level solution to build Serverless and Event Driven Applications in Kubernetes / OpenShift cluster. For more information see [https://knative.dev/docs/](https://knative.dev/docs/).
+Knative Serving is an Open-Source Enterprise-level solution to build Serverless and Event Driven Applications in Kubernetes / OpenShift cluster. For more information see [https://knative.dev/docs/](https://knative.dev/docs/).
 
-In the tutorial, you create a `Knative Service` to run the Watson NLP runtime image. In the Knative Service Manifest, pretrained model images are specified as init containers. These init containers run to completion before the main application starts, and provision models to the emptyDir volume of the Pod. When the Watson NLP Runtime container starts, it loads the models and begins serving them.
+In this tutorial you will create a Knative Service to run the Watson NLP runtime image. In the Knative Service Manifest, pretrained model images are specified as init containers. These init containers run to completion before the main application starts, and provision models to the emptyDir volume of the Pod. When the Watson NLP Runtime container starts, it loads the models and begins serving them.
 
-When using this approach, models are kept in separate containers from the runtime. To change the set of served models you need only to update the Knative service Manifest.
+Using approach allows for models to be kept in separate container images from the runtime container image. To change the set of served models you need only to update the Knative Service Manifest.
 
 ## Prerequisites
 
-To follow this tutorial, you need:
+To follow this tutorial you need:
 
 - [Docker Desktop](https://docs.docker.com/get-docker/) installed.
 - You have access to an OpenShift Container Platform account with cluster administrator access. For this tutorial, you can reserve an [OpenShift Sandbox](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox).
