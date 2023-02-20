@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: watson-nlp-runtime
+spec:
+  selector:
+    matchLabels:
+      app: watson-nlp-runtime
+  strategy:
+    type: Recreate
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: watson-nlp-runtime
+    spec:
+      initContainers:
+      - name: syntax-izumo-lang-en-stock
+        image: cp.icr.io/cp/ai/watson-nlp_syntax_izumo_lang_en_stock:1.0.9
+        volumeMounts:
+        - name: model-directory
+          mountPath: "/app/models"
+        env:
+        - name: ACCEPT_LICENSE
+          value: "true"
+      - name: syntax-izumo-lang-fr-stock
+        image: cp.icr.io/cp/ai/watson-nlp_syntax_izumo_lang_fr_stock:1.0.9
+        volumeMounts:
+        - name: model-directory
+          mountPath: "/app/models"
+        env:
+        - name: ACCEPT_LICENSE
+          value: "true"
+      containers:
+      - name: watson-nlp-runtime
+        image: cp.icr.io/cp/ai/watson-nlp-runtime:1.1.0
+        env:
+        - name: ACCEPT_LICENSE
+          value: "true"
+        - name: LOCAL_MODELS_DIR
+          value: "/app/models"
+        - name: LOG_LEVEL
+          value: "debug"
+        - name: TLS_SERVER_KEY
+          value: "/app/tls/tls.key"
+        - name: TLS_SERVER_CERT
+          value: "/app/tls/tls.crt"
+        - name: SERVE_KEY
+          value: "/app/tls/tls.key"
+        - name: SERVE_CERT
+          value: "/app/tls/tls.crt"
+        - name: PROXY_CERT
+          value: "/app/tls/tls.crt"
+        resources:
+          requests:
+            cpu: "2"
+            memory: "4Gi"
+            ephemeral-storage: "1Gi"
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+            ephemeral-storage: "1Gi"
+        ports:
+        - containerPort: 8080
+        - containerPort: 8085
+        volumeMounts:
+        - name: model-directory
+          mountPath: "/app/models"
+        - name: watson-runtime-cert
+          mountPath: "/app/tls"
+      imagePullSecrets:
+      - name: ibm-entitlement-key
+      volumes:
+      - name: model-directory
+        emptyDir:
+          sizeLimit: 1Gi
+      - name: watson-runtime-cert
+        secret:
+          secretName: watson-runtime-cert
