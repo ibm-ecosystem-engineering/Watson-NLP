@@ -29,7 +29,7 @@ alias docker=podman
 
 ### Step 1. Enable `init-containers` and `volumes-emptydir` in Knative configuration
 
-> Skip this step if you had reserved a [Sandbox Environment](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox).
+> Skip this step if you are using the [Sandbox Environment](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox).
 
 Save `config-features` config map in your current directory.
 
@@ -38,7 +38,7 @@ oc get configmap/config-features -n knative-serving -o yaml > config-feature.yam
 
 ```
 
-Modify the saved yaml `config-feature.yaml` with your favourite editor and add the following lines in the data section. Please do not modify any other section and content.
+Modify the configuration with your favourite editor by adding the following lines in the data section. Do not modify any other section and content.
 
 ```yaml
 apiVersion: v1
@@ -46,9 +46,10 @@ data:
   kubernetes.podspec-init-containers: enabled
   kubernetes.podspec-volumes-emptydir: enabled
 ```
-> There is an example file `deployment/config-feature.yaml` in deployment directory for your reference.
 
-Apply the configuration
+There is an example file `deployment/config-feature.yaml` in deployment directory for your reference.
+
+Apply the configuration.
 
 ```sh
 oc apply -f config-feature.yaml 
@@ -63,13 +64,13 @@ git clone https://github.com/ibm-build-labs/Watson-NLP
 cd Watson-NLP/MLOps/Watson-NLP-Knative/deployment
 ```
 
-### Step 3. Deploy the service
+### Step 3. Create a Knative Service
 
-In this step you will deploy the container image to Knative Serving. During the creation of a Service, Knative performs the following steps:
+In this step you will create a Knative Service to run the Watson NLP Runtime. When creating a Service, Knative performs the following:
 
-- Creates a new immutable revision for this version of the application.
-- Creates a Route, Ingress, Service, and Load Balancer for your app.
-- Automatically scales your pods up and down, including scaling down to zero active pods.
+- Create a new immutable revision for this version of the application.
+- Create a Route, Ingress, Service, and Load Balancer for your app.
+- Automatically scale replicas up and down based on request load, including scaling down to zero active replicas.
 
 ***To deploy execute the below command.***
 
