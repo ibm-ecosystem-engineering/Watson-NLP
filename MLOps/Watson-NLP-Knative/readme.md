@@ -4,7 +4,7 @@ With IBM Watson NLP, IBM introduced a common library for natural language proces
 
 Knative Serving is an Open-Source Enterprise-level solution to build Serverless and Event Driven Applications in Kubernetes / OpenShift cluster. For more information see [https://knative.dev/docs/](https://knative.dev/docs/).
 
-In this tutorial you will create a Knative Service to run the Watson NLP runtime image. In the Knative Service Manifest, pretrained model images are specified as init containers. These init containers run to completion before the main application starts, and provision models to the emptyDir volume of the Pod. When the Watson NLP Runtime container starts, it loads the models and begins serving them.
+A *Knative Service* is conceptually similar to a Kubernetes Deployment. In this tutorial you will create a Knative Service to run the Watson NLP Runtime. In the Knative Service Manifest pretrained Watson NLP model images are specified as init containers. These init containers run to completion before the main application starts, and provision models to the emptyDir volume of the Knative Service. When the Watson NLP Runtime container starts, it loads the models and begins serving them.
 
 Using approach allows for models to be kept in separate container images from the runtime container image. To change the set of served models you need only to update the Knative Service Manifest.
 
