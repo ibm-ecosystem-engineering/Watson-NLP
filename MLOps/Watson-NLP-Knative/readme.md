@@ -12,7 +12,7 @@ Using approach allows for models to be kept in separate container images from th
 
 - Install [Docker Desktop](https://docs.docker.com/get-docker/).
 - Ensure that you have access to an OpenShift Container Platform account with cluster administrator access. 
-  - For this tutorial, you can reserve an [OpenShift Sandbox](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox).
+  - For this tutorial, you can reserve a [Sandbox Environment](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox).
   - Alternatively, if you are using your own cluster, follow the instructions below to install Knative Serving.
     - [Install the OpenShift Serverless Operator](https://docs.openshift.com/container-platform/4.10/serverless/install/install-serverless-operator.html)
     - [Install Knative Serving](https://docs.openshift.com/container-platform/4.10/serverless/install/installing-knative-serving.html)
@@ -29,7 +29,7 @@ alias docker=podman
 
 ### Step 1. Enable `init-containers` and `volumes-emptydir` in Knative configuration
 
-> Please skip this step if you had reserved a sandbox environment in [techzone](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox)
+> Skip this step if you had reserved a [Sandbox Environment](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox).
 
 Save `config-features` config map in your current directory.
 
