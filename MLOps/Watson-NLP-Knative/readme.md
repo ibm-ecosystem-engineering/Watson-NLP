@@ -27,9 +27,11 @@ alias docker=podman
 
 ## Steps
 
-### Step 1. Enable `init-containers` and `volumes-emptydir` in Knative configuration
+### Step 1. Configure Knative
 
 > Skip this step if you are using the [Sandbox Environment](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox).
+
+The deployment approach that we use in this tutorial relies on capabilities of Knative Service which are disabled by default. Below you will configure Knative Service to enable *init containers* and *empty directories*.
 
 Save `config-features` config map in your current directory.
 
