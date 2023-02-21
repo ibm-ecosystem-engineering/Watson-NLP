@@ -57,7 +57,7 @@ Apply the configuration.
 oc apply -f config-feature.yaml 
 ```
 
-### Step 2. Clone the GitHub repository
+### Step 2. Clone the GitHub Repository
 
 Clone the repository containing code used in this tutorial.
 
@@ -66,7 +66,7 @@ git clone https://github.com/ibm-build-labs/Watson-NLP
 cd Watson-NLP/MLOps/Watson-NLP-Knative/deployment
 ```
 
-### Step 3. Create a Knative Service
+### Step 3. Deploy the Model Service
 
 In this step you will create a Knative Service to run the Watson NLP Runtime. When a Service is created, Knative does the following:
 
@@ -76,9 +76,9 @@ In this step you will create a Knative Service to run the Watson NLP Runtime. Wh
 
 To create the Service, run the following command.
 
- ```sh
-  oc apply -f knative-service.yaml
-  ```
+```sh
+oc apply -f knative-service.yaml
+```
 
 Verify that the service has been created.
   
@@ -91,7 +91,6 @@ You should see output similar to the following.
   ```sh
   NAME            LATESTCREATED         LATESTREADY           READY   REASON
   watson-nlp-kn   watson-nlp-kn-00001   watson-nlp-kn-00001   True    
-
   ```
   
 To check the revisions of this service:
@@ -107,7 +106,7 @@ Set the URL for the Service in an environment variable.
   export SERVICE_URL=$(oc get ksvc watson-nlp-kn  -o jsonpath="{.status.url}")
   ```
 
-### Step 4. Testing Knative autoscaling
+### Step 4. Test Knative Autoscaling
   
 With Knative autoscaling, code runs when it needs to, with Knative starting and stopping instances automatically. When there is no traffic no instance will be running of the app.
   
