@@ -82,83 +82,80 @@ oc apply -f knative-service.yaml
 
 Verify that the service has been created.
   
-  ```sh
-  oc get configuration  
-  ```
+```sh
+oc get configuration  
+```
   
 You should see output similar to the following.
   
-  ```sh
-  NAME            LATESTCREATED         LATESTREADY           READY   REASON
-  watson-nlp-kn   watson-nlp-kn-00001   watson-nlp-kn-00001   True    
-  ```
+```sh
+NAME            LATESTCREATED         LATESTREADY           READY   REASON
+watson-nlp-kn   watson-nlp-kn-00001   watson-nlp-kn-00001   True    
+```
   
 To check the revisions of this service:
   
-  ```sh
-  oc get revisions
-  
-  ```
+```sh
+oc get revisions 
+```
 
 Set the URL for the Service in an environment variable.
   
-  ```sh
-  export SERVICE_URL=$(oc get ksvc watson-nlp-kn  -o jsonpath="{.status.url}")
-  ```
+```sh
+export SERVICE_URL=$(oc get ksvc watson-nlp-kn  -o jsonpath="{.status.url}")
+```
 
 ### Step 4. Test Knative Autoscaling
   
-With Knative autoscaling, code runs when it needs to, with Knative starting and stopping instances automatically. When there is no traffic no instance will be running of the app.
+With the parameters used when creating the Service, Knative will autoscale Pods based on requests including scaling to zero when there are no requests. Run the following command.
+
+```sh
+oc get pods
+```
+
+There should be no Pods running. If you do see Pods named with prefix 'watson-nlp-kn' intially then wait for a minute or two, and they will be  automatically terminated.
+
+Next, we will make requests of the Knative Service and observe Pods get created to respond. In a second terminal, run the following to watch Pods.
+
+```sh
+oc get pods -w
+```
   
-lets Check currently running pods
-
-  ```sh
-  oc get pods
-  ```
-
-You should not see any pod runnng. If you see the 'watson-nlp-kn' is running wait for a minute and the instance should be terminated automatically.
+ In the first terminal, run following command.
   
-#### Observe the pod status changing
-
-  Open a new terminal to exceute the below command to watch pod status changing
-
-  ```sh
-  oc get pods -w
-  ```
+```sh
+curl ${SERVICE_URL}
+```
   
-  In the current terminal run the below commands to put some traffice in the service,
+Observe that one or more Pods will be created to serve the request. Over time you will see something like the following.
+
+```sh
+NAME                                             READY   STATUS    RESTARTS   AGE
+watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Pending   0          0s
+watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Pending   0          0s
+watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     ContainerCreating   0          0s
+watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     ContainerCreating   0          1s
+watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     ContainerCreating   0          1s
+watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   1/2     Running             0          2s
+watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   2/2     Running             0          30s
+watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   2/2     Terminating         0          90s
+watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   1/2     Terminating         0          110s
+watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   1/2     Terminating         0          2m1s
+watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0          2m1s
+watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0          2m1s
+watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0          2m1s
+```
+
+### Step 5. Test the Service
+
+Exceute the following command.
+
+```sh
+curl -X POST "${SERVICE_URL}/v1/watson.runtime.nlp.v1/NlpService/ClassificationPredict" -H "accept: application/json" -H "grpc-metadata-mm-model-id: classification_ensemble-workflow_lang_en_tone-stock" -H "content-type: application/json" -d "{ \"rawDocument\": { \"text\": \"Watson nlp is awesome! works in knative\" }}"
+```
   
-  ```sh
-  curl ${SERVICE_URL}
-  ```
-  
-  Observe the status of the pod. When you put some traffic, pod started to wake up and then after a while it got terminated automatically.
 
-  ```sh
-  NAME                                             READY   STATUS    RESTARTS   AGE
-  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Pending   0          0s
-  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Pending   0          0s
-  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     ContainerCreating   0          0s
-  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     ContainerCreating   0          1s
-  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     ContainerCreating   0          1s
-  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   1/2     Running             0          2s
-  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   2/2     Running             0          30s
-  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   2/2     Terminating         0          90s
-  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   1/2     Terminating         0          110s
-  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   1/2     Terminating         0          2m1s
-  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0          2m1s
-  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0          2m1s
-  watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0          2m1s
-  ```
-
-### Step 5. Testing inference service
-
-Exceute the curl command to the inference service.
-
-  ```sh
-    curl -X POST "${SERVICE_URL}/v1/watson.runtime.nlp.v1/NlpService/ClassificationPredict" -H "accept: application/json" -H "grpc-metadata-mm-model-id: classification_ensemble-workflow_lang_en_tone-stock" -H "content-type: application/json" -d "{ \"rawDocument\": { \"text\": \"Watson nlp is awesome! works in knative\" }}"
-  ```
 
 ### Conclusion
 
-This tutorial walked you through the steps to to serve pretrained Watson NLP models using Knative serving on a Red Hat OpenShift cluster. Also you observed how the Knative autoscaling scale the pod to zero when there is no traffice and if there is a traffic how the pod spins up automatically. In the tutorial, you learned how to create a Knative Deployment to run the Watson NLP runtime image.
+In this tutorial you deployed a pretrained Watson NLP Model on a Red Hat OpenShift cluster using Knative Service. Model images are specified as init-containers in the Kubernetes manifest. You further observed Knative autoscaling, including scaling to zero.
