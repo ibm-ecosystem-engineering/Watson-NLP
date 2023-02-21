@@ -1,0 +1,52 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: watson-nlp-kn
+spec:
+  template:
+    metadata:
+    spec:
+      initContainers:
+      - name: ensemble-workflow-lang-en-tone-stock
+        image: cp.icr.io/cp/ai/watson-nlp_classification_ensemble-workflow_lang_en_tone-stock:1.0.6
+        volumeMounts:
+        - name: model-directory
+          mountPath: "/app/models"
+        env:
+        - name: ACCEPT_LICENSE
+          value: 'true'
+        resources:
+          requests:
+            memory: "100Mi"
+            cpu: "100m"
+          limits:
+            memory: "200Mi"
+            cpu: "200m"
+      containers:
+      - name: watson-nlp-runtime
+        image: cp.icr.io/cp/ai/watson-nlp-runtime:1.0.18
+        env:
+        - name: ACCEPT_LICENSE
+          value: 'true'
+        - name: LOCAL_MODELS_DIR
+          value: "/app/models"
+        - name: LOG_LEVEL
+          value: debug
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "4Gi"
+            cpu: "2"
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: model-directory
+          mountPath: "/app/models"
+      imagePullSecrets:
+      - name: watson-nlp
+      volumes:
+      - name: model-directory
+        emptyDir: {}
+        
