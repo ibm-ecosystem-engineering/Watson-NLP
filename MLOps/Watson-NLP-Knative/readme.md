@@ -31,7 +31,7 @@ alias docker=podman
 
 > Skip this step if you are using the [Sandbox Environment](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox).
 
-The deployment approach that we use in this tutorial relies on capabilities of Knative Service which are disabled by default. Below you will configure Knative Service to enable *init containers* and *empty directories*.
+The deployment approach that we use in this tutorial relies on capabilities of Knative Serving that are disabled by default. Below you will configure Knative Service to enable *init containers* and *empty directories*.
 
 Save `config-features` config map in your current directory.
 
@@ -68,25 +68,25 @@ cd Watson-NLP/MLOps/Watson-NLP-Knative/deployment
 
 ### Step 3. Create a Knative Service
 
-In this step you will create a Knative Service to run the Watson NLP Runtime. When creating a Service, Knative performs the following:
+In this step you will create a Knative Service to run the Watson NLP Runtime. When a Service is created, Knative does the following:
 
-- Create a new immutable revision for this version of the application.
-- Create a Route, Ingress, Service, and Load Balancer for your app.
-- Automatically scale replicas up and down based on request load, including scaling down to zero active replicas.
+- It creates a new immutable revision for this version of the application.
+- It creates a Route, Ingress, Service, and Load Balancer for your application.
+- It automatically scales replicas based on request load, including scaling to zero active replicas.
 
-***To deploy execute the below command.***
+To create the Service, run the following command.
 
  ```sh
   oc apply -f knative-service.yaml
   ```
 
-***Check if the service is up and running***
+Verify that the service has been created.
   
   ```sh
   oc get configuration  
   ```
   
-***Output:***
+You should see output similar to the following.
   
   ```sh
   NAME            LATESTCREATED         LATESTREADY           READY   REASON
@@ -94,20 +94,14 @@ In this step you will create a Knative Service to run the Watson NLP Runtime. Wh
 
   ```
   
-***check revision***
+To check the revisions of this service:
   
   ```sh
   oc get revisions
   
   ```
-  
-***Get the service url***
 
-  ```sh
-  oc get ksvc watson-nlp-kn  -o jsonpath="{.status.url}"
-  ```
-
-***Set the SERVICE_URL***
+Set the URL for the Service in an environment variable.
   
   ```sh
   export SERVICE_URL=$(oc get ksvc watson-nlp-kn  -o jsonpath="{.status.url}")
