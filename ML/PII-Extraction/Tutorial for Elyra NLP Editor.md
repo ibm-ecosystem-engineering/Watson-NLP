@@ -1,4 +1,4 @@
-# Tutorial for Elytra NLP Rules Editor
+# Tutorial for Elyra NLP Rules Editor
 
 This tutorial explains the basic concepts in the NLP editor for generating the custom rules for detecting Driving License Number.
 
