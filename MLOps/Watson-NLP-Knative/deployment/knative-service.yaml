@@ -5,6 +5,8 @@ metadata:
 spec:
   template:
     metadata:
+      annotations:
+        queue.sidecar.serving.knative.dev/resourcePercentage: "10"
     spec:
       initContainers:
       - name: ensemble-workflow-lang-en-tone-stock
