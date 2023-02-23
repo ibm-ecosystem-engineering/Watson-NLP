@@ -35,9 +35,8 @@ The deployment approach that we use in this tutorial relies on capabilities of K
 
 Save `config-features` config map in your current directory.
 
-```sh
+```bash
 oc get configmap/config-features -n knative-serving -o yaml > config-feature.yaml
-
 ```
 
 Modify the configuration with your favourite editor by adding the following lines in the data section. Do not modify any other section and content.
@@ -53,7 +52,7 @@ There is an example file `deployment/config-feature.yaml` in deployment director
 
 Apply the configuration.
 
-```sh
+```bash
 oc apply -f config-feature.yaml 
 ```
 
@@ -61,7 +60,7 @@ oc apply -f config-feature.yaml
 
 Clone the repository containing code used in this tutorial.
 
-```sh
+```bash
 git clone https://github.com/ibm-build-labs/Watson-NLP
 cd Watson-NLP/MLOps/Watson-NLP-Knative/deployment
 ```
@@ -76,32 +75,32 @@ In this step you will create a Knative Service to run the Watson NLP Runtime. Wh
 
 To create the Service, run the following command.
 
-```sh
+```bash
 oc apply -f knative-service.yaml
 ```
 
 Verify that the service has been created.
   
-```sh
+```bash
 oc get configuration  
 ```
   
 You should see output similar to the following.
   
-```sh
+```
 NAME            LATESTCREATED         LATESTREADY           READY   REASON
 watson-nlp-kn   watson-nlp-kn-00001   watson-nlp-kn-00001   True    
 ```
   
 To check the revisions of this service:
   
-```sh
+```bash
 oc get revisions 
 ```
 
 Set the URL for the Service in an environment variable.
   
-```sh
+```bash
 export SERVICE_URL=$(oc get ksvc watson-nlp-kn  -o jsonpath="{.status.url}")
 ```
 
@@ -109,7 +108,7 @@ export SERVICE_URL=$(oc get ksvc watson-nlp-kn  -o jsonpath="{.status.url}")
   
 With the parameters used when creating the Service, Knative will autoscale Pods based on requests including scaling to zero when there are no requests. Run the following command.
 
-```sh
+```bash
 oc get pods
 ```
 
@@ -117,19 +116,19 @@ There should be no Pods running. If you do see Pods named with prefix 'watson-nl
 
 Next, we will make requests of the Knative Service and observe Pods get created to respond. In a second terminal, run the following to watch Pods.
 
-```sh
+```bash
 oc get pods -w
 ```
   
  In the first terminal, run following command.
   
-```sh
+```bash
 curl ${SERVICE_URL}
 ```
   
 Observe that one or more Pods will be created to serve the request. Over time you will see something like the following.
 
-```sh
+```
 NAME                                             READY   STATUS    RESTARTS   AGE
 watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Pending   0          0s
 watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Pending   0          0s
@@ -150,7 +149,7 @@ watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0  
 
 Exceute the following command.
 
-```sh
+```bash
 curl -X POST "${SERVICE_URL}/v1/watson.runtime.nlp.v1/NlpService/ClassificationPredict" -H "accept: application/json" -H "grpc-metadata-mm-model-id: classification_ensemble-workflow_lang_en_tone-stock" -H "content-type: application/json" -d "{ \"rawDocument\": { \"text\": \"Watson nlp is awesome! works in knative\" }}"
 ```
   
