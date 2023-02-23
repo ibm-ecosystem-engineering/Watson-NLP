@@ -32,7 +32,7 @@ You will find below instructions for running the NLP Editor frontend and the AQL
 
 5. Open http://localhost:8080 in a web browser. 
 
-![step1](Watson-NLP/Screenshots/Elyra%20doc%20step1.png)
+![step1](../../Screenshots/Elyra%20doc%20step1.png)
 
 
 # Generate the custom rules for Driving License Number 
@@ -40,7 +40,7 @@ You will find below instructions for running the NLP Editor frontend and the AQL
 ## 1. Set up the input document
 Expand the Extractors, drag and drop Input Documents on the canvas. Configure with document [Driving License Data](https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/PII-Extraction/PII_faker_LicenseNumber_sentances.txt). Click Upload, then Close.
 
-![step2](Watson-NLP/Screenshots/Elyra%20doc%20step2.png)
+![step2](../../Screenshots/Elyra%20doc%20step2.png)
 
 ## 2. Create a dictionary of Driving License Keywords
 
@@ -48,13 +48,13 @@ Under **Extractors**, drag **Dictionary** on the canvas. Connect its input to th
 Rename the node to `DLicence` and enter the terms: `Driving` and `Licence`, check the IGNORE CASE option BELOW. Click **Save**.
 (Skip the test if you want to detect direct Driving Licence number without any context)
 
-![step3](Watson-NLP/Screenshots/Elyra%20doc%20step3.png)
+![step3](../../Screenshots/Elyra%20doc%20step3.png)
 
 ## 3. Run the dictionary and see results highlighted
 
 Select the `DLicence` node, and click **Run**.
 
-![step4](Watson-NLP/Screenshots/Elyra%20doc%20step4.png)
+![step4](../../Screenshots/Elyra%20doc%20step4.png)
 
 ## 4. Create a regular expression to capture Driving Licence Number 
 
@@ -75,15 +75,15 @@ Combined regular expression: `\b[a-zA-Z]{1}[0-9]{8}(\b)|\b[0-9]{9}($|\b)|\b[0-9]
 
 Under Extractors, drag RegEx to the canvas. Name it `Driving_Licence_Number` and specify the regular expression as explain above. Click Save, then Run. The regular expression captures mentions of Driving Licence Number.
 
-![step5](Watson-NLP/Screenshots/Elyra%20doc%20step5.png)
+![step5](../../Screenshots/Elyra%20doc%20step5.png)
 
-![step6](Watson-NLP/Screenshots/Elyra%20doc%20step6.png)
+![step6](../../Screenshots/Elyra%20doc%20step6.png)
 
 ## 5. Create a sequence to combine the Driving Licence key words and Driving License Number 
 
 Create a sequence called `Driving_Licence_Detect` and specify the pattern as `(<DLicence .DLicence >)<Token>{1,2}(<Driving_Licence_Number.Driving_Licence_Number>)`, Click **Save** and **Run**.
 
-![step7](Watson-NLP/Screenshots/Elyra%20doc%20step7.png)
+![step7](../../Screenshots/Elyra%20doc%20step7.png)
 
 This step helps to identify Driving Licence Number with Keywords. If you want to detect only Driving Licence Number without Keywords then skip the step3 and step5 and directly prepare Regex patterns as shown in step4.
 
@@ -93,11 +93,11 @@ This step helps to identify Driving Licence Number with Keywords. If you want to
 If you notice the result of step 5, it can not detect Driving Licence Number if Keyword are after the numbers. We can add Consolidate canvas for resolving this issue. Under Refinement, drag Consolidate on the canvas and connect its input with Driving_Licence_Detect. Rename it to Driving_Licence_Consolidated Click Save.
 
 
-![step8](Watson-NLP/Screenshots/Elyra%20doc%20step8.png)
+![step8](../../Screenshots/Elyra%20doc%20step8.png)
 
 Select the `Driving_Licence_Consolidated` node, and click Run.
 
 
-![step9](Watson-NLP/Screenshots/Elyra%20doc%20step9.png)
+![step9](../../Screenshots/Elyra%20doc%20step9.png)
 
 The above result detect all the available Driving Licence Numbers in the document. So now select the final `Driving_Licence_Consolidated` canvas and click on the export button. It will generate the `NLP_Canvas_Export.zip` file for the custom rules to detect the Driving Licencee Number. This exported zip file will be used in [`PII Extraction - Custom-RBR Models Notebook`](https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/PII-Extraction/PII%20Extraction%20-%20Custom-RBR%20Models.ipynb) to create a custom rule based model in the Watson NLP library.
