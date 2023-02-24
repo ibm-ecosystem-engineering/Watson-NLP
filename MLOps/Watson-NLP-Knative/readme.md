@@ -114,14 +114,34 @@ oc get pods
 
 Pods belonging to the Knative Service should have the prefix `watson-nlp-kn`. Initially, there should be none. If you do see some, then wait for a minute or two and they will be  automatically terminated.
 
-Run following command to trigger the Knative Service to start up Pods.
+Run following command in the background to trigger the Knative Service to start up Pods.
   
 ```bash
-curl ${SERVICE_URL}
+curl ${SERVICE_URL} &
 ```
 
-Soon you should see Pods being created. They may take some time to start up if the images need to be downloaded.
-  
+You can watch the Pods being created to in response to the request, and then later terminated, using the following command.
+
+```bash
+oc get pods -w
+```
+
+The output will be similar to the following.
+
+```
+NAME                                              READY   STATUS     RESTARTS   AGE
+watson-nlp-kn-00001-deployment-6f8b5d7494-cdvqb   0/2     Init:0/1   0          15s
+watson-nlp-kn-00001-deployment-6f8b5d7494-cdvqb   0/2     PodInitializing   0          75s
+watson-nlp-kn-00001-deployment-6f8b5d7494-cdvqb   1/2     Running           0          76s
+watson-nlp-kn-00001-deployment-6f8b5d7494-cdvqb   2/2     Running           0          2m
+watson-nlp-kn-00001-deployment-6f8b5d7494-cdvqb   2/2     Terminating       0          3m
+watson-nlp-kn-00001-deployment-6f8b5d7494-cdvqb   1/2     Terminating       0          3m20s
+watson-nlp-kn-00001-deployment-6f8b5d7494-cdvqb   1/2     Terminating       0          3m30s
+watson-nlp-kn-00001-deployment-6f8b5d7494-cdvqb   0/2     Terminating       0          3m32s
+```
+
+Use `ctrl-c` to break out of the command.
+
 ### Step 5. Test the Service
 
 In this step, you will make an inference request on the model using the REST interface. Exceute the following command.
