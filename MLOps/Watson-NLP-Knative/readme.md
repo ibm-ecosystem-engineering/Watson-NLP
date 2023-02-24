@@ -16,7 +16,7 @@ Using approach allows for models to be kept in separate container images from th
   - Alternatively, if you are using your own cluster, follow the instructions below to install Knative Serving.
     - [Install the OpenShift Serverless Operator](https://docs.openshift.com/container-platform/4.10/serverless/install/install-serverless-operator.html)
     - [Install Knative Serving](https://docs.openshift.com/container-platform/4.10/serverless/install/installing-knative-serving.html)
-- Install the Red Hat OpenShift CLI (```oc```) and log in to your OpenShift cluster.
+- Install the Red Hat OpenShift CLI (```oc```) and log in to the OpenShift cluster.
 - Create a Docker registry secret in the Kubernetes project that grants access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
 
 **Tip:** Podman provides a Docker-compatible command-line front end. Unless otherwise noted, all of the Docker commands in this tutorial should work for Podman if you alias the Docker CLI with the shell command:
