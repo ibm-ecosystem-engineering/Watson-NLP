@@ -147,13 +147,53 @@ watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0  
 
 ### Step 5. Test the Service
 
-Exceute the following command.
+In this step, you will make an inference request on the model using the REST interface. Exceute the following command.
 
 ```bash
-curl -X POST "${SERVICE_URL}/v1/watson.runtime.nlp.v1/NlpService/ClassificationPredict" -H "accept: application/json" -H "grpc-metadata-mm-model-id: classification_ensemble-workflow_lang_en_tone-stock" -H "content-type: application/json" -d "{ \"rawDocument\": { \"text\": \"Watson nlp is awesome! works in knative\" }}"
+curl -X POST "${SERVICE_URL}/v1/watson.runtime.nlp.v1/NlpService/ClassificationPredict" -H "accept: application/json" -H "grpc-metadata-mm-model-id: classification_ensemble-workflow_lang_en_tone-stock" -H "content-type: application/json" -d "{ \"rawDocument\": { \"text\": \"Watson nlp is awesome! works in knative\" }}" | jq
+```
+
+You will see output similar to the following.
+
+```
+{
+  "classes": [
+    {
+      "className": "satisfied",
+      "confidence": 0.6308287
+    },
+    {
+      "className": "excited",
+      "confidence": 0.5176963
+    },
+    {
+      "className": "polite",
+      "confidence": 0.3245624
+    },
+    {
+      "className": "sympathetic",
+      "confidence": 0.1331128
+    },
+    {
+      "className": "sad",
+      "confidence": 0.023583649
+    },
+    {
+      "className": "frustrated",
+      "confidence": 0.0158445
+    },
+    {
+      "className": "impolite",
+      "confidence": 0.0021891927
+    }
+  ],
+  "producerId": {
+    "name": "Voting based Ensemble",
+    "version": "0.0.1"
+  }
+}
 ```
   
-
 
 ### Conclusion
 
