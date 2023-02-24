@@ -6,7 +6,7 @@ Knative Serving is an Open-Source Enterprise-level solution to build Serverless 
 
 In this tutorial you will create a Knative Service to run the Watson NLP Runtime. Pods of this Knative Service specify Watson NLP pretrained model images as init containers. These init containers run to completion before the main application starts in the Pod. They will provision models to the emptyDir volume of the Pod. When the Watson NLP Runtime container starts, it loads the models and begins serving them.
 
-Using approach allows for models to be kept in separate container images from the runtime container image. To change the set of served models you need only to update the Knative Service Manifest.
+Using this approach allows for models to be kept in separate container images from the runtime container image. To change the set of served models you need only to update the Knative Service Manifest.
 
 ## Reference Architecture
 
