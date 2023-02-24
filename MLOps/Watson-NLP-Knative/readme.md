@@ -112,7 +112,7 @@ With the parameters used when creating the Service, Knative will autoscale Pods 
 oc get pods
 ```
 
-There should be no Pods running. If you do see Pods named with prefix 'watson-nlp-kn' intially then wait for a minute or two, and they will be  automatically terminated.
+There should be no Pods running. If you do see Pods named with prefix `watson-nlp-kn` intially then wait for a minute or two, and they will be  automatically terminated.
 
 Next, we will make requests of the Knative Service and observe Pods get created to respond. In a second terminal, run the following to watch Pods.
 
