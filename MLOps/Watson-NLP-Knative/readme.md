@@ -8,6 +8,10 @@ In this tutorial you will create a Knative Service to run the Watson NLP Runtime
 
 Using approach allows for models to be kept in separate container images from the runtime container image. To change the set of served models you need only to update the Knative Service Manifest.
 
+## Reference Architecture
+
+![Reference architecture for Knative deployment pattern.](images/Knative.png) 
+
 ## Prerequisites
 
 - Install [Docker Desktop](https://docs.docker.com/get-docker/).
