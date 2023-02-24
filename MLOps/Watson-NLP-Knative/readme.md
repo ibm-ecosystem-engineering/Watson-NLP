@@ -106,45 +106,22 @@ export SERVICE_URL=$(oc get ksvc watson-nlp-kn  -o jsonpath="{.status.url}")
 
 ### Step 4. Test Knative Autoscaling
   
-With the parameters used when creating the Service, Knative will autoscale Pods based on requests including scaling to zero when there are no requests. Run the following command.
+With the parameters used when creating the Service, Knative will autoscale Pods based on requests including scaling to zero when there are no requests. Run the following command to list the Pods in your OpenShift Project.
 
 ```bash
 oc get pods
 ```
 
-Initially, there should be no Pods running. If you do see Pods named with prefix `watson-nlp-kn` intially then wait for a minute or two, and they will be  automatically terminated.
+Pods belonging to the Knative Service should have the prefix `watson-nlp-kn`. Initially, there should be none. If you do see some, then wait for a minute or two and they will be  automatically terminated.
 
-Next, we will make requests of the Knative Service and observe Pods get created to respond. In a second terminal, run the following to watch Pods.
-
-```bash
-oc get pods -w
-```
-  
- In the first terminal, run following command.
+Run following command to trigger the Knative Service to start up Pods.
   
 ```bash
 curl ${SERVICE_URL}
 ```
+
+Soon you should see Pods being created. They may take some time to start up if the images need to be downloaded.
   
-Observe that one or more Pods will be created to serve the request. Over time you will see something like the following.
-
-```
-NAME                                             READY   STATUS    RESTARTS   AGE
-watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Pending   0          0s
-watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Pending   0          0s
-watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     ContainerCreating   0          0s
-watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     ContainerCreating   0          1s
-watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     ContainerCreating   0          1s
-watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   1/2     Running             0          2s
-watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   2/2     Running             0          30s
-watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   2/2     Terminating         0          90s
-watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   1/2     Terminating         0          110s
-watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   1/2     Terminating         0          2m1s
-watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0          2m1s
-watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0          2m1s
-watson-nlp-kn-00001-deployment-6966f5cc9-pfkrc   0/2     Terminating         0          2m1s
-```
-
 ### Step 5. Test the Service
 
 In this step, you will make an inference request on the model using the REST interface. Exceute the following command.
