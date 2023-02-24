@@ -12,7 +12,7 @@ Using approach allows for models to be kept in separate container images from th
 
 - Install [Docker Desktop](https://docs.docker.com/get-docker/).
 - Ensure that you have access to an OpenShift Container Platform account with cluster administrator access. 
-  - For this tutorial, you can reserve a [Sandbox Environment](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox).
+  - For this tutorial, you can reserve a [Sandbox Environment](https://techzone.ibm.com/collection/watson-nlp-serving-nlp-models#tab-4). When you reserve this, a Project will be created for you in an OpenShift cluster. You will recieve an email with instructions on accessing the environment.
   - Alternatively, if you are using your own cluster, follow the instructions below to install Knative Serving.
     - [Install the OpenShift Serverless Operator](https://docs.openshift.com/container-platform/4.10/serverless/install/install-serverless-operator.html)
     - [Install Knative Serving](https://docs.openshift.com/container-platform/4.10/serverless/install/installing-knative-serving.html)
