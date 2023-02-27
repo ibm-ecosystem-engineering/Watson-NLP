@@ -118,11 +118,13 @@ oc get pods
 
 Pods belonging to the Knative Service should have the prefix `watson-nlp-kn`. Initially, there should be none. If you do see some, then wait for a minute or two and they will be  automatically terminated.
 
-Run following command in the background to trigger the Knative Service to start up Pods.
+Run following command to trigger the Knative Service to start up Pods.
   
 ```bash
-curl ${SERVICE_URL} &
+curl ${SERVICE_URL}
 ```
+
+Use `ctrl-c` to break out of the command.
 
 You can watch the Pods being created to in response to the request, and then later terminated, using the following command.
 
