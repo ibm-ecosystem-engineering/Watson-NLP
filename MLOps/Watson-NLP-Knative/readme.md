@@ -10,7 +10,7 @@ Using this approach allows for models to be kept in separate container images fr
 
 ## Reference Architecture
 
-![Reference architecture for Knative deployment pattern.](images/Knative.png) 
+![Reference architecture for Knative deployment pattern.](images/knative.png) 
 
 ## Prerequisites
 
