@@ -1,0 +1,54 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: watson-nlp-rest-ksvc
+spec:
+  template:
+    metadata:
+      annotations:
+        queue.sidecar.serving.knative.dev/resourcePercentage: "10"
+    spec:
+      initContainers:
+      - name: syntax-izumo-lang-en-stock
+        image: cp.icr.io/cp/ai/watson-nlp_syntax_izumo_lang_en_stock:1.0.9
+        volumeMounts:
+        - name: model-directory
+          mountPath: "/app/models"
+        env:
+        - name: ACCEPT_LICENSE
+          value: "true"
+      - name: syntax-izumo-lang-fr-stock
+        image: cp.icr.io/cp/ai/watson-nlp_syntax_izumo_lang_fr_stock:1.0.9
+        volumeMounts:
+        - name: model-directory
+          mountPath: "/app/models"
+        env:
+        - name: ACCEPT_LICENSE
+          value: "true"
+      containers:
+      - name: watson-nlp-runtime
+        image: cp.icr.io/cp/ai/watson-nlp-runtime:1.1.0
+        env:
+        - name: ACCEPT_LICENSE
+          value: 'true'
+        - name: LOCAL_MODELS_DIR
+          value: "/app/models"
+        - name: LOG_LEVEL
+          value: debug
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "2"
+          limits:
+            memory: "4Gi"
+            cpu: "2"
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: model-directory
+          mountPath: "/app/models"
+      imagePullSecrets:
+      - name: ibm-entitlement-key
+      volumes:
+      - name: model-directory
+        emptyDir: {}
