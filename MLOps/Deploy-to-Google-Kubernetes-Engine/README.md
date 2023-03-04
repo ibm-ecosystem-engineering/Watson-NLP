@@ -80,7 +80,7 @@ Where the content of `openssl-san.conf` looks like:
 [req]
 distinguished_name = req
 [san]
-subjectAltName = DNS:localhost,IP:0.0.0.0
+subjectAltName = DNS:localhost
 ```
 
 Run the following command to store the TLS certificate and private key in a Secret:
