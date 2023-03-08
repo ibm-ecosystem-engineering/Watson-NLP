@@ -37,27 +37,21 @@ alias docker=podman
 
 The deployment approach that we use in this tutorial relies on capabilities of Knative Serving that are disabled by default. Below you will configure Knative Service to enable *init containers* and *empty directories*.
 
-Save `config-features` config map in your current directory.
-
-```bash
-oc get configmap/config-features -n knative-serving -o yaml > config-feature.yaml
-```
-
-Modify the configuration with your favourite editor by adding the following lines in the data section. Do not modify any other section and content.
+To apply the configuration, use the following command:
 
 ```yaml
-apiVersion: v1
-data:
-  kubernetes.podspec-init-containers: enabled
-  kubernetes.podspec-volumes-emptydir: enabled
-```
-
-There is an example file `deployment/config-feature.yaml` in deployment directory for your reference.
-
-Apply the configuration.
-
-```bash
-oc apply -f config-feature.yaml 
+kubectl apply -f - <<EOF
+apiVersion: operator.knative.dev/v1beta1
+kind: KnativeServing
+metadata:
+  name: knative-serving
+  namespace: knative-serving
+spec:
+  config:
+    features:
+      kubernetes.podspec-init-containers: "enabled"
+      kubernetes.podspec-volumes-emptydir: "enabled"
+EOF
 ```
 
 ### Step 2. Clone the GitHub Repository
