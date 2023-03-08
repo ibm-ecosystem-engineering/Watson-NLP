@@ -134,7 +134,7 @@ kubectl create -f deployment/service.yaml
 The created Kubernetes Service uses an external load-balancer, as `type: LoadBalancer` suggests in its Kubernetes manifest. It might take a few minutes for the external load-balancer to become ready to accept network connections, at the IP address and port listed by the `kubectl get service watson-nlp-runtime-service` command under `EXTERNAL-IP` and `PORT(S)`, as shown in the following example:
 
 ```sh
-$ oc get service watson-nlp-runtime-service
+$ kubectl get service watson-nlp-runtime-service
 NAME                         TYPE           CLUSTER-IP   EXTERNAL-IP      PORT(S)                         AGE
 watson-nlp-runtime-service   LoadBalancer   10.7.131.0   34.123.153.123   8080:31825/TCP,8085:30357/TCP   1h34m
 ```
