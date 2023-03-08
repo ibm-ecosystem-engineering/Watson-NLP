@@ -1,4 +1,4 @@
-# Serve Watson MLP Models Using Knative Serving 
+# Serve Watson NLP Models Using Knative Serving 
 
 With IBM Watson NLP, IBM introduced a common library for natural language processing, document understanding, translation, and trust. IBM Watson NLP brings everything under one umbrella for consistency and ease of development and deployment. This tutorial walks you through the steps to serve pretrained Watson NLP models using Knative Serving in a Red Hat OpenShift cluster.
 
