@@ -7,7 +7,7 @@ IBM Watson NLP is a powerful and versatile AI library that seamlessly integrates
 
 The `watson_nlp` library is available on IBM Watson Studio as a runtime library so that you can directly use it for model training, evaluation, and prediction. The following figure shows the Watson NLP architecture.
 
-![WS-flow](images/watson-studio-flow.png)
+![WS-flow](images/Watson-Studio-flow.png)
 
 This tutorial provides an introduction to IBM Watson NLP, covering the fundamental concepts and guiding you through the process of using <b>fine-tuning</b> them for Entity Extraction.
 
