@@ -287,7 +287,7 @@ sire_custom = watson_nlp.blocks.entity_mentions.SIRE.train(train_iob_stream,
                                                            feature_extractors=[default_feature_extractor])
 ```
 
-In the above Fine-tuning, `train_iob_stream` is the training data that generate at beginning of the tutorial which includes 10,000 sentences, `en` is the language code for English, and `mentions_train_template` is the SIRE model entity mention template which we load in the beginning 
+In the above Fine-tuning, `train_iob_stream` is the training data that generate at beginning of the tutorial which includes 10,000 sentences, `en` is the language code for English, and `mentions_train_template` is the SIRE model entity mention template which we load in the beginning, it is base training template for entity mentions SIRE block using the CRF algorithm.
 
 ```
 #Save the Trained block model as a workflow model 
