@@ -43,14 +43,14 @@ The tutorial demonstrates the extraction of PII using generated training data fo
 
 ## Step 1. Generate the data for custom PII 
 
-### Step 1.1 Set Project token
+### 1. Set Project token
 Before you can begin working on notebook in Watson Studio in Cloud Pak for Data as a Service, you need to ensure that the project token is set so that you can access the project assets via the notebook.
 
 When this notebook is added to the project, a project access token should be inserted at the top of the notebook in a code cell. If you do not see the cell above, add the token to the notebook by clicking **More > Insert project token** from the notebook action bar. By running the inserted hidden code cell, a project object is created that you can use to access project resources.
 
 ![ws-project.mov](https://media.giphy.com/media/jSVxX2spqwWF9unYrs/giphy.gif)
 
-### 1.2 Generate the sample data set for train the custom PIIs using faker library. Below table shows the custom PIIs which demonstrate in this tutorial:
+### 2. Generate the sample data set for train the custom PIIs using faker library. Below table shows the custom PIIs which demonstrate in this tutorial:
 
 |Custom PIIs|
 |-----------|
@@ -216,7 +216,7 @@ The Watson NLP platform provides a fine-tune feature that allows for custom trai
 * BILSTM: the BiLSTM network would take the preprocessed text as input and learn to identify patterns and relationships between words that are indicative of PII data. The BiLSTM network would then output a probability score for each word in the text, indicating the likelihood that the word is part of a PII entity. The BiLSTM network may also be trained to recognize specific entities such as names, addresses, phone numbers, email addresses, etc.
 
 
-## Step 2.1 PII extraction function
+## 1. PII extraction function
 
 Both the model are trained from labeled data, which require the syntax block to be executed first to generate the expected input for the entity-mention block. BiLSTM model requires Glove embedding for fine tuning. It allows for words to be represented as dense vectors in a high-dimensional space, where the distance between vectors reflects the semantic similarity between the corresponding words. We can use GloVe embedding to generate vector representations of the words in our data, which can then be utilized for further analysis or modeling." is a popular method for generating vector representations of words in natural language processing. It allows for words to be represented as dense vectors in a high-dimensional space, where the distance between vectors reflects the semantic similarity between the corresponding words. We can use GloVe embedding to generate vector representations of the words in our data, which can then be utilized for further analysis or modeling."
 
@@ -233,7 +233,7 @@ mentions_train_template = watson_nlp.load(watson_nlp.download('file_path_entity-
 default_feature_extractor = watson_nlp.load(watson_nlp.download('feature-extractor_rbr_entity-mentions_sire_en_stock'))
 ```
 
-## Step 2.2 Fine-Tuning the models
+## 2. Fine-Tuning the models
 
 Fine-tuning a BiLSTM model for PII extraction involves training the model on a labeled training dataset includes examples of PII entities.
 
@@ -261,7 +261,7 @@ project.save_data('bilstm_pii_workflow_custom', data=mentions_workflow.as_file_l
 ```
 now save the model with Syntax model as workflow model so we can directly test on the input text.
 
-## 2.3 Test the Fine-Tuned Model
+## 3. Test the Fine-Tuned Model
 
 Now let's run the trained models with testing data, Here testing data is a sentence from test data which we generate before. We can fetch single sentences : `text = pd.read_json('faker_PII_text_test.json')['text'][1]` 
 
@@ -275,7 +275,7 @@ As per the above result, fine-tuned BiLSTM model can identify all trained custom
 
 * SIRE: Statistical Information and Relation Extraction (SIRE) is a technique used in natural language processing (NLP) to extract specific information and relationships from text. It involves using machine learning algorithms to identify and extract structured data such as entities, attributes, and relations from unstructured text. SIRE is used in a variety of applications, including information extraction, knowledge graph construction, and question answering. SIRE typically uses supervised learning approach, where a model is trained using annotated examples of text and the corresponding structured data. The model can then be used to extract the same information from new, unseen text.
 
-## 3.1 Fine-Tuning the models
+## 1. Fine-Tuning the models
 
 Fine-tuning a Sire model for PII extraction involves training the model on a labeled training dataset includes examples of PII entities.
 
@@ -287,7 +287,7 @@ sire_custom = watson_nlp.blocks.entity_mentions.SIRE.train(train_iob_stream,
                                                            feature_extractors=[default_feature_extractor])
 ```
 
-In the above Fine-tuning, `train_iob_stream` is the training data that generate at beginning of the tutorial which includes 10,000 sentences, `en` is the language code for English, and `mentions_train_template` is the SIRE model entity mention template which we load in the beginning 
+In the above Fine-tuning, `train_iob_stream` is the training data that generate at beginning of the tutorial which includes 10,000 sentences, `en` is the language code for English, and `mentions_train_template` is the SIRE model entity mention template which we load in the beginning, it is base training template for entity mentions SIRE block using the CRF algorithm.
 
 ```
 #Save the Trained block model as a workflow model 
@@ -300,7 +300,7 @@ project.save_data('sire_pii_workflow_custom', data=sire_workflow.as_file_like_ob
 
 now save the model with Syntax model as workflow model so we can directly test on the input text.
 
-## 3.1 Test the Fine-Tuned Model
+## 2. Test the Fine-Tuned Model
 
 Now let's run the trained models with testing data, Here testing data is a sentence from test data which we generate before. 
 
