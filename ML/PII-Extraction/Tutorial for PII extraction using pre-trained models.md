@@ -42,14 +42,14 @@ The tutorial demonstrates the extraction of PII using pre-trained Watson NLP mod
 
 ## Step 1. Generate the testing data
 
-### Step 1.1 Set Project token
+### 1. Set Project token
 Before you can begin working on notebook in Watson Studio in Cloud Pak for Data as a Service, you need to ensure that the project token is set so that you can access the project assets via the notebook.
 
 When this notebook is added to the project, a project access token should be inserted at the top of the notebook in a code cell. If you do not see the cell above, add the token to the notebook by clicking **More > Insert project token** from the notebook action bar. By running the inserted hidden code cell, a project object is created that you can use to access project resources.
 
 ![ws-project.mov](https://media.giphy.com/media/jSVxX2spqwWF9unYrs/giphy.gif)
 
-### Step 1.2 Generate the sample data set for Name, credit card number and social security number using faker library.
+### 2. Generate the sample data set for Name, credit card number and social security number using faker library.
 
 
 ```
@@ -99,7 +99,7 @@ The process of identifying and PII entities from text can be accomplished using 
 2. A model that is trained on labeled data for the more complex entity types such as persons, organizations, and locations. This model uses machine learning techniques to learn patterns and relationships between words and their corresponding entity types in order to accurately identify and extract entities from text.
 
 
-## Step 2.1 PII extraction function
+## 1. PII extraction function
 
 Rule-based models (RBR) can be directly applied to input text without any dependency on pre-processing blocks. On the other hand, models that are trained from labeled data, such as BilSTM and SIRE, require the syntax block to be executed first to generate the expected input for the entity-mention block.
 
@@ -117,7 +117,7 @@ rbr_model = watson_nlp.load(watson_nlp.download('entity-mentions_rbr_multi_pii')
 sire = watson_nlp.load(watson_nlp.download('entity-mentions_sire_en_stock-wf'))
 ```
 
-## Step 2.2 Run the Pre-Trained models for PII Extraction 
+## 2. Run the Pre-Trained models for PII Extraction 
 
 * BiLSTM Pretrained
 
