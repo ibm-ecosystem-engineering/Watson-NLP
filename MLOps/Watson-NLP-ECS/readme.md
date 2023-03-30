@@ -190,10 +190,10 @@ aws ecs describe-task-definition --task-definition "$TASK_FAMILY" --region "us-e
 
 ### Step 9: The Watson NLP ECS Services
 
-Get the subnetId
+execute the below command and create ECS service passing the task defintion.
 
 ```sh
-aws ecs run-task --cluster $CLUSTER_NAME --task-definition $TASK_FAMILY:1 --count 1 --network-configuration "awsvpcConfiguration={subnets=[subnet-0906c6ef826ea3898, subnet-0cad8624ef5e2d544, subnet-0a595854bb4af7860],securityGroups=[sg-00cd1568797e76974]}" --launch-type FARGATE 
+aws ecs run-task --cluster $CLUSTER_NAME --task-definition watson-nlp-runtime:1 --count 1 --network-configuration "awsvpcConfiguration={subnets=[subnet-0906c6ef826ea3898, subnet-0cad8624ef5e2d544, subnet-0a595854bb4af7860],securityGroups=[sg-00cd1568797e76974],assignPublicIp=ENABLED}" --launch-type FARGATE 
  ```
 
 
@@ -205,33 +205,3 @@ aws ecs list-services --cluster fargate-cluster --cluster fargate-watsonlib-ecs
 aws ecs describe-services --services ecs-watson-nlp --cluster fargate-watsonlib-ecs
 ```
 
-```sh
-TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition "$TASK_FAMILY" --region "us-east-2")
-```
-
-## get subnet id
-
-```sh
-aws ecs describe-clusters --clusters fargate-watsonlib-ecs --query 'clusters[0].settings[?name==`subnets`].value[]'
-
-```
-
-```sh
- aws ecs run-task --cluster fargate-watsonlib-ecs --task-definition ecs-watson-nlp-app:8 --count 1 --network-configuration "awsvpcConfiguration={subnets=[subnet-0b71b5a3a3da5f468, subnet-0d17b2eed77f1734b],securityGroups=[sg-087ecd95ec8bf9797]}" --launch-type FARGATE 
- ```
-
- ```sh
- aws ecs run-task --cluster fargate-watsonlib-ecs --task-definition sample-httpd-test:1 --count 1 --network-configuration "awsvpcConfiguration={subnets=[subnet-0b71b5a3a3da5f468, subnet-0d17b2eed77f1734b],securityGroups=[sg-087ecd95ec8bf9797]}" --launch-type FARGATE 
- ```
-
-```sh
-aws ecs create-service --cluster fargate-watsonlib-ecs --service-name watosn-lib-svc --task-definition ecs-watson-nlp-app:8 --desired-count 1 --launch-type "FARGATE" --network-configuration "awsvpcConfiguration={subnets=[subnet-0b71b5a3a3da5f468, subnet-0d17b2eed77f1734b],securityGroups=[sg-087ecd95ec8bf9797],assignPublicIp=ENABLED}" 
-```
-
-
-aws ecs update-service --cluster fargate-watsonlib-ecs --service watosn-lib-svc --task-definition ecs-watson-nlp-app:8 --desired-count 1 --network-configuration "awsvpcConfiguration={subnets=[subnet-0b71b5a3a3da5f468, subnet-0d17b2eed77f1734b],securityGroups=[sg-087ecd95ec8bf9797],assignPublicIp=ENABLED}"
-
-
-```sh
-aws ecs create-service --cluster fargate-watsonlib-ecs --service-name httpd-svc --task-definition sample-httpd-test:1 --desired-count 1 --launch-type "FARGATE" --network-configuration "awsvpcConfiguration={subnets=[subnet-0b71b5a3a3da5f468, subnet-0d17b2eed77f1734b],securityGroups=[sg-087ecd95ec8bf9797],assignPublicIp=ENABLED}" 
-```
