@@ -111,22 +111,15 @@ docker push ${DEFAULT_REGISTRY}/my-watson-nlp-runtime:latest
 
 ## Deploy the Runtime to Amazon ECS
 
-## Create secret to pull watsn nlp images
+Set the cluster name in an environment variable.
 
 ```sh
-aws secretsmanager create-secret \
-    --name watsonlib-ibmecs \
-    --description "IBM Watson nlp secret key to pull libraries" \
-    --secret-string "{\"user\":\"iamapikey\",\"password\":\"njaYo2ekaQiyH9kT5BaOb61VbC57-QSr4KIgofUHWJ8S\"}"
+CLUSTER_NAME=MyFargateCluster
 ```
 
-```json
-{
-    "ARN": "arn:aws:secretsmanager:us-east-2:481118440516:secret:watsonlib-ibmecs-nXztkK",
-    "Name": "watsonlib-ibmecs",
-    "VersionId": "452160d7-dc23-411a-ad4c-f3100e60ca69"
-}
-```
+## Create secret to pull watsn nlp images
+
+Create a new file name `task-definition.json` and save the following content. Please change the `image:` location where you pushed the image in the previous step. And also `executionRoleArn:` 
 
 ```json
 {
@@ -163,41 +156,46 @@ aws secretsmanager create-secret \
 }
 ```
 
-## Describe a cluster
+### Step 8: Register the task definition
 
 ```sh
-aws ecs list-clusters
+TASK_FAMILY=watson-nlp-runtime
 ```
 
 ```sh
-aws ecs describe-clusters --clusters  fargate-watsonlib-ecs
+aws ecs register-task-definition --cli-input-json file://task-definition.json
 ```
 
-## Register a task definition
-
-```sh
-aws ecs register-task-definition --cli-input-json file://task-def.json
-```
+Check if the task definition registered successfully.
 
 ```sh
 aws ecs list-task-definitions
 ```
 
+output:
+
+```json
+{
+    "taskDefinitionArns": [
+        "arn:aws:ecs:us-east-2:507003332374:task-definition/watson-nlp-runtime:1"
+    ]
+}
+```
+
+To view the task-defintion execute the below command.
+
 ```sh
 aws ecs describe-task-definition --task-definition "$TASK_FAMILY" --region "us-east-2"
 ```
 
-```sh
-aws ecs run-task --cluster fargate-watsonlib-ecs --task-definition ecs-watson-nlp-app --count 1
-```
+### Step 9: The Watson NLP ECS Services
 
-## Uninstall a task definition
+Get the subnetId
 
 ```sh
-aws ecs deregister-task-definition --task-definition ecs-watson-nlp-app:1
-```
+aws ecs run-task --cluster $CLUSTER_NAME --task-definition $TASK_FAMILY:1 --count 1 --network-configuration "awsvpcConfiguration={subnets=[subnet-0906c6ef826ea3898, subnet-0cad8624ef5e2d544, subnet-0a595854bb4af7860],securityGroups=[sg-00cd1568797e76974]}" --launch-type FARGATE 
+ ```
 
-## services
 
 ```sh
 aws ecs list-services --cluster fargate-cluster --cluster fargate-watsonlib-ecs
