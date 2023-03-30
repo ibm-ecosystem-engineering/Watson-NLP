@@ -1,0 +1,39 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "watson-nlp-container",
+            "image": "<ACCOUNT_ID>.dkr.ecr.<ZONE_ID>.amazonaws.com/my-watson-nlp-runtime:latest",
+            "portMappings": [
+                {
+                    "name": "watson-nlp-container-8080-tcp",
+                    "containerPort": 8080,
+                    "hostPort": 8080,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "ACCEPT_LICENSE",
+                    "value": "true"
+                }
+            ]
+        }
+    ],
+    "family": "watson-nlp",
+    "executionRoleArn": "arn:aws:iam::<ACCOUNT_ID>:role/ecsTaskExecutionRole",
+    "networkMode": "awsvpc",
+    "compatibilities": [
+        "FARGATE"
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "4096",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    }
+}
