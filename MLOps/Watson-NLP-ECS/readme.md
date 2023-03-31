@@ -111,55 +111,68 @@ docker push ${DEFAULT_REGISTRY}/my-watson-nlp-runtime:latest
 
 ## Deploy the Runtime to Amazon ECS
 
-Set the cluster name in an environment variable.
+Set the cluster name in an environment variable. The cluster I am using here is `MyFargateCluster`, your cluster name might be different, make sure you set correct cluster name.
 
 ```sh
 CLUSTER_NAME=MyFargateCluster
+REGION=us-east-2
 ```
 
-## Create secret to pull watsn nlp images
+Create a new file name `task-definition.json` and save the following content. Please change the `image:` location where you pushed the image in the previous step. And also `executionRoleArn:` you will find it in the in aws console.
 
-Create a new file name `task-definition.json` and save the following content. Please change the `image:` location where you pushed the image in the previous step. And also `executionRoleArn:` 
 
 ```json
 {
-    "family": "ecs-watson-nlp-app", 
-    "networkMode": "awsvpc", 
     "containerDefinitions": [
         {
-            "name": "watson-nlp-app", 
-            "image": "us.icr.io/watson-core-demo/watson-nlp-demo:v1", 
-            "repositoryCredentials": {
-                "credentialsParameter": "arn:aws:secretsmanager:us-east-2:481118440516:secret:watsonlib-ibmecs-nXztkK"
-            },
+            "name": "watson-nlp-container",
+            "image": "CHANGE_ME",
+            "cpu": 0,
             "portMappings": [
                 {
-                    "containerPort": 8080, 
-                    "hostPort": 8080, 
-                    "protocol": "tcp"
+                    "name": "watson-nlp-container-8080-tcp",
+                    "containerPort": 8080,
+                    "hostPort": 8080,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
                 }
             ],
+            "essential": true,
             "environment": [
                 {
                     "name": "ACCEPT_LICENSE",
                     "value": "true"
                 }
-            ]
+            ],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": []
         }
-    ], 
+    ],
+    "family": "watson-nlp-runtime",
+    "executionRoleArn": "CHANGE_ME",
+    "networkMode": "awsvpc",
+    "volumes": [],
+    "placementConstraints": [],
     "requiresCompatibilities": [
         "FARGATE"
     ],
-    "memory": "6 GB",
     "cpu": "1024",
-    "executionRoleArn": "arn:aws:iam::481118440516:role/ecsTaskExecutionRole" 
+    "memory": "4096",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    }
 }
 ```
 
 ### Step 8: Register the task definition
 
+Set the task definition family name and ECS service name in environment variables
+
 ```sh
 TASK_FAMILY=watson-nlp-runtime
+SERVICE_NAME=watson-nlp-svc
 ```
 
 ```sh
@@ -177,7 +190,7 @@ output:
 ```json
 {
     "taskDefinitionArns": [
-        "arn:aws:ecs:us-east-2:507003332374:task-definition/watson-nlp-runtime:1"
+        "arn:aws:ecs:us-east-2:<AWS-ACCOUNT-ID>:task-definition/watson-nlp-runtime:1"
     ]
 }
 ```
@@ -190,16 +203,32 @@ aws ecs describe-task-definition --task-definition "$TASK_FAMILY" --region "us-e
 
 ### Step 9: The Watson NLP ECS Services
 
-execute the below command and create ECS service passing the task defintion.
+To start the service you need to provide network configuration, subnets and security group. To find your subnets execute the below command
+
+```sh
+aws ec2 describe-subnets \
+--query "Subnets[*].SubnetId" \
+--output text
+```
+
+To find security groups execute the command below,
+
+```sh
+aws ec2 describe-security-groups \
+--query "SecurityGroups[*].GroupId" \
+--output text
+```
+
+Replace the subnet ids and security group you found in the previous two commands. Please note that you may use one or more subnet id.
 
 ```sh
 aws ecs create-service \
 --cluster $CLUSTER_NAME \
---service-name watson-nlp-svc \
+--service-name $SERVICE_NAME \
 --task-definition watson-nlp-runtime:1 \
 --desired-count 1 \
 --launch-type "FARGATE" \
---network-configuration "awsvpcConfiguration={subnets=[subnet-0906c6ef826ea3898, subnet-0cad8624ef5e2d544, subnet-0a595854bb4af7860],securityGroups=[sg-00cd1568797e76974],assignPublicIp=ENABLED}"
+--network-configuration "awsvpcConfiguration={subnets=[subnet-CHANGE_ME, subnet-CHANGE_ME, subnet-CHANGE_ME],securityGroups=[sg-CHANGE_ME],assignPublicIp=ENABLED}"
 ```
 
 It will take some time to deploy the NLP model. To see list of services
@@ -208,20 +237,141 @@ It will take some time to deploy the NLP model. To see list of services
 aws ecs list-services --cluster $CLUSTER_NAME
 ```
 
+To view details of the service
+
 ```sh
-aws ecs describe-services --cluster $CLUSTER_NAME --services watson-nlp-svc
+aws ecs describe-services --cluster $CLUSTER_NAME --services $SERVICE_NAME
 ```
 
-```sh
-aws ecs run-task --cluster $CLUSTER_NAME --task-definition watson-nlp-runtime:1 --count 1 --network-configuration "awsvpcConfiguration={subnets=[subnet-0906c6ef826ea3898, subnet-0cad8624ef5e2d544, subnet-0a595854bb4af7860],securityGroups=[sg-00cd1568797e76974],assignPublicIp=ENABLED}" --launch-type FARGATE 
- ```
+### Step 10: Test the deployed NLP Model
 
+Before testing the service, make sure you have allowed port 8080 in inboud rule, so that traffic can flow to the deployed model.
+
+![Diagram](inboundTraffic.png)
+
+Lets find the public IP assigned to the task.
 
 ```sh
-aws ecs list-services --cluster fargate-cluster --cluster fargate-watsonlib-ecs
+NLP_TASK_ID=$(aws ecs list-tasks --cluster $CLUSTER_NAME --query "taskArns[0]" --output text)
+echo $NLP_TASK_ID
 ```
 
+Describe the task and locate the ENI ID. Use the task ARN for the tasks parameter.
+
 ```sh
-aws ecs describe-services --services ecs-watson-nlp --cluster fargate-watsonlib-ecs
+NETWORK_INTERFACE_ID=$(aws ecs describe-tasks \
+--cluster $CLUSTER_NAME \
+--tasks $NLP_TASK_ID \
+--query "tasks[*].attachments[*].details[?name == 'networkInterfaceId'].value" --output text)
+echo $NETWORK_INTERFACE_ID
 ```
 
+Describe the ENI to get the public IP address.
+
+```sh
+MODEL_HOST_IP=$(aws ec2 describe-network-interfaces \
+--network-interface-id  $NETWORK_INTERFACE_ID \
+--query "NetworkInterfaces[*].Association.PublicIp" --output text)
+echo $MODEL_HOST_IP
+```
+
+Once the Watson NLP Runtime service is ready, you should be able to send an inference request to the REST service endpoint as follows.
+
+```sh
+curl -s -X POST "http://${MODEL_HOST_IP}:8080/v1/watson.runtime.nlp.v1/NlpService/SyntaxPredict" \
+  -H "accept: application/json" \
+  -H "grpc-metadata-mm-model-id: syntax_izumo_lang_en_stock" \
+  -H "content-type: application/json" \
+  -d "{ \"rawDocument\": { \"text\": \"This is a test.\" }, \"parsers\": [ \"TOKEN\" ]}" \
+  | jq -r .
+```
+
+> Tip:
+  The value of metadata grpc-metadata-mm-model-id should match the folder name of the model when it was downloaded and saved in ./models in Step 2.
+
+If you get a response like the following, the Watson NLP Runtime is working properly.
+
+```json
+{
+  "text": "This is a test.",
+  "producerId": {
+    "name": "Izumo Text Processing",
+    "version": "0.0.1"
+  },
+  "tokens": [
+    {
+      "span": {
+        "begin": 0,
+        "end": 4,
+        "text": "This"
+      },
+      "lemma": "",
+      "partOfSpeech": "POS_UNSET",
+      "dependency": null,
+      "features": []
+    },
+    {
+      "span": {
+        "begin": 5,
+        "end": 7,
+        "text": "is"
+      },
+      "lemma": "",
+      "partOfSpeech": "POS_UNSET",
+      "dependency": null,
+      "features": []
+    },
+    {
+      "span": {
+        "begin": 8,
+        "end": 9,
+        "text": "a"
+      },
+      "lemma": "",
+      "partOfSpeech": "POS_UNSET",
+      "dependency": null,
+      "features": []
+    },
+    {
+      "span": {
+        "begin": 10,
+        "end": 14,
+        "text": "test"
+      },
+      "lemma": "",
+      "partOfSpeech": "POS_UNSET",
+      "dependency": null,
+      "features": []
+    },
+    {
+      "span": {
+        "begin": 14,
+        "end": 15,
+        "text": "."
+      },
+      "lemma": "",
+      "partOfSpeech": "POS_UNSET",
+      "dependency": null,
+      "features": []
+    }
+  ],
+  "sentences": [
+    {
+      "span": {
+        "begin": 0,
+        "end": 15,
+        "text": "This is a test."
+      }
+    }
+  ],
+  "paragraphs": [
+    {
+      "span": {
+        "begin": 0,
+        "end": 15,
+        "text": "This is a test."
+      }
+    }
+  ]
+}
+```
