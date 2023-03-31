@@ -195,7 +195,7 @@ output:
 ```json
 {
     "taskDefinitionArns": [
-        "arn:aws:ecs:us-east-2:<AWS-ACCOUNT-ID>:task-definition/watson-nlp-runtime:1"
+        "arn:aws:ecs:<REGION>:<AWS-ACCOUNT-ID>:task-definition/watson-nlp-runtime:1"
     ]
 }
 ```
@@ -203,7 +203,7 @@ output:
 To view the task-defintion execute the below command.
 
 ```sh
-aws ecs describe-task-definition --task-definition "$TASK_FAMILY" --region "us-east-2"
+aws ecs describe-task-definition --task-definition "$TASK_FAMILY" --region $REGION
 ```
 
 ### Step 9: The Watson NLP ECS Services
