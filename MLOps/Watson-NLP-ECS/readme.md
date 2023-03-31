@@ -111,15 +111,18 @@ docker push ${DEFAULT_REGISTRY}/my-watson-nlp-runtime:latest
 
 ## Deploy the Runtime to Amazon ECS
 
-Set the cluster name in an environment variable. The cluster I am using here is `MyFargateCluster`, your cluster name might be different, make sure you set correct cluster name.
+Set the cluster name in an environment variable. The cluster I am using here is `MyFargateCluster`, your cluster name might be different, make sure you set the correct cluster name and Region.
 
 ```sh
 CLUSTER_NAME=MyFargateCluster
 REGION=us-east-2
 ```
 
-Create a new file name `task-definition.json` and save the following content. Please change the `image:` location where you pushed the image in the previous step. And also `executionRoleArn:` you will find it in the in aws console.
+Find Amazon task `executionRoleArn` with policy assigned `AmazonECSTaskExecutionRolePolicy` in AWS console `Path: IAM -> Roles -> ecsTaskExecutionRole`. You should find the execution role like this `arn:aws:iam::<ACCOUNT_ID>:role/ecsTaskExecutionRole`. If there is no role found, please create a new one.
 
+Create a new file name `task-definition.json` and save the following content. Please change the `image:` location where you pushed the image in the previous step. And also `executionRoleArn:` you found in aws console `IAM -> Roles -> ecsTaskExecutionRole`
+
+> Tip: Look at the `CHANGE_ME` in the below json file and replace them with proper value.
 
 ```json
 {
