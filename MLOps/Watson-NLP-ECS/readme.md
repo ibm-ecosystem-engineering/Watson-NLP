@@ -4,7 +4,7 @@ With IBM Watson NLP, IBM introduced a common library for natural language proces
 
 Amazon Elastic Container Service (ECS) is a fully managed container orchestration service that helps you easily deploy, manage, and scale containerized applications that supports Docker containers and allows you to run applications on a managed cluster of Amazon Elastic Compute Cloud (Amazon EC2) instances and Fargate.
 
-This tutorial you are going to deploy a pretrained models `watson-nlp_syntax_izumo_lang_en_stock:1.0.6` but other pretrained models also can be served.
+This tutorial you are going to deploy a pretrained models `watson-nlp_syntax_izumo_lang_en_stock:1.0.6` but other pretrained models also can be served. You can find all the pretrained model [here](https://www.ibm.com/docs/en/watson-libraries?topic=models-catalog)
 
 ## Prerequisite
 
@@ -120,7 +120,7 @@ REGION=us-east-2
 
 Find Amazon task `executionRoleArn` with policy assigned `AmazonECSTaskExecutionRolePolicy` in AWS console `Path: IAM -> Roles -> ecsTaskExecutionRole`. You should find the execution role like this `arn:aws:iam::<ACCOUNT_ID>:role/ecsTaskExecutionRole`. If there is no role found, please create a new one.
 
-Create a new file name `task-definition.json` and save the following content. Please change the `image:` location where you pushed the image in the previous step. And also `executionRoleArn:` you found in aws console `IAM -> Roles -> ecsTaskExecutionRole`
+Create a new file name `task-definition.json` and save the following content in the file. Change the `image:` location where you pushed the image in the previous step. And also `executionRoleArn:` you found in aws console `IAM -> Roles -> ecsTaskExecutionRole`
 
 > Tip: Look at the `CHANGE_ME` in the below json file and replace them with proper value.
 
@@ -178,6 +178,8 @@ TASK_FAMILY=watson-nlp-runtime
 SERVICE_NAME=watson-nlp-svc
 ```
 
+Register the task definition file.
+
 ```sh
 aws ecs register-task-definition --cli-input-json file://task-definition.json
 ```
@@ -234,7 +236,7 @@ aws ecs create-service \
 --network-configuration "awsvpcConfiguration={subnets=[subnet-CHANGE_ME, subnet-CHANGE_ME, subnet-CHANGE_ME],securityGroups=[sg-CHANGE_ME],assignPublicIp=ENABLED}"
 ```
 
-It will take some time to deploy the NLP model. To see list of services
+It will take some time to deploy the NLP model. To see list of services,
 
 ```sh
 aws ecs list-services --cluster $CLUSTER_NAME
