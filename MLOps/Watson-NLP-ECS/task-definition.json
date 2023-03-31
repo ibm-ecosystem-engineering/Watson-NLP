@@ -1,0 +1,42 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "watson-nlp-container",
+            "image": "CHANGE_ME",
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "name": "watson-nlp-container-8080-tcp",
+                    "containerPort": 8080,
+                    "hostPort": 8080,
+                    "protocol": "tcp",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                {
+                    "name": "ACCEPT_LICENSE",
+                    "value": "true"
+                }
+            ],
+            "environmentFiles": [],
+            "mountPoints": [],
+            "volumesFrom": []
+        }
+    ],
+    "family": "watson-nlp-runtime",
+    "executionRoleArn": "CHANGE_ME",
+    "networkMode": "awsvpc",
+    "volumes": [],
+    "placementConstraints": [],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "1024",
+    "memory": "4096",
+    "runtimePlatform": {
+        "cpuArchitecture": "X86_64",
+        "operatingSystemFamily": "LINUX"
+    }
+}
