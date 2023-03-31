@@ -32,3 +32,4 @@ To help you get started in AWS platform quickly using IBM Watson Libraries, Foll
  ## Deploy on ECS Fargate
  
  - [Deploy IBM Watson Natural Language Processing library](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/Deploy-to-AWS-Fargate)
+ - [Deploy with ECS task definition](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/Watson-NLP-ECS)
