@@ -193,6 +193,26 @@ aws ecs describe-task-definition --task-definition "$TASK_FAMILY" --region "us-e
 execute the below command and create ECS service passing the task defintion.
 
 ```sh
+aws ecs create-service \
+--cluster $CLUSTER_NAME \
+--service-name watson-nlp-svc \
+--task-definition watson-nlp-runtime:1 \
+--desired-count 1 \
+--launch-type "FARGATE" \
+--network-configuration "awsvpcConfiguration={subnets=[subnet-0906c6ef826ea3898, subnet-0cad8624ef5e2d544, subnet-0a595854bb4af7860],securityGroups=[sg-00cd1568797e76974],assignPublicIp=ENABLED}"
+```
+
+It will take some time to deploy the NLP model. To see list of services
+
+```sh
+aws ecs list-services --cluster $CLUSTER_NAME
+```
+
+```sh
+aws ecs describe-services --cluster $CLUSTER_NAME --services watson-nlp-svc
+```
+
+```sh
 aws ecs run-task --cluster $CLUSTER_NAME --task-definition watson-nlp-runtime:1 --count 1 --network-configuration "awsvpcConfiguration={subnets=[subnet-0906c6ef826ea3898, subnet-0cad8624ef5e2d544, subnet-0a595854bb4af7860],securityGroups=[sg-00cd1568797e76974],assignPublicIp=ENABLED}" --launch-type FARGATE 
  ```
 
