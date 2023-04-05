@@ -1,6 +1,6 @@
-# IBM Watson Libraries AWS Deployment guide
+# IBM Watson Libraries AWS Deployment Cheatsheet
 
-Get started quickly using IBM Watson Libraries with this list of assets to deploy in AWS platform.
+This cheatsheet points you to tutorials you can use to deploy Watson Libraries on AWS.
 
 With Watson Libraries, IBM introduced a common library framework for natural language processing (NLP), speech, document understanding, translation, and trust. It's a framework that is specifically designed for developers to embed AI into their products. IBM Watson Libraries is designed to help lower the barrier for AI adoption by helping address the skills shortage and development costs that are required to build AI models from scratch.
 
@@ -16,6 +16,40 @@ The Watson NLP library comes with hundreds of pretrained models in a vast assort
 
 To help you get started in AWS platform quickly using IBM Watson Libraries, Follow the following tutorials for Watson NLP and Speech library.
 
+## Deploy Watson NLP 
+
+### Redhat OpenShift AWS (ROSA) and EKS EC2/Fargate
+
+[https://developer.ibm.com/tutorials/serve-pretrained-models-on-kubernetes-or-openshift/](https://developer.ibm.com/tutorials/serve-pretrained-models-on-kubernetes-or-openshift/) In this tutorial you will deploy Watson NLP models on a Kubernetes or OpenShift cluster.
+
+### ECS Fargate
+
+We demonstrate two approaches to deploy Watson NLP models using ECS:
+
+  - [Deploy with Docker Compose](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/Deploy-to-AWS-Fargate)
+  - [Deploy with ECS task definition](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/Watson-NLP-ECS)
+
+## Deploy Watson Speech to Text (STT)
+
+Deploy IBM Watson Speech to Text library: The STT service can be deployed either with or without customization. A customizable deployment allows users to update the service to understand how to transcribe words.
+
+Redhat OpenShift AWS (ROSA) and EKS EC2/Fargate
+
+- IBM Watson Text to Speech library deployment: The TTS service also can be deployed either with or without customization.
+  - [TTS runtime only](https://github.com/ibm-build-lab/Watson-Speech/tree/main/tts-runtime-openshift)
+  - [Customization deployment](https://github.com/ibm-build-lab/Watson-Speech/tree/main/tts-customization-openshift)
+
+## Deploy Watson Text to Speech (TTS)
+
+Redhat OpenShift AWS (ROSA) and EKS EC2/Fargate
+
+- IBM Watson Text to Speech library deployment: The TTS service also can be deployed either with or without customization.
+  - [TTS runtime only](https://github.com/ibm-build-lab/Watson-Speech/tree/main/tts-runtime-openshift)
+  - [Customization deployment](https://github.com/ibm-build-lab/Watson-Speech/tree/main/tts-customization-openshift)
+
+
+
+****
 
 ## Deploy on Redhat OpenShift AWS (ROSA) and EKS EC2/Fargate
 
@@ -29,8 +63,4 @@ To help you get started in AWS platform quickly using IBM Watson Libraries, Foll
   - [TTS runtime only](https://github.com/ibm-build-lab/Watson-Speech/tree/main/tts-runtime-openshift)
   - [Customization deployment](https://github.com/ibm-build-lab/Watson-Speech/tree/main/tts-customization-openshift)
   
- ## Deploy on ECS Fargate
- 
- -  Deploy IBM Watson Natural Language Processing library
-    - [Deploy with docker compose definition file](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/Deploy-to-AWS-Fargate)
-    - [Deploy with ECS task definition](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/Watson-NLP-ECS)
+
