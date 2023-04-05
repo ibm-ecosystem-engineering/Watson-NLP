@@ -20,11 +20,11 @@ To help you get started in AWS platform quickly using IBM Watson Libraries, Foll
 
 ### Redhat OpenShift AWS (ROSA) and EKS EC2/Fargate
 
-In this [tutorial](https://developer.ibm.com/tutorials/serve-pretrained-models-on-kubernetes-or-openshift/) you will deploy Watson NLP models on a Kubernetes or OpenShift cluster.
+This [tutorial](https://developer.ibm.com/tutorials/serve-pretrained-models-on-kubernetes-or-openshift/) shows you how to deploy Watson NLP models on a Kubernetes or OpenShift cluster.
 
 ### ECS Fargate
 
-We demonstrate two approaches to deploy Watson NLP models using ECS:
+Two approaches to deploy Watson NLP models using ECS:
 
   - [Deploy with Docker Compose](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/Deploy-to-AWS-Fargate)
   - [Deploy with ECS task definition](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/Watson-NLP-ECS)
