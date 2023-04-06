@@ -31,19 +31,20 @@ Two approaches to deploy Watson NLP models using ECS:
 
 ## Deploy Watson Speech to Text (STT)
 
-Redhat OpenShift AWS (ROSA) and EKS EC2/Fargate
+### Redhat OpenShift AWS (ROSA) and EKS EC2/Fargate
 
-The service can be deployed either with or without customization. A customizable deployment allows users to update the service to understand how to transcribe words.
+You can do either a customizable deployment or non-customizable. A customizable deployment allows users to specify how particular words should be written.
 
   - [Non-customizable deployment](https://github.com/ibm-build-lab/Watson-Speech/tree/main/tts-runtime-openshift)
   - [Customization deployment](https://github.com/ibm-build-lab/Watson-Speech/tree/main/tts-customization-openshift)
 
 ## Deploy Watson Text to Speech (TTS)
 
-Redhat OpenShift AWS (ROSA) and EKS EC2/Fargate
+### Redhat OpenShift AWS (ROSA) and EKS EC2/Fargate
 
-- IBM Watson Text to Speech library deployment: The TTS service also can be deployed either with or without customization.
-  - [TTS runtime only](https://github.com/ibm-build-lab/Watson-Speech/tree/main/tts-runtime-openshift)
+As with STT, you can deploy TTS as either a customizable or non-customizable. The customizable deployment allows the user to specify how particular words should be pronounced.
+
+  - [Non-customizable deployment](https://github.com/ibm-build-lab/Watson-Speech/tree/main/tts-runtime-openshift)
   - [Customization deployment](https://github.com/ibm-build-lab/Watson-Speech/tree/main/tts-customization-openshift)
 
 
