@@ -24,7 +24,7 @@ To help you get started in AWS platform quickly using IBM Watson Libraries, Foll
 
 ### ECS Fargate
 
-Two approaches to deploy Watson NLP models using ECS:
+We demonstrate two alternative approaches to deploy Watson NLP models using ECS:
 
   - [Deploy with Docker Compose](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/Deploy-to-AWS-Fargate)
   - [Deploy with ECS task definition](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/Watson-NLP-ECS)
