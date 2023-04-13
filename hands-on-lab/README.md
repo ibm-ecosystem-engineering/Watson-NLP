@@ -7,7 +7,7 @@ Prior to the lab session follow the directions below to set up the environments 
 1. Ensure that you can access [IBM Technology Zone (TechZone)](https://techzone.ibm.com/)
 2. Ensure that you can get an entitlement key from the [container software library](https://myibm.ibm.com/products-services/containerlibrary) to access IBM Entitled Registry. You may need to add a new key if one does not already exist.
 3. Reserve a Watson Studio environment for the Use Model tutorial: [https://techzone.ibm.com/collection/watson-nlp-library-hands-on-lab/journey-use-model](https://techzone.ibm.com/collection/watson-nlp-library-hands-on-lab/journey-use-model).
-4. Reserve an OpenShift environment for the Deploy Model tutorial: [https://techzone.ibm.com/my/reservations/create/63cefb044e26be0017d9fa83](https://techzone.ibm.com/my/reservations/create/63cefb044e26be0017d9fa83).
+4. Reserve an OpenShift environment for the Deploy Model tutorial: [https://techzone.ibm.com/collection/watson-nlp-library-hands-on-lab/journey-deploy-model](https://techzone.ibm.com/collection/watson-nlp-library-hands-on-lab/journey-deploy-model).
 
 **The environments will last only for 3 days, so time your reservation accordingly.**
 
