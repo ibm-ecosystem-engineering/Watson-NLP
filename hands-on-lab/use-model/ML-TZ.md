@@ -15,7 +15,7 @@ In this tutorial, you will learn to use the Watson NLP library to perform emotio
 
 In this step you will reserve a Watson Studio environment for using the Watson NLP models via TechZone. The Watson Studio environment has been pre-packaged with the required Notebooks, data assets and runtime environment configuration.
 
-1. Reserve an environment through TechZone: [https://techzone.ibm.com/my/reservations/create/63d3189b1b83a20017bd9f27](https://techzone.ibm.com/my/reservations/create/63d3189b1b83a20017bd9f27).
+1. Reserve an environment through TechZone: [https://techzone.ibm.com/collection/watson-nlp-library-hands-on-lab/journey-use-model](https://techzone.ibm.com/collection/watson-nlp-library-hands-on-lab/journey-use-model).
 
     When filling in the form you can set:
 
