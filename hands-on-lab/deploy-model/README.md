@@ -12,7 +12,7 @@ Be sure to do the following in advance of the lab session.
 
 1. Ensure that you have access to [IBM Technology Zone (TechZone)](https://techzone.ibm.com/)
 2. Ensure that you can get an entitlement key from the [container software library](https://myibm.ibm.com/products-services/containerlibrary) in order to access IBM Entitled Registry.
-3. Reserve an environment through TechZone: [https://techzone.ibm.com/my/reservations/create/63cefb044e26be0017d9fa83](https://techzone.ibm.com/my/reservations/create/63cefb044e26be0017d9fa83).
+3. Reserve an environment through TechZone: [https://techzone.ibm.com/collection/watson-nlp-library-hands-on-lab/journey-deploy-model](https://techzone.ibm.com/collection/watson-nlp-library-hands-on-lab/journey-deploy-model).
 
 When making your TechZone reservation, fill in the request form as follows:
 
