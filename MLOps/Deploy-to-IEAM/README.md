@@ -1,35 +1,48 @@
 # Deploy Watson NLP to an IEAM Edge Device
 
-IBM Edge Application Manager (IEAM) provides you with edge computing features to help you manage and deploy workloads from a management hub cluster to edge devices and remote instances of OpenShift Container Platform or other Kubernetes-based clusters.
+[IBM Edge Application Manager](https://www.ibm.com/cloud/edge-application-manager) (IEAM) IBM Edge Application Manager is an intelligent, secure and flexible platform that provides autonomous management for edge computing. It is a full-lifecycle edge environment that helps you create, deploy, run, secure, monitor, maintain and scale business logic and analytics applications at the edge. Based on The Linux Foundation Edge project, [Open Horizon](https://www.lfedge.org/projects/openhorizon/), IEAM provides you with edge computing features to help you manage and deploy workloads from a management hub cluster to edge devices and remote instances of OpenShift Container Platform or other Kubernetes-based clusters.
 
-This tutorial will walk you through the steps to deploy Watson NLP Runtime on an IEAM node device to serve a couple of pretrained models.
+This tutorial provides you with step-by-step instructions to deploy Watson NLP Runtime serving a couple of pretrained models on an IEAM node device. They including steps to:
+- Create an API key
+- Install the Horizon Agent on the edge device
+- Create an edge service for running Watson NLP Runtime
+- Publish the edge service to the management hub
+- Define a deployment pattern for the edge service to be deployed to the edge device
+- Use policies for deploying the edge service to the edge device
+
+The following diagram shows the typical interactions between the components within Horizon.
+
+![](images/developing_edge_service_for_device.png)
 
 
 ## Prerequisites
 
 - Your entitlement key to access the IBM Entitled Registry. See [here](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/access) for more information.
 - A *Dedicated IEAM Organization* reservable enviroment included in [this IBM TechZone collection](https://techzone.ibm.com/collection/watson-nlp-serve-models-with-ieam).
-- An IEAM edge device that meets [the hardware and software requirements](https://www.ibm.com/docs/en/eam/4.5?topic=devices-preparing-edge-device). If you don't have one available, a Linux VM can be deployed from the aforementioned TechZone collection, with at least 2 vCPUs and 8GB memory.
-- A Docker Hub account to store container images for your application.
+- Deploy a VM running Ubuntu 20.04 LTS as an IEAM edge device, from the aforementioned TechZone collection. Please make sure:
+  - The VM has at least 2 vCPUs and 8GB memory
+  - Docker is properly installed and configured, as described in the [documentation](https://www.ibm.com/docs/en/eam/4.5?topic=devices-preparing-edge-device)
+- A [Docker Hub](https://hub.docker.com) account to store container images for your application
 
 **Tip**:
-- Some CLI commands in this tutorial require super-user/root access to the edge device. While it's possible to run most of them successfully with `sudo`, for the sake of simplicity, run all the commands when directly logged in as `root`, or after switching from a non-root user with the `su -` or `sudo su -` command.
-
+- For the sake of simplicity, run all CLI commands in this tutorial as super-user/root. It's possible to run most commands successfully with `sudo`, but some may fail. If you login as a non-root user, you can run `su -` or `sudo su -` command to become root first.
+- If you want to use your own IEAM edge device, make sure it meets [the hardware and software requirements](https://www.ibm.com/docs/en/eam/4.5?topic=devices-preparing-edge-device).
 
 ## Create Your First API Key
 
-Each user who is setting up edge nodes must have an API key. You can use the same API key to set up multiple edge nodes. The API key is not saved on the edge nodes.
+Assuming you have successfully deployed the Ubuntu VM and opened an interactive SSH session with root access, the first thing you need to do is to create an API key. Each user who is setting up edge nodes must have an API key. You can use the same API key to set up multiple edge nodes. For security reasons, the API key is not to be saved on the edge nodes.
 
 Set some environment variables for running the CLI commands on your edge device:
 
 ```sh
 export IEAM_CLUSTER_URL="<ieam_cluster_url>"
+export IEAM_ORGANIZATION="<ieam_organization>"
 export IEAM_USER_NAME="<your_ldap_username>"
 export IEAM_USER_PASSWORD="<your_ldap_password>"
 ```
 
 **Tip**:
-- The LDAP user credential, IEAM cluster URL and other information can be found in the TechZone reservation details, and in the email notification sent after the *Dedicated IEAM Organization* reservable enviroment is successfully created.
+- The LDAP user credential, IEAM cluster URL, IEAM organization name, and other information can be found in the TechZone reservation details, and in the email notification sent after the *Dedicated IEAM Organization* reservable enviroment is successfully created.
 
 Login to the IEAM Management Hub:
 
@@ -49,16 +62,21 @@ cloudctl iam api-key-create "my-1st-api-key" -d "My first API Key"
 **Tip**:
 - Make sure you save the key value for future use, because you won't be able to query it from the system later.
 
+Set an environment variable for the API key:
 
-## Install the Agent on an Edge Device
+```sh
+export API_KEY="<your_api_key>"
+```
+
+## Install the Horizon Agent on the Edge Device
 
 There are several ways you can install the Horizon agent software on your edge device and register it with IEAM. The following steps use a script to install the agent on a single edge device, add it to the dedicated IEAM organization in a multi-tenant IEAM cluster, and register it with a `helloworld` example service to confirm the edge device is working properly. These steps apply to all edge device types (architectures). See the [documentation](https://www.ibm.com/docs/en/eam/4.5?topic=nodes-edge-devices) for details of other installation options.
 
 Set some environment variables as follows:
 
 ```sh
-export HZN_EXCHANGE_USER_AUTH=iamapikey:<my-1st-api-key>
-export HZN_ORG_ID=<your-organization>
+export HZN_EXCHANGE_USER_AUTH=iamapikey:${API_KEY}
+export HZN_ORG_ID=${IEAM_ORGANIZATION}
 export HZN_FSS_CSSURL=${IEAM_CLUSTER_URL}/edge-css/
 export HZN_EXCHANGE_URL=${IEAM_CLUSTER_URL}/edge-exchange/v1
 ```
@@ -84,24 +102,23 @@ CONTAINER ID   IMAGE                              COMMAND                  CREAT
 c87f042e7ddc   openhorizon/ibm.helloworld_amd64   "/bin/sh -c /service…"   3 minutes ago   Up 3 minutes             01ebfffb302793ba14ae47eed39686b6cfba4984c05a7fdf8f7d3094b8b5cc10-ibm.helloworld
 ```
 
-You can check the output of the *helloworld* container:
+You can check the output of the *helloworld* container, using the following Horizon CLI `hzn` command:
 
 ```sh
 hzn service log -f ibm.helloworld
 # Press Ctrl-c to stop the output display
 ```
 
-If the helloworld edge service does not start, run this command to see error messages:
+If the *helloworld* edge service does not start, run this command to see error messages:
 
 ```sh
 hzn eventlog list -f
 # Press Ctrl-c to stop the output display
 ```
 
-Use the `hzn` command on this edge node to view services, patterns, and deployment policies in the Horizon Exchange. Set your specific information as environment variables in your shell and run these commands:
+You can run `hzn` commands on the edge node to view services, patterns, and deployment policies in the Horizon Exchange, e.g.:
 
 ```sh
-eval export $(cat agent-install.cfg)
 hzn exchange service list IBM/
 hzn exchange pattern list IBM/
 hzn exchange deployment listpolicy
@@ -115,17 +132,22 @@ hzn unregister -fD
 
 ## Prepare to Create an Edge Service
 
-Confirm that your credentials are still set correctly by verifying that this command does not display an error:
+Confirm that your credential is still set correctly by verifying that this command does not display an error:
 
 ```sh
 hzn exchange user list
 ```
 
+Set an environment variable for your Docker Hub username:
+
+```sh
+export DOCKER_HUB_USERNAME="<your_docker_hub_username>"
+```
+
 Login to Docker Hub with your Docker Hub credential:
 
 ```sh
-export DOCKER_HUB_ID="<your_docker_hub_user_id>"
-docker login -u $DOCKER_HUB_ID
+docker login -u $DOCKER_HUB_USERNAME
 ```
 
 Create a cryptographic signing key pair, which enables you to sign services when publishing them to the exchange.
@@ -138,31 +160,16 @@ hzn key create "<company_name>" "<email_address>"
 - `<company_name>` is used as the x509 organization
 - `<email_address>` is used as the x509 CN
 
-
 Install a few development tools, in case they are missing:
-
-On Linux (for Ubuntu / Debian distributions):
 
 ```sh
 apt install -y git jq make
 ```
 
-On Linux (Red Hat Enterprise Linux or Fedora distributions):
-
-```sh
-dnf install git jq make
-```
-
-On macOS:
-
-```sh
-brew install git jq make
-```
-
 Check if you have all the prerequisites before moving on to the next step:
 
 ```sh
-echo "HZN_ORG_ID=$HZN_ORG_ID, HZN_EXCHANGE_USER_AUTH=$HZN_EXCHANGE_USER_AUTH, DOCKER_HUB_ID=$DOCKER_HUB_ID"
+echo "HZN_ORG_ID=$HZN_ORG_ID, HZN_EXCHANGE_USER_AUTH=$HZN_EXCHANGE_USER_AUTH, DOCKER_HUB_USERNAME=$DOCKER_HUB_USERNAME"
 which git jq
 ls ~/.hzn/keys/service.private.key ~/.hzn/keys/service.public.pem
 cat /etc/default/horizon
@@ -180,11 +187,11 @@ Create the edge service metadata for your project:
 hzn dev service new \
   -s ${HZN_ORG_ID}.watson-nlp-runtime \
   -V 1.1.15 \
-  -i ${DOCKER_HUB_ID}/${HZN_ORG_ID}.watson-nlp-runtime \
+  -i ${DOCKER_HUB_USERNAME}/${HZN_ORG_ID}.watson-nlp-runtime \
   --noImageGen
 ```
-
-This command creates `horizon/service.definition.json` to describe your service and `horizon/pattern.json` to describe the deployment pattern. 
+**NOTE**:
+- This command creates `horizon/service.definition.json` to describe your service and `horizon/pattern.json` to describe the deployment pattern. 
 
 Make some changes to `horizon/service.definition.json` as follows, to specify the service port(s) and environment variables:
 
@@ -211,7 +218,7 @@ Make some changes to `horizon/service.definition.json` as follows, to specify th
     "deployment": {
         "services": {
             "${HZN_ORG_ID}.watson-nlp-runtime": {
-                "image": "${DOCKER_IMAGE_BASE}:${SERVICE_VERSION}",
+                "image": "${DOCKER_IMAGE_BASE}_${ARCH}:${SERVICE_VERSION}",
                 "privileged": false,
                 "network": "",
                 "ports": [
@@ -263,7 +270,6 @@ Build the docker image and push it to Docker Hub. The image name must match what
 eval $(hzn util configconv -f horizon/hzn.json)
 export ARCH=$(hzn architecture)
 docker build -t "${DOCKER_IMAGE_BASE}_$ARCH:$SERVICE_VERSION" .
-unset DOCKER_IMAGE_BASE SERVICE_NAME SERVICE_VERSION
 ```
 
 Run this service container image in the Horizon simulated agent environment:
@@ -314,7 +320,9 @@ hzn exchange pattern publish -f horizon/pattern.json
 hzn exchange pattern list
 ```
 
-## Register your edge node to run the deployment pattern
+## Deploy the Edge Service Using Patterns
+
+Typically, service deployment patterns can be published to the management hub after a developer published an edge service in the horizon exchange.
 
 Register your edge node with the deployment pattern you published under your own organization:
 
@@ -331,7 +339,7 @@ List the docker container edge service that has been started as a result:
 docker ps
 ```
 
-View the myservice edge service output:
+View the edge service output:
 
 ```sh
 hzn service log -f $SERVICE_NAME
@@ -340,7 +348,6 @@ hzn service log -f $SERVICE_NAME
 You can view the node, service, and pattern that you have created with the following commands:
 
 ```sh
-eval export $(cat agent-install.cfg)
 hzn exchange node list
 hzn exchange service list
 hzn exchange pattern list
@@ -454,7 +461,104 @@ Finally, unregister your edge node device and stop the service to complete this 
 hzn unregister -fD
 ```
 
+
+## Deploy the Edge Service Using Policies
+
+Policies are an alternative to deployment patterns. To achieve scaling up to tens of thousands of nodes or beyond, IEAM uses policies to automatically determine where and when to autonomously deploy services and machine learning models. A policy is expressed through a flexible policy language that is applied to models, nodes, services, and deployment policies. The policy language defines attributes (called properties) and asserts specific requirements (called constraints). This allows each part of the system to provide input to the IEAM deployment engine. Before services can be deployed, the models, nodes, services, and deployment policies constraints are checked to ensure that all requirements are met. Now, let's use policies to deploy the same edge service created earlier to your edge device.
+
+Register the node again without a deployment pattern:
+
+```sh
+hzn register
+```
+
+Create a JSON file `deploy-policy.json` for the new deployment policy:
+
+```json
+{
+    "label": "deploy-policy-wnlp-runtime-$ARCH",
+    "description": "A deployment policy for Watson NLP Runtime on $ARCH",
+    "service": {
+        "name": "${HZN_ORG_ID}.watson-nlp-runtime",
+        "org": "$HZN_ORG_ID",
+        "arch": "$ARCH",
+        "serviceVersions": [
+            {
+                "version": "1.1.15",
+                "priority":{}
+            }
+        ]
+    },
+    "properties": [],
+    "constraints": [
+        "wnlp.runtime.enabled == true"
+    ],
+    "userInput": []
+}
+```
+
+Run the following command to create the deployment policy using the JSON file:
+
+```sh
+hzn exchange deployment addpolicy --json-file=deploy-policy.json deploy-policy-wnlp-runtime-$ARCH
+```
+
+Check to make sure the deployment policy is created properly:
+
+```sh
+hzn exchange deployment listpolicy deploy-policy-wnlp-runtime-amd64 -l
+```
+
+Create a JSON file `node-policy.json` for adding a node deployment property:
+
+```json
+{
+  "deployment": {
+    "properties": [
+      {
+        "name": "wnlp.runtime.enabled",
+        "value": true
+      }
+    ]
+  }
+}
+```
+
+Run the following command to update the node policy using the JSON file:
+
+```sh
+hzn exchange node updatepolicy --json-file=node-policy.json $NODENANE
+```
+
+**Tip**:
+- The the node name is by default the hostname of the node device.
+
+Check to make sure the node policy is updated properly:
+
+```sh
+hzn exchange node listpolicy $NODENANE
+```
+
+Because the added property matches the constraint in the deployment policy, the coresponding edge service should deploy to your edge device within a couple of minutes.
+
+List the docker container edge service that has been started as a result:
+
+```sh
+docker ps
+```
+
+View the edge service output:
+
+```sh
+hzn service log -f $SERVICE_NAME
+```
+
+When the edge service is up and running, you should be able to send an inference request to the REST service endpoint using the same `curl` command in the previous section to verify that the service is working as expected.
+
+With that, you've successfully completed the tutorial. You can now go to the [My reservations](https://techzone.ibm.com/my/reservations) page on TechZone and delete the *Dedicated IEAM Organization* and the *IBM Cloud VSI (Classic)* sandbox environments.
+
+
 ## Summary
 
-In this tutorial, you learned how to build a standalone container image with pretrained models baked into the Watson NLP Runtime, push it to a container image registry, and deploy it to an edge device with a service pattern published in IEAM.
+In this tutorial, you learned how to build a standalone container image with pretrained models baked into the Watson NLP Runtime, push it to a container image registry, and deploy it to an edge device with a deployment pattern or a deployment policy published in IEAM.
 
