@@ -2,7 +2,7 @@
 
 [IBM Edge Application Manager](https://www.ibm.com/cloud/edge-application-manager) (IEAM) IBM Edge Application Manager is an intelligent, secure and flexible platform that provides autonomous management for edge computing. It is a full-lifecycle edge environment that helps you create, deploy, run, secure, monitor, maintain and scale business logic and analytics applications at the edge. Based on The Linux Foundation Edge project, [Open Horizon](https://www.lfedge.org/projects/openhorizon/), IEAM provides you with edge computing features to help you manage and deploy workloads from a management hub cluster to edge devices and remote instances of OpenShift Container Platform or other Kubernetes-based clusters.
 
-This tutorial provides you with step-by-step instructions to deploy Watson NLP Runtime serving a couple of pretrained models on an IEAM node device. They including steps to:
+This tutorial provides you with step-by-step instructions to deploy Watson NLP Runtime serving a couple of pretrained models on an IEAM node device. They include steps to:
 - Create an API key
 - Install the Horizon Agent on the edge device
 - Create an edge service for running Watson NLP Runtime
