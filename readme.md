@@ -34,6 +34,11 @@ Machine Learning notebooks, tutorials, and datasets focused on supporting a Data
     - [Topic Modeling Tutorial](ML/Topic-Modeling/Topic%20Modeling%20using%20Watson%20NLP.pdf)
     - [Topic Modeling Notebook](ML/Topic-Modeling/Complaint%20Data%20Topic%20Modeling.ipynb)
     - [Topic Modeling Comparison with LDA Notebook](ML/Topic-Modeling/Complaint%20Data%20Topic%20Modeling%20-%20Compare%20With%20LDA.ipynb)
+    - PII Extraction - Custom Train Models.ipynb
+   -[PII Extraction](ML/PII-Extraction)
+    - PII Extraction - Custom-RBR Models.ipynb
+    - PII Extraction - Pre-Trained Models.ipynb
+    - PII Extraction - Fine-Tuned Models.ipynb
 - [MLOps Assets](MLOps/)
   - [Serve Pretrained Models using Docker](MLOps/Watson-NLP-Container)
   - [Serve Custom Models using Docker](MLOps/Watson-NLP-Custom-Model-Container)
