@@ -16,6 +16,8 @@ This tutorial will walk you through the steps to deploy a Watson NLP model to th
 
 When you first reserve a TechZone sandbox environment for KServe ModelMesh Serving, an instance of ModelMesh Serving would be created for you in a dedicated Kubernetes [namespace](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) on an [IBM Cloud Kubernetes Service](https://cloud.ibm.com/docs/containers) (IKS) cluster.
 
+![architecure](images/KServe_ModelMesh_Serving.jpg)
+
 ### Step 1: Open the Kubernetes Dashboard
 
 When the sandbox environment is ready, you will receive an email that includes a link to the [Kubernetes Dashboard](https://github.com/kubernetes/dashboard). Clicking on this link will open the Dashboard in your browser and show the Kubernetes `service` resources in your namespace.
