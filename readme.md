@@ -8,7 +8,8 @@ Key Technologies:
 
 ## Outline
 
-Machine Learning notebooks, tutorials, and datasets focused on supporting a Data Science Engineer are under the [ML folder](ML/). Assets focused on deployment are under the [MLOps folder](MLOps/). Go to the respective folders to learn more about these assets.
+Machine Learning notebooks, tutorials, and datasets focused on supporting a Data Science Engineer are under the [ML folder](ML/). 
+Assets focused on deployment are under the [MLOps folder](MLOps/). Go to the respective folders to learn more about these assets.
 
 - [ML Assets](ML/)
   - [Emotion Classification](ML/Emotion-Classification/)
