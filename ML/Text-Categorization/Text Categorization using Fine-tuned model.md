@@ -3,7 +3,7 @@
 
 Text categorization provides a more structured and organized approach to categorizing text, enabling better analysis, improved search, and more efficient content management. So Creating a hierarchical categorization system for public medical dataset that is more specific than broad categories like Humanities, Health Care, Anatomy, Phenomena and Processes, Named Groups, Geographicals, Technology, Industry, and Agriculture, Chemicals and Drugs, Anthropology, Education, Sociology, and Social Phenomena, Information Science, Disciplines and Occupations, Analytical, Diagnostic and Therapeutic Techniques, and Equipment, Diseases, Psychiatry and Psychology, and Organisms. 
 
-This notebook demonstrates how to use the Explicit Semantic Analysis (ESA) block for performing text categorization. This model has been pre-trained on scrapped web data & news data set.
+This notebook demonstrates how to use the Explicit Semantic Analysis (ESA) block for performing text categorization.
 
 The dataset contains over 50000 medical data with categories. The original source of this dataset is from [Kaggle](https://www.kaggle.com/datasets/owaiskhan9654/pubmed-multilabel-text-classification)
 IBM Watson NLP is a powerful and versatile AI library that seamlessly integrates various components of IBM's natural language processing capabilities. It offers a standardized natural language processing layer, as well as a unified roadmap, architecture, and code stack that can be easily adopted across IBM's range of products. By leveraging the capabilities of IBM Watson NLP, businesses can gain deeper insights into their data, enabling them to make more informed decisions and stay ahead of the competition.
