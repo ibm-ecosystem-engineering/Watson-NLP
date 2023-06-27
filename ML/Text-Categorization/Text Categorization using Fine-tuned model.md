@@ -5,7 +5,8 @@ Text categorization provides a more structured and organized approach to categor
 
 This notebook demonstrates how to use the Explicit Semantic Analysis (ESA) block for performing text categorization.
 
-The dataset contains over 50000 medical data with categories. The original source of this dataset is from [Kaggle](https://www.kaggle.com/datasets/owaiskhan9654/pubmed-multilabel-text-classification)
+The dataset contains over 50000 medical data with categories. The original source of this dataset is from [Kaggle](https://www.kaggle.com/datasets/owaiskhan9654/pubmed-multilabel-text-classification).
+
 IBM Watson NLP is a powerful and versatile AI library that seamlessly integrates various components of IBM's natural language processing capabilities. It offers a standardized natural language processing layer, as well as a unified roadmap, architecture, and code stack that can be easily adopted across IBM's range of products. By leveraging the capabilities of IBM Watson NLP, businesses can gain deeper insights into their data, enabling them to make more informed decisions and stay ahead of the competition.
 
 The `watson_nlp` library is available on IBM Watson Studio as a runtime library so that you can directly use it for model training, evaluation, and prediction. The following figure shows the Watson NLP architecture.
@@ -30,12 +31,13 @@ It should take you approximately 1 hour to complete this tutorial.
 # Steps
 
 
-# Fine-Tune Watson NLP Models for custom Entities 
+# Fine-Tune Watson NLP Models for Text Categarization
 
 
 ## Step 1. Data Loading
 
-The dataset contains over 50000 medical data with these columns `['Title', 'abstractText', 'meshMajor', 'pmid', 'meshid', 'meshroot', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'L', 'M', 'N', 'Z']`.
+The dataset contains over 50000 medical data with these columns `['Title', 'abstractText', 'meshMajor', 'pmid', 'meshid', 'meshroot', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'L', 'M', 'N', 'Z']`.  The original source of this dataset is from [Kaggle](https://www.kaggle.com/datasets/owaiskhan9654/pubmed-multilabel-text-classification).
+
 ```
 # load data set into a dataframe
 file_name = "PubMed Multi Label Text Classification Dataset Processed.csv"
