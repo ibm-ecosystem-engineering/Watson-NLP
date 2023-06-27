@@ -30,7 +30,7 @@ It should take you approximately 1 hour to complete this tutorial.
 # Steps
 
 
-# Fine-Tune Watson NLP Models for custom Entities 
+# Fine-Tune Watson NLP Models for Text Categarization`
 
 
 ## Step 1. Data Loading
