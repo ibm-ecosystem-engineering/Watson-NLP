@@ -49,8 +49,6 @@ med_df = pd.read_csv(buffer)
 ## Step 2. Data Pre-Processing and Preparing the training data
 
 
-The code provided helps extract unique categories from the dataset's `meshRoot` column. It iterates through each value in the column, splits them into parts, and removes single quotes and specific characters using regular expressions. The cleaned values are then added to a set to collect the unique categories. This code allows you to obtain a set of distinct categories from the `meshRoot` column, eliminating duplicates and preparing them for further analysis or processing.
-
 ```
 # extarct message data through the channel name 
 import re  
@@ -70,6 +68,12 @@ def extarct_dictionary_list(df_meshRoot):
     
 dictionary_list =extarct_dictionary_list(df_meshRoot)
 ```
+
+Now we will process the data and extract categories from the `meshRoot` column. The provided code snippet performs this task. It begins by importing the necessary modules, including regular expressions `re`. The function `extract_dictionary_list` takes the `df_meshRoot` parameter, which represents the `meshRoot` column of the dataset. Within the function, a set called `dictionary_list` is initialized to store the unique categories.
+
+The code iterates through each value in the `df_meshRoot` column. It splits the value into parts using the delimiter `"',"` and then proceeds to clean each part. First, single quotes are removed by replacing them with an empty string. Then, using regular expressions, characters surrounded by square brackets, denoting MeSH categories, are removed. These categories are identified by their ASCII values from 65 to 91 (representing A to Z). After removing the square brackets, any remaining square brackets are also removed. Finally, the cleaned category value is stripped of any leading or trailing whitespace and added to the `dictionary_list` set.
+
+Once the `extract_dictionary_list` function is executed, it returns the `dictionary_list` set containing the unique categories extracted from the `meshRoot` column. This set can then be used to create a training dataset by combining these unique categories with the corresponding `meshMajor` values.
 
 After the data cleaning now creating training data set using unique dict values with `meshMajor`.
 
