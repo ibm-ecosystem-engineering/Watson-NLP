@@ -31,12 +31,12 @@ It should take you approximately 1 hour to complete this tutorial.
 # Steps
 
 
-# Fine-Tune Watson NLP Models for Text Categarization
+# Fine-Tune Watson NLP Models for Text Categorization
 
 
 ## Step 1. Data Loading
 
-The dataset contains over 50000 medical data with these columns `['Title', 'abstractText', 'meshMajor', 'pmid', 'meshid', 'meshroot', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'L', 'M', 'N', 'Z']`.  The original source of this dataset is from [Kaggle](https://www.kaggle.com/datasets/owaiskhan9654/pubmed-multilabel-text-classification).
+The dataset contains over 50000 medical data with each article described by several columns. The columns include `Title` and `abstractText` for the article title and summary, `meshMajor` for the major MeSH (Medical Subject Headings) terms associated with the article, `pmid` for the PubMed identifier, `meshid` for the unique MeSH ID, and `meshroot` for the MeSH mapped root term. Additionally, there are columns labeled A to Z representing different categories of MeSH terms, such as Anatomy, Organisms, Diseases, Chemicals and Drugs, and more. These columns provide valuable information about the articles, their MeSH labels, and various aspects of biomedical research covered in the dataset. The original source of this dataset is from [Kaggle](https://www.kaggle.com/datasets/owaiskhan9654/pubmed-multilabel-text-classification).
 
 ```
 # load data set into a dataframe
