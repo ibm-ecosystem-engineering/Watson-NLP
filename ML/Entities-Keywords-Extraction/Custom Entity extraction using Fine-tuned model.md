@@ -17,7 +17,7 @@ To follow the steps in this tutorial, you need:
 
 * An [IBMid](https://cloud.ibm.com/login?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg)
 * A Watson Studio project
-* A Python [Fine-Tuned Models notebook](https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/Entities-Keywords-Extraction/Entities%20Extraction%20-%20Fine-Tuned%20%20Models.ipynb)
+* A Python [Fine-Tuned Models notebook](https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/ML/Entities-Keywords-Extraction/Entities%20Extraction%20-%20Fine-Tuned%20%20Models.ipynb)
 * Your [environment set up](https://developer.ibm.com/tutorials/set-up-your-ibm-watson-libraries-environment/)
 
 # Estimated time
@@ -454,4 +454,4 @@ As per the above result, fine-tuned BiLSTM model can identify all trained custom
 
 ## Conclusion 
 
-The purpose of this tutorial is to demonstrate the practical process of fine-tuning a Watson NLP model using custom entities, with a focus on achieving high accuracy. Through the use of a [Notebook](https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/Entities-Keywords-Extraction/Entities%20Extraction%20-%20Fine-Tuned%20%20Models.ipynb), the step-by-step process of fine-tuning will be presented in detail, with testing results showing that organizations can fine-tune their required custom Entities with good accuracy.
+The purpose of this tutorial is to demonstrate the practical process of fine-tuning a Watson NLP model using custom entities, with a focus on achieving high accuracy. Through the use of a [Notebook](https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/ML/Entities-Keywords-Extraction/Entities%20Extraction%20-%20Fine-Tuned%20%20Models.ipynb), the step-by-step process of fine-tuning will be presented in detail, with testing results showing that organizations can fine-tune their required custom Entities with good accuracy.

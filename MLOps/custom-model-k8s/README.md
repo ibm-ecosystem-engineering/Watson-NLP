@@ -12,11 +12,11 @@ To complete this tutorial, you need to have first completed the [Consumer Compla
 
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
 - [Docker Desktop](https://docs.docker.com/get-docker/) is installed
-- Docker has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md#docker)
+- Docker has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/MLOps/access/README.md#docker)
 - You have a Kubernetes or OpenShift cluster on which you can deploy an application
 - You have either the Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed, and logged into your cluster. The current namespace should be set to the namespace in which you will deploy the model service
-- Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
-- You have completed the [Consumer Complaints Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification#tab-1) tutorial, and have saved the custom trained model named `ensemble_model` to the COS bucket associated with the project. The tutorial uses this [notebook](https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/Text-Classification/Consumer%20complaints%20Classification.ipynb).
+- Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
+- You have completed the [Consumer Complaints Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification#tab-1) tutorial, and have saved the custom trained model named `ensemble_model` to the COS bucket associated with the project. The tutorial uses this [notebook](https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/ML/Text-Classification/Consumer%20complaints%20Classification.ipynb).
 
 ## Steps
 
@@ -113,7 +113,7 @@ docker push <REGISTRY>/<NAMESPACE>/watson-nlp_ensemble_model:latest
 Clone the GitHub repository containing sample code for this tutorial.
 
 ```sh
-git clone https://github.com/ibm-build-lab/Watson-NLP
+git clone https://github.com/ibm-ecosystem-engineering/Watson-NLP
 ```
 
 Go to the directory for this tutorial.

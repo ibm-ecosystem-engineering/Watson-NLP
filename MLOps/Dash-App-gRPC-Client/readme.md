@@ -22,7 +22,7 @@ In this tutorial you will build and deploy a Watson NLP client application. The 
 Clone the repository containing the sample code used in this tutorial.
 
 ```sh
-git clone https://github.com/ibm-build-lab/Watson-NLP
+git clone https://github.com/ibm-ecosystem-engineering/Watson-NLP
 ```
 
 Go to the root directory for this tutorial.

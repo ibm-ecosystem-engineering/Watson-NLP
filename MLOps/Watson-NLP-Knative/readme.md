@@ -21,7 +21,7 @@ Using this approach allows for models to be kept in separate container images fr
     - [Install the OpenShift Serverless Operator](https://docs.openshift.com/container-platform/4.10/serverless/install/install-serverless-operator.html)
     - [Install Knative Serving](https://docs.openshift.com/container-platform/4.10/serverless/install/installing-knative-serving.html)
 - Install the Red Hat OpenShift CLI (```oc```) and log in to the OpenShift cluster.
-- Create a Docker registry secret in the Kubernetes project that grants access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
+- Create a Docker registry secret in the Kubernetes project that grants access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
 
 **Tip:** Podman provides a Docker-compatible command-line front end. Unless otherwise noted, all of the Docker commands in this tutorial should work for Podman if you alias the Docker CLI with the shell command:
 
@@ -33,7 +33,7 @@ alias docker=podman
 
 ### Step 1. Configure Knative
 
-> Skip this step if you are using the [Sandbox Environment](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox).
+> Skip this step if you are using the [Sandbox Environment](https://github.com/ibm-ecosystem-engineering/Watson-NLP/tree/main/MLOps/reserve-openshift-sandbox).
 
 The deployment approach that we use in this tutorial relies on capabilities of Knative Serving that are disabled by default. Below you will configure Knative Service to enable *init containers* and *empty directories*.
 
@@ -59,7 +59,7 @@ EOF
 Clone the repository containing code used in this tutorial.
 
 ```bash
-git clone https://github.com/ibm-build-labs/Watson-NLP
+git clone https://github.com/ibm-ecosystem-engineering/Watson-NLP
 cd Watson-NLP/MLOps/Watson-NLP-Knative/deployment
 ```
 

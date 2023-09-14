@@ -17,7 +17,7 @@ To follow the steps in this tutorial, you need:
 
 * An [IBMid](https://cloud.ibm.com/login?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg)
 * A Watson Studio project
-* A Python [Pre-Trained Models notebook](https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/PII-Extraction/PII%20Extraction%20-%20Pre-Trained%20Models.ipynb)
+* A Python [Pre-Trained Models notebook](https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/ML/PII-Extraction/PII%20Extraction%20-%20Pre-Trained%20Models.ipynb)
 * Your [environment set up](https://developer.ibm.com/tutorials/set-up-your-ibm-watson-libraries-environment/)
 
 # Estimated time
@@ -143,4 +143,4 @@ As shown in above result. Pre-Trained RBR Model can detect the credit card numbe
 
 This tutorial showed how to use the Watson NLP library and how easily you can run various PII Extraction using Pre-trained models on input text. This notebook also demonstrated one possible application of Watson NLP.
 
-Work through the [notebook](https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/PII-Extraction/PII%20Extraction%20-%20Pre-Trained%20Models.ipynb) to try out this feature.
+Work through the [notebook](https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/ML/PII-Extraction/PII%20Extraction%20-%20Pre-Trained%20Models.ipynb) to try out this feature.

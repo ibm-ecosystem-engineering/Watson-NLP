@@ -26,8 +26,8 @@ To help you get started in AWS platform quickly using IBM Watson Libraries, Foll
 
 We demonstrate two alternative approaches to deploy Watson NLP models using ECS:
 
-  - [Deploy with Docker Compose](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/Deploy-to-AWS-Fargate)
-  - [Deploy with ECS task definition](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/Watson-NLP-ECS)
+  - [Deploy with Docker Compose](https://github.com/ibm-ecosystem-engineering/Watson-NLP/tree/main/MLOps/Deploy-to-AWS-Fargate)
+  - [Deploy with ECS task definition](https://github.com/ibm-ecosystem-engineering/Watson-NLP/tree/main/MLOps/Watson-NLP-ECS)
 
 ## Deploy Watson Speech to Text (STT)
 
@@ -35,8 +35,8 @@ We demonstrate two alternative approaches to deploy Watson NLP models using ECS:
 
 You can do either a customizable deployment or non-customizable. A customizable deployment allows users to specify how particular words should be written.
 
-  - [Non-customizable deployment](https://github.com/ibm-build-lab/Watson-Speech/tree/main/tts-runtime-openshift)
-  - [Customization deployment](https://github.com/ibm-build-lab/Watson-Speech/tree/main/tts-customization-openshift)
+  - [Non-customizable deployment](https://github.com/ibm-ecosystem-engineering/Watson-Speech/tree/main/tts-runtime-openshift)
+  - [Customization deployment](https://github.com/ibm-ecosystem-engineering/Watson-Speech/tree/main/tts-customization-openshift)
 
 ## Deploy Watson Text to Speech (TTS)
 
@@ -44,8 +44,8 @@ You can do either a customizable deployment or non-customizable. A customizable 
 
 As with STT, you can deploy TTS as either a customizable or non-customizable. The customizable deployment allows the user to specify how particular words should be pronounced.
 
-  - [Non-customizable deployment](https://github.com/ibm-build-lab/Watson-Speech/tree/main/tts-runtime-openshift)
-  - [Customization deployment](https://github.com/ibm-build-lab/Watson-Speech/tree/main/tts-customization-openshift)
+  - [Non-customizable deployment](https://github.com/ibm-ecosystem-engineering/Watson-Speech/tree/main/tts-runtime-openshift)
+  - [Customization deployment](https://github.com/ibm-ecosystem-engineering/Watson-Speech/tree/main/tts-customization-openshift)
 
 
 

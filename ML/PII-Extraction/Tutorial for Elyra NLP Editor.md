@@ -38,7 +38,7 @@ You will find below instructions for running the NLP Editor frontend and the AQL
 # Generate the custom rules for Driving License Number 
 
 ## 1. Set up the input document
-Expand the Extractors, drag and drop Input Documents on the canvas. Configure with document [Driving License Data](https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/PII-Extraction/PII_faker_LicenseNumber_sentances.txt). Click Upload, then Close.
+Expand the Extractors, drag and drop Input Documents on the canvas. Configure with document [Driving License Data](https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/ML/PII-Extraction/PII_faker_LicenseNumber_sentances.txt). Click Upload, then Close.
 
 ![step2](../../Screenshots/Elyra%20doc%20step2.png)
 
@@ -100,4 +100,4 @@ Select the `Driving_Licence_Consolidated` node, and click Run.
 
 ![step9](../../Screenshots/Elyra%20doc%20step9.png)
 
-The above result detect all the available Driving Licence Numbers in the document. So now select the final `Driving_Licence_Consolidated` canvas and click on the export button. It will generate the `NLP_Canvas_Export.zip` file for the custom rules to detect the Driving Licencee Number. This exported zip file will be used in [`PII Extraction - Custom-RBR Models Notebook`](https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/PII-Extraction/PII%20Extraction%20-%20Custom-RBR%20Models.ipynb) to create a custom rule based model in the Watson NLP library.
+The above result detect all the available Driving Licence Numbers in the document. So now select the final `Driving_Licence_Consolidated` canvas and click on the export button. It will generate the `NLP_Canvas_Export.zip` file for the custom rules to detect the Driving Licencee Number. This exported zip file will be used in [`PII Extraction - Custom-RBR Models Notebook`](https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/ML/PII-Extraction/PII%20Extraction%20-%20Custom-RBR%20Models.ipynb) to create a custom rule based model in the Watson NLP library.

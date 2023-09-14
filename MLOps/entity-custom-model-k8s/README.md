@@ -2,7 +2,7 @@
 
 In this tutorial you will take a Watson NLP model that you have trained in Watson Studio and serve it on a Kubernetes or OpenShift cluster. The model will be packaged as a container image using the [model builder](https://github.com/IBM/ibm-watson-embed-model-builder). The container images can be used in the same way as the pretrained Watson NLP models, i.e. specified as init containers of Watson NLP Runtime Pods.
 
-To complete this tutorial, you need to have first completed the [Entity Extraction Model](https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/Entity-Extraction-Labeled/Train%20Entity%20Extraction%20Model.ipynb) notebook, which includes steps on training a Entity Extraction Modeland saving it to the Cloud Object Storage (COS) bucket associated with the project.
+To complete this tutorial, you need to have first completed the [Entity Extraction Model](https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/ML/Entity-Extraction-Labeled/Train%20Entity%20Extraction%20Model.ipynb) notebook, which includes steps on training a Entity Extraction Modeland saving it to the Cloud Object Storage (COS) bucket associated with the project.
 
 ## Reference Architecture
 
@@ -12,11 +12,11 @@ To complete this tutorial, you need to have first completed the [Entity Extracti
 
 - [Python 3.9](https://www.python.org/downloads/) or later is installed
 - [Docker Desktop](https://docs.docker.com/get-docker/) is installed
-- Docker has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md#docker)
+- Docker has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/MLOps/access/README.md#docker)
 - You have a Kubernetes or OpenShift cluster on which you can deploy an application
 - You have either the Kubernetes (`kubectl`) or OpenShift (`oc`) CLI installed, and logged into your cluster. The current namespace should be set to the namespace in which you will deploy the model service
-- Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
-- You have completed the [Entity Extraction](https://techzone.ibm.com/collection/watson-nlp-text-classification#tab-1) tutorial, and have saved the custom trained model named `sire_custom` to the COS bucket associated with the project. The tutorial uses this [notebook]([https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/Entity-Extraction-Labeled/Train%20Entity%20Extraction%20Model.ipynb](https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/Entity-Extraction-Labeled/Train%20Entity%20Extraction%20Model.ipynb)).
+- Your Kubernetes or OpenShift cluster has access to the [Watson NLP Runtime and pretrained models](https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
+- You have completed the [Entity Extraction](https://techzone.ibm.com/collection/watson-nlp-text-classification#tab-1) tutorial, and have saved the custom trained model named `sire_custom` to the COS bucket associated with the project. The tutorial uses this [notebook]([https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/ML/Entity-Extraction-Labeled/Train%20Entity%20Extraction%20Model.ipynb](https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/ML/Entity-Extraction-Labeled/Train%20Entity%20Extraction%20Model.ipynb)).
 
 ## Steps
 
@@ -129,7 +129,7 @@ docker push <REGISTRY>/<NAMESPACE>/watson-nlp_sire_custom:latest
 Clone the GitHub repository containing sample code for this tutorial.
 
 ```sh
-git clone https://github.com/ibm-build-lab/Watson-NLP
+git clone https://github.com/ibm-ecosystem-engineering/Watson-NLP
 ```
 
 Go to the directory for this tutorial.

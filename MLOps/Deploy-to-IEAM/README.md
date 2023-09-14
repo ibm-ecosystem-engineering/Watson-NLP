@@ -17,7 +17,7 @@ The following diagram shows the typical interactions between the components with
 
 ## Prerequisites
 
-- Your entitlement key to access the IBM Entitled Registry. See [here](https://github.com/ibm-build-lab/Watson-NLP/tree/main/MLOps/access) for more information.
+- Your entitlement key to access the IBM Entitled Registry. See [here](https://github.com/ibm-ecosystem-engineering/Watson-NLP/tree/main/MLOps/access) for more information.
 - A *Dedicated IEAM Organization* reservable enviroment included in [this IBM TechZone collection](https://techzone.ibm.com/collection/watson-nlp-serve-models-with-ieam).
 - Deploy a VM running Ubuntu 20.04 LTS as an IEAM edge device, from the aforementioned TechZone collection. Please make sure:
   - The VM has at least 2 vCPUs and 8GB memory

@@ -1,6 +1,6 @@
 # Embeddable AI Self-Serve Assets using NLP Library
 
-[Assets/Accelerators for Watson NLP](https://github.com/ibm-build-lab/Watson-NLP) (this repo) contains self-serve notebooks and documentation on how to create NLP models using Watson NLP library, how to serve Watson NLP models, and how to make inference requests from custom applications. With an IBM Cloud account a full production sample can be deployed in roughly one hour.
+[Assets/Accelerators for Watson NLP](https://github.com/ibm-ecosystem-engineering/Watson-NLP) (this repo) contains self-serve notebooks and documentation on how to create NLP models using Watson NLP library, how to serve Watson NLP models, and how to make inference requests from custom applications. With an IBM Cloud account a full production sample can be deployed in roughly one hour.
 
 Key Technologies:
 

@@ -4,7 +4,7 @@
 
 This directory contains all the Machine Learning notebooks, tutorials, and dataset which covers most of the NLP tasks available in Watson NLP library and it is being updated every week. The coverage map below shows the NLP tasks available in Watson NLP library which are being covered in this assets/accelerator repo.
 
-![ML Assets Coverage Map](<img width="857" alt="image" src="https://github.com/ibm-build-lab/Watson-NLP/assets/134647636/ae0b2142-3356-40e6-8ec2-adba16d62469">)
+![ML Assets Coverage Map](<img width="857" alt="image" src="https://github.com/ibm-ecosystem-engineering/Watson-NLP/assets/134647636/ae0b2142-3356-40e6-8ec2-adba16d62469">)
 
 The structure for the ML assets is shown below:
 
@@ -45,7 +45,7 @@ The structure for the ML assets is shown below:
   - [Documentation](https://ibmdocs-test.mybluemix.net/docs/en/watson-libraries?topic=watson-natural-language-processing-home)
   - [Watson NLP Helm Chart](https://github.com/cloud-native-toolkit/toolkit-charts/tree/main/stable/watson-nlp)
   - **TO BE DONE** [Syntax model](https://ibmdocs-test.mybluemix.net/docs/en/watson-libraries?topic=models-syntax)
-  - [Samples](https://github.com/ibm-build-lab/Watson-NLP)
+  - [Samples](https://github.com/ibm-ecosystem-engineering/Watson-NLP)
 - [IBM Embeddable AI Home Page](https://dce.blabs.cloud/) **TO BE DONE**
 - IBM Technology Zone assets
   - [Watson NLP - Text Classification](https://techzone.ibm.com/collection/watson-nlp-text-classification)

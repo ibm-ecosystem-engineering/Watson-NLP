@@ -8,7 +8,7 @@ This tutorial you are going to deploy a pretrained models `watson-nlp_syntax_izu
 
 ## Prerequisite
 
-- Ensure you have your entitlement key to access the IBM Entitled Registry to access [Watson NLP Runtime and pretrained models](https://github.com/ibm-build-lab/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
+- Ensure you have your entitlement key to access the IBM Entitled Registry to access [Watson NLP Runtime and pretrained models](https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/MLOps/access/README.md#kubernetes-and-openshift)
 - Ensure you have an AWS account
 - [Install](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) AWS CLI
 

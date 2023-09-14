@@ -250,7 +250,7 @@ kubectl create secret docker-registry ibm-entitlement-key \
 Run the following command to clone the repository that contains the Knative Service manifests used in this tutorial:
 
 ```sh
-git clone https://github.com/ibm-build-lab/Watson-NLP.git
+git clone https://github.com/ibm-ecosystem-engineering/Watson-NLP.git
 ```
 
 Go to the directory of this tutorial:

@@ -92,7 +92,7 @@ In this step you will retrieve a Kubernetes manifest from GitHub that we will us
 
 ```bash
 cd /workshop
-wget https://raw.githubusercontent.com/ibm-build-lab/Watson-NLP/workshop/MLOps/Init-Container/deployment/deployment.yaml
+wget https://raw.githubusercontent.com/ibm-ecosystem-engineering/Watson-NLP/workshop/MLOps/Init-Container/deployment/deployment.yaml
 oc apply -f deployment.yaml
 ```
 

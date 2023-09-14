@@ -21,7 +21,7 @@ To follow the steps in this tutorial, you need:
 
 * An [IBMid](https://cloud.ibm.com/login?cm_sp=ibmdev-_-developer-tutorials-_-cloudreg)
 * A Watson Studio project
-* A Python [Fine-Tuned Models notebook](https://github.com/ibm-build-lab/Watson-NLP/blob/PR2/ML/Text-Categorization/Hierarchical%20Text%20Categorization%20-%20Fine%20Tune.ipynb)
+* A Python [Fine-Tuned Models notebook](https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/PR2/ML/Text-Categorization/Hierarchical%20Text%20Categorization%20-%20Fine%20Tune.ipynb)
 * Your [environment set up](https://developer.ibm.com/tutorials/set-up-your-ibm-watson-libraries-environment/)
 
 # Estimated time

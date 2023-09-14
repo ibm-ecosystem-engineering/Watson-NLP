@@ -26,7 +26,7 @@ In this step you will setup your own Watson Studio environment for using the Wat
 
 ![create_from_file](Screenshots/create_from_file.png)
 
-4. Download the project zip file from GitHub: https://github.com/ibm-build-lab/Watson-NLP/blob/main/ML/Emotion-Classification/Emotion-Classification.zip
+4. Download the project zip file from GitHub: https://github.com/ibm-ecosystem-engineering/Watson-NLP/blob/main/ML/Emotion-Classification/Emotion-Classification.zip
 
 ![download_zip](Screenshots/download_zip.png)
 
