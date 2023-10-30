@@ -31,25 +31,23 @@ It should take you approximately 1 hour to complete this tutorial.
 # Steps
 
 
-# Fine-Tune Watson NLP Models for Text Categarization
+# Fine-Tune Watson NLP Models for Text Categorization
 
 
 ## Step 1. Data Loading
 
-The dataset contains over 50000 medical data with these columns `['Title', 'abstractText', 'meshMajor', 'pmid', 'meshid', 'meshroot', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'L', 'M', 'N', 'Z']`.  The original source of this dataset is from [Kaggle](https://www.kaggle.com/datasets/owaiskhan9654/pubmed-multilabel-text-classification).
+The dataset contains over 50000 medical data with each article described by several columns. The columns include `Title` and `abstractText` for the article title and summary, `meshMajor` for the major MeSH (Medical Subject Headings) terms associated with the article, `pmid` for the PubMed identifier, `meshid` for the unique MeSH ID, and `meshroot` for the MeSH mapped root term. Additionally, there are columns labeled A to Z representing different categories of MeSH terms, such as Anatomy, Organisms, Diseases, Chemicals and Drugs, and more. These columns provide valuable information about the articles, their MeSH labels, and various aspects of biomedical research covered in the dataset. The original source of this dataset is from [Kaggle](https://www.kaggle.com/datasets/owaiskhan9654/pubmed-multilabel-text-classification).
 
 ```
 # load data set into a dataframe
 file_name = "PubMed Multi Label Text Classification Dataset Processed.csv"
 buffer = project.get_file(file_name)
 med_df = pd.read_csv(buffer)
-
 ```
 
 ## Step 2. Data Pre-Processing and Preparing the training data
 
-
-The code provided helps extract unique categories from the dataset's `meshRoot` column. It iterates through each value in the column, splits them into parts, and removes single quotes and specific characters using regular expressions. The cleaned values are then added to a set to collect the unique categories. This code allows you to obtain a set of distinct categories from the `meshRoot` column, eliminating duplicates and preparing them for further analysis or processing.
+Now we will process the data and extract categories from the `meshRoot` column. The provided code snippet performs this task. 
 
 ```
 # extarct message data through the channel name 
@@ -70,6 +68,11 @@ def extarct_dictionary_list(df_meshRoot):
     
 dictionary_list =extarct_dictionary_list(df_meshRoot)
 ```
+It begins by importing the necessary modules, including regular expressions `re`. The function `extract_dictionary_list` takes the `df_meshRoot` parameter, which represents the `meshRoot` column of the dataset. Within the function, a set called `dictionary_list` is initialized to store the unique categories.
+
+The code iterates through each value in the `df_meshRoot` column. It splits the value into parts using the delimiter `"',"` and then proceeds to clean each part. First, single quotes are removed by replacing them with an empty string. Then, using regular expressions, characters surrounded by square brackets, denoting MeSH categories, are removed. These categories are identified by their ASCII values from 65 to 91 (representing A to Z). After removing the square brackets, any remaining square brackets are also removed. Finally, the cleaned category value is stripped of any leading or trailing whitespace and added to the `dictionary_list` set.
+
+Once the `extract_dictionary_list` function is executed, it returns the `dictionary_list` set containing the unique categories extracted from the `meshRoot` column. This set can then be used to create a training dataset by combining these unique categories with the corresponding `meshMajor` values.
 
 After the data cleaning now creating training data set using unique dict values with `meshMajor`.
 
@@ -84,7 +87,6 @@ for dict_val in dict_list:
             mesh_val_list = mesh_value.split("',")
             for mesh in mesh_val_list:top_doc_list.add(mesh.replace("[","").replace("]","").replace("'","").strip())
     training_data.append({'labels':[dict_val],'key_phrases':list(top_doc_list)})
-    
 ```
 
 ## Step 3. Fine-Tuning the model
@@ -104,7 +106,6 @@ categories_model_path = watson_nlp.download('categories_esa_en_stock')
 train_data_stream = prepare_stream_from_python_list(training_data, syntax_model, data_path)
 model = ESAHierarchical.train(train_data_stream, categories_model_path)
 print('[DONE]')
-
 ```
 The `syntax_model` is used for text tokenization. Text tokenization refers to the process of breaking down a text document into smaller units, such as words or sentences, called tokens. The syntax model helps analyze the syntactic structure of the text and identifies these tokens, which are essential for various natural language processing tasks like parsing, part-of-speech tagging, and dependency parsing.
 
