@@ -77,12 +77,13 @@ Assets focused on deployment are under the [MLOps folder](MLOps/). Go to the res
 ### Team 
 Created & Architected By
 
-    Kunal Sawarkar, Chief Data Scientist
+  Kunal Sawarkar, Chief Data Scientist
 
 Builders
 
+
+  Michael Spriggs, Principal Architect
     Shivam Solanki, Senior Advisory Data Scientist
-    Michael Spriggs, Principal Architect
     Kevin Huang, Sr. ML-Ops Engineer
     Abhilasha Mangal, Senior Data Scientist
     Himadri Talukder - Senior Software Engineer
